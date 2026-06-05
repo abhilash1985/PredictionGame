@@ -17,7 +17,8 @@ class RoundAdmin(admin.ModelAdmin):
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ['name', 'short_name', 'fifa_code', 'fifa_ranking']
+    list_display = ['name', 'short_name', 'group_letter', 'fifa_code', 'fifa_ranking']
+    list_filter = ['group_letter']
     search_fields = ['name', 'short_name', 'fifa_code']
 
 
