@@ -1,9 +1,11 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 
 from allauth.account.forms import SignupForm
 
 from apps.accounts.models import UserProfile
+from apps.accounts.profile_service import ensure_user_profile
 
 
 class SignupForm(SignupForm):
@@ -22,9 +24,15 @@ class SignupForm(SignupForm):
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.save(update_fields=['first_name', 'last_name'])
-        profile = user.profile
-        profile.display_name = self.cleaned_data['display_name']
-        profile.save(update_fields=['display_name'])
+
+        desired_name = self.cleaned_data['display_name']
+        profile = ensure_user_profile(user)
+        if profile.display_name != desired_name:
+            profile.display_name = desired_name
+            try:
+                profile.save(update_fields=['display_name'])
+            except IntegrityError as exc:
+                raise ValidationError({'display_name': 'This display name is already taken.'}) from exc
         return user
 
 
@@ -41,8 +49,10 @@ class ProfileForm(forms.ModelForm):
             'ai_predict_enabled': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user')
+    def __init__(self, *args, user=None, **kwargs):
+        if user is None:
+            raise TypeError('ProfileForm requires a user keyword argument.')
+        self.user = user
         super().__init__(*args, **kwargs)
         self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
         self.fields['last_name'].widget.attrs.update({'class': 'form-control'})

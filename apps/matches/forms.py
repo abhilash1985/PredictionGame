@@ -1,13 +1,17 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from apps.matches.models import Match, MatchPrediction, QuestionPrediction
+from apps.accounts.profile_service import ensure_user_profile
+from apps.matches.models import MatchPrediction, QuestionPrediction
 
 
 class MatchPredictionForm(forms.Form):
     point_booster = forms.BooleanField(required=False, label='Use Point Booster (2× points)')
 
     def __init__(self, *args, match=None, user=None, **kwargs):
+        if match is None or user is None:
+            raise TypeError('MatchPredictionForm requires match and user keyword arguments.')
+
         self.match = match
         self.user = user
         super().__init__(*args, **kwargs)
@@ -38,7 +42,7 @@ class MatchPredictionForm(forms.Form):
                 if answer:
                     self.fields[field_name].initial = answer.user_answer
 
-        profile = user.profile
+        profile = ensure_user_profile(user)
         if profile.point_boosters_remaining <= 0 and not (existing and existing.point_booster_used):
             del self.fields['point_booster']
 
@@ -56,7 +60,7 @@ class MatchPredictionForm(forms.Form):
         )
 
         if use_booster and not prediction.point_booster_used:
-            profile = self.user.profile
+            profile = ensure_user_profile(self.user)
             if profile.point_boosters_remaining <= 0:
                 raise ValidationError('No point boosters remaining.')
             profile.point_boosters_remaining -= 1

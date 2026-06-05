@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
+from apps.accounts.profile_service import ensure_user_profile
 from apps.matches.forms import MatchPredictionForm
 from apps.matches.models import Match, MatchPrediction
 from apps.matches.services.scoring import ScoringService
@@ -70,7 +71,7 @@ def predict_view(request, pk):
     else:
         form = MatchPredictionForm(match=match, user=request.user)
 
-    profile = request.user.profile
+    profile = ensure_user_profile(request.user)
     return render(request, 'matches/predict.html', {
         'match': match,
         'form': form,

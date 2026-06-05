@@ -5,11 +5,12 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 
 from apps.accounts.forms import OnboardingForm, ProfileForm
+from apps.accounts.profile_service import ensure_user_profile
 
 
 @login_required
 def onboarding_view(request):
-    profile = request.user.profile
+    profile = ensure_user_profile(request.user)
     if profile.onboarding_completed:
         return redirect('dashboard')
 
@@ -27,7 +28,7 @@ def onboarding_view(request):
 
 @login_required
 def profile_view(request):
-    profile = request.user.profile
+    profile = ensure_user_profile(request.user)
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=profile, user=request.user)
         if form.is_valid():
