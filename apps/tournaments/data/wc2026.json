@@ -1,0 +1,1302 @@
+{
+  "stadiums": {
+    "mexico_city": [
+      "Mexico City Stadium",
+      "Mexico City",
+      "Mexico",
+      "America/Mexico_City"
+    ],
+    "guadalajara": [
+      "Guadalajara Stadium",
+      "Guadalajara",
+      "Mexico",
+      "America/Mexico_City"
+    ],
+    "monterrey": [
+      "Monterrey Stadium",
+      "Monterrey",
+      "Mexico",
+      "America/Monterrey"
+    ],
+    "toronto": [
+      "Toronto Stadium",
+      "Toronto",
+      "Canada",
+      "America/Toronto"
+    ],
+    "vancouver": [
+      "BC Place Vancouver",
+      "Vancouver",
+      "Canada",
+      "America/Vancouver"
+    ],
+    "los_angeles": [
+      "Los Angeles Stadium",
+      "Los Angeles",
+      "USA",
+      "America/Los_Angeles"
+    ],
+    "sf_bay": [
+      "San Francisco Bay Area Stadium",
+      "San Francisco Bay Area",
+      "USA",
+      "America/Los_Angeles"
+    ],
+    "seattle": [
+      "Seattle Stadium",
+      "Seattle",
+      "USA",
+      "America/Los_Angeles"
+    ],
+    "boston": [
+      "Boston Stadium",
+      "Boston",
+      "USA",
+      "America/New_York"
+    ],
+    "ny_nj": [
+      "New York/New Jersey Stadium",
+      "New York",
+      "USA",
+      "America/New_York"
+    ],
+    "philadelphia": [
+      "Philadelphia Stadium",
+      "Philadelphia",
+      "USA",
+      "America/New_York"
+    ],
+    "miami": [
+      "Miami Stadium",
+      "Miami",
+      "USA",
+      "America/New_York"
+    ],
+    "atlanta": [
+      "Atlanta Stadium",
+      "Atlanta",
+      "USA",
+      "America/New_York"
+    ],
+    "houston": [
+      "Houston Stadium",
+      "Houston",
+      "USA",
+      "America/Chicago"
+    ],
+    "dallas": [
+      "Dallas Stadium",
+      "Dallas",
+      "USA",
+      "America/Chicago"
+    ],
+    "kansas_city": [
+      "Kansas City Stadium",
+      "Kansas City",
+      "USA",
+      "America/Chicago"
+    ]
+  },
+  "teams": [
+    {
+      "code": "MEX",
+      "name": "Mexico",
+      "group": "A",
+      "ranking": 14
+    },
+    {
+      "code": "RSA",
+      "name": "South Africa",
+      "group": "A",
+      "ranking": 59
+    },
+    {
+      "code": "KOR",
+      "name": "Korea Republic",
+      "group": "A",
+      "ranking": 23
+    },
+    {
+      "code": "CZE",
+      "name": "Czechia",
+      "group": "A",
+      "ranking": 39
+    },
+    {
+      "code": "CAN",
+      "name": "Canada",
+      "group": "B",
+      "ranking": 41
+    },
+    {
+      "code": "BIH",
+      "name": "Bosnia and Herzegovina",
+      "group": "B",
+      "ranking": 75
+    },
+    {
+      "code": "QAT",
+      "name": "Qatar",
+      "group": "B",
+      "ranking": 35
+    },
+    {
+      "code": "SUI",
+      "name": "Switzerland",
+      "group": "B",
+      "ranking": 19
+    },
+    {
+      "code": "BRA",
+      "name": "Brazil",
+      "group": "C",
+      "ranking": 3
+    },
+    {
+      "code": "MAR",
+      "name": "Morocco",
+      "group": "C",
+      "ranking": 13
+    },
+    {
+      "code": "HAI",
+      "name": "Haiti",
+      "group": "C",
+      "ranking": 87
+    },
+    {
+      "code": "SCO",
+      "name": "Scotland",
+      "group": "C",
+      "ranking": 36
+    },
+    {
+      "code": "USA",
+      "name": "USA",
+      "group": "D",
+      "ranking": 11
+    },
+    {
+      "code": "PAR",
+      "name": "Paraguay",
+      "group": "D",
+      "ranking": 52
+    },
+    {
+      "code": "AUS",
+      "name": "Australia",
+      "group": "D",
+      "ranking": 24
+    },
+    {
+      "code": "TUR",
+      "name": "T\u00fcrkiye",
+      "group": "D",
+      "ranking": 42
+    },
+    {
+      "code": "GER",
+      "name": "Germany",
+      "group": "E",
+      "ranking": 8
+    },
+    {
+      "code": "CUW",
+      "name": "Cura\u00e7ao",
+      "group": "E",
+      "ranking": 90
+    },
+    {
+      "code": "CIV",
+      "name": "C\u00f4te d'Ivoire",
+      "group": "E",
+      "ranking": 38
+    },
+    {
+      "code": "ECU",
+      "name": "Ecuador",
+      "group": "E",
+      "ranking": 31
+    },
+    {
+      "code": "NED",
+      "name": "Netherlands",
+      "group": "F",
+      "ranking": 7
+    },
+    {
+      "code": "JPN",
+      "name": "Japan",
+      "group": "F",
+      "ranking": 18
+    },
+    {
+      "code": "SWE",
+      "name": "Sweden",
+      "group": "F",
+      "ranking": 25
+    },
+    {
+      "code": "TUN",
+      "name": "Tunisia",
+      "group": "F",
+      "ranking": 40
+    },
+    {
+      "code": "BEL",
+      "name": "Belgium",
+      "group": "G",
+      "ranking": 5
+    },
+    {
+      "code": "EGY",
+      "name": "Egypt",
+      "group": "G",
+      "ranking": 37
+    },
+    {
+      "code": "IRN",
+      "name": "IR Iran",
+      "group": "G",
+      "ranking": 21
+    },
+    {
+      "code": "NZL",
+      "name": "New Zealand",
+      "group": "G",
+      "ranking": 93
+    },
+    {
+      "code": "ESP",
+      "name": "Spain",
+      "group": "H",
+      "ranking": 9
+    },
+    {
+      "code": "CPV",
+      "name": "Cabo Verde",
+      "group": "H",
+      "ranking": 65
+    },
+    {
+      "code": "KSA",
+      "name": "Saudi Arabia",
+      "group": "H",
+      "ranking": 58
+    },
+    {
+      "code": "URU",
+      "name": "Uruguay",
+      "group": "H",
+      "ranking": 10
+    },
+    {
+      "code": "FRA",
+      "name": "France",
+      "group": "I",
+      "ranking": 2
+    },
+    {
+      "code": "SEN",
+      "name": "Senegal",
+      "group": "I",
+      "ranking": 17
+    },
+    {
+      "code": "IRQ",
+      "name": "Iraq",
+      "group": "I",
+      "ranking": 56
+    },
+    {
+      "code": "NOR",
+      "name": "Norway",
+      "group": "I",
+      "ranking": 45
+    },
+    {
+      "code": "ARG",
+      "name": "Argentina",
+      "group": "J",
+      "ranking": 1
+    },
+    {
+      "code": "ALG",
+      "name": "Algeria",
+      "group": "J",
+      "ranking": 32
+    },
+    {
+      "code": "AUT",
+      "name": "Austria",
+      "group": "J",
+      "ranking": 22
+    },
+    {
+      "code": "JOR",
+      "name": "Jordan",
+      "group": "J",
+      "ranking": 70
+    },
+    {
+      "code": "POR",
+      "name": "Portugal",
+      "group": "K",
+      "ranking": 6
+    },
+    {
+      "code": "COD",
+      "name": "Congo DR",
+      "group": "K",
+      "ranking": 61
+    },
+    {
+      "code": "UZB",
+      "name": "Uzbekistan",
+      "group": "K",
+      "ranking": 62
+    },
+    {
+      "code": "COL",
+      "name": "Colombia",
+      "group": "K",
+      "ranking": 12
+    },
+    {
+      "code": "ENG",
+      "name": "England",
+      "group": "L",
+      "ranking": 4
+    },
+    {
+      "code": "CRO",
+      "name": "Croatia",
+      "group": "L",
+      "ranking": 15
+    },
+    {
+      "code": "GHA",
+      "name": "Ghana",
+      "group": "L",
+      "ranking": 60
+    },
+    {
+      "code": "PAN",
+      "name": "Panama",
+      "group": "L",
+      "ranking": 43
+    }
+  ],
+  "knockout_teams": {
+    "1A": "Winner Group A",
+    "2A": "Runner-up Group A",
+    "1B": "Winner Group B",
+    "2B": "Runner-up Group B",
+    "1C": "Winner Group C",
+    "2C": "Runner-up Group C",
+    "1D": "Winner Group D",
+    "2D": "Runner-up Group D",
+    "1E": "Winner Group E",
+    "2E": "Runner-up Group E",
+    "1F": "Winner Group F",
+    "2F": "Runner-up Group F",
+    "1G": "Winner Group G",
+    "2G": "Runner-up Group G",
+    "1H": "Winner Group H",
+    "2H": "Runner-up Group H",
+    "1I": "Winner Group I",
+    "2I": "Runner-up Group I",
+    "1J": "Winner Group J",
+    "2J": "Runner-up Group J",
+    "1K": "Winner Group K",
+    "2K": "Runner-up Group K",
+    "1L": "Winner Group L",
+    "2L": "Runner-up Group L",
+    "3ABCDF": "3rd Group ABCDF",
+    "3CDFGH": "3rd Group CDFGH",
+    "3CEFHI": "3rd Group CEFHI",
+    "3EHIJK": "3rd Group EHIJK",
+    "3AEHIJ": "3rd Group AEHIJ",
+    "3BEFIJ": "3rd Group BEFIJ",
+    "3EFGIJ": "3rd Group EFGIJ",
+    "3DEIJL": "3rd Group DEIJL",
+    "W73": "Winner Match 73",
+    "W74": "Winner Match 74",
+    "W75": "Winner Match 75",
+    "W76": "Winner Match 76",
+    "W77": "Winner Match 77",
+    "W78": "Winner Match 78",
+    "W79": "Winner Match 79",
+    "W80": "Winner Match 80",
+    "W81": "Winner Match 81",
+    "W82": "Winner Match 82",
+    "W83": "Winner Match 83",
+    "W84": "Winner Match 84",
+    "W85": "Winner Match 85",
+    "W86": "Winner Match 86",
+    "W87": "Winner Match 87",
+    "W88": "Winner Match 88",
+    "W93": "Winner Match 93",
+    "W94": "Winner Match 94",
+    "W95": "Winner Match 95",
+    "W96": "Winner Match 96",
+    "RU101": "Loser Semi-final 1",
+    "RU102": "Loser Semi-final 2",
+    "W101": "Winner Semi-final 1",
+    "W102": "Winner Semi-final 2"
+  },
+  "group_matches": [
+    {
+      "date": "2026-06-11",
+      "time": "19:00",
+      "home": "MEX",
+      "away": "RSA",
+      "group": "A",
+      "stadium": "mexico_city"
+    },
+    {
+      "date": "2026-06-12",
+      "time": "02:00",
+      "home": "KOR",
+      "away": "CZE",
+      "group": "A",
+      "stadium": "guadalajara"
+    },
+    {
+      "date": "2026-06-12",
+      "time": "19:00",
+      "home": "CAN",
+      "away": "BIH",
+      "group": "B",
+      "stadium": "toronto"
+    },
+    {
+      "date": "2026-06-13",
+      "time": "01:00",
+      "home": "USA",
+      "away": "PAR",
+      "group": "D",
+      "stadium": "los_angeles"
+    },
+    {
+      "date": "2026-06-13",
+      "time": "19:00",
+      "home": "QAT",
+      "away": "SUI",
+      "group": "B",
+      "stadium": "sf_bay"
+    },
+    {
+      "date": "2026-06-13",
+      "time": "22:00",
+      "home": "BRA",
+      "away": "MAR",
+      "group": "C",
+      "stadium": "ny_nj"
+    },
+    {
+      "date": "2026-06-14",
+      "time": "01:00",
+      "home": "HAI",
+      "away": "SCO",
+      "group": "C",
+      "stadium": "boston"
+    },
+    {
+      "date": "2026-06-14",
+      "time": "04:00",
+      "home": "AUS",
+      "away": "TUR",
+      "group": "D",
+      "stadium": "vancouver"
+    },
+    {
+      "date": "2026-06-14",
+      "time": "17:00",
+      "home": "GER",
+      "away": "CUW",
+      "group": "E",
+      "stadium": "houston"
+    },
+    {
+      "date": "2026-06-14",
+      "time": "20:00",
+      "home": "NED",
+      "away": "JPN",
+      "group": "F",
+      "stadium": "dallas"
+    },
+    {
+      "date": "2026-06-14",
+      "time": "23:00",
+      "home": "CIV",
+      "away": "ECU",
+      "group": "E",
+      "stadium": "philadelphia"
+    },
+    {
+      "date": "2026-06-15",
+      "time": "02:00",
+      "home": "SWE",
+      "away": "TUN",
+      "group": "F",
+      "stadium": "monterrey"
+    },
+    {
+      "date": "2026-06-15",
+      "time": "16:00",
+      "home": "ESP",
+      "away": "CPV",
+      "group": "H",
+      "stadium": "atlanta"
+    },
+    {
+      "date": "2026-06-15",
+      "time": "19:00",
+      "home": "BEL",
+      "away": "EGY",
+      "group": "G",
+      "stadium": "seattle"
+    },
+    {
+      "date": "2026-06-15",
+      "time": "22:00",
+      "home": "KSA",
+      "away": "URU",
+      "group": "H",
+      "stadium": "miami"
+    },
+    {
+      "date": "2026-06-16",
+      "time": "01:00",
+      "home": "IRN",
+      "away": "NZL",
+      "group": "G",
+      "stadium": "los_angeles"
+    },
+    {
+      "date": "2026-06-16",
+      "time": "19:00",
+      "home": "FRA",
+      "away": "SEN",
+      "group": "I",
+      "stadium": "ny_nj"
+    },
+    {
+      "date": "2026-06-16",
+      "time": "22:00",
+      "home": "IRQ",
+      "away": "NOR",
+      "group": "I",
+      "stadium": "boston"
+    },
+    {
+      "date": "2026-06-17",
+      "time": "01:00",
+      "home": "ARG",
+      "away": "ALG",
+      "group": "J",
+      "stadium": "kansas_city"
+    },
+    {
+      "date": "2026-06-17",
+      "time": "04:00",
+      "home": "AUT",
+      "away": "JOR",
+      "group": "J",
+      "stadium": "sf_bay"
+    },
+    {
+      "date": "2026-06-17",
+      "time": "17:00",
+      "home": "POR",
+      "away": "COD",
+      "group": "K",
+      "stadium": "houston"
+    },
+    {
+      "date": "2026-06-17",
+      "time": "20:00",
+      "home": "ENG",
+      "away": "CRO",
+      "group": "L",
+      "stadium": "dallas"
+    },
+    {
+      "date": "2026-06-17",
+      "time": "23:00",
+      "home": "GHA",
+      "away": "PAN",
+      "group": "L",
+      "stadium": "toronto"
+    },
+    {
+      "date": "2026-06-18",
+      "time": "02:00",
+      "home": "UZB",
+      "away": "COL",
+      "group": "K",
+      "stadium": "mexico_city"
+    },
+    {
+      "date": "2026-06-18",
+      "time": "16:00",
+      "home": "CZE",
+      "away": "RSA",
+      "group": "A",
+      "stadium": "atlanta"
+    },
+    {
+      "date": "2026-06-18",
+      "time": "19:00",
+      "home": "SUI",
+      "away": "BIH",
+      "group": "B",
+      "stadium": "los_angeles"
+    },
+    {
+      "date": "2026-06-18",
+      "time": "22:00",
+      "home": "CAN",
+      "away": "QAT",
+      "group": "B",
+      "stadium": "vancouver"
+    },
+    {
+      "date": "2026-06-19",
+      "time": "01:00",
+      "home": "MEX",
+      "away": "KOR",
+      "group": "A",
+      "stadium": "guadalajara"
+    },
+    {
+      "date": "2026-06-19",
+      "time": "19:00",
+      "home": "USA",
+      "away": "AUS",
+      "group": "D",
+      "stadium": "seattle"
+    },
+    {
+      "date": "2026-06-19",
+      "time": "22:00",
+      "home": "SCO",
+      "away": "MAR",
+      "group": "C",
+      "stadium": "boston"
+    },
+    {
+      "date": "2026-06-20",
+      "time": "00:30",
+      "home": "BRA",
+      "away": "HAI",
+      "group": "C",
+      "stadium": "philadelphia"
+    },
+    {
+      "date": "2026-06-20",
+      "time": "03:00",
+      "home": "TUR",
+      "away": "PAR",
+      "group": "D",
+      "stadium": "sf_bay"
+    },
+    {
+      "date": "2026-06-20",
+      "time": "17:00",
+      "home": "NED",
+      "away": "SWE",
+      "group": "F",
+      "stadium": "houston"
+    },
+    {
+      "date": "2026-06-20",
+      "time": "20:00",
+      "home": "GER",
+      "away": "CIV",
+      "group": "E",
+      "stadium": "toronto"
+    },
+    {
+      "date": "2026-06-21",
+      "time": "00:00",
+      "home": "ECU",
+      "away": "CUW",
+      "group": "E",
+      "stadium": "kansas_city"
+    },
+    {
+      "date": "2026-06-21",
+      "time": "04:00",
+      "home": "TUN",
+      "away": "JPN",
+      "group": "F",
+      "stadium": "monterrey"
+    },
+    {
+      "date": "2026-06-21",
+      "time": "16:00",
+      "home": "ESP",
+      "away": "KSA",
+      "group": "H",
+      "stadium": "atlanta"
+    },
+    {
+      "date": "2026-06-21",
+      "time": "19:00",
+      "home": "BEL",
+      "away": "IRN",
+      "group": "G",
+      "stadium": "los_angeles"
+    },
+    {
+      "date": "2026-06-21",
+      "time": "22:00",
+      "home": "URU",
+      "away": "CPV",
+      "group": "H",
+      "stadium": "miami"
+    },
+    {
+      "date": "2026-06-22",
+      "time": "01:00",
+      "home": "NZL",
+      "away": "EGY",
+      "group": "G",
+      "stadium": "vancouver"
+    },
+    {
+      "date": "2026-06-22",
+      "time": "17:00",
+      "home": "ARG",
+      "away": "AUT",
+      "group": "J",
+      "stadium": "dallas"
+    },
+    {
+      "date": "2026-06-22",
+      "time": "21:00",
+      "home": "FRA",
+      "away": "IRQ",
+      "group": "I",
+      "stadium": "philadelphia"
+    },
+    {
+      "date": "2026-06-23",
+      "time": "00:00",
+      "home": "NOR",
+      "away": "SEN",
+      "group": "I",
+      "stadium": "ny_nj"
+    },
+    {
+      "date": "2026-06-23",
+      "time": "03:00",
+      "home": "JOR",
+      "away": "ALG",
+      "group": "J",
+      "stadium": "sf_bay"
+    },
+    {
+      "date": "2026-06-23",
+      "time": "17:00",
+      "home": "POR",
+      "away": "UZB",
+      "group": "K",
+      "stadium": "houston"
+    },
+    {
+      "date": "2026-06-23",
+      "time": "20:00",
+      "home": "ENG",
+      "away": "GHA",
+      "group": "L",
+      "stadium": "boston"
+    },
+    {
+      "date": "2026-06-23",
+      "time": "23:00",
+      "home": "PAN",
+      "away": "CRO",
+      "group": "L",
+      "stadium": "toronto"
+    },
+    {
+      "date": "2026-06-24",
+      "time": "02:00",
+      "home": "COL",
+      "away": "COD",
+      "group": "K",
+      "stadium": "guadalajara"
+    },
+    {
+      "date": "2026-06-24",
+      "time": "19:00",
+      "home": "SUI",
+      "away": "CAN",
+      "group": "B",
+      "stadium": "vancouver"
+    },
+    {
+      "date": "2026-06-24",
+      "time": "19:00",
+      "home": "BIH",
+      "away": "QAT",
+      "group": "B",
+      "stadium": "seattle"
+    },
+    {
+      "date": "2026-06-24",
+      "time": "22:00",
+      "home": "SCO",
+      "away": "BRA",
+      "group": "C",
+      "stadium": "miami"
+    },
+    {
+      "date": "2026-06-24",
+      "time": "22:00",
+      "home": "MAR",
+      "away": "HAI",
+      "group": "C",
+      "stadium": "atlanta"
+    },
+    {
+      "date": "2026-06-25",
+      "time": "01:00",
+      "home": "CZE",
+      "away": "MEX",
+      "group": "A",
+      "stadium": "mexico_city"
+    },
+    {
+      "date": "2026-06-25",
+      "time": "01:00",
+      "home": "RSA",
+      "away": "KOR",
+      "group": "A",
+      "stadium": "monterrey"
+    },
+    {
+      "date": "2026-06-25",
+      "time": "20:00",
+      "home": "CUW",
+      "away": "CIV",
+      "group": "E",
+      "stadium": "philadelphia"
+    },
+    {
+      "date": "2026-06-25",
+      "time": "20:00",
+      "home": "ECU",
+      "away": "GER",
+      "group": "E",
+      "stadium": "ny_nj"
+    },
+    {
+      "date": "2026-06-25",
+      "time": "23:00",
+      "home": "JPN",
+      "away": "SWE",
+      "group": "F",
+      "stadium": "dallas"
+    },
+    {
+      "date": "2026-06-25",
+      "time": "23:00",
+      "home": "TUN",
+      "away": "NED",
+      "group": "F",
+      "stadium": "kansas_city"
+    },
+    {
+      "date": "2026-06-26",
+      "time": "02:00",
+      "home": "TUR",
+      "away": "USA",
+      "group": "D",
+      "stadium": "los_angeles"
+    },
+    {
+      "date": "2026-06-26",
+      "time": "02:00",
+      "home": "PAR",
+      "away": "AUS",
+      "group": "D",
+      "stadium": "sf_bay"
+    },
+    {
+      "date": "2026-06-26",
+      "time": "19:00",
+      "home": "NOR",
+      "away": "FRA",
+      "group": "I",
+      "stadium": "boston"
+    },
+    {
+      "date": "2026-06-26",
+      "time": "19:00",
+      "home": "SEN",
+      "away": "IRQ",
+      "group": "I",
+      "stadium": "toronto"
+    },
+    {
+      "date": "2026-06-27",
+      "time": "00:00",
+      "home": "CPV",
+      "away": "KSA",
+      "group": "H",
+      "stadium": "houston"
+    },
+    {
+      "date": "2026-06-27",
+      "time": "00:00",
+      "home": "URU",
+      "away": "ESP",
+      "group": "H",
+      "stadium": "guadalajara"
+    },
+    {
+      "date": "2026-06-27",
+      "time": "03:00",
+      "home": "EGY",
+      "away": "IRN",
+      "group": "G",
+      "stadium": "seattle"
+    },
+    {
+      "date": "2026-06-27",
+      "time": "03:00",
+      "home": "NZL",
+      "away": "BEL",
+      "group": "G",
+      "stadium": "vancouver"
+    },
+    {
+      "date": "2026-06-27",
+      "time": "21:00",
+      "home": "PAN",
+      "away": "ENG",
+      "group": "L",
+      "stadium": "ny_nj"
+    },
+    {
+      "date": "2026-06-27",
+      "time": "21:00",
+      "home": "CRO",
+      "away": "GHA",
+      "group": "L",
+      "stadium": "philadelphia"
+    },
+    {
+      "date": "2026-06-27",
+      "time": "23:30",
+      "home": "COL",
+      "away": "POR",
+      "group": "K",
+      "stadium": "miami"
+    },
+    {
+      "date": "2026-06-27",
+      "time": "23:30",
+      "home": "COD",
+      "away": "UZB",
+      "group": "K",
+      "stadium": "atlanta"
+    },
+    {
+      "date": "2026-06-28",
+      "time": "02:00",
+      "home": "ALG",
+      "away": "AUT",
+      "group": "J",
+      "stadium": "kansas_city"
+    },
+    {
+      "date": "2026-06-28",
+      "time": "02:00",
+      "home": "JOR",
+      "away": "ARG",
+      "group": "J",
+      "stadium": "dallas"
+    }
+  ],
+  "knockout_matches": [
+    {
+      "date": "2026-06-28",
+      "time": "19:00",
+      "home": "2A",
+      "away": "2B",
+      "round": "Round of 32",
+      "stadium": "los_angeles"
+    },
+    {
+      "date": "2026-06-29",
+      "time": "17:00",
+      "home": "1C",
+      "away": "2F",
+      "round": "Round of 32",
+      "stadium": "houston"
+    },
+    {
+      "date": "2026-06-29",
+      "time": "20:30",
+      "home": "1E",
+      "away": "3ABCDF",
+      "round": "Round of 32",
+      "stadium": "boston"
+    },
+    {
+      "date": "2026-06-30",
+      "time": "01:00",
+      "home": "1F",
+      "away": "2C",
+      "round": "Round of 32",
+      "stadium": "monterrey"
+    },
+    {
+      "date": "2026-06-30",
+      "time": "17:00",
+      "home": "2E",
+      "away": "2I",
+      "round": "Round of 32",
+      "stadium": "dallas"
+    },
+    {
+      "date": "2026-06-30",
+      "time": "21:00",
+      "home": "1I",
+      "away": "3CDFGH",
+      "round": "Round of 32",
+      "stadium": "ny_nj"
+    },
+    {
+      "date": "2026-07-01",
+      "time": "01:00",
+      "home": "1A",
+      "away": "3CEFHI",
+      "round": "Round of 32",
+      "stadium": "mexico_city"
+    },
+    {
+      "date": "2026-07-01",
+      "time": "16:00",
+      "home": "1L",
+      "away": "3EHIJK",
+      "round": "Round of 32",
+      "stadium": "atlanta"
+    },
+    {
+      "date": "2026-07-01",
+      "time": "20:00",
+      "home": "1G",
+      "away": "3AEHIJ",
+      "round": "Round of 32",
+      "stadium": "seattle"
+    },
+    {
+      "date": "2026-07-02",
+      "time": "00:00",
+      "home": "1D",
+      "away": "3BEFIJ",
+      "round": "Round of 32",
+      "stadium": "sf_bay"
+    },
+    {
+      "date": "2026-07-02",
+      "time": "19:00",
+      "home": "1H",
+      "away": "2J",
+      "round": "Round of 32",
+      "stadium": "los_angeles"
+    },
+    {
+      "date": "2026-07-02",
+      "time": "23:00",
+      "home": "2K",
+      "away": "2L",
+      "round": "Round of 32",
+      "stadium": "toronto"
+    },
+    {
+      "date": "2026-07-03",
+      "time": "03:00",
+      "home": "1B",
+      "away": "3EFGIJ",
+      "round": "Round of 32",
+      "stadium": "vancouver"
+    },
+    {
+      "date": "2026-07-03",
+      "time": "18:00",
+      "home": "2D",
+      "away": "2G",
+      "round": "Round of 32",
+      "stadium": "dallas"
+    },
+    {
+      "date": "2026-07-03",
+      "time": "22:00",
+      "home": "1J",
+      "away": "2H",
+      "round": "Round of 32",
+      "stadium": "miami"
+    },
+    {
+      "date": "2026-07-04",
+      "time": "01:00",
+      "home": "1K",
+      "away": "3DEIJL",
+      "round": "Round of 32",
+      "stadium": "kansas_city"
+    },
+    {
+      "date": "2026-07-04",
+      "time": "17:00",
+      "home": "W73",
+      "away": "W75",
+      "round": "Round of 16",
+      "stadium": "houston"
+    },
+    {
+      "date": "2026-07-04",
+      "time": "21:00",
+      "home": "W74",
+      "away": "W77",
+      "round": "Round of 16",
+      "stadium": "philadelphia"
+    },
+    {
+      "date": "2026-07-05",
+      "time": "20:00",
+      "home": "W76",
+      "away": "W78",
+      "round": "Round of 16",
+      "stadium": "ny_nj"
+    },
+    {
+      "date": "2026-07-06",
+      "time": "00:00",
+      "home": "W79",
+      "away": "W80",
+      "round": "Round of 16",
+      "stadium": "mexico_city"
+    },
+    {
+      "date": "2026-07-06",
+      "time": "19:00",
+      "home": "W83",
+      "away": "W84",
+      "round": "Round of 16",
+      "stadium": "dallas"
+    },
+    {
+      "date": "2026-07-07",
+      "time": "00:00",
+      "home": "W81",
+      "away": "W82",
+      "round": "Round of 16",
+      "stadium": "seattle"
+    },
+    {
+      "date": "2026-07-07",
+      "time": "16:00",
+      "home": "W86",
+      "away": "W88",
+      "round": "Round of 16",
+      "stadium": "atlanta"
+    },
+    {
+      "date": "2026-07-07",
+      "time": "20:00",
+      "home": "W85",
+      "away": "W87",
+      "round": "Round of 16",
+      "stadium": "vancouver"
+    },
+    {
+      "date": "2026-07-10",
+      "time": "19:00",
+      "home": "W93",
+      "away": "W94",
+      "round": "Quarter-final",
+      "stadium": "los_angeles"
+    },
+    {
+      "date": "2026-07-12",
+      "time": "01:00",
+      "home": "W95",
+      "away": "W96",
+      "round": "Quarter-final",
+      "stadium": "kansas_city"
+    },
+    {
+      "date": "2026-07-18",
+      "time": "21:00",
+      "home": "RU101",
+      "away": "RU102",
+      "round": "Play-off for third place",
+      "stadium": "miami"
+    },
+    {
+      "date": "2026-07-19",
+      "time": "19:00",
+      "home": "W101",
+      "away": "W102",
+      "round": "Final",
+      "stadium": "ny_nj"
+    }
+  ],
+  "past_winners": [
+    [
+      2022,
+      "Argentina"
+    ],
+    [
+      2018,
+      "France"
+    ],
+    [
+      2014,
+      "Germany"
+    ],
+    [
+      2010,
+      "Spain"
+    ],
+    [
+      2006,
+      "Italy"
+    ],
+    [
+      2002,
+      "Brazil"
+    ],
+    [
+      1998,
+      "France"
+    ],
+    [
+      1994,
+      "Brazil"
+    ],
+    [
+      1990,
+      "Germany"
+    ],
+    [
+      1986,
+      "Argentina"
+    ],
+    [
+      1982,
+      "Italy"
+    ],
+    [
+      1978,
+      "Argentina"
+    ]
+  ]
+}
