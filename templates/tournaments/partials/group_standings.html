@@ -1,0 +1,37 @@
+<div class="table-responsive">
+  <table class="table table-sm table-striped standings-table mb-0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Team</th>
+        <th class="text-center">P</th>
+        <th class="text-center">W</th>
+        <th class="text-center">D</th>
+        <th class="text-center">L</th>
+        <th class="text-center">GF</th>
+        <th class="text-center">GA</th>
+        <th class="text-center">GD</th>
+        <th class="text-center fw-bold">Pts</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>
+            <span class="team-code">{{ row.team.short_name }}</span>
+            {{ row.team.name }}
+          </td>
+          <td class="text-center">{{ row.played }}</td>
+          <td class="text-center">{{ row.won }}</td>
+          <td class="text-center">{{ row.drawn }}</td>
+          <td class="text-center">{{ row.lost }}</td>
+          <td class="text-center">{{ row.goals_for }}</td>
+          <td class="text-center">{{ row.goals_against }}</td>
+          <td class="text-center">{{ row.goal_diff }}</td>
+          <td class="text-center fw-bold text-success">{{ row.points }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

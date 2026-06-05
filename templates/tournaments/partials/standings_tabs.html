@@ -1,0 +1,21 @@
+{% if group_standings_list %}
+  <ul class="nav nav-pills group-tabs mb-3 flex-wrap" role="tablist">
+    {% for letter, rows in group_standings_list %}
+      <li class="nav-item" role="presentation">
+        <button class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="pill"
+                data-bs-target="#{{ tab_prefix|default:'standings' }}-{{ letter }}" type="button">
+          Group {{ letter }}
+        </button>
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="tab-content">
+    {% for letter, rows in group_standings_list %}
+      <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="{{ tab_prefix|default:'standings' }}-{{ letter }}">
+        {% include 'tournaments/partials/group_standings.html' with rows=rows %}
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-muted small mb-0">Standings available after seeding tournament data.</p>
+{% endif %}

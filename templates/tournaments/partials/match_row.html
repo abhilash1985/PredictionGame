@@ -1,19 +1,24 @@
-<div class="list-group-item match-row py-3">
-  <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
-    <div>
-      <div class="fw-semibold">
-        {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}
+<div class="list-group-item match-row py-3 px-3">
+  <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+    <div class="flex-grow-1">
+      <div class="d-flex align-items-center gap-2 mb-1">
+        <span class="team-code">{{ match.team_home.short_name }}</span>
+        <span class="text-muted small">vs</span>
+        <span class="team-code away">{{ match.team_away.short_name }}</span>
+        {% if show_group and match.round.name %}
+          <span class="badge rounded-pill bg-secondary ms-1">{{ match.round.name }}</span>
+        {% endif %}
       </div>
-      <small class="text-muted">
+      <div class="fw-semibold">{{ match.team_home.name }} vs {{ match.team_away.name }}</div>
+      <small class="text-muted d-block">
         Match {{ match.match_number }} · {{ match.stadium.name }}, {{ match.stadium.city }}
       </small>
-      <br>
-      <small>{{ match.kickoff_at|date:"M j, Y H:i" }} UTC</small>
+      <small class="text-muted">{{ match.kickoff_at|date:"D, M j · H:i" }} UTC</small>
     </div>
     <div class="text-end">
-      <span class="countdown" data-kickoff="{{ match.kickoff_at|date:'c' }}">...</span>
+      <span class="countdown d-inline-block mb-2" data-kickoff="{{ match.kickoff_at|date:'c' }}">...</span>
       {% if user.is_authenticated %}
-        <div class="mt-2">
+        <div class="d-flex gap-1 justify-content-end">
           <a href="{% url 'match_detail' match.pk %}" class="btn btn-sm btn-outline-success">Details</a>
           <a href="{% url 'match_squad' match.pk %}" class="btn btn-sm btn-outline-secondary">Squads</a>
         </div>
