@@ -32,11 +32,12 @@ class Team(models.Model):
     name = models.CharField(max_length=100)
     short_name = models.CharField(max_length=10)
     fifa_code = models.CharField(max_length=3, blank=True)
+    group_letter = models.CharField(max_length=1, blank=True, db_index=True)
     flag_image = models.ImageField(upload_to='flags/', blank=True)
     fifa_ranking = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
-        ordering = ['name']
+        ordering = ['group_letter', 'name']
 
     def __str__(self):
         return self.name
