@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="hero-banner hero-wc2026 mb-4">
+      <div>
+        <h1 class="display-5 fw-bold">FIFA World Cup 2026</h1>
+        <p class="lead mb-0">Predict matches. Compete on the leaderboard. Double down with Point Boosters.</p>
+      </div>
+    </div>
+
+    <div class="card card-football mb-4">
+      <div class="card-header">Next 10 Matches</div>
+      <div class="card-body p-0">
+        {% if upcoming_matches %}
+          <div class="list-group list-group-flush">
+            {% for match in upcoming_matches %}
+              {% include 'tournaments/partials/match_row.html' with match=match %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="p-4 text-muted">No upcoming matches loaded yet. Admin can seed tournament data.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card card-football mb-4 auth-card">
+      <div class="card-header">Join the Game</div>
+      <div class="card-body text-center">
+        <p>Predict winners, goals, and more before each match kicks off.</p>
+        <a href="{% url 'account_signup' %}" class="btn btn-gold w-100 mb-2">Sign Up</a>
+        <a href="{% url 'account_login' %}" class="btn btn-outline-success w-100">Sign In</a>
+      </div>
+    </div>
+
+    <div class="card card-football">
+      <div class="card-header">Past World Cup Winners</div>
+      <div class="card-body">
+        <div class="row g-2">
+          {% for winner in winners %}
+            <div class="col-4 text-center">
+              <div class="winner-thumb bg-secondary d-flex align-items-center justify-content-center text-white small">
+                {{ winner.year }}
+              </div>
+              <small>{{ winner.country }}</small>
+            </div>
+          {% empty %}
+            <p class="text-muted small">Winner history will appear here.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

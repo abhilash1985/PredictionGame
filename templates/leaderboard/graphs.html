@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-white mb-4">Prediction Graphs</h2>
+<div id="graph-data" data-charts="{{ graph_data_json|escape }}"></div>
+{% for item in graph_data %}
+  <div class="card card-football mb-4">
+    <div class="card-header">{{ item.match }}</div>
+    <div class="card-body">
+      <p class="small text-muted">{{ item.question }}</p>
+      <canvas id="chart_{{ forloop.counter0 }}" height="120"></canvas>
+    </div>
+  </div>
+{% empty %}
+  <div class="card card-football p-4 text-muted">No prediction data to graph yet.</div>
+{% endfor %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  const raw = document.getElementById('graph-data')?.dataset.charts;
+  if (raw) {
+    const charts = JSON.parse(raw);
+    charts.forEach(function(item, index) {
+      const canvas = document.getElementById('chart_' + index);
+      if (!canvas) return;
+      new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: item.labels,
+          datasets: [{
+            label: 'Answers',
+            data: item.counts,
+            backgroundColor: '#1a5f2a'
+          }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+      });
+    });
+  }
+</script>
+{% endblock %}

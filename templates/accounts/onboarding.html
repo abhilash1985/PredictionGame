@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card card-football">
+      <div class="card-header">Welcome — Set Your Preferences</div>
+      <div class="card-body">
+        <p class="text-muted">Choose your favorite team and optionally enable AI Predict before you start.</p>
+        <form method="post">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="mb-3">
+              <label class="form-label">{{ field.label }}</label>
+              {{ field }}
+              {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+            </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-gold w-100">Continue to Dashboard</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

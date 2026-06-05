@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card card-football">
+  <div class="card-header">
+    Predict — {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}
+  </div>
+  <div class="card-body">
+    <p class="text-muted">Boosters remaining: <strong>{{ boosters_remaining }}</strong></p>
+    <form method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="mb-3">
+          {% if field.field.widget.input_type == 'checkbox' %}
+            <div class="form-check">
+              {{ field }}
+              <label class="form-check-label">{{ field.label }}</label>
+            </div>
+          {% else %}
+            <label class="form-label">{{ field.label }}</label>
+            {{ field }}
+          {% endif %}
+          {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-gold">Save Prediction</button>
+      <a href="{% url 'match_detail' match.pk %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

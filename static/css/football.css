@@ -1,0 +1,147 @@
+:root {
+  --pitch-green: #1a5f2a;
+  --pitch-dark: #0d3d18;
+  --gold: #f4c430;
+  --white: #ffffff;
+  --off-white: #f5f7f5;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: linear-gradient(160deg, var(--pitch-dark) 0%, var(--pitch-green) 45%, #2d7a3e 100%);
+  min-height: 100vh;
+  color: #1a1a1a;
+}
+
+.site-navbar {
+  background: rgba(13, 61, 24, 0.95) !important;
+  border-bottom: 3px solid var(--gold);
+}
+
+.site-navbar .navbar-brand,
+.site-navbar .nav-link {
+  color: var(--white) !important;
+}
+
+.site-navbar .nav-link:hover {
+  color: var(--gold) !important;
+}
+
+.main-content {
+  padding: 2rem 0 4rem;
+}
+
+.card-football {
+  background: var(--off-white);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.card-football .card-header {
+  background: var(--pitch-green);
+  color: var(--white);
+  font-weight: 600;
+  border-bottom: 2px solid var(--gold);
+}
+
+.hero-banner {
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  min-height: 200px;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  color: var(--white);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  margin-bottom: 1.5rem;
+}
+
+.hero-wc2026 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+    url('/static/images/wc2026-banner.svg');
+  background-color: var(--pitch-dark);
+}
+
+.hero-argentina2022 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
+    url('/static/images/argentina2022.svg');
+  background-color: #75aadb;
+}
+
+.match-row {
+  border-left: 4px solid var(--gold);
+  transition: transform 0.15s ease;
+}
+
+.match-row:hover {
+  transform: translateX(4px);
+}
+
+.team-flag {
+  width: 32px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+}
+
+.countdown {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: var(--pitch-dark);
+  background: var(--gold);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.countdown.closed {
+  background: #dc3545;
+  color: var(--white);
+}
+
+.position-badge {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.4rem;
+}
+
+.position-gk { background: #ffc107; }
+.position-def { background: #0d6efd; color: white; }
+.position-mid { background: #198754; color: white; }
+.position-fwd { background: #dc3545; color: white; }
+
+.winner-thumb {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--gold);
+}
+
+.btn-gold {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.btn-gold:hover {
+  background: #ddb520;
+  border-color: #ddb520;
+  color: #1a1a1a;
+}
+
+.auth-card {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+footer.site-footer {
+  background: rgba(13, 61, 24, 0.9);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 1rem 0;
+  margin-top: auto;
+}

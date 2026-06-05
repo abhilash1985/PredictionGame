@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card card-football mb-4">
+  <div class="card-header">
+    Match {{ match.match_number }}: {{ match.team_home.name }} vs {{ match.team_away.name }}
+  </div>
+  <div class="card-body">
+    <p><strong>Venue:</strong> {{ match.stadium.name }}, {{ match.stadium.city }}</p>
+    <p><strong>Kickoff:</strong> {{ match.kickoff_at|date:"M j, Y H:i" }} UTC</p>
+    <p><strong>Countdown:</strong> <span class="countdown" data-kickoff="{{ match.kickoff_at|date:'c' }}">...</span></p>
+    <p><strong>Status:</strong>
+      {% if prediction_open %}
+        <span class="badge bg-success">Predictions open</span>
+      {% else %}
+        <span class="badge bg-danger">Predictions closed</span>
+      {% endif %}
+    </p>
+    {% if prediction %}
+      <p><strong>Your points:</strong> {{ prediction.total_points }} {% if prediction.point_booster_used %}(2× booster){% endif %}</p>
+    {% endif %}
+    <div class="d-flex gap-2 flex-wrap">
+      {% if prediction_open %}
+        <a href="{% url 'match_predict' match.pk %}" class="btn btn-gold">{% if prediction %}Update{% else %}Predict{% endif %}</a>
+      {% endif %}
+      <a href="{% url 'match_squad' match.pk %}" class="btn btn-outline-secondary">View Squads</a>
+      <a href="{% url 'match_list' %}" class="btn btn-outline-secondary">Back</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

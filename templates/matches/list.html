@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-white mb-4">All Matches</h2>
+<div class="card card-football">
+  <div class="card-body p-0">
+    {% if matches %}
+      <div class="list-group list-group-flush">
+        {% for match in matches %}
+          {% include 'tournaments/partials/match_row.html' with match=match %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="p-4 text-muted">No matches available.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

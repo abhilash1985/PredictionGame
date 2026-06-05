@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d3d18"/>
+      <stop offset="100%" stop-color="#1a5f2a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#g)"/>
+  <circle cx="600" cy="200" r="80" fill="none" stroke="#fff" stroke-width="3" opacity="0.5"/>
+  <line x1="600" y1="0" x2="600" y2="400" stroke="#fff" stroke-width="2" opacity="0.4"/>
+  <text x="600" y="180" text-anchor="middle" fill="#f4c430" font-size="48" font-family="Arial" font-weight="bold">FIFA WORLD CUP</text>
+  <text x="600" y="240" text-anchor="middle" fill="#fff" font-size="36" font-family="Arial">2026  USA · CANADA · MEXICO</text>
+</svg>

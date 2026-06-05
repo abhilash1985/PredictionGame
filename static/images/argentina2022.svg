@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+  <rect width="1200" height="300" fill="#75aadb"/>
+  <rect y="100" width="1200" height="100" fill="#fff"/>
+  <text x="600" y="160" text-anchor="middle" fill="#75aadb" font-size="32" font-family="Arial" font-weight="bold">ARGENTINA</text>
+  <text x="600" y="220" text-anchor="middle" fill="#1a1a1a" font-size="24" font-family="Arial">FIFA World Cup 2022 Champions</text>
+</svg>

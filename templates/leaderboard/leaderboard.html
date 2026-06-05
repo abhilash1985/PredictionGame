@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-white mb-4">Leaderboard{% if tournament %} — {{ tournament.name }}{% endif %}</h2>
+<div class="card card-football">
+  <div class="table-responsive">
+    <table class="table table-striped mb-0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Matches</th>
+          <th>Points</th>
+          <th>%</th>
+          <th>Boosters</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ row.display_name }}</td>
+            <td>{{ row.matches_predicted }}</td>
+            <td><strong>{{ row.total_points }}</strong></td>
+            <td>{{ row.prediction_percentage }}%</td>
+            <td>{{ row.boosters_used }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="6" class="text-muted p-4">No predictions yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

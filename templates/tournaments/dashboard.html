@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero-banner hero-argentina2022 mb-4">
+  <div>
+    <h2 class="fw-bold">Welcome, {{ user.display_name }}!</h2>
+    <p class="mb-0">{% if winner_2022 %}{{ winner_2022.country }} — {{ winner_2022.year }} Champions{% else %}FIFA World Cup 2022 — Argentina 🏆{% endif %}</p>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card card-football text-center p-3">
+      <div class="text-muted small">Boosters left</div>
+      <div class="fs-3 fw-bold text-success">{{ user.profile.point_boosters_remaining }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card card-football text-center p-3">
+      <div class="text-muted small">AI Predict</div>
+      <div class="fs-5 fw-bold">{% if user.profile.ai_predict_enabled %}ON{% else %}OFF{% endif %}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card card-football text-center p-3">
+      <div class="text-muted small">Favorite team</div>
+      <div class="fs-6 fw-bold">{% if user.profile.favorite_team %}{{ user.profile.favorite_team.short_name }}{% else %}—{% endif %}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <a href="{% url 'match_list' %}" class="btn btn-gold w-100 h-100 d-flex align-items-center justify-content-center">Predict Matches</a>
+  </div>
+</div>
+
+<div class="card card-football">
+  <div class="card-header">Upcoming Matches</div>
+  <div class="card-body p-0">
+    {% if upcoming_matches %}
+      <div class="list-group list-group-flush">
+        {% for match in upcoming_matches %}
+          {% include 'tournaments/partials/match_row.html' with match=match %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="p-4 text-muted">No matches scheduled yet.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}Sign In — WC 2026{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-5">
+    <div class="card card-football auth-card">
+      <div class="card-header">Sign In</div>
+      <div class="card-body">
+        <form method="post" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="mb-3">
+              <label class="form-label">{{ field.label }}</label>
+              <input type="{{ field.field.widget.input_type|default:'text' }}" name="{{ field.name }}"
+                     class="form-control" value="{{ field.value|default:'' }}" {% if field.field.required %}required{% endif %}>
+              {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+            </div>
+          {% endfor %}
+          {% if redirect_field_value %}<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">{% endif %}
+          <button type="submit" class="btn btn-gold w-100">Sign In</button>
+        </form>
+        <hr>
+        <p class="text-center small mb-2"><a href="{% url 'account_reset_password' %}">Forgot password?</a></p>
+        <p class="text-center small mb-0">No account? <a href="{% url 'account_signup' %}">Sign up</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

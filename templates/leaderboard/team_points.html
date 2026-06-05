@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-white mb-4">Team Points (Fan Clubs)</h2>
+<div class="card card-football">
+  <div class="table-responsive">
+    <table class="table table-striped mb-0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Team</th>
+          <th>Fans</th>
+          <th>Total Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ row.user__profile__favorite_team__name }} ({{ row.user__profile__favorite_team__short_name }})</td>
+            <td>{{ row.fan_count }}</td>
+            <td><strong>{{ row.total_points }}</strong></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4" class="text-muted p-4">No team data yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
