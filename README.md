@@ -10,7 +10,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
 python manage.py migrate
-python manage.py seed_wc2026_demo
+python manage.py seed_wc2026 --clear-matches
 python manage.py createsuperuser
 python manage.py runserver
 ```
