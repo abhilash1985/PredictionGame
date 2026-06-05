@@ -61,6 +61,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.tournaments.context_processors.tournament_context',
+                'apps.tournaments.context_processors.standings_context',
             ],
         },
     },

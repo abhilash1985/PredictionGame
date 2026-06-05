@@ -1,6 +1,7 @@
 from django.utils import timezone
 
 from apps.tournaments.models import Tournament
+from apps.tournaments.services.standings import get_all_group_standings
 
 
 def get_active_tournament():
@@ -10,6 +11,15 @@ def get_active_tournament():
 def tournament_context(request):
     return {
         'active_tournament': get_active_tournament(),
+    }
+
+
+def standings_context(request):
+    tournament = get_active_tournament()
+    group_standings = get_all_group_standings(tournament)
+    group_letters = sorted(group_standings.keys())
+    return {
+        'group_standings_list': [(letter, group_standings[letter]) for letter in group_letters],
     }
 
 
