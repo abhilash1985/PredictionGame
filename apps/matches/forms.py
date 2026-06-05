@@ -1,0 +1,77 @@
+from django import forms
+from django.core.exceptions import ValidationError
+
+from apps.matches.models import Match, MatchPrediction, QuestionPrediction
+
+
+class MatchPredictionForm(forms.Form):
+    point_booster = forms.BooleanField(required=False, label='Use Point Booster (2× points)')
+
+    def __init__(self, *args, match=None, user=None, **kwargs):
+        self.match = match
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+        existing = MatchPrediction.objects.filter(user=user, match=match).first()
+        if existing and existing.point_booster_used:
+            self.fields['point_booster'].initial = True
+
+        for question in match.questions.all():
+            field_name = f'question_{question.id}'
+            if question.options:
+                self.fields[field_name] = forms.ChoiceField(
+                    label=question.question_text,
+                    choices=[('', '— Select —')] + [(opt, opt) for opt in question.options],
+                    required=True,
+                    widget=forms.Select(attrs={'class': 'form-select'}),
+                )
+            else:
+                self.fields[field_name] = forms.CharField(
+                    label=question.question_text,
+                    max_length=255,
+                    required=True,
+                    widget=forms.TextInput(attrs={'class': 'form-control'}),
+                )
+
+            if existing:
+                answer = existing.answers.filter(match_question=question).first()
+                if answer:
+                    self.fields[field_name].initial = answer.user_answer
+
+        profile = user.profile
+        if profile.point_boosters_remaining <= 0 and not (existing and existing.point_booster_used):
+            del self.fields['point_booster']
+
+    def clean(self):
+        cleaned = super().clean()
+        if not self.match.is_prediction_open:
+            raise ValidationError('Predictions are closed — this match has already started.')
+        return cleaned
+
+    def save(self):
+        use_booster = self.cleaned_data.get('point_booster', False)
+        prediction, created = MatchPrediction.objects.get_or_create(
+            user=self.user,
+            match=self.match,
+        )
+
+        if use_booster and not prediction.point_booster_used:
+            profile = self.user.profile
+            if profile.point_boosters_remaining <= 0:
+                raise ValidationError('No point boosters remaining.')
+            profile.point_boosters_remaining -= 1
+            profile.save(update_fields=['point_boosters_remaining'])
+            prediction.point_booster_used = True
+
+        for question in self.match.questions.all():
+            field_name = f'question_{question.id}'
+            answer_value = self.cleaned_data.get(field_name, '')
+            QuestionPrediction.objects.update_or_create(
+                match_prediction=prediction,
+                match_question=question,
+                defaults={'user_answer': answer_value},
+            )
+
+        prediction.is_ai_generated = False
+        prediction.save()
+        return prediction
