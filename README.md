@@ -1,13 +1,32 @@
 # FIFA 2026 World Cup Prediction Game
 
-Python web app for predicting FIFA World Cup 2026 match outcomes, with User and Admin modules, leaderboards, AI predictions, and point boosters.
+Python/Django web app for predicting FIFA World Cup 2026 match outcomes.
 
-**Reference:** [PredictApp](../PredictApp) (Rails) · [FIFA 2026 fixtures](https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/scores-fixtures?country=US&wtw-filter=ALL)
+## Quick start
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+python manage.py migrate
+python manage.py seed_wc2026_demo
+python manage.py createsuperuser
+python manage.py runserver
+```
+
+Open http://127.0.0.1:8000/
 
 ## Documentation
 
-- **[Architecture Plan](docs/ARCHITECTURE-PLAN.md)** — system design, database schema, deployment, and email setup
+- [Architecture Plan](docs/ARCHITECTURE-PLAN.md)
 
-## Status
+## Modules
 
-Planning phase — implementation not started.
+| App | Purpose |
+|-----|---------|
+| `apps.accounts` | User, profile, onboarding, auth |
+| `apps.tournaments` | Teams, players, stadiums, landing/dashboard |
+| `apps.matches` | Matches, questions, predictions, scoring |
+| `apps.leaderboard` | Rankings, team points, graphs |
+| `apps.ai_predict` | AI auto-predict service (Celery) |
