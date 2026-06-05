@@ -4,10 +4,10 @@
 {% block title %}Sign In — WC 2026{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
+<div class="row g-4">
   <div class="col-lg-5">
-    <div class="card card-football auth-card">
-      <div class="card-header">Sign In</div>
+    <div class="card card-football auth-card mx-lg-0 mx-auto">
+      <div class="card-header text-center"><i class="bi bi-box-arrow-in-right me-1"></i> Sign In</div>
       <div class="card-body">
         <form method="post" action="{% url 'account_login' %}">
           {% csrf_token %}
@@ -20,11 +20,20 @@
             </div>
           {% endfor %}
           {% if redirect_field_value %}<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">{% endif %}
-          <button type="submit" class="btn btn-gold w-100">Sign In</button>
+          <button type="submit" class="btn btn-gold w-100 btn-lg">Sign In</button>
         </form>
         <hr>
         <p class="text-center small mb-2"><a href="{% url 'account_reset_password' %}">Forgot password?</a></p>
         <p class="text-center small mb-0">No account? <a href="{% url 'account_signup' %}">Sign up</a></p>
+        <p class="text-center small mt-2 mb-0"><a href="{% url 'landing' %}">← Back to home</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card card-football h-100">
+      <div class="card-header">FIFA World Cup 2026 — Group Standings</div>
+      <div class="card-body">
+        {% include 'tournaments/partials/standings_tabs.html' with tab_prefix='login' %}
       </div>
     </div>
   </div>

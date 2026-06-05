@@ -145,3 +145,59 @@ footer.site-footer {
   padding: 1rem 0;
   margin-top: auto;
 }
+
+.group-tabs .nav-link {
+  color: var(--pitch-dark);
+  border: 1px solid #dee2e6;
+  margin: 0.15rem;
+  font-weight: 600;
+}
+
+.group-tabs .nav-link.active {
+  background: var(--pitch-green);
+  color: var(--white);
+  border-color: var(--pitch-green);
+}
+
+.standings-table thead th {
+  background: #e9ecef;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.team-code {
+  display: inline-block;
+  min-width: 2.5rem;
+  text-align: center;
+  background: var(--pitch-green);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+}
+
+.team-code.away {
+  background: #495057;
+}
+
+.sticky-auth {
+  position: sticky;
+  top: 1rem;
+}
+
+.tournament-facts li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.tournament-facts li:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 991px) {
+  .sticky-auth {
+    position: static;
+  }
+}
