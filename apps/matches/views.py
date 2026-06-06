@@ -19,7 +19,7 @@ def match_list_view(request):
     matches = Match.objects.none()
     if tournament:
         matches = (
-            Match.objects.filter(tournament=tournament)
+            Match.objects.filter(tournament=tournament, round__name__startswith='Group ')
             .select_related('team_home', 'team_away', 'stadium', 'round')
             .order_by('kickoff_at')
         )
@@ -76,6 +76,7 @@ def predict_view(request, pk):
         'match': match,
         'form': form,
         'boosters_remaining': profile.point_boosters_remaining,
+        'booster_allowed': match.is_group_stage,
     })
 
 

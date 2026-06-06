@@ -1,220 +1,16 @@
 {
-  "MEX": [
-    [
-      "Guillermo",
-      "Ochoa",
-      13,
-      "GK"
-    ],
-    [
-      "Jorge",
-      "Sanchez",
-      2,
-      "RB"
-    ],
-    [
-      "Cesar",
-      "Montes",
-      3,
-      "CB"
-    ],
-    [
-      "Hector",
-      "Moreno",
-      15,
-      "CB"
-    ],
-    [
-      "Jesus",
-      "Gallardo",
-      23,
-      "LB"
-    ],
-    [
-      "Edson",
-      "Alvarez",
-      4,
-      "CDM"
-    ],
-    [
-      "Luis",
-      "Chavez",
-      24,
-      "CM"
-    ],
-    [
-      "Orbelin",
-      "Pineda",
-      17,
-      "CAM"
-    ],
-    [
-      "Hirving",
-      "Lozano",
-      22,
-      "LW"
-    ],
-    [
-      "Alexis",
-      "Vega",
-      10,
-      "RW"
-    ],
-    [
-      "Santiago",
-      "Gimenez",
-      11,
-      "ST"
-    ]
-  ],
-  "RSA": [
-    [
-      "Ronwen",
-      "Williams",
-      16,
-      "GK"
-    ],
-    [
-      "Grant",
-      "Kekana",
-      20,
-      "CB"
-    ],
-    [
-      "Teboho",
-      "Mokoena",
-      4,
-      "CDM"
-    ],
-    [
-      "Themba",
-      "Zwane",
-      15,
-      "CM"
-    ],
-    [
-      "Percy",
-      "Tau",
-      10,
-      "LW"
-    ],
-    [
-      "Bongokuhle",
-      "Hlongwane",
-      9,
-      "ST"
-    ],
-    [
-      "Evidence",
-      "Makgopa",
-      11,
-      "ST"
-    ],
-    [
-      "Sphelele",
-      "Mkhulise",
-      18,
-      "CM"
-    ],
-    [
-      "Mothobi",
-      "Mvala",
-      3,
-      "CB"
-    ],
-    [
-      "Khuliso",
-      "Khune",
-      1,
-      "GK"
-    ],
-    [
-      "Dean",
-      "Henderson",
-      22,
-      "GK"
-    ]
-  ],
-  "KOR": [
-    [
-      "Kim",
-      "Seung-gyu",
-      21,
-      "GK"
-    ],
-    [
-      "Kim",
-      "Min-jae",
-      4,
-      "CB"
-    ],
-    [
-      "Kim",
-      "Young-gwon",
-      19,
-      "CB"
-    ],
-    [
-      "Jung",
-      "Seung-hyun",
-      15,
-      "CB"
-    ],
-    [
-      "Lee",
-      "Kang-in",
-      18,
-      "CAM"
-    ],
-    [
-      "Son",
-      "Heung-min",
-      7,
-      "LW"
-    ],
-    [
-      "Hwang",
-      "Hee-chan",
-      11,
-      "ST"
-    ],
-    [
-      "Cho",
-      "Gue-sung",
-      9,
-      "ST"
-    ],
-    [
-      "Lee",
-      "Jae-sung",
-      10,
-      "CM"
-    ],
-    [
-      "Hwang",
-      "In-beom",
-      6,
-      "CDM"
-    ],
-    [
-      "Hong",
-      "Hyun-seok",
-      8,
-      "CM"
-    ]
-  ],
   "CZE": [
     [
-      "Tomas",
-      "Vaclik",
+      "Matej",
+      "Kovar",
       1,
       "GK"
     ],
     [
-      "Vladimir",
-      "Coufal",
-      5,
-      "RB"
+      "David",
+      "Zima",
+      2,
+      "CB"
     ],
     [
       "Tomas",
@@ -223,34 +19,40 @@
       "CB"
     ],
     [
-      "David",
-      "Jurasek",
-      18,
-      "LB"
+      "Robin",
+      "Hranac",
+      4,
+      "CB"
     ],
     [
-      "Tomas",
-      "Soucek",
-      22,
-      "CDM"
+      "Vladimir",
+      "Coufal",
+      5,
+      "CB"
     ],
     [
-      "Antonin",
-      "Barak",
+      "Stepan",
+      "Chaloupek",
+      6,
+      "CB"
+    ],
+    [
+      "Ladislav",
+      "Krejci",
       7,
+      "CB"
+    ],
+    [
+      "Vladimir",
+      "Darida",
+      8,
       "CM"
     ],
     [
       "Adam",
       "Hlozek",
-      20,
-      "LW"
-    ],
-    [
-      "Michal",
-      "Sadilek",
-      23,
-      "CM"
+      9,
+      "ST"
     ],
     [
       "Patrik",
@@ -266,85 +68,593 @@
     ],
     [
       "Lukas",
+      "Cerv",
+      12,
+      "CM"
+    ],
+    [
+      "Mojmir",
+      "Chytil",
+      13,
+      "ST"
+    ],
+    [
+      "David",
+      "Jurasek",
+      14,
+      "CB"
+    ],
+    [
+      "Pavel",
+      "Sulc",
+      15,
+      "ST"
+    ],
+    [
+      "Jindrich",
+      "Stanek",
+      16,
+      "GK"
+    ],
+    [
+      "Lukas",
       "Provod",
-      8,
-      "CAM"
+      17,
+      "CM"
+    ],
+    [
+      "Michal",
+      "Sadilek",
+      18,
+      "CM"
+    ],
+    [
+      "Tomas",
+      "Chory",
+      19,
+      "ST"
+    ],
+    [
+      "Jaroslav",
+      "Zeleny",
+      20,
+      "CB"
+    ],
+    [
+      "David",
+      "Doudera",
+      21,
+      "CB"
+    ],
+    [
+      "Tomas",
+      "Soucek",
+      22,
+      "CM"
+    ],
+    [
+      "Lukas",
+      "Hornicek",
+      23,
+      "GK"
+    ],
+    [
+      "Alexandr",
+      "Sojka",
+      24,
+      "CM"
+    ],
+    [
+      "Hugo",
+      "Sochurek",
+      25,
+      "CM"
+    ],
+    [
+      "Denis",
+      "Visinsky",
+      26,
+      "ST"
     ]
   ],
-  "CAN": [
+  "MEX": [
     [
-      "Dayne",
-      "St. Clair",
+      "Raul",
+      "Rangel",
       1,
       "GK"
     ],
     [
-      "Alphonso",
-      "Davies",
-      19,
-      "LB"
-    ],
-    [
-      "Steven",
-      "Vitoria",
-      5,
+      "Jorge",
+      "Sanchez",
+      2,
       "CB"
     ],
     [
-      "Derek",
-      "Cornelius",
+      "Cesar",
+      "Montes",
+      3,
+      "CB"
+    ],
+    [
+      "Edson",
+      "Alvarez",
       4,
       "CB"
     ],
     [
-      "Alistair",
-      "Johnston",
-      2,
-      "RB"
+      "Johan",
+      "Vasquez",
+      5,
+      "CB"
     ],
     [
-      "Samuel",
-      "Piette",
+      "Erik",
+      "Lira",
       6,
-      "CDM"
+      "CM"
     ],
     [
-      "Stephen",
-      "Eust\u00e1quio",
+      "Luis",
+      "Romo",
       7,
       "CM"
     ],
     [
-      "Jonathan",
-      "David",
-      10,
-      "ST"
+      "Alvaro",
+      "Fidalgo",
+      8,
+      "CM"
     ],
     [
-      "Cyle",
-      "Larin",
+      "Raul",
+      "Jimenez",
       9,
       "ST"
     ],
     [
-      "Tajon",
-      "Buchanan",
-      11,
-      "RW"
+      "Alexis",
+      "Vega",
+      10,
+      "ST"
     ],
     [
-      "Richie",
-      "Laryea",
+      "Santiago",
+      "Gimenez",
+      11,
+      "ST"
+    ],
+    [
+      "Carlos",
+      "Acevedo",
+      12,
+      "GK"
+    ],
+    [
+      "Guillermo",
+      "Ochoa",
+      13,
+      "GK"
+    ],
+    [
+      "Armando",
+      "Gonzalez",
+      14,
+      "ST"
+    ],
+    [
+      "Israel",
+      "Reyes",
+      15,
+      "CB"
+    ],
+    [
+      "Julian",
+      "Quinones",
+      16,
+      "ST"
+    ],
+    [
+      "Orbelin",
+      "Pineda",
+      17,
+      "CM"
+    ],
+    [
+      "Obed",
+      "Vargas",
+      18,
+      "CM"
+    ],
+    [
+      "Gilberto",
+      "Mora",
+      19,
+      "CM"
+    ],
+    [
+      "Mateo",
+      "Chavez",
+      20,
+      "CB"
+    ],
+    [
+      "Cesar",
+      "Huerta",
+      21,
+      "ST"
+    ],
+    [
+      "Guillermo",
+      "Martinez",
       22,
-      "LB"
+      "ST"
+    ],
+    [
+      "Jesus",
+      "Gallardo",
+      23,
+      "CB"
+    ],
+    [
+      "Luis",
+      "Chavez",
+      24,
+      "CM"
+    ],
+    [
+      "Roberto",
+      "Alvarado",
+      25,
+      "ST"
+    ],
+    [
+      "Brian",
+      "Gutierrez",
+      26,
+      "CM"
+    ]
+  ],
+  "RSA": [
+    [
+      "Ronwen",
+      "Williams",
+      1,
+      "GK"
+    ],
+    [
+      "Thabang",
+      "Matuludi",
+      2,
+      "CB"
+    ],
+    [
+      "Khulumani",
+      "Ndamane",
+      3,
+      "CB"
+    ],
+    [
+      "Teboho",
+      "Mokoena",
+      4,
+      "CM"
+    ],
+    [
+      "Thalente",
+      "Mbatha",
+      5,
+      "CM"
+    ],
+    [
+      "Aubrey",
+      "Modiba",
+      6,
+      "CB"
+    ],
+    [
+      "Oswin",
+      "Appollis",
+      7,
+      "ST"
+    ],
+    [
+      "Tshepang",
+      "Moremi",
+      8,
+      "ST"
+    ],
+    [
+      "Lyle",
+      "Foster",
+      9,
+      "ST"
+    ],
+    [
+      "Relebohile",
+      "Mofokeng",
+      10,
+      "ST"
+    ],
+    [
+      "Themba",
+      "Zwane",
+      11,
+      "CM"
+    ],
+    [
+      "Thapelo",
+      "Maseko",
+      12,
+      "ST"
+    ],
+    [
+      "Sphephelo",
+      "Sithole",
+      13,
+      "CM"
+    ],
+    [
+      "Mbekezeli",
+      "Mbokazi",
+      14,
+      "CB"
+    ],
+    [
+      "Iqraam",
+      "Rayners",
+      15,
+      "ST"
+    ],
+    [
+      "Sipho",
+      "Chaine",
+      16,
+      "GK"
+    ],
+    [
+      "Evidence",
+      "Makgopa",
+      17,
+      "ST"
+    ],
+    [
+      "Samukele",
+      "Kabini",
+      18,
+      "CB"
+    ],
+    [
+      "Nkosinathi",
+      "Sibisi",
+      19,
+      "CB"
+    ],
+    [
+      "Khuliso",
+      "Mudau",
+      20,
+      "CB"
+    ],
+    [
+      "Ime",
+      "Okon",
+      21,
+      "CB"
+    ],
+    [
+      "Ricardo",
+      "Goss",
+      22,
+      "GK"
+    ],
+    [
+      "Jayden",
+      "Adams",
+      23,
+      "CM"
+    ],
+    [
+      "Olwethu",
+      "Makhanya",
+      24,
+      "CB"
+    ],
+    [
+      "Kamogelo",
+      "Sebelebele",
+      25,
+      "ST"
+    ],
+    [
+      "Bradley",
+      "Cross",
+      26,
+      "CB"
+    ]
+  ],
+  "KOR": [
+    [
+      "Seung-gyu",
+      "Kim",
+      1,
+      "GK"
+    ],
+    [
+      "Han-beom",
+      "Lee",
+      2,
+      "CB"
+    ],
+    [
+      "Gi-hyuk",
+      "Lee",
+      3,
+      "CM"
+    ],
+    [
+      "Min-jae",
+      "Kim",
+      4,
+      "CB"
+    ],
+    [
+      "Tae-hyeon",
+      "Kim",
+      5,
+      "CB"
+    ],
+    [
+      "In-beom",
+      "Hwang",
+      6,
+      "CM"
+    ],
+    [
+      "Heung-min",
+      "Son",
+      7,
+      "ST"
+    ],
+    [
+      "Seung-ho",
+      "Paik",
+      8,
+      "CM"
+    ],
+    [
+      "Gue-sung",
+      "Cho",
+      9,
+      "ST"
+    ],
+    [
+      "Jae-sung",
+      "Lee",
+      10,
+      "CM"
+    ],
+    [
+      "Hee-chan",
+      "Hwang",
+      11,
+      "CM"
+    ],
+    [
+      "Bum-keun",
+      "Song",
+      12,
+      "GK"
+    ],
+    [
+      "Tae-seok",
+      "Lee",
+      13,
+      "CB"
+    ],
+    [
+      "Wi-je",
+      "Cho",
+      14,
+      "CB"
+    ],
+    [
+      "Moon-hwan",
+      "Kim",
+      15,
+      "CB"
+    ],
+    [
+      "Jin-seob",
+      "Park",
+      16,
+      "CB"
+    ],
+    [
+      "Jun-ho",
+      "Bae",
+      17,
+      "CM"
+    ],
+    [
+      "Hyeon-gyu",
+      "Oh",
+      18,
+      "ST"
+    ],
+    [
+      "Kang-in",
+      "Lee",
+      19,
+      "CM"
+    ],
+    [
+      "Hyun-jun",
+      "Yang",
+      20,
+      "CM"
+    ],
+    [
+      "Hyeon-woo",
+      "Jo",
+      21,
+      "GK"
+    ],
+    [
+      "Young-woo",
+      "Seol",
+      22,
+      "CB"
+    ],
+    [
+      "Jens",
+      "Castrop",
+      23,
+      "CB"
+    ],
+    [
+      "Jin-gyu",
+      "Kim",
+      24,
+      "CM"
+    ],
+    [
+      "Ji-sung",
+      "Eom",
+      25,
+      "CM"
+    ],
+    [
+      "Dong-gyeong",
+      "Lee",
+      26,
+      "CM"
     ]
   ],
   "BIH": [
     [
-      "Ibrahim",
-      "Sehic",
+      "Nikola",
+      "Vasilj",
       1,
       "GK"
+    ],
+    [
+      "Nihad",
+      "Mujakic",
+      2,
+      "CB"
+    ],
+    [
+      "Dennis",
+      "Hadzikadunic",
+      3,
+      "CB"
+    ],
+    [
+      "Tarik",
+      "Muharemovic",
+      4,
+      "CB"
     ],
     [
       "Sead",
@@ -353,16 +663,34 @@
       "CB"
     ],
     [
-      "Ermedin",
-      "Demirovic",
+      "Benjamin",
+      "Tahirovic",
+      6,
+      "CM"
+    ],
+    [
+      "Amar",
+      "Dedic",
+      7,
+      "CB"
+    ],
+    [
+      "Armin",
+      "Gigovic",
+      8,
+      "CM"
+    ],
+    [
+      "Samed",
+      "Bazdar",
       9,
       "ST"
     ],
     [
-      "Miralem",
-      "Pjanic",
+      "Ermedin",
+      "Demirovic",
       10,
-      "CAM"
+      "ST"
     ],
     [
       "Edin",
@@ -371,90 +699,296 @@
       "ST"
     ],
     [
-      "Miroslav",
-      "Stevanovic",
-      8,
-      "RW"
+      "Mladen",
+      "Jurkas",
+      12,
+      "GK"
     ],
     [
-      "Edin",
-      "Visca",
-      7,
-      "LW"
+      "Ivan",
+      "Basic",
+      13,
+      "CM"
     ],
     [
-      "Gojko",
-      "Cimirot",
-      6,
-      "CDM"
-    ],
-    [
-      "Admir",
-      "Brahimagic",
+      "Ivan",
+      "Sunjic",
       14,
       "CM"
     ],
     [
-      "Dennis",
-      "Hadzic",
-      12,
-      "GK"
+      "Amar",
+      "Memic",
+      15,
+      "CM"
     ],
     [
       "Amir",
       "Hadziahmetovic",
-      4,
-      "CDM"
-    ]
-  ],
-  "QAT": [
-    [
-      "Saad",
-      "Al Sheeb",
-      1,
-      "GK"
+      16,
+      "CM"
     ],
     [
-      "Hassan",
-      "Al Haydos",
-      10,
-      "CAM"
+      "Dzenis",
+      "Burnic",
+      17,
+      "CM"
     ],
     [
-      "Almoez",
-      "Ali",
+      "Nikola",
+      "Katic",
+      18,
+      "CB"
+    ],
+    [
+      "Kerim",
+      "Alajbegovic",
       19,
       "ST"
     ],
     [
-      "Akram",
-      "Afif",
-      11,
-      "LW"
+      "Esmir",
+      "Bajraktarevic",
+      20,
+      "ST"
     ],
     [
-      "Boualem",
-      "Khoukhi",
-      16,
+      "Stjepan",
+      "Radeljic",
+      21,
       "CB"
     ],
     [
-      "Abdelkarim",
-      "Hassan",
+      "Martin",
+      "Zlomislic",
+      22,
+      "GK"
+    ],
+    [
+      "Haris",
+      "Tabakovic",
+      23,
+      "ST"
+    ],
+    [
+      "Nidal",
+      "Celik",
+      24,
+      "CB"
+    ],
+    [
+      "Jovo",
+      "Lukic",
+      25,
+      "ST"
+    ],
+    [
+      "Ermin",
+      "Mahmic",
+      26,
+      "CM"
+    ]
+  ],
+  "CAN": [
+    [
+      "Dayne",
+      "St Clair",
+      1,
+      "GK"
+    ],
+    [
+      "Alistair",
+      "Johnston",
+      2,
+      "CB"
+    ],
+    [
+      "Alfie",
+      "Jones",
       3,
       "CB"
     ],
     [
-      "Homam",
-      "Ahmed",
-      15,
-      "LB"
+      "Luc de",
+      "Fougerolles",
+      4,
+      "CB"
     ],
     [
-      "Karim",
-      "Boudiaf",
+      "Joel",
+      "Waterman",
+      5,
+      "CB"
+    ],
+    [
+      "Mathieu",
+      "Choiniere",
+      6,
+      "CM"
+    ],
+    [
+      "Stephen",
+      "Eustaquio",
+      7,
+      "CM"
+    ],
+    [
+      "Ismael",
+      "Kone",
+      8,
+      "CM"
+    ],
+    [
+      "Cyle",
+      "Larin",
+      9,
+      "ST"
+    ],
+    [
+      "Jonathan",
+      "David",
+      10,
+      "ST"
+    ],
+    [
+      "Liam",
+      "Millar",
+      11,
+      "CM"
+    ],
+    [
+      "Tani",
+      "Oluwaseyi",
       12,
-      "CDM"
+      "ST"
+    ],
+    [
+      "Derek",
+      "Cornelius",
+      13,
+      "CB"
+    ],
+    [
+      "Jacob",
+      "Shaffelburg",
+      14,
+      "CM"
+    ],
+    [
+      "Moise",
+      "Bombito",
+      15,
+      "CB"
+    ],
+    [
+      "Maxime",
+      "Crepeau",
+      16,
+      "GK"
+    ],
+    [
+      "Tajon",
+      "Buchanan",
+      17,
+      "ST"
+    ],
+    [
+      "Owen",
+      "Goodman",
+      18,
+      "GK"
+    ],
+    [
+      "Alphonso",
+      "Davies",
+      19,
+      "CB"
+    ],
+    [
+      "Ali",
+      "Ahmed",
+      20,
+      "ST"
+    ],
+    [
+      "Jonathan",
+      "Osorio",
+      21,
+      "CM"
+    ],
+    [
+      "Richie",
+      "Laryea",
+      22,
+      "CB"
+    ],
+    [
+      "Niko",
+      "Sigur",
+      23,
+      "CB"
+    ],
+    [
+      "Promise",
+      "David",
+      24,
+      "ST"
+    ],
+    [
+      "Nathan",
+      "Saliba",
+      25,
+      "CM"
+    ]
+  ],
+  "QAT": [
+    [
+      "Mahmud",
+      "Abunada",
+      1,
+      "GK"
+    ],
+    [
+      "Pedro",
+      "Miguel",
+      2,
+      "CB"
+    ],
+    [
+      "Lucas",
+      "Mendes",
+      3,
+      "CB"
+    ],
+    [
+      "Issa",
+      "Laye",
+      4,
+      "CB"
+    ],
+    [
+      "Jassem",
+      "Gaber",
+      5,
+      "CB"
+    ],
+    [
+      "Abdulaziz",
+      "Hatem",
+      6,
+      "CM"
+    ],
+    [
+      "Ahmed",
+      "Alaaeldin",
+      7,
+      "ST"
+    ],
+    [
+      "Edmilson",
+      "Junior",
+      8,
+      "ST"
     ],
     [
       "Mohammed",
@@ -463,29 +997,125 @@
       "ST"
     ],
     [
+      "Hassan",
+      "Haydos",
+      10,
+      "ST"
+    ],
+    [
+      "Akram",
+      "Afif",
+      11,
+      "ST"
+    ],
+    [
+      "Karim",
+      "Boudiaf",
+      12,
+      "CM"
+    ],
+    [
+      "Ayoub",
+      "Oui",
+      13,
+      "CB"
+    ],
+    [
+      "Homam",
+      "Ahmed",
+      14,
+      "CB"
+    ],
+    [
       "Yusuf",
       "Abdurisag",
-      7,
-      "RW"
+      15,
+      "ST"
+    ],
+    [
+      "Boualem",
+      "Khoukhi",
+      16,
+      "CB"
+    ],
+    [
+      "Ahmed",
+      "Ganehi",
+      17,
+      "CM"
+    ],
+    [
+      "Sultan",
+      "Brake",
+      18,
+      "CB"
+    ],
+    [
+      "Almoez",
+      "Ali",
+      19,
+      "ST"
+    ],
+    [
+      "Ahmed",
+      "Fathy",
+      20,
+      "CM"
+    ],
+    [
+      "Salah",
+      "Zakaria",
+      21,
+      "GK"
     ],
     [
       "Meshaal",
       "Barsham",
       22,
       "GK"
+    ],
+    [
+      "Assim",
+      "Madibo",
+      23,
+      "CM"
+    ],
+    [
+      "Tahsin",
+      "Jamshid",
+      24,
+      "ST"
+    ],
+    [
+      "Al-Hashmi",
+      "Hussain",
+      25,
+      "CB"
+    ],
+    [
+      "Mohamed",
+      "Manai",
+      26,
+      "ST"
     ]
   ],
   "SUI": [
     [
-      "Yann",
-      "Sommer",
+      "Gregor",
+      "Kobel",
       1,
       "GK"
     ],
     [
-      "Manuel",
-      "Akanji",
-      5,
+      "Miro",
+      "Muheim",
+      2,
+      "CB"
+    ],
+    [
+      "Silvan",
+      "Widmer",
+      3,
       "CB"
     ],
     [
@@ -495,28 +1125,16 @@
       "CB"
     ],
     [
-      "Ricardo",
-      "Rodriguez",
-      13,
-      "LB"
+      "Manuel",
+      "Akanji",
+      5,
+      "CB"
     ],
     [
-      "Granit",
-      "Xhaka",
-      10,
-      "CDM"
-    ],
-    [
-      "Remo",
-      "Freuler",
-      8,
+      "Denis",
+      "Zakaria",
+      6,
       "CM"
-    ],
-    [
-      "Ruben",
-      "Vargas",
-      17,
-      "LW"
     ],
     [
       "Breel",
@@ -525,35 +1143,131 @@
       "ST"
     ],
     [
-      "Dan Ndoye",
-      "Dan Ndoye",
+      "Remo",
+      "Freuler",
+      8,
+      "CM"
+    ],
+    [
+      "Johan",
+      "Manzambi",
+      9,
+      "CM"
+    ],
+    [
+      "Granit",
+      "Xhaka",
+      10,
+      "CM"
+    ],
+    [
+      "Dan",
+      "Ndoye",
+      11,
+      "ST"
+    ],
+    [
+      "Yvon",
+      "Mvogo",
+      12,
+      "GK"
+    ],
+    [
+      "Ricardo",
+      "Rodriguez",
+      13,
+      "CB"
+    ],
+    [
+      "Ardon",
+      "Jashari",
+      14,
+      "CM"
+    ],
+    [
+      "Djibril",
+      "Sow",
+      15,
+      "CM"
+    ],
+    [
+      "Christian",
+      "Fassnacht",
+      16,
+      "ST"
+    ],
+    [
+      "Ruben",
+      "Vargas",
+      17,
+      "ST"
+    ],
+    [
+      "Eray",
+      "Comert",
+      18,
+      "CB"
+    ],
+    [
+      "Noah",
+      "Okafor",
       19,
-      "RW"
+      "ST"
     ],
     [
       "Michel",
-      "Rieder",
-      16,
-      "CAM"
+      "Aebischer",
+      20,
+      "CM"
     ],
     [
-      "Gregor",
-      "Kobel",
+      "Marvin",
+      "Keller",
       21,
       "GK"
+    ],
+    [
+      "Fabian",
+      "Rieder",
+      22,
+      "CM"
+    ],
+    [
+      "Zeki",
+      "Amdouni",
+      23,
+      "ST"
+    ],
+    [
+      "Aurele",
+      "Amenda",
+      24,
+      "CB"
+    ],
+    [
+      "Luca",
+      "Jaquez",
+      25,
+      "CB"
+    ],
+    [
+      "Cedric",
+      "Itten",
+      26,
+      "ST"
     ]
   ],
   "BRA": [
     [
       "Alisson",
-      "Becker",
+      "",
       1,
       "GK"
     ],
     [
-      "Marquinhos",
-      "Marquinhos",
-      4,
+      "Wesley",
+      "",
+      2,
       "CB"
     ],
     [
@@ -563,120 +1277,142 @@
       "CB"
     ],
     [
-      "Danilo",
-      "Luiz",
-      2,
-      "RB"
+      "Marquinhos",
+      "",
+      4,
+      "CB"
+    ],
+    [
+      "Casemiro",
+      "",
+      5,
+      "CM"
+    ],
+    [
+      "Alex",
+      "Sandro",
+      6,
+      "CB"
+    ],
+    [
+      "Vinícius",
+      "Júnior",
+      7,
+      "ST"
     ],
     [
       "Bruno",
       "Guimaraes",
-      5,
-      "CDM"
-    ],
-    [
-      "Casemiro",
-      "Casemiro",
-      6,
-      "CDM"
-    ],
-    [
-      "Rodrygo",
-      "Goes",
-      10,
-      "RW"
-    ],
-    [
-      "Vinicius",
-      "Junior",
-      7,
-      "LW"
-    ],
-    [
-      "Raphinha",
-      "Raphinha",
-      11,
-      "RW"
-    ],
-    [
-      "Neymar",
-      "Junior",
-      9,
-      "ST"
-    ],
-    [
-      "Richarlison",
-      "Richarlison",
-      19,
-      "ST"
-    ]
-  ],
-  "MAR": [
-    [
-      "Yassine",
-      "Bono",
-      1,
-      "GK"
-    ],
-    [
-      "Achraf",
-      "Hakimi",
-      2,
-      "RB"
-    ],
-    [
-      "Romain",
-      "Saiss",
-      6,
-      "CB"
-    ],
-    [
-      "Nayef",
-      "Aguerd",
-      5,
-      "CB"
-    ],
-    [
-      "Sofyan",
-      "Amrabat",
-      4,
-      "CDM"
-    ],
-    [
-      "Azzedine",
-      "Ounahi",
       8,
       "CM"
     ],
     [
-      "Hakim",
-      "Ziyech",
-      7,
-      "RW"
+      "Matheus",
+      "Cunha",
+      9,
+      "ST"
     ],
     [
-      "Youssef",
-      "En-Nesyri",
+      "Neymar",
+      "",
+      10,
+      "ST"
+    ],
+    [
+      "Raphinha",
+      "",
+      11,
+      "ST"
+    ],
+    [
+      "Weverton",
+      "",
+      12,
+      "GK"
+    ],
+    [
+      "Danilo",
+      "",
+      13,
+      "CB"
+    ],
+    [
+      "Bremer",
+      "",
+      14,
+      "CB"
+    ],
+    [
+      "Leo",
+      "Pereira",
+      15,
+      "CB"
+    ],
+    [
+      "Douglas",
+      "Santos",
+      16,
+      "CB"
+    ],
+    [
+      "Fabinho",
+      "",
+      17,
+      "CM"
+    ],
+    [
+      "Danilo",
+      "Santos",
+      18,
+      "CM"
+    ],
+    [
+      "Endrick",
+      "",
       19,
       "ST"
     ],
     [
-      "Brahim",
-      "Diaz",
-      11,
-      "CAM"
+      "Lucas",
+      "Paqueta",
+      20,
+      "CM"
     ],
     [
-      "Selim",
-      "Amallah",
-      15,
-      "CAM"
+      "Luiz",
+      "Henrique",
+      21,
+      "ST"
     ],
     [
-      "Sofiane",
-      "Boufal",
-      17,
-      "LW"
+      "Gabriel",
+      "Martinelli",
+      22,
+      "ST"
+    ],
+    [
+      "Ederson",
+      "",
+      23,
+      "GK"
+    ],
+    [
+      "Roger",
+      "Ibanez",
+      24,
+      "CB"
+    ],
+    [
+      "Igor",
+      "Thiago",
+      25,
+      "ST"
+    ],
+    [
+      "Rayan",
+      "",
+      26,
+      "ST"
     ]
   ],
   "HAI": [
@@ -687,63 +1423,311 @@
       "GK"
     ],
     [
-      "Derrick",
-      "Etienne",
-      7,
-      "LW"
-    ],
-    [
-      "Frantzdy",
-      "Pierrot",
-      9,
-      "ST"
-    ],
-    [
-      "Zachary",
-      "Brault-Guillard",
+      "Carlens",
+      "Arcus",
       2,
-      "RB"
+      "CB"
     ],
     [
-      "Mondy",
-      "Prunier",
+      "Keeto",
+      "Thermoncy",
+      3,
+      "CB"
+    ],
+    [
+      "Ricardo",
+      "Ade",
       4,
       "CB"
     ],
     [
-      "Dany",
-      "Jean",
+      "Hannes",
+      "Delcroix",
       5,
       "CB"
     ],
     [
-      "Carlens",
-      "Arcus",
-      3,
-      "LB"
-    ],
-    [
-      "Bryan",
-      "Alceus",
+      "Carl",
+      "Sainte",
       6,
-      "CDM"
+      "CM"
     ],
     [
-      "Steeven",
-      "Saba",
+      "Derrick Jr",
+      "Etienne",
+      7,
+      "ST"
+    ],
+    [
+      "Martin",
+      "Experience",
+      8,
+      "CB"
+    ],
+    [
+      "Duckens",
+      "Nazon",
+      9,
+      "ST"
+    ],
+    [
+      "Jean-Ricner",
+      "Bellegarde",
       10,
       "CM"
     ],
     [
-      "Derrick",
-      "Pierre",
+      "Louicius",
+      "Deedson",
       11,
       "ST"
     ],
     [
-      "Jems",
-      "Geffrard",
+      "Alexandre",
+      "Pierre",
+      12,
+      "GK"
+    ],
+    [
+      "Duke",
+      "Lacroix",
+      13,
+      "CB"
+    ],
+    [
+      "Leverton",
+      "Pierre",
+      14,
+      "CM"
+    ],
+    [
+      "Ruben",
+      "Providence",
       15,
+      "ST"
+    ],
+    [
+      "Lenny",
+      "Joseph",
+      16,
+      "ST"
+    ],
+    [
+      "Danley",
+      "Jean Jacques",
+      17,
+      "CM"
+    ],
+    [
+      "Wilson",
+      "Isidor",
+      18,
+      "ST"
+    ],
+    [
+      "Yassin",
+      "Fortune",
+      19,
+      "ST"
+    ],
+    [
+      "Frantzdy",
+      "Pierrot",
+      20,
+      "ST"
+    ],
+    [
+      "Josue",
+      "Casimir",
+      21,
+      "ST"
+    ],
+    [
+      "Jean-Kevin",
+      "Duverne",
+      22,
+      "CB"
+    ],
+    [
+      "Josue",
+      "Duverger",
+      23,
+      "GK"
+    ],
+    [
+      "Wilguens",
+      "Paugain",
+      24,
+      "CB"
+    ],
+    [
+      "Dominique",
+      "Simon",
+      25,
+      "CM"
+    ],
+    [
+      "Woodensky",
+      "Pierre",
+      26,
+      "CM"
+    ]
+  ],
+  "MAR": [
+    [
+      "Yassine",
+      "Bounou",
+      1,
+      "GK"
+    ],
+    [
+      "Achraf",
+      "Hakimi",
+      2,
+      "CB"
+    ],
+    [
+      "Noussair",
+      "Mazraoui",
+      3,
+      "CB"
+    ],
+    [
+      "Sofyan",
+      "Amrabat",
+      4,
+      "CM"
+    ],
+    [
+      "Nayef",
+      "Aguerd",
+      5,
+      "CB"
+    ],
+    [
+      "Ayyoub",
+      "Bouaddi",
+      6,
+      "CM"
+    ],
+    [
+      "Chemsdine",
+      "Talbi",
+      7,
+      "CM"
+    ],
+    [
+      "Azzedine",
+      "Ounahi",
+      8,
+      "CM"
+    ],
+    [
+      "Soufiane",
+      "Rahimi",
+      9,
+      "ST"
+    ],
+    [
+      "Brahim",
+      "Diaz",
+      10,
+      "ST"
+    ],
+    [
+      "Ismael",
+      "Saibari",
+      11,
+      "CM"
+    ],
+    [
+      "Munir",
+      "Mohamedi",
+      12,
+      "GK"
+    ],
+    [
+      "Zakaria",
+      "Ouahdi",
+      13,
+      "CB"
+    ],
+    [
+      "Issa",
+      "Diop",
+      14,
+      "CB"
+    ],
+    [
+      "Samir",
+      "Mourabet",
+      15,
+      "CM"
+    ],
+    [
+      "Gessime",
+      "Yassine",
+      16,
+      "CM"
+    ],
+    [
+      "Abde",
+      "Ezzalzouli",
+      17,
+      "ST"
+    ],
+    [
+      "Chadi",
+      "Riad",
+      18,
+      "CB"
+    ],
+    [
+      "Youssef",
+      "Belammari",
+      19,
+      "CB"
+    ],
+    [
+      "Ayoub",
+      "Kaabi",
+      20,
+      "ST"
+    ],
+    [
+      "Ayoube",
+      "Amaimouni",
+      21,
+      "ST"
+    ],
+    [
+      "Ahmed Reda",
+      "Tagnaouti",
+      22,
+      "GK"
+    ],
+    [
+      "Bilal",
+      "Khannouss",
+      23,
+      "CM"
+    ],
+    [
+      "Neil",
+      "Aynaoui",
+      24,
+      "CM"
+    ],
+    [
+      "Redouane",
+      "Halhal",
+      25,
+      "CB"
+    ],
+    [
+      "Anass",
+      "Salah-Eddine",
+      26,
       "CB"
     ]
   ],
@@ -755,10 +1739,28 @@
       "GK"
     ],
     [
-      "Andrew",
+      "Aaron",
+      "Hickey",
+      2,
+      "CB"
+    ],
+    [
+      "Andy",
       "Robertson",
       3,
-      "LB"
+      "CB"
+    ],
+    [
+      "Scott",
+      "Mctominay",
+      4,
+      "CM"
+    ],
+    [
+      "Grant",
+      "Hanley",
+      5,
+      "CB"
     ],
     [
       "Kieran",
@@ -767,22 +1769,16 @@
       "CB"
     ],
     [
-      "Scott",
-      "McTominay",
-      8,
-      "CM"
-    ],
-    [
       "John",
-      "McGinn",
+      "Mcginn",
       7,
       "CM"
     ],
     [
-      "Che",
-      "Adams",
-      10,
-      "ST"
+      "Tyler",
+      "Fletcher",
+      8,
+      "CM"
     ],
     [
       "Lyndon",
@@ -791,164 +1787,106 @@
       "ST"
     ],
     [
+      "Che",
+      "Adams",
+      10,
+      "ST"
+    ],
+    [
       "Ryan",
       "Christie",
       11,
-      "CAM"
+      "CM"
+    ],
+    [
+      "Liam",
+      "Kelly",
+      12,
+      "GK"
     ],
     [
       "Jack",
       "Hendry",
-      4,
+      13,
       "CB"
     ],
     [
-      "Anthony",
-      "Ralston",
-      2,
-      "RB"
+      "Ross",
+      "Stewart",
+      14,
+      "ST"
+    ],
+    [
+      "John",
+      "Souttar",
+      15,
+      "CB"
+    ],
+    [
+      "Dominic",
+      "Hyam",
+      16,
+      "CB"
+    ],
+    [
+      "Ben",
+      "Gannon-Doak",
+      17,
+      "ST"
+    ],
+    [
+      "George",
+      "Hirst",
+      18,
+      "ST"
+    ],
+    [
+      "Lewis",
+      "Ferguson",
+      19,
+      "CM"
     ],
     [
       "Lawrence",
       "Shankland",
-      19,
+      20,
       "ST"
-    ]
-  ],
-  "USA": [
+    ],
     [
-      "Matt",
-      "Turner",
-      1,
+      "Craig",
+      "Gordon",
+      21,
       "GK"
     ],
     [
-      "Sergino",
-      "Dest",
-      2,
-      "RB"
-    ],
-    [
-      "Chris",
-      "Richards",
-      3,
+      "Nathan",
+      "Patterson",
+      22,
       "CB"
     ],
     [
-      "Antonee",
-      "Robinson",
-      5,
-      "LB"
-    ],
-    [
-      "Tyler",
-      "Adams",
-      4,
-      "CDM"
-    ],
-    [
-      "Weston",
-      "McKennie",
-      8,
+      "Kenny",
+      "Mclean",
+      23,
       "CM"
     ],
-    [
-      "Yunus",
-      "Musah",
-      6,
-      "CM"
-    ],
-    [
-      "Christian",
-      "Pulisic",
-      10,
-      "LW"
-    ],
-    [
-      "Timothy",
-      "Weah",
-      21,
-      "RW"
-    ],
-    [
-      "Ricardo",
-      "Pepi",
-      9,
-      "ST"
-    ],
-    [
-      "Gio",
-      "Reyna",
-      7,
-      "CAM"
-    ]
-  ],
-  "PAR": [
     [
       "Anthony",
-      "Silva",
-      1,
-      "GK"
-    ],
-    [
-      "Gustavo",
-      "Gomez",
-      3,
+      "Ralston",
+      24,
       "CB"
     ],
     [
-      "Omar",
-      "Alderete",
-      4,
-      "CB"
-    ],
-    [
-      "Juan",
-      "Cascante",
-      5,
-      "CB"
-    ],
-    [
-      "Mathias",
-      "Espinoza",
-      2,
-      "RB"
-    ],
-    [
-      "Miguel",
-      "Almiron",
-      10,
-      "RW"
-    ],
-    [
-      "Alex",
-      "Arce",
-      9,
+      "Findlay",
+      "Curtis",
+      25,
       "ST"
     ],
     [
-      "Julio",
-      "Enciso",
-      11,
-      "CAM"
-    ],
-    [
-      "Diego",
-      "Gomez",
-      8,
-      "CM"
-    ],
-    [
-      "Richard",
-      "Sanchez",
-      6,
-      "CDM"
-    ],
-    [
-      "Carlos",
-      "Gruezo",
-      16,
-      "CDM"
+      "Scott",
+      "Mckenna",
+      26,
+      "CB"
     ]
   ],
   "AUS": [
@@ -959,28 +1897,124 @@
       "GK"
     ],
     [
-      "Harry",
-      "Souttar",
+      "Milos",
+      "Degenek",
+      2,
+      "CB"
+    ],
+    [
+      "Alessandro",
+      "Circati",
+      3,
+      "CB"
+    ],
+    [
+      "Jacob",
+      "Italiano",
       4,
       "CB"
     ],
     [
-      "Kye",
-      "Rowles",
-      2,
+      "Jordan",
+      "Bos",
+      5,
+      "CB"
+    ],
+    [
+      "Jason",
+      "Geria",
+      6,
+      "CB"
+    ],
+    [
+      "Mathew",
+      "Leckie",
+      7,
+      "ST"
+    ],
+    [
+      "Connor",
+      "Metcalfe",
+      8,
+      "CM"
+    ],
+    [
+      "Mohamed",
+      "Toure",
+      9,
+      "ST"
+    ],
+    [
+      "Ajdin",
+      "Hrustic",
+      10,
+      "ST"
+    ],
+    [
+      "Awer",
+      "Mabil",
+      11,
+      "ST"
+    ],
+    [
+      "Paul",
+      "Izzo",
+      12,
+      "GK"
+    ],
+    [
+      "Aiden",
+      "Oneill",
+      13,
+      "CM"
+    ],
+    [
+      "Cammy",
+      "Devlin",
+      14,
+      "CM"
+    ],
+    [
+      "Kai",
+      "Trewin",
+      15,
       "CB"
     ],
     [
       "Aziz",
       "Behich",
       16,
-      "LB"
+      "CB"
     ],
     [
-      "Fran",
-      "Karacic",
-      3,
-      "RB"
+      "Nestory",
+      "Irankunda",
+      17,
+      "ST"
+    ],
+    [
+      "Patrick",
+      "Beach",
+      18,
+      "GK"
+    ],
+    [
+      "Harry",
+      "Souttar",
+      19,
+      "CB"
+    ],
+    [
+      "Cristian",
+      "Volpato",
+      20,
+      "ST"
+    ],
+    [
+      "Cameron",
+      "Burgess",
+      21,
+      "CB"
     ],
     [
       "Jackson",
@@ -989,40 +2023,192 @@
       "CM"
     ],
     [
-      "Riley",
-      "McGree",
-      17,
-      "CM"
-    ],
-    [
-      "Aiden",
-      "O'Neill",
-      13,
-      "CDM"
-    ],
-    [
-      "Mathew",
-      "Leckie",
-      7,
-      "LW"
-    ],
-    [
-      "Mitchell",
-      "Duke",
-      15,
+      "Nishan",
+      "Velupillay",
+      23,
       "ST"
     ],
     [
-      "Martin",
-      "Boyle",
+      "Paul",
+      "Okon-Engstler",
+      24,
+      "CM"
+    ],
+    [
+      "Lucas",
+      "Herrington",
+      25,
+      "CB"
+    ],
+    [
+      "Tete",
+      "Yengi",
+      26,
+      "ST"
+    ]
+  ],
+  "PAR": [
+    [
+      "Gatito",
+      "Fernandez",
+      1,
+      "GK"
+    ],
+    [
+      "Gustavo",
+      "Velazquez",
+      2,
+      "CB"
+    ],
+    [
+      "Omar",
+      "Alderete",
+      3,
+      "CB"
+    ],
+    [
+      "Juan Jose",
+      "Caceres",
+      4,
+      "CB"
+    ],
+    [
+      "Fabian",
+      "Balbuena",
+      5,
+      "CB"
+    ],
+    [
+      "Junior",
+      "Alonso",
+      6,
+      "CB"
+    ],
+    [
+      "Ramon",
+      "Sosa",
+      7,
+      "CM"
+    ],
+    [
+      "Diego",
+      "Gomez",
+      8,
+      "CM"
+    ],
+    [
+      "Antonio",
+      "Sanabria",
+      9,
+      "ST"
+    ],
+    [
+      "Miguel",
+      "Almiron",
       10,
-      "RW"
+      "CM"
+    ],
+    [
+      "Maurício",
+      "",
+      11,
+      "CM"
+    ],
+    [
+      "Orlando",
+      "Gill",
+      12,
+      "GK"
+    ],
+    [
+      "Jose",
+      "Canale",
+      13,
+      "CB"
+    ],
+    [
+      "Andres",
+      "Cubas",
+      14,
+      "CM"
+    ],
+    [
+      "Gustavo",
+      "Gomez",
+      15,
+      "CB"
+    ],
+    [
+      "Damian",
+      "Bobadilla",
+      16,
+      "CM"
+    ],
+    [
+      "Kaku",
+      "",
+      17,
+      "ST"
+    ],
+    [
+      "Alex",
+      "Arce",
+      18,
+      "ST"
+    ],
+    [
+      "Julio",
+      "Enciso",
+      19,
+      "ST"
+    ],
+    [
+      "Braian",
+      "Ojeda",
+      20,
+      "CM"
+    ],
+    [
+      "Gabriel",
+      "Avalos",
+      21,
+      "ST"
+    ],
+    [
+      "Gaston",
+      "Olveira",
+      22,
+      "GK"
+    ],
+    [
+      "Matias",
+      "Galarza",
+      23,
+      "CM"
+    ],
+    [
+      "Gustavo",
+      "Caballero",
+      24,
+      "CM"
+    ],
+    [
+      "Isidro",
+      "Pitta",
+      25,
+      "ST"
+    ],
+    [
+      "Alexandro",
+      "Maidana",
+      26,
+      "CB"
     ]
   ],
   "TUR": [
     [
-      "Ugurcan",
-      "Cakir",
+      "Mert",
+      "Gunok",
       1,
       "GK"
     ],
@@ -1030,7 +2216,7 @@
       "Zeki",
       "Celik",
       2,
-      "RB"
+      "CB"
     ],
     [
       "Merih",
@@ -1045,10 +2231,34 @@
       "CB"
     ],
     [
-      "Ferdi",
-      "Kadioglu",
+      "Salih",
+      "Ozcan",
+      5,
+      "CM"
+    ],
+    [
+      "Orkun",
+      "Kokcu",
       6,
-      "LB"
+      "CM"
+    ],
+    [
+      "Kerem",
+      "Akturkoglu",
+      7,
+      "ST"
+    ],
+    [
+      "Arda",
+      "Guler",
+      8,
+      "ST"
+    ],
+    [
+      "Deniz",
+      "Gul",
+      9,
+      "ST"
     ],
     [
       "Hakan",
@@ -1057,101 +2267,257 @@
       "CM"
     ],
     [
-      "Arda",
-      "Guler",
-      8,
-      "CAM"
-    ],
-    [
       "Kenan",
       "Yildiz",
-      7,
-      "LW"
-    ],
-    [
-      "Baris",
-      "Alper Yilmaz",
       11,
-      "RW"
-    ],
-    [
-      "Cenk",
-      "Tosun",
-      9,
       "ST"
     ],
     [
-      "Orkun",
-      "Kokcu",
-      5,
+      "Altay",
+      "Bayindir",
+      12,
+      "GK"
+    ],
+    [
+      "Eren",
+      "Elmali",
+      13,
+      "CB"
+    ],
+    [
+      "Abdulkerim",
+      "Bardakci",
+      14,
+      "CB"
+    ],
+    [
+      "Ozan",
+      "Kabak",
+      15,
+      "CB"
+    ],
+    [
+      "Ismail",
+      "Yuksek",
+      16,
       "CM"
+    ],
+    [
+      "Irfan Can",
+      "Kahveci",
+      17,
+      "ST"
+    ],
+    [
+      "Mert",
+      "Muldur",
+      18,
+      "CB"
+    ],
+    [
+      "Yunus",
+      "Akgun",
+      19,
+      "ST"
+    ],
+    [
+      "Ferdi",
+      "Kadioglu",
+      20,
+      "CB"
+    ],
+    [
+      "Baris Alper",
+      "Yilmaz",
+      21,
+      "ST"
+    ],
+    [
+      "Kaan",
+      "Ayhan",
+      22,
+      "CM"
+    ],
+    [
+      "Ugurcan",
+      "Cakir",
+      23,
+      "GK"
+    ],
+    [
+      "Oguz",
+      "Aydin",
+      24,
+      "ST"
+    ],
+    [
+      "Samet",
+      "Akaydin",
+      25,
+      "CB"
+    ],
+    [
+      "Can",
+      "Uzun",
+      26,
+      "ST"
     ]
   ],
-  "GER": [
+  "USA": [
     [
-      "Manuel",
-      "Neuer",
+      "Matt",
+      "Turner",
       1,
       "GK"
     ],
     [
-      "Joshua",
-      "Kimmich",
-      6,
-      "RB"
-    ],
-    [
-      "Antonio",
-      "Rudiger",
+      "Sergino",
+      "Dest",
       2,
       "CB"
     ],
     [
-      "Jonathan",
-      "Tah",
-      4,
+      "Chris",
+      "Richards",
+      3,
       "CB"
     ],
     [
-      "David",
-      "Raum",
-      3,
-      "LB"
+      "Tyler",
+      "Adams",
+      4,
+      "CM"
     ],
     [
-      "Ilkay",
-      "Gundogan",
+      "Antonee",
+      "Robinson",
+      5,
+      "CB"
+    ],
+    [
+      "Auston",
+      "Trusty",
+      6,
+      "CB"
+    ],
+    [
+      "Giovanni",
+      "Reyna",
+      7,
+      "CM"
+    ],
+    [
+      "Weston",
+      "Mckennie",
       8,
       "CM"
     ],
     [
-      "Florian",
-      "Wirtz",
-      10,
-      "CAM"
-    ],
-    [
-      "Jamal",
-      "Musiala",
-      11,
-      "CAM"
-    ],
-    [
-      "Leroy",
-      "Sane",
-      7,
-      "LW"
-    ],
-    [
-      "Kai",
-      "Havertz",
+      "Ricardo",
+      "Pepi",
       9,
       "ST"
     ],
     [
-      "Niclas",
-      "Fullkrug",
+      "Christian",
+      "Pulisic",
+      10,
+      "ST"
+    ],
+    [
+      "Brenden",
+      "Aaronson",
+      11,
+      "ST"
+    ],
+    [
+      "Miles",
+      "Robinson",
+      12,
+      "CB"
+    ],
+    [
+      "Tim",
+      "Ream",
       13,
+      "CB"
+    ],
+    [
+      "Sebastian",
+      "Berhalter",
+      14,
+      "CM"
+    ],
+    [
+      "Cristian",
+      "Roldan",
+      15,
+      "CM"
+    ],
+    [
+      "Alex",
+      "Freeman",
+      16,
+      "CB"
+    ],
+    [
+      "Malik",
+      "Tillman",
+      17,
+      "CM"
+    ],
+    [
+      "Maximilian",
+      "Arfsten",
+      18,
+      "CB"
+    ],
+    [
+      "Haji",
+      "Wright",
+      19,
+      "ST"
+    ],
+    [
+      "Folarin",
+      "Balogun",
+      20,
+      "ST"
+    ],
+    [
+      "Timothy",
+      "Weah",
+      21,
+      "ST"
+    ],
+    [
+      "Mark",
+      "Mckenzie",
+      22,
+      "CB"
+    ],
+    [
+      "Joe",
+      "Scally",
+      23,
+      "CB"
+    ],
+    [
+      "Matt",
+      "Freese",
+      24,
+      "GK"
+    ],
+    [
+      "Chris",
+      "Brady",
+      25,
+      "GK"
+    ],
+    [
+      "Alejandro",
+      "Zendejas",
+      26,
       "ST"
     ]
   ],
@@ -1163,140 +2529,168 @@
       "GK"
     ],
     [
-      "Juri",
-      "Schoenstedt",
+      "Shurandy",
+      "Sambo",
+      2,
+      "CB"
+    ],
+    [
+      "Jurien",
+      "Gaari",
+      3,
+      "CB"
+    ],
+    [
+      "Roshon van",
+      "Eijma",
       4,
       "CB"
     ],
     [
-      "Brandley",
-      "Kuwas",
+      "Sherel",
+      "Floranus",
+      5,
+      "CB"
+    ],
+    [
+      "Godfried",
+      "Roemeratoe",
+      6,
+      "CM"
+    ],
+    [
+      "Juninho",
+      "Bacuna",
       7,
-      "RW"
+      "CM"
     ],
     [
-      "Leandro",
-      "Fernandes",
-      10,
-      "CAM"
+      "Livano",
+      "Comenencia",
+      8,
+      "CM"
     ],
     [
-      "Rangelo",
-      "Janga",
+      "Jurgen",
+      "Locadia",
       9,
       "ST"
     ],
     [
-      "Elson",
-      "Hooi",
-      11,
-      "LW"
+      "Leandro",
+      "Bacuna",
+      10,
+      "CM"
     ],
     [
-      "Jarchinio",
-      "Antonia",
+      "Jeremy",
+      "Antonisse",
+      11,
+      "ST"
+    ],
+    [
+      "Sontje",
+      "Hansen",
+      12,
+      "ST"
+    ],
+    [
+      "Tyrese",
+      "Noslin",
+      13,
+      "ST"
+    ],
+    [
+      "Kenji",
+      "Gorre",
+      14,
+      "ST"
+    ],
+    [
+      "Arjany",
+      "Martha",
+      15,
+      "CM"
+    ],
+    [
+      "Jearl",
+      "Margaritha",
+      16,
+      "ST"
+    ],
+    [
+      "Brandley",
+      "Kuwas",
       17,
       "ST"
+    ],
+    [
+      "Armando",
+      "Obispo",
+      18,
+      "CB"
     ],
     [
       "Gervane",
       "Kastaneer",
       19,
-      "RW"
-    ],
-    [
-      "Jurich",
-      "Croes",
-      2,
-      "RB"
-    ],
-    [
-      "Caique",
-      "Da Silva",
-      5,
-      "CB"
-    ],
-    [
-      "Trevon",
-      "Clemencia",
-      6,
-      "CDM"
-    ]
-  ],
-  "CIV": [
-    [
-      "Badra",
-      "Ali Sangare",
-      23,
-      "GK"
-    ],
-    [
-      "Eric",
-      "Bailly",
-      3,
-      "CB"
-    ],
-    [
-      "Odilon",
-      "Kossounou",
-      4,
-      "CB"
-    ],
-    [
-      "Serge",
-      "Aurier",
-      2,
-      "RB"
-    ],
-    [
-      "Franck",
-      "Kessie",
-      8,
-      "CDM"
-    ],
-    [
-      "Seko",
-      "Fofana",
-      6,
-      "CM"
-    ],
-    [
-      "Nicolas",
-      "Pepe",
-      19,
-      "RW"
-    ],
-    [
-      "Simon",
-      "Adingra",
-      11,
-      "LW"
-    ],
-    [
-      "Sebastien",
-      "Haller",
-      9,
       "ST"
     ],
     [
-      "Wilfried",
-      "Zaha",
-      10,
-      "LW"
+      "Joshua",
+      "Brenet",
+      20,
+      "CB"
     ],
     [
-      "Ibrahim",
-      "Sangare",
-      5,
-      "CDM"
+      "Tahith",
+      "Chong",
+      21,
+      "CM"
+    ],
+    [
+      "Kevin",
+      "Felida",
+      22,
+      "CM"
+    ],
+    [
+      "Riechedly",
+      "Bazoer",
+      23,
+      "CB"
+    ],
+    [
+      "Deveron",
+      "Fonville",
+      24,
+      "CB"
+    ],
+    [
+      "Tyrick",
+      "Bodak",
+      25,
+      "GK"
+    ],
+    [
+      "Trevor",
+      "Doornbusch",
+      26,
+      "GK"
     ]
   ],
   "ECU": [
     [
-      "Alexander",
-      "Dominguez",
+      "Hernan",
+      "Galindez",
       1,
       "GK"
+    ],
+    [
+      "Felix",
+      "Torres",
+      2,
+      "CB"
     ],
     [
       "Piero",
@@ -1305,46 +2699,16 @@
       "CB"
     ],
     [
-      "Felix",
-      "Torres",
+      "Joel",
+      "Ordonez",
       4,
       "CB"
     ],
     [
-      "Angelo",
-      "Preciado",
-      2,
-      "RB"
-    ],
-    [
-      "Mois\u00e9s",
-      "Caicedo",
+      "Jordy",
+      "Alcivar",
       5,
-      "CDM"
-    ],
-    [
-      "Carlos",
-      "Gruezo",
-      6,
-      "CDM"
-    ],
-    [
-      "Enner",
-      "Valencia",
-      13,
-      "ST"
-    ],
-    [
-      "Jeremy",
-      "Sarmiento",
-      7,
-      "LW"
-    ],
-    [
-      "Kendry",
-      "Paez",
-      10,
-      "CAM"
+      "CM"
     ],
     [
       "Willian",
@@ -1353,16 +2717,622 @@
       "CB"
     ],
     [
+      "Pervis",
+      "Estupinan",
+      7,
+      "CB"
+    ],
+    [
+      "Anthony",
+      "Valencia",
+      8,
+      "CM"
+    ],
+    [
+      "John",
+      "Yeboah",
+      9,
+      "ST"
+    ],
+    [
+      "Kendry",
+      "Paez",
+      10,
+      "CM"
+    ],
+    [
+      "Kevin",
+      "Rodriguez",
+      11,
+      "ST"
+    ],
+    [
+      "Moises",
+      "Ramirez",
+      12,
+      "GK"
+    ],
+    [
+      "Enner",
+      "Valencia",
+      13,
+      "ST"
+    ],
+    [
+      "Alan",
+      "Minda",
+      14,
+      "CM"
+    ],
+    [
+      "Pedro",
+      "Vite",
+      15,
+      "CM"
+    ],
+    [
       "Jordy",
       "Caicedo",
+      16,
+      "ST"
+    ],
+    [
+      "Angelo",
+      "Preciado",
+      17,
+      "CB"
+    ],
+    [
+      "Denil",
+      "Castillo",
+      18,
+      "CM"
+    ],
+    [
+      "Gonzalo",
+      "Plata",
+      19,
+      "ST"
+    ],
+    [
+      "Nilson",
+      "Angulo",
+      20,
+      "ST"
+    ],
+    [
+      "Alan",
+      "Franco",
+      21,
+      "CM"
+    ],
+    [
+      "Gonzalo",
+      "Valle",
+      22,
+      "GK"
+    ],
+    [
+      "Moises",
+      "Caicedo",
+      23,
+      "CM"
+    ],
+    [
+      "Jeremy",
+      "Arevalo",
+      24,
+      "ST"
+    ],
+    [
+      "Jackson",
+      "Porozo",
+      25,
+      "CB"
+    ],
+    [
+      "Yaimar",
+      "Medina",
+      26,
+      "CB"
+    ]
+  ],
+  "GER": [
+    [
+      "Manuel",
+      "Neuer",
+      1,
+      "GK"
+    ],
+    [
+      "Antonio",
+      "Rudiger",
+      2,
+      "CB"
+    ],
+    [
+      "Waldemar",
+      "Anton",
+      3,
+      "CB"
+    ],
+    [
+      "Jonathan",
+      "Tah",
+      4,
+      "CB"
+    ],
+    [
+      "Aleksandar",
+      "Pavlovic",
+      5,
+      "CM"
+    ],
+    [
+      "Joshua",
+      "Kimmich",
+      6,
+      "CB"
+    ],
+    [
+      "Kai",
+      "Havertz",
+      7,
+      "ST"
+    ],
+    [
+      "Leon",
+      "Goretzka",
+      8,
+      "CM"
+    ],
+    [
+      "Jamie",
+      "Leweling",
       9,
+      "CM"
+    ],
+    [
+      "Jamal",
+      "Musiala",
+      10,
+      "CM"
+    ],
+    [
+      "Nick",
+      "Woltemade",
+      11,
+      "ST"
+    ],
+    [
+      "Oliver",
+      "Baumann",
+      12,
+      "GK"
+    ],
+    [
+      "Pascal",
+      "Gross",
+      13,
+      "CM"
+    ],
+    [
+      "Maximilian",
+      "Beier",
+      14,
+      "ST"
+    ],
+    [
+      "Nico",
+      "Schlotterbeck",
+      15,
+      "CB"
+    ],
+    [
+      "Angelo",
+      "Stiller",
+      16,
+      "CM"
+    ],
+    [
+      "Florian",
+      "Wirtz",
+      17,
+      "CM"
+    ],
+    [
+      "Nathaniel",
+      "Brown",
+      18,
+      "CB"
+    ],
+    [
+      "Leroy",
+      "Sane",
+      19,
+      "CM"
+    ],
+    [
+      "Nadiem",
+      "Amiri",
+      20,
+      "CM"
+    ],
+    [
+      "Alexander",
+      "Nubel",
+      21,
+      "GK"
+    ],
+    [
+      "David",
+      "Raum",
+      22,
+      "CB"
+    ],
+    [
+      "Felix",
+      "Nmecha",
+      23,
+      "CM"
+    ],
+    [
+      "Malick",
+      "Thiaw",
+      24,
+      "CB"
+    ],
+    [
+      "Assan",
+      "Ouédraogo",
+      25,
+      "CM"
+    ],
+    [
+      "Deniz",
+      "Undav",
+      26,
+      "ST"
+    ]
+  ],
+  "CIV": [
+    [
+      "Yahia",
+      "Fofana",
+      1,
+      "GK"
+    ],
+    [
+      "Ousmane",
+      "Diomande",
+      2,
+      "CB"
+    ],
+    [
+      "Ghislain",
+      "Konan",
+      3,
+      "CB"
+    ],
+    [
+      "Jean Michael",
+      "Seri",
+      4,
+      "CM"
+    ],
+    [
+      "Wilfried",
+      "Singo",
+      5,
+      "CB"
+    ],
+    [
+      "Seko",
+      "Fofana",
+      6,
+      "CM"
+    ],
+    [
+      "Odilon",
+      "Kossounou",
+      7,
+      "CB"
+    ],
+    [
+      "Franck",
+      "Kessie",
+      8,
+      "CM"
+    ],
+    [
+      "Ange-Yoan",
+      "Bonny",
+      9,
+      "ST"
+    ],
+    [
+      "Simon",
+      "Adingra",
+      10,
+      "ST"
+    ],
+    [
+      "Yan",
+      "Diomande",
+      11,
+      "ST"
+    ],
+    [
+      "Elye",
+      "Wahi",
+      12,
+      "ST"
+    ],
+    [
+      "Christopher",
+      "Operi",
+      13,
+      "CB"
+    ],
+    [
+      "Oumar",
+      "Diakite",
+      14,
+      "ST"
+    ],
+    [
+      "Amad",
+      "Diallo",
+      15,
+      "ST"
+    ],
+    [
+      "Mohamed",
+      "Kone",
+      16,
+      "GK"
+    ],
+    [
+      "Guela",
+      "Doue",
+      17,
+      "CB"
+    ],
+    [
+      "Ibrahim",
+      "Sangare",
+      18,
+      "CM"
+    ],
+    [
+      "Nicolas",
+      "Pepe",
+      19,
+      "ST"
+    ],
+    [
+      "Emmanuel",
+      "Agbadou",
+      20,
+      "CB"
+    ],
+    [
+      "Evan",
+      "Ndicka",
+      21,
+      "CB"
+    ],
+    [
+      "Evann",
+      "Guessand",
+      22,
+      "ST"
+    ],
+    [
+      "Alban",
+      "Lafont",
+      23,
+      "GK"
+    ],
+    [
+      "Bazoumana",
+      "Toure",
+      24,
+      "ST"
+    ],
+    [
+      "Parfait",
+      "Guiagon",
+      25,
+      "CM"
+    ],
+    [
+      "Christ",
+      "Inao Oulai",
+      26,
+      "CM"
+    ]
+  ],
+  "JPN": [
+    [
+      "Zion",
+      "Suzuki",
+      1,
+      "GK"
+    ],
+    [
+      "Yukinari",
+      "Sugawara",
+      2,
+      "CB"
+    ],
+    [
+      "Shogo",
+      "Taniguchi",
+      3,
+      "CB"
+    ],
+    [
+      "Ko",
+      "Itakura",
+      4,
+      "CB"
+    ],
+    [
+      "Yuto",
+      "Nagatomo",
+      5,
+      "CB"
+    ],
+    [
+      "Wataru",
+      "Endo",
+      6,
+      "CM"
+    ],
+    [
+      "Ao",
+      "Tanaka",
+      7,
+      "CM"
+    ],
+    [
+      "Takefusa",
+      "Kubo",
+      8,
+      "CM"
+    ],
+    [
+      "Keisuke",
+      "Goto",
+      9,
+      "ST"
+    ],
+    [
+      "Ritsu",
+      "Doan",
+      10,
+      "CM"
+    ],
+    [
+      "Daizen",
+      "Maeda",
+      11,
+      "CM"
+    ],
+    [
+      "Keisuke",
+      "Osako",
+      12,
+      "GK"
+    ],
+    [
+      "Keito",
+      "Nakamura",
+      13,
+      "CM"
+    ],
+    [
+      "Junya",
+      "Ito",
+      14,
+      "CM"
+    ],
+    [
+      "Daichi",
+      "Kamada",
+      15,
+      "CM"
+    ],
+    [
+      "Tsuyoshi",
+      "Watanabe",
+      16,
+      "CB"
+    ],
+    [
+      "Yuito",
+      "Suzuki",
+      17,
+      "CM"
+    ],
+    [
+      "Ayase",
+      "Ueda",
+      18,
+      "ST"
+    ],
+    [
+      "Koki",
+      "Ogawa",
+      19,
+      "ST"
+    ],
+    [
+      "Ayumu",
+      "Seko",
+      20,
+      "CB"
+    ],
+    [
+      "Hiroki",
+      "Ito",
+      21,
+      "CB"
+    ],
+    [
+      "Takehiro",
+      "Tomiyasu",
+      22,
+      "CB"
+    ],
+    [
+      "Tomoki",
+      "Hayakawa",
+      23,
+      "GK"
+    ],
+    [
+      "Kaishu",
+      "Sano",
+      24,
+      "CM"
+    ],
+    [
+      "Junnosuke",
+      "Suzuki",
+      25,
+      "CB"
+    ],
+    [
+      "Kento",
+      "Shiogai",
+      26,
       "ST"
     ]
   ],
   "NED": [
     [
-      "Virgil",
-      "van Dijk",
+      "Bart",
+      "Verbruggen",
+      1,
+      "GK"
+    ],
+    [
+      "Jurrien",
+      "Timber",
+      2,
+      "CB"
+    ],
+    [
+      "Marten de",
+      "Roon",
+      3,
+      "CM"
+    ],
+    [
+      "Virgil van",
+      "Dijk",
       4,
       "CB"
     ],
@@ -1373,40 +3343,28 @@
       "CB"
     ],
     [
-      "Denzel",
-      "Dumfries",
-      22,
-      "RB"
+      "Jan Paul van",
+      "Hecke",
+      6,
+      "CB"
     ],
     [
-      "Daley",
-      "Blind",
-      17,
-      "LB"
-    ],
-    [
-      "Frenkie",
-      "de Jong",
-      21,
+      "Justin",
+      "Kluivert",
+      7,
       "CM"
     ],
     [
-      "Georginio",
-      "Wijnaldum",
+      "Ryan",
+      "Gravenberch",
       8,
       "CM"
     ],
     [
-      "Cody",
-      "Gakpo",
-      11,
-      "LW"
-    ],
-    [
-      "Steven",
-      "Bergwijn",
-      7,
-      "RW"
+      "Wout",
+      "Weghorst",
+      9,
+      "ST"
     ],
     [
       "Memphis",
@@ -1415,97 +3373,149 @@
       "ST"
     ],
     [
-      "Brian",
-      "Brobbey",
-      9,
-      "ST"
-    ],
-    [
-      "Bart",
-      "Verbruggen",
-      1,
-      "GK"
-    ]
-  ],
-  "JPN": [
-    [
-      "Keisuke",
-      "Osako",
-      1,
-      "GK"
-    ],
-    [
-      "Takehiro",
-      "Tomiyasu",
-      16,
-      "RB"
-    ],
-    [
-      "Ko",
-      "Itakura",
-      4,
-      "CB"
-    ],
-    [
-      "Wataru",
-      "Endo",
-      6,
-      "CDM"
-    ],
-    [
-      "Hidemasa",
-      "Morita",
-      8,
-      "CM"
-    ],
-    [
-      "Kaoru",
-      "Mitoma",
-      7,
-      "LW"
-    ],
-    [
-      "Takefusa",
-      "Kubo",
-      10,
-      "RW"
-    ],
-    [
-      "Daizen",
-      "Maeda",
-      9,
-      "ST"
-    ],
-    [
-      "Ayase",
-      "Ueda",
+      "Cody",
+      "Gakpo",
       11,
       "ST"
     ],
     [
-      "Ritsu",
-      "Doan",
-      20,
-      "RW"
+      "Mats",
+      "Wieffer",
+      12,
+      "CB"
     ],
     [
-      "Hiroki",
-      "Ito",
-      3,
+      "Robin",
+      "Roefs",
+      13,
+      "GK"
+    ],
+    [
+      "Tijjani",
+      "Reijnders",
+      14,
+      "CM"
+    ],
+    [
+      "Micky van de",
+      "Ven",
+      15,
       "CB"
+    ],
+    [
+      "Guus",
+      "Til",
+      16,
+      "CM"
+    ],
+    [
+      "Noa",
+      "Lang",
+      17,
+      "ST"
+    ],
+    [
+      "Donyell",
+      "Malen",
+      18,
+      "ST"
+    ],
+    [
+      "Brian",
+      "Brobbey",
+      19,
+      "ST"
+    ],
+    [
+      "Teun",
+      "Koopmeiners",
+      20,
+      "CM"
+    ],
+    [
+      "Frenkie de",
+      "Jong",
+      21,
+      "CM"
+    ],
+    [
+      "Denzel",
+      "Dumfries",
+      22,
+      "CB"
+    ],
+    [
+      "Mark",
+      "Flekken",
+      23,
+      "GK"
+    ],
+    [
+      "Crysencio",
+      "Summerville",
+      24,
+      "ST"
+    ],
+    [
+      "Jorrel",
+      "Hato",
+      25,
+      "CB"
+    ],
+    [
+      "Quinten",
+      "Timber",
+      26,
+      "CM"
     ]
   ],
   "SWE": [
     [
-      "Robin",
-      "Olsen",
+      "Jacob",
+      "Widell Zetterstrom",
       1,
       "GK"
     ],
     [
+      "Gustaf",
+      "Lagerbielke",
+      2,
+      "CB"
+    ],
+    [
       "Victor",
-      "Lindeloef",
+      "Lindelof",
+      3,
+      "CB"
+    ],
+    [
+      "Isak",
+      "Hien",
       4,
+      "CB"
+    ],
+    [
+      "Gabriel",
+      "Gudmundsson",
+      5,
+      "CB"
+    ],
+    [
+      "Herman",
+      "Johansson",
+      6,
+      "CB"
+    ],
+    [
+      "Lucas",
+      "Bergvall",
+      7,
+      "CM"
+    ],
+    [
+      "Daniel",
+      "Svensson",
+      8,
       "CB"
     ],
     [
@@ -1515,139 +3525,277 @@
       "ST"
     ],
     [
-      "Dejan",
-      "Kulusevski",
-      21,
-      "RW"
-    ],
-    [
-      "Emil",
-      "Forsberg",
+      "Benjamin",
+      "Nygren",
       10,
-      "CAM"
-    ],
-    [
-      "Mattias",
-      "Svanberg",
-      8,
       "CM"
     ],
     [
-      "Jesper",
-      "Karlsson",
-      7,
-      "LW"
+      "Anthony",
+      "Elanga",
+      11,
+      "ST"
     ],
     [
-      "Gustav",
-      "Svensson",
-      6,
-      "CDM"
+      "Viktor",
+      "Johansson",
+      12,
+      "GK"
     ],
     [
-      "Filip",
-      "Helander",
-      3,
+      "Ken",
+      "Sema",
+      13,
+      "CM"
+    ],
+    [
+      "Hjalmar",
+      "Ekdal",
+      14,
       "CB"
     ],
     [
-      "Emil",
-      "Holm",
-      2,
-      "RB"
+      "Carl",
+      "Starfelt",
+      15,
+      "CB"
+    ],
+    [
+      "Jesper",
+      "Karlstrom",
+      16,
+      "CM"
     ],
     [
       "Viktor",
       "Gyokeres",
-      11,
+      17,
+      "ST"
+    ],
+    [
+      "Yasin",
+      "Ayari",
+      18,
+      "CM"
+    ],
+    [
+      "Mattias",
+      "Svanberg",
+      19,
+      "CM"
+    ],
+    [
+      "Eric",
+      "Smith",
+      20,
+      "CB"
+    ],
+    [
+      "Alexander",
+      "Bernhardsson",
+      21,
+      "CB"
+    ],
+    [
+      "Besfort",
+      "Zeneli",
+      22,
+      "CM"
+    ],
+    [
+      "Kristoffer",
+      "Nordfeldt",
+      23,
+      "GK"
+    ],
+    [
+      "Elliot",
+      "Stroud",
+      24,
+      "CB"
+    ],
+    [
+      "Gustaf",
+      "Nilsson",
+      25,
+      "ST"
+    ],
+    [
+      "Taha",
+      "Ali",
+      26,
       "ST"
     ]
   ],
   "TUN": [
     [
-      "Aymen",
-      "Dahmen",
+      "Mouhib",
+      "Chamakh",
       1,
       "GK"
     ],
     [
-      "Yassine",
-      "Meriah",
-      4,
-      "CB"
-    ],
-    [
       "Ali",
-      "Maaloul",
-      12,
-      "LB"
-    ],
-    [
-      "Ellyes",
-      "Skhiri",
-      6,
-      "CDM"
-    ],
-    [
-      "Aissa",
-      "Laidouni",
-      14,
-      "CM"
-    ],
-    [
-      "Wahbi",
-      "Khazri",
-      10,
-      "CAM"
-    ],
-    [
-      "Taha",
-      "Yassine Khenissi",
-      9,
-      "ST"
-    ],
-    [
-      "Hamza",
-      "Lamti",
+      "Abdi",
       2,
-      "RB"
-    ],
-    [
-      "Anis",
-      "Ben Slimane",
-      8,
-      "CM"
-    ],
-    [
-      "Issam",
-      "Jebali",
-      11,
-      "ST"
+      "CB"
     ],
     [
       "Montassar",
       "Talbi",
       3,
       "CB"
+    ],
+    [
+      "Omar",
+      "Rekik",
+      4,
+      "CB"
+    ],
+    [
+      "Adem",
+      "Arous",
+      5,
+      "CB"
+    ],
+    [
+      "Dylan",
+      "Bronn",
+      6,
+      "CB"
+    ],
+    [
+      "Elias",
+      "Achouri",
+      7,
+      "ST"
+    ],
+    [
+      "Elias",
+      "Saad",
+      8,
+      "ST"
+    ],
+    [
+      "Hazem",
+      "Mastouri",
+      9,
+      "ST"
+    ],
+    [
+      "Hannibal",
+      "Mejbri",
+      10,
+      "CM"
+    ],
+    [
+      "Ismael",
+      "Gharbi",
+      11,
+      "CM"
+    ],
+    [
+      "Mortadha",
+      "Ben Ouanes",
+      12,
+      "CB"
+    ],
+    [
+      "Rani",
+      "Khedira",
+      13,
+      "CM"
+    ],
+    [
+      "Khalil",
+      "Ayari",
+      14,
+      "CM"
+    ],
+    [
+      "Hadj",
+      "Mahmoud",
+      15,
+      "CM"
+    ],
+    [
+      "Aymen",
+      "Dahmen",
+      16,
+      "GK"
+    ],
+    [
+      "Ellyes",
+      "Skhiri",
+      17,
+      "CM"
+    ],
+    [
+      "Rayan",
+      "Elloumi",
+      18,
+      "ST"
+    ],
+    [
+      "Firas",
+      "Chaouat",
+      19,
+      "ST"
+    ],
+    [
+      "Yan",
+      "Valery",
+      20,
+      "CB"
+    ],
+    [
+      "Mohamed Amine",
+      "Ben Hamida",
+      21,
+      "CB"
+    ],
+    [
+      "Sabri",
+      "Ben Hessen",
+      22,
+      "GK"
+    ],
+    [
+      "Moutaz",
+      "Neffati",
+      23,
+      "CB"
+    ],
+    [
+      "Raed",
+      "Chikhaoui",
+      24,
+      "CB"
+    ],
+    [
+      "Anis",
+      "Ben Slimane",
+      25,
+      "CM"
+    ],
+    [
+      "Sebastian",
+      "Tounekti",
+      26,
+      "CM"
     ]
   ],
   "BEL": [
     [
-      "Koen",
-      "Casteels",
+      "Thibaut",
+      "Courtois",
       1,
       "GK"
     ],
     [
-      "Timothy",
-      "Castagne",
-      21,
-      "RB"
-    ],
-    [
-      "Wout",
-      "Faes",
-      4,
+      "Zeno",
+      "Debast",
+      2,
       "CB"
     ],
     [
@@ -1657,10 +3805,28 @@
       "CB"
     ],
     [
-      "Jan",
-      "Vertonghen",
+      "Brandon",
+      "Mechele",
+      4,
+      "CB"
+    ],
+    [
+      "Maxim",
+      "De Cuyper",
       5,
       "CB"
+    ],
+    [
+      "Axel",
+      "Witsel",
+      6,
+      "CM"
+    ],
+    [
+      "Kevin",
+      "De Bruyne",
+      7,
+      "CM"
     ],
     [
       "Youri",
@@ -1669,102 +3835,270 @@
       "CM"
     ],
     [
-      "Amadou",
-      "Onana",
-      6,
-      "CDM"
-    ],
-    [
-      "Kevin",
-      "De Bruyne",
-      7,
-      "CAM"
-    ],
-    [
-      "Jeremy",
-      "Doku",
-      22,
-      "LW"
-    ],
-    [
       "Romelu",
       "Lukaku",
       9,
       "ST"
     ],
     [
+      "Leandro",
+      "Trossard",
+      10,
+      "ST"
+    ],
+    [
+      "Jeremy",
+      "Doku",
+      11,
+      "ST"
+    ],
+    [
+      "Senne",
+      "Lammens",
+      12,
+      "GK"
+    ],
+    [
+      "Mike",
+      "Penders",
+      13,
+      "GK"
+    ],
+    [
+      "Dodi",
+      "Lukebakio",
+      14,
+      "ST"
+    ],
+    [
+      "Thomas",
+      "Meunier",
+      15,
+      "CB"
+    ],
+    [
+      "Koni",
+      "De Winter",
+      16,
+      "CB"
+    ],
+    [
       "Charles",
       "De Ketelaere",
-      10,
-      "CAM"
+      17,
+      "ST"
+    ],
+    [
+      "Joaquin",
+      "Seys",
+      18,
+      "CB"
+    ],
+    [
+      "Diego",
+      "Moreira",
+      19,
+      "CM"
+    ],
+    [
+      "Hans",
+      "Vanaken",
+      20,
+      "CM"
+    ],
+    [
+      "Timothy",
+      "Castagne",
+      21,
+      "CB"
+    ],
+    [
+      "Alexis",
+      "Saelemaekers",
+      22,
+      "CM"
+    ],
+    [
+      "Nicolas",
+      "Raskin",
+      23,
+      "CM"
+    ],
+    [
+      "Amadou",
+      "Onana",
+      24,
+      "CM"
+    ],
+    [
+      "Nathan",
+      "Ngoy",
+      25,
+      "CB"
+    ],
+    [
+      "Matias",
+      "Fernandez-Pardo",
+      26,
+      "ST"
     ]
   ],
   "EGY": [
     [
       "Mohamed",
-      "El Shenawy",
+      "Shenawy",
       1,
       "GK"
     ],
     [
-      "Mohamed",
-      "Salah",
-      10,
-      "RW"
-    ],
-    [
-      "Omar",
-      "Marmoush",
-      7,
-      "LW"
-    ],
-    [
-      "Tr\u00e9z\u00e9guet",
-      "Hassan",
-      11,
-      "LW"
-    ],
-    [
-      "Mohamed",
-      "Elneny",
-      17,
-      "CDM"
-    ],
-    [
-      "Ahmed",
-      "Hegazi",
-      6,
+      "Yasser",
+      "Ibrahim",
+      2,
       "CB"
-    ],
-    [
-      "Mahmoud",
-      "Hassan",
-      19,
-      "CAM"
-    ],
-    [
-      "Mostafa",
-      "Mohamed",
-      9,
-      "ST"
     ],
     [
       "Mohamed",
       "Hany",
       3,
-      "RB"
+      "CB"
     ],
     [
-      "Ayman",
-      "Ashraf",
+      "Hossam",
+      "Abdelmaguid",
       4,
       "CB"
+    ],
+    [
+      "Ramy",
+      "Rabia",
+      5,
+      "CB"
+    ],
+    [
+      "Mohamed",
+      "Abdelmonem",
+      6,
+      "CB"
+    ],
+    [
+      "Trézéguet",
+      "",
+      7,
+      "ST"
     ],
     [
       "Emam",
       "Ashour",
       8,
       "CM"
+    ],
+    [
+      "Hamza",
+      "Abdelkarim",
+      9,
+      "ST"
+    ],
+    [
+      "Mohamed",
+      "Salah",
+      10,
+      "ST"
+    ],
+    [
+      "Mostafa",
+      "Ziko",
+      11,
+      "CM"
+    ],
+    [
+      "Haissem",
+      "Hassan",
+      12,
+      "ST"
+    ],
+    [
+      "Ahmed",
+      "Fatouh",
+      13,
+      "CB"
+    ],
+    [
+      "Hamdy",
+      "Fathy",
+      14,
+      "CM"
+    ],
+    [
+      "Karim",
+      "Hafez",
+      15,
+      "CB"
+    ],
+    [
+      "El Mahdy",
+      "Soliman",
+      16,
+      "GK"
+    ],
+    [
+      "Mohanad",
+      "Lasheen",
+      17,
+      "CM"
+    ],
+    [
+      "Nabil",
+      "Emad",
+      18,
+      "CM"
+    ],
+    [
+      "Marwan",
+      "Attia",
+      19,
+      "CM"
+    ],
+    [
+      "Ibrahim",
+      "Adel",
+      20,
+      "ST"
+    ],
+    [
+      "Mahmoud",
+      "Saber",
+      21,
+      "CM"
+    ],
+    [
+      "Omar",
+      "Marmoush",
+      22,
+      "ST"
+    ],
+    [
+      "Mostafa",
+      "Shobeir",
+      23,
+      "GK"
+    ],
+    [
+      "Tarek",
+      "Alaa",
+      24,
+      "CB"
+    ],
+    [
+      "Zizo",
+      "",
+      25,
+      "ST"
+    ],
+    [
+      "Mohamed",
+      "Alaa",
+      26,
+      "GK"
     ]
   ],
   "IRN": [
@@ -1775,28 +4109,46 @@
       "GK"
     ],
     [
-      "Morteza",
-      "Pouraliganji",
-      8,
+      "Saleh",
+      "Hardani",
+      2,
       "CB"
     ],
     [
-      "Rouzbeh",
-      "Cheshmi",
+      "Ehsan",
+      "Hajsafi",
       3,
+      "CB"
+    ],
+    [
+      "Shojae",
+      "Khalilzadeh",
+      4,
       "CB"
     ],
     [
       "Milad",
       "Mohammadi",
       5,
-      "LB"
+      "CB"
     ],
     [
       "Saeid",
       "Ezatolahi",
       6,
-      "CDM"
+      "CM"
+    ],
+    [
+      "Alireza",
+      "Jahanbakhsh",
+      7,
+      "CM"
+    ],
+    [
+      "Mohammad",
+      "Mohebi",
+      8,
+      "CM"
     ],
     [
       "Mehdi",
@@ -1805,34 +4157,106 @@
       "ST"
     ],
     [
-      "Sardar",
-      "Azmoun",
+      "Mehdi",
+      "Ghayedi",
       10,
       "ST"
     ],
     [
-      "Alireza",
-      "Jahanbakhsh",
-      7,
-      "RW"
+      "Ali",
+      "Alipour",
+      11,
+      "ST"
     ],
     [
-      "Mehdi",
-      "Ghoudossi",
-      11,
-      "LW"
+      "Payam",
+      "Niazmand",
+      12,
+      "GK"
+    ],
+    [
+      "Hossein",
+      "Kanaanizadegan",
+      13,
+      "CB"
     ],
     [
       "Saman",
       "Ghoddos",
       14,
-      "CAM"
+      "CM"
     ],
     [
-      "Ehsan",
-      "Hajsafi",
-      2,
-      "LB"
+      "Rouzbeh",
+      "Cheshmi",
+      15,
+      "CM"
+    ],
+    [
+      "Mehdi",
+      "Torabi",
+      16,
+      "CM"
+    ],
+    [
+      "Aria",
+      "Yousefi",
+      17,
+      "CB"
+    ],
+    [
+      "Amirhossein",
+      "Hosseinzadeh",
+      18,
+      "ST"
+    ],
+    [
+      "Ali",
+      "Nemati",
+      19,
+      "CB"
+    ],
+    [
+      "Shahriyar",
+      "Moghanlou",
+      20,
+      "ST"
+    ],
+    [
+      "Mohammad",
+      "Ghorbani",
+      21,
+      "CM"
+    ],
+    [
+      "Hossein",
+      "Hosseini",
+      22,
+      "GK"
+    ],
+    [
+      "Ramin",
+      "Rezaeian",
+      23,
+      "CB"
+    ],
+    [
+      "Dennis",
+      "Eckert",
+      24,
+      "ST"
+    ],
+    [
+      "Danial",
+      "Eiri",
+      25,
+      "CB"
+    ],
+    [
+      "Amirmohammad",
+      "Razzaghinia",
+      26,
+      "CM"
     ]
   ],
   "NZL": [
@@ -1843,28 +4267,46 @@
       "GK"
     ],
     [
-      "Winston",
-      "Reid",
+      "Tim",
+      "Payne",
+      2,
+      "CB"
+    ],
+    [
+      "Francis",
+      "De Vries",
+      3,
+      "CB"
+    ],
+    [
+      "Tyler",
+      "Bindon",
       4,
       "CB"
     ],
     [
-      "Bill",
-      "Tuiloma",
+      "Michael",
+      "Boxall",
       5,
       "CB"
     ],
     [
-      "Marko",
-      "Stamenic",
+      "Joe",
+      "Bell",
       6,
-      "CDM"
+      "CM"
     ],
     [
-      "Marco",
-      "Rojas",
-      10,
-      "CAM"
+      "Matthew",
+      "Garbett",
+      7,
+      "CM"
+    ],
+    [
+      "Marko",
+      "Stamenic",
+      8,
+      "CM"
     ],
     [
       "Chris",
@@ -1873,22 +4315,46 @@
       "ST"
     ],
     [
-      "Elijah",
-      "Just",
-      8,
+      "Sarpreet",
+      "Singh",
+      10,
       "CM"
     ],
     [
-      "Ben",
-      "Waine",
+      "Elijah",
+      "Just",
       11,
-      "ST"
+      "CM"
+    ],
+    [
+      "Alex",
+      "Paulsen",
+      12,
+      "GK"
+    ],
+    [
+      "Liberato",
+      "Cacace",
+      13,
+      "CB"
     ],
     [
       "Alex",
       "Rufer",
-      7,
-      "LW"
+      14,
+      "CM"
+    ],
+    [
+      "Nando",
+      "Pijnaker",
+      15,
+      "CB"
+    ],
+    [
+      "Finn",
+      "Surman",
+      16,
+      "CB"
     ],
     [
       "Kosta",
@@ -1897,17 +4363,453 @@
       "ST"
     ],
     [
-      "Liberato",
-      "Cacace",
+      "Ben",
+      "Waine",
+      18,
+      "ST"
+    ],
+    [
+      "Ben",
+      "Old",
+      19,
+      "CM"
+    ],
+    [
+      "Callum",
+      "Mccowatt",
+      20,
+      "CM"
+    ],
+    [
+      "Jesse",
+      "Randall",
+      21,
+      "ST"
+    ],
+    [
+      "Michael",
+      "Woud",
+      22,
+      "GK"
+    ],
+    [
+      "Ryan",
+      "Thomas",
+      23,
+      "CM"
+    ],
+    [
+      "Callan",
+      "Elliot",
+      24,
+      "CB"
+    ],
+    [
+      "Lachlan",
+      "Bayliss",
+      25,
+      "CM"
+    ],
+    [
+      "Tommy",
+      "Smith",
+      26,
+      "CB"
+    ]
+  ],
+  "CPV": [
+    [
+      "Vozinha",
+      "",
+      1,
+      "GK"
+    ],
+    [
+      "Stopira",
+      "",
+      2,
+      "CB"
+    ],
+    [
+      "Diney",
+      "",
       3,
-      "LB"
+      "CB"
+    ],
+    [
+      "Roberto",
+      "Lopes",
+      4,
+      "CB"
+    ],
+    [
+      "Logan",
+      "Costa",
+      5,
+      "CB"
+    ],
+    [
+      "Kevin",
+      "Pina",
+      6,
+      "CM"
+    ],
+    [
+      "Jovane",
+      "Cabral",
+      7,
+      "CM"
+    ],
+    [
+      "João",
+      "Paulo",
+      8,
+      "CM"
+    ],
+    [
+      "Gilson",
+      "Benchimol",
+      9,
+      "ST"
+    ],
+    [
+      "Jamiro",
+      "Monteiro",
+      10,
+      "CM"
+    ],
+    [
+      "Garry",
+      "Rodrigues",
+      11,
+      "CM"
+    ],
+    [
+      "Marcio",
+      "Rosa",
+      12,
+      "GK"
+    ],
+    [
+      "Sidny",
+      "Lopes Cabral",
+      13,
+      "CB"
+    ],
+    [
+      "Deroy",
+      "Duarte",
+      14,
+      "CM"
+    ],
+    [
+      "Laros",
+      "Duarte",
+      15,
+      "CM"
+    ],
+    [
+      "Yannick",
+      "Semedo",
+      16,
+      "CM"
+    ],
+    [
+      "Willy",
+      "Semedo",
+      17,
+      "CM"
+    ],
+    [
+      "Telmo",
+      "Arcanjo",
+      18,
+      "CM"
+    ],
+    [
+      "Dailon",
+      "Livramento",
+      19,
+      "ST"
+    ],
+    [
+      "Ryan",
+      "Mendes",
+      20,
+      "ST"
+    ],
+    [
+      "Nuno",
+      "Da Costa",
+      21,
+      "CM"
+    ],
+    [
+      "Steven",
+      "Moreira",
+      22,
+      "CB"
+    ],
+    [
+      "Cj",
+      "Dos Santos",
+      23,
+      "GK"
+    ],
+    [
+      "Wagner",
+      "Pina",
+      24,
+      "CB"
+    ],
+    [
+      "Kelvin",
+      "Pires",
+      25,
+      "CB"
+    ],
+    [
+      "Helio",
+      "Varela",
+      26,
+      "CM"
+    ]
+  ],
+  "KSA": [
+    [
+      "Nawaf",
+      "Aqidi",
+      1,
+      "GK"
+    ],
+    [
+      "Ali",
+      "Majrashi",
+      2,
+      "CB"
+    ],
+    [
+      "Ali",
+      "Lajami",
+      3,
+      "CB"
+    ],
+    [
+      "Abdulelah",
+      "Amri",
+      4,
+      "CB"
+    ],
+    [
+      "Hassan",
+      "Tambakti",
+      5,
+      "CB"
+    ],
+    [
+      "Nasser",
+      "Dawsari",
+      6,
+      "CM"
+    ],
+    [
+      "Musab",
+      "Juwayr",
+      7,
+      "CM"
+    ],
+    [
+      "Ayman",
+      "Yahya",
+      8,
+      "ST"
+    ],
+    [
+      "Firas",
+      "Buraikan",
+      9,
+      "ST"
+    ],
+    [
+      "Salem",
+      "Dawsari",
+      10,
+      "ST"
+    ],
+    [
+      "Saleh",
+      "Shehri",
+      11,
+      "ST"
+    ],
+    [
+      "Saud",
+      "Abdulhamid",
+      12,
+      "CB"
+    ],
+    [
+      "Nawaf",
+      "Boushal",
+      13,
+      "CB"
+    ],
+    [
+      "Hassan",
+      "Kadesh",
+      14,
+      "CB"
+    ],
+    [
+      "Abdullah",
+      "Khaibari",
+      15,
+      "CM"
+    ],
+    [
+      "Ziyad",
+      "Johani",
+      16,
+      "CM"
+    ],
+    [
+      "Khalid",
+      "Ghannam",
+      17,
+      "ST"
+    ],
+    [
+      "Alaa",
+      "Hejji",
+      18,
+      "CM"
+    ],
+    [
+      "Abdullah",
+      "Hamdan",
+      19,
+      "ST"
+    ],
+    [
+      "Sultan",
+      "Mandash",
+      20,
+      "ST"
+    ],
+    [
+      "Mohammed",
+      "Owais",
+      21,
+      "GK"
+    ],
+    [
+      "Ahmed",
+      "Kassar",
+      22,
+      "GK"
+    ],
+    [
+      "Mohamed",
+      "Kanno",
+      23,
+      "CM"
+    ],
+    [
+      "Moteb",
+      "Harbi",
+      24,
+      "CB"
+    ],
+    [
+      "Jehad",
+      "Thakri",
+      25,
+      "CB"
+    ],
+    [
+      "Mohammed",
+      "Abu Shamat",
+      26,
+      "CB"
     ]
   ],
   "ESP": [
     [
-      "Unai",
-      "Simon",
+      "David",
+      "Raya",
       1,
+      "GK"
+    ],
+    [
+      "Marc",
+      "Pubill",
+      2,
+      "CB"
+    ],
+    [
+      "Alex",
+      "Grimaldo",
+      3,
+      "CB"
+    ],
+    [
+      "Eric",
+      "Garcia",
+      4,
+      "CB"
+    ],
+    [
+      "Marcos",
+      "Llorente",
+      5,
+      "CB"
+    ],
+    [
+      "Mikel",
+      "Merino",
+      6,
+      "CM"
+    ],
+    [
+      "Ferran",
+      "Torres",
+      7,
+      "ST"
+    ],
+    [
+      "Fabian",
+      "Ruiz",
+      8,
+      "CM"
+    ],
+    [
+      "Gavi",
+      "",
+      9,
+      "CM"
+    ],
+    [
+      "Dani",
+      "Olmo",
+      10,
+      "ST"
+    ],
+    [
+      "Yeremy",
+      "Pino",
+      11,
+      "ST"
+    ],
+    [
+      "Pedro",
+      "Porro",
+      12,
+      "CB"
+    ],
+    [
+      "Joan",
+      "Garcia",
+      13,
       "GK"
     ],
     [
@@ -1917,194 +4819,76 @@
       "CB"
     ],
     [
-      "Robin",
-      "Le Normand",
-      3,
-      "CB"
-    ],
-    [
-      "Dani",
-      "Carvajal",
-      2,
-      "RB"
-    ],
-    [
-      "Marc",
-      "Cucurella",
-      18,
-      "LB"
+      "Alex",
+      "Baena",
+      15,
+      "CM"
     ],
     [
       "Rodri",
-      "Hernandez",
+      "",
       16,
-      "CDM"
+      "CM"
     ],
     [
-      "Pedri",
-      "Gonzalez",
-      8,
+      "Nico",
+      "Williams",
+      17,
+      "ST"
+    ],
+    [
+      "Martin",
+      "Zubimendi",
+      18,
       "CM"
     ],
     [
       "Lamine",
       "Yamal",
       19,
-      "RW"
-    ],
-    [
-      "Nico",
-      "Williams",
-      11,
-      "LW"
-    ],
-    [
-      "Alvaro",
-      "Morata",
-      9,
       "ST"
     ],
     [
-      "Dani",
-      "Olmo",
-      10,
-      "CAM"
-    ]
-  ],
-  "CPV": [
+      "Pedri",
+      "",
+      20,
+      "CM"
+    ],
     [
-      "Vozinha",
-      "Vozinha",
-      1,
+      "Mikel",
+      "Oyarzabal",
+      21,
+      "ST"
+    ],
+    [
+      "Pau",
+      "Cubarsi",
+      22,
+      "CB"
+    ],
+    [
+      "Unai",
+      "Simon",
+      23,
       "GK"
     ],
     [
-      "Stopira",
-      "Stopira",
-      4,
+      "Marc",
+      "Cucurella",
+      24,
       "CB"
     ],
     [
-      "Jovane",
-      "Cabral",
-      11,
-      "LW"
-    ],
-    [
-      "Ryan",
-      "Mendes",
-      7,
-      "RW"
-    ],
-    [
-      "Gariss",
-      "Evora",
-      9,
+      "Victor",
+      "Munoz",
+      25,
       "ST"
     ],
     [
-      "Bruno",
-      "Leite",
-      6,
-      "CDM"
-    ],
-    [
-      "Marco",
-      "Silva",
-      10,
-      "CAM"
-    ],
-    [
-      "Patrick",
-      "Andrade",
-      8,
-      "CM"
-    ],
-    [
-      "Roberto",
-      "Lopes",
-      5,
-      "CB"
-    ],
-    [
-      "Steve",
-      "Furtado",
-      2,
-      "RB"
-    ],
-    [
-      "Geovane",
-      "Santos",
-      3,
-      "LB"
-    ]
-  ],
-  "KSA": [
-    [
-      "Mohammed",
-      "Al-Owais",
-      1,
-      "GK"
-    ],
-    [
-      "Ali",
-      "Al-Bulayhi",
-      5,
-      "CB"
-    ],
-    [
-      "Hassan",
-      "Al-Tambakti",
-      4,
-      "CB"
-    ],
-    [
-      "Sultan",
-      "Al-Ghannam",
-      2,
-      "RB"
-    ],
-    [
-      "Mohammed",
-      "Al-Breik",
-      12,
-      "LB"
-    ],
-    [
-      "Salman",
-      "Al-Faraj",
-      7,
-      "CM"
-    ],
-    [
-      "Salem",
-      "Al-Dawsari",
-      10,
-      "LW"
-    ],
-    [
-      "Saleh",
-      "Al-Shehri",
-      9,
+      "Borja",
+      "Iglesias",
+      26,
       "ST"
-    ],
-    [
-      "Firas",
-      "Al-Buraikan",
-      11,
-      "ST"
-    ],
-    [
-      "Nasser",
-      "Al-Dawsari",
-      8,
-      "CM"
-    ],
-    [
-      "Abdulellah",
-      "Al-Malki",
-      6,
-      "CDM"
     ]
   ],
   "URU": [
@@ -2121,34 +4905,40 @@
       "CB"
     ],
     [
+      "Sebastian",
+      "Caceres",
+      3,
+      "CB"
+    ],
+    [
       "Ronald",
       "Araujo",
       4,
       "CB"
     ],
     [
-      "Matias",
-      "Vina",
-      17,
-      "LB"
-    ],
-    [
-      "Federico",
-      "Valverde",
-      15,
+      "Manuel",
+      "Ugarte",
+      5,
       "CM"
     ],
     [
       "Rodrigo",
       "Bentancur",
       6,
-      "CDM"
+      "CM"
     ],
     [
-      "Facundo",
-      "Pellistri",
-      11,
-      "RW"
+      "Nicolas de la",
+      "Cruz",
+      7,
+      "CM"
+    ],
+    [
+      "Federico",
+      "Valverde",
+      8,
+      "CM"
     ],
     [
       "Darwin",
@@ -2157,72 +4947,162 @@
       "ST"
     ],
     [
-      "Luis",
-      "Suarez",
+      "Giorgian de",
+      "Arrascaeta",
+      10,
+      "CM"
+    ],
+    [
+      "Facundo",
+      "Pellistri",
+      11,
+      "ST"
+    ],
+    [
+      "Santiago",
+      "Mele",
+      12,
+      "GK"
+    ],
+    [
+      "Guillermo",
+      "Varela",
+      13,
+      "CB"
+    ],
+    [
+      "Agustin",
+      "Canobbio",
+      14,
+      "CM"
+    ],
+    [
+      "Emiliano",
+      "Martinez",
+      15,
+      "CM"
+    ],
+    [
+      "Mathias",
+      "Olivera",
+      16,
+      "CB"
+    ],
+    [
+      "Matias",
+      "Vina",
+      17,
+      "CB"
+    ],
+    [
+      "Brian",
+      "Rodriguez",
+      18,
+      "ST"
+    ],
+    [
+      "Rodrigo",
+      "Aguirre",
       19,
       "ST"
     ],
     [
-      "Federico",
-      "Diaz",
-      7,
-      "CAM"
+      "Maximiliano",
+      "Araujo",
+      20,
+      "CM"
     ],
     [
-      "Damian",
-      "Suarez",
-      13,
-      "RB"
+      "Federico",
+      "Vinas",
+      21,
+      "ST"
+    ],
+    [
+      "Joaquin",
+      "Piquerez",
+      22,
+      "CM"
+    ],
+    [
+      "Fernando",
+      "Muslera",
+      23,
+      "GK"
+    ],
+    [
+      "Santiago",
+      "Bueno",
+      24,
+      "CB"
+    ],
+    [
+      "Juan Manuel",
+      "Sanabria",
+      25,
+      "CM"
+    ],
+    [
+      "Rodrigo",
+      "Zalazar",
+      26,
+      "CM"
     ]
   ],
   "FRA": [
     [
-      "Mike",
-      "Maignan",
+      "Brice",
+      "Samba",
       1,
       "GK"
     ],
     [
-      "William",
-      "Saliba",
-      4,
+      "Malo",
+      "Gusto",
+      2,
+      "CB"
+    ],
+    [
+      "Lucas",
+      "Digne",
+      3,
       "CB"
     ],
     [
       "Dayot",
       "Upamecano",
-      5,
+      4,
       "CB"
-    ],
-    [
-      "Theo",
-      "Hernandez",
-      22,
-      "LB"
     ],
     [
       "Jules",
       "Kounde",
-      2,
-      "RB"
+      5,
+      "CB"
     ],
     [
-      "Aurelien",
-      "Tchouameni",
-      8,
-      "CDM"
-    ],
-    [
-      "Adrien",
-      "Rabiot",
-      14,
+      "Manu",
+      "Kone",
+      6,
       "CM"
     ],
     [
       "Ousmane",
       "Dembele",
-      11,
-      "RW"
+      7,
+      "ST"
+    ],
+    [
+      "Aurelien",
+      "Tchouameni",
+      8,
+      "CM"
+    ],
+    [
+      "Marcus",
+      "Thuram",
+      9,
+      "ST"
     ],
     [
       "Kylian",
@@ -2231,126 +5111,154 @@
       "ST"
     ],
     [
-      "Antoine",
-      "Griezmann",
-      7,
-      "CAM"
-    ],
-    [
-      "Olivier",
-      "Giroud",
-      9,
-      "ST"
-    ]
-  ],
-  "SEN": [
-    [
-      "Edouard",
-      "Mendy",
-      1,
-      "GK"
-    ],
-    [
-      "Kalidou",
-      "Koulibaly",
-      3,
-      "CB"
-    ],
-    [
-      "Abdu",
-      "Diallo",
-      4,
-      "CB"
-    ],
-    [
-      "Ismaila",
-      "Sarr",
-      18,
-      "RW"
-    ],
-    [
-      "Sadio",
-      "Mane",
-      10,
-      "LW"
-    ],
-    [
-      "Nicolas",
-      "Jackson",
-      9,
-      "ST"
-    ],
-    [
-      "Idrissa",
-      "Gueye",
-      6,
-      "CDM"
-    ],
-    [
-      "Cheikhou",
-      "Kouyate",
-      5,
-      "CDM"
-    ],
-    [
-      "Pape",
-      "Gueye",
-      8,
-      "CM"
-    ],
-    [
-      "Boulaye",
-      "Dia",
+      "Michael",
+      "Olise",
       11,
       "ST"
     ],
     [
-      "Moussa",
-      "Niakhate",
-      2,
-      "LB"
+      "Bradley",
+      "Barcola",
+      12,
+      "ST"
+    ],
+    [
+      "Ngolo",
+      "Kante",
+      13,
+      "CM"
+    ],
+    [
+      "Adrien",
+      "Rabiot",
+      14,
+      "CM"
+    ],
+    [
+      "Ibrahima",
+      "Konate",
+      15,
+      "CB"
+    ],
+    [
+      "Mike",
+      "Maignan",
+      16,
+      "GK"
+    ],
+    [
+      "William",
+      "Saliba",
+      17,
+      "CB"
+    ],
+    [
+      "Warren",
+      "Zaire-Emery",
+      18,
+      "CM"
+    ],
+    [
+      "Theo",
+      "Hernandez",
+      19,
+      "CB"
+    ],
+    [
+      "Desire",
+      "Doue",
+      20,
+      "ST"
+    ],
+    [
+      "Lucas",
+      "Hernandez",
+      21,
+      "CB"
+    ],
+    [
+      "Jean-Philippe",
+      "Mateta",
+      22,
+      "ST"
+    ],
+    [
+      "Robin",
+      "Risser",
+      23,
+      "GK"
+    ],
+    [
+      "Rayan",
+      "Cherki",
+      24,
+      "CM"
+    ],
+    [
+      "Maghnes",
+      "Akliouche",
+      25,
+      "CM"
+    ],
+    [
+      "Maxence",
+      "Lacroix",
+      26,
+      "CB"
     ]
   ],
   "IRQ": [
     [
-      "Jalal",
-      "Hassan",
+      "Fahad",
+      "Talib",
       1,
       "GK"
     ],
     [
-      "Ali",
-      "Adnan",
-      14,
-      "LB"
+      "Rebin",
+      "Sulaka",
+      2,
+      "CB"
     ],
     [
-      "Saad",
-      "Natiq",
+      "Hussein",
+      "Ali",
+      3,
+      "CB"
+    ],
+    [
+      "Zaid",
+      "Tahseen",
       4,
       "CB"
     ],
     [
-      "Manar",
-      "Salman",
+      "Akam",
+      "Hashim",
       5,
       "CB"
     ],
     [
-      "Amjad",
-      "Attwan",
+      "Manaf",
+      "Younis",
       6,
-      "CDM"
+      "CB"
     ],
     [
-      "Zaid",
-      "Fadhil",
+      "Youssef",
+      "Amyn",
+      7,
+      "CM"
+    ],
+    [
+      "Ibrahim",
+      "Bayesh",
       8,
       "CM"
     ],
     [
-      "Aymen",
-      "Hussein",
+      "Ali",
+      "Hamadi",
       9,
       "ST"
     ],
@@ -2361,72 +5269,120 @@
       "ST"
     ],
     [
-      "Bashar",
-      "Resan",
-      7,
-      "CAM"
-    ],
-    [
-      "Alaa",
-      "Abdul-Zahra",
+      "Ahmed",
+      "Qasem",
       11,
-      "LW"
+      "ST"
     ],
     [
-      "Hussein",
+      "Jalal",
+      "Hassan",
+      12,
+      "GK"
+    ],
+    [
       "Ali",
+      "Yousif",
+      13,
+      "ST"
+    ],
+    [
+      "Zidane",
+      "Iqbal",
+      14,
+      "CM"
+    ],
+    [
+      "Ahmed",
+      "Yahya",
+      15,
+      "CB"
+    ],
+    [
+      "Amir",
+      "Ammari",
+      16,
+      "CM"
+    ],
+    [
+      "Ali",
+      "Jasim",
       17,
-      "RW"
+      "ST"
+    ],
+    [
+      "Aymen",
+      "Hussein",
+      18,
+      "ST"
+    ],
+    [
+      "Kevin",
+      "Yakob",
+      19,
+      "CM"
+    ],
+    [
+      "Aimar",
+      "Sher",
+      20,
+      "CM"
+    ],
+    [
+      "Marko",
+      "Farji",
+      21,
+      "ST"
+    ],
+    [
+      "Ahmed",
+      "Basil",
+      22,
+      "GK"
+    ],
+    [
+      "Merchas",
+      "Doski",
+      23,
+      "CB"
+    ],
+    [
+      "Zaid",
+      "Ismail",
+      24,
+      "CM"
+    ],
+    [
+      "Mustafa",
+      "Saadoon",
+      25,
+      "CB"
+    ],
+    [
+      "Frans",
+      "Putros",
+      26,
+      "CB"
     ]
   ],
   "NOR": [
     [
-      "Andre",
-      "Hansen",
+      "Orjan",
+      "Nyland",
       1,
       "GK"
     ],
     [
-      "Stefan",
-      "Bajcetic",
-      6,
-      "CDM"
-    ],
-    [
-      "Martin",
-      "Odegaard",
-      10,
-      "CAM"
-    ],
-    [
-      "Erling",
-      "Haaland",
-      9,
-      "ST"
-    ],
-    [
-      "Alexander",
-      "Sorloth",
-      11,
-      "ST"
-    ],
-    [
-      "Antonio",
-      "Nusa",
-      18,
-      "LW"
-    ],
-    [
-      "Patrick",
-      "Berg",
-      8,
+      "Morten",
+      "Thorsby",
+      2,
       "CM"
     ],
     [
-      "Felix",
-      "Myhre",
-      7,
-      "CM"
+      "Kristoffer",
+      "Ajer",
+      3,
+      "CB"
     ],
     [
       "Leo",
@@ -2436,22 +5392,524 @@
     ],
     [
       "David",
-      "Wolfe",
-      2,
-      "RB"
+      "Moller Wolfe",
+      5,
+      "CB"
+    ],
+    [
+      "Patrick",
+      "Berg",
+      6,
+      "CM"
+    ],
+    [
+      "Alexander",
+      "Sorloth",
+      7,
+      "ST"
+    ],
+    [
+      "Sander",
+      "Berge",
+      8,
+      "CM"
+    ],
+    [
+      "Erling",
+      "Haaland",
+      9,
+      "ST"
+    ],
+    [
+      "Martin",
+      "Odegaard",
+      10,
+      "CM"
+    ],
+    [
+      "Jorgen",
+      "Strand Larsen",
+      11,
+      "ST"
+    ],
+    [
+      "Sander",
+      "Tangvik",
+      12,
+      "GK"
+    ],
+    [
+      "Egil",
+      "Selvik",
+      13,
+      "GK"
     ],
     [
       "Fredrik",
+      "Aursnes",
+      14,
+      "CM"
+    ],
+    [
+      "Fredrik Andre",
       "Bjorkan",
+      15,
+      "CB"
+    ],
+    [
+      "Marcus Holmgren",
+      "Pedersen",
+      16,
+      "CB"
+    ],
+    [
+      "Torbjorn",
+      "Heggem",
+      17,
+      "CB"
+    ],
+    [
+      "Kristian",
+      "Thorstvedt",
+      18,
+      "CM"
+    ],
+    [
+      "Thelo",
+      "Aasgaard",
+      19,
+      "CM"
+    ],
+    [
+      "Antonio",
+      "Nusa",
+      20,
+      "ST"
+    ],
+    [
+      "Andreas",
+      "Schjelderup",
+      21,
+      "CM"
+    ],
+    [
+      "Oscar",
+      "Bobb",
+      22,
+      "CM"
+    ],
+    [
+      "Jens Petter",
+      "Hauge",
+      23,
+      "CM"
+    ],
+    [
+      "Sondre",
+      "Langas",
+      24,
+      "CB"
+    ],
+    [
+      "Henrik",
+      "Falchener",
+      25,
+      "CB"
+    ],
+    [
+      "Julian",
+      "Ryerson",
+      26,
+      "ST"
+    ]
+  ],
+  "SEN": [
+    [
+      "Yehvann",
+      "Diouf",
+      1,
+      "GK"
+    ],
+    [
+      "Mamadou",
+      "Sarr",
+      2,
+      "CB"
+    ],
+    [
+      "Kalidou",
+      "Koulibaly",
       3,
-      "LB"
+      "CB"
+    ],
+    [
+      "Abdoulaye",
+      "Seck",
+      4,
+      "CB"
+    ],
+    [
+      "Idrissa",
+      "Gueye",
+      5,
+      "CM"
+    ],
+    [
+      "Pathe",
+      "Ciss",
+      6,
+      "CM"
+    ],
+    [
+      "Assane",
+      "Diao",
+      7,
+      "ST"
+    ],
+    [
+      "Lamine",
+      "Camara",
+      8,
+      "CM"
+    ],
+    [
+      "Bamba",
+      "Dieng",
+      9,
+      "ST"
+    ],
+    [
+      "Sadio",
+      "Mane",
+      10,
+      "ST"
+    ],
+    [
+      "Nicolas",
+      "Jackson",
+      11,
+      "ST"
+    ],
+    [
+      "Cherif",
+      "Ndiaye",
+      12,
+      "ST"
+    ],
+    [
+      "Iliman",
+      "Ndiaye",
+      13,
+      "ST"
+    ],
+    [
+      "Ismail",
+      "Jakobs",
+      14,
+      "CB"
+    ],
+    [
+      "Krepin",
+      "Diatta",
+      15,
+      "CB"
+    ],
+    [
+      "Edouard",
+      "Mendy",
+      16,
+      "GK"
+    ],
+    [
+      "Pape Matar",
+      "Sarr",
+      17,
+      "CM"
+    ],
+    [
+      "Ismaila",
+      "Sarr",
+      18,
+      "ST"
+    ],
+    [
+      "Moussa",
+      "Niakhate",
+      19,
+      "CB"
+    ],
+    [
+      "Ibrahim",
+      "Mbaye",
+      20,
+      "ST"
+    ],
+    [
+      "Habib",
+      "Diarra",
+      21,
+      "CM"
+    ],
+    [
+      "Bara",
+      "Sapoko Ndiaye",
+      22,
+      "CM"
+    ],
+    [
+      "Mory",
+      "Diaw",
+      23,
+      "GK"
+    ],
+    [
+      "Antoine",
+      "Mendy",
+      24,
+      "CB"
+    ],
+    [
+      "El Hadji Malick",
+      "Diouf",
+      25,
+      "CB"
+    ],
+    [
+      "Pape",
+      "Gueye",
+      26,
+      "CM"
+    ]
+  ],
+  "ALG": [
+    [
+      "Melvin",
+      "Mastil",
+      1,
+      "GK"
+    ],
+    [
+      "Aissa",
+      "Mandi",
+      2,
+      "CB"
+    ],
+    [
+      "Achref",
+      "Abada",
+      3,
+      "CB"
+    ],
+    [
+      "Mohamed Amine",
+      "Tougai",
+      4,
+      "CB"
+    ],
+    [
+      "Zineddine",
+      "Belaid",
+      5,
+      "CB"
+    ],
+    [
+      "Ramiz",
+      "Zerrouki",
+      6,
+      "CM"
+    ],
+    [
+      "Riyad",
+      "Mahrez",
+      7,
+      "ST"
+    ],
+    [
+      "Houssem",
+      "Aouar",
+      8,
+      "CM"
+    ],
+    [
+      "Amine",
+      "Gouiri",
+      9,
+      "ST"
+    ],
+    [
+      "Fares",
+      "Chaibi",
+      10,
+      "CM"
+    ],
+    [
+      "Anis",
+      "Hadj Moussa",
+      11,
+      "ST"
+    ],
+    [
+      "Nadhir",
+      "Benbouali",
+      12,
+      "ST"
+    ],
+    [
+      "Jaouen",
+      "Hadjam",
+      13,
+      "CB"
+    ],
+    [
+      "Hicham",
+      "Boudaoui",
+      14,
+      "CM"
+    ],
+    [
+      "Rayan",
+      "Ait-Nouri",
+      15,
+      "CB"
+    ],
+    [
+      "Oussama",
+      "Benbot",
+      16,
+      "GK"
+    ],
+    [
+      "Rafik",
+      "Belghali",
+      17,
+      "CB"
+    ],
+    [
+      "Mohamed",
+      "Amoura",
+      18,
+      "ST"
+    ],
+    [
+      "Nabil",
+      "Bentaleb",
+      19,
+      "CM"
+    ],
+    [
+      "Adil",
+      "Boulbina",
+      20,
+      "ST"
+    ],
+    [
+      "Ramy",
+      "Bensebaini",
+      21,
+      "CB"
+    ],
+    [
+      "Ibrahim",
+      "Maza",
+      22,
+      "CM"
+    ],
+    [
+      "Luca",
+      "Zidane",
+      23,
+      "GK"
+    ],
+    [
+      "Yacine",
+      "Titraoui",
+      24,
+      "CM"
+    ],
+    [
+      "Fares",
+      "Ghedjemis",
+      25,
+      "ST"
+    ],
+    [
+      "Samir",
+      "Chergui",
+      26,
+      "CB"
     ]
   ],
   "ARG": [
     [
-      "Emiliano",
-      "Martinez",
+      "Juan",
+      "Musso",
       1,
+      "GK"
+    ],
+    [
+      "Leonardo",
+      "Balerdi",
+      2,
+      "CB"
+    ],
+    [
+      "Nicolas",
+      "Tagliafico",
+      3,
+      "CB"
+    ],
+    [
+      "Gonzalo",
+      "Montiel",
+      4,
+      "CB"
+    ],
+    [
+      "Leandro",
+      "Paredes",
+      5,
+      "CM"
+    ],
+    [
+      "Lisandro",
+      "Martinez",
+      6,
+      "CB"
+    ],
+    [
+      "Rodrigo",
+      "De Paul",
+      7,
+      "CM"
+    ],
+    [
+      "Valentin",
+      "Barco",
+      8,
+      "CM"
+    ],
+    [
+      "Julian",
+      "Alvarez",
+      9,
+      "ST"
+    ],
+    [
+      "Lionel",
+      "Messi",
+      10,
+      "ST"
+    ],
+    [
+      "Giovani",
+      "Lo Celso",
+      11,
+      "CM"
+    ],
+    [
+      "Geronimo",
+      "Rulli",
+      12,
       "GK"
     ],
     [
@@ -2461,28 +5919,40 @@
       "CB"
     ],
     [
+      "Exequiel",
+      "Palacios",
+      14,
+      "CM"
+    ],
+    [
+      "Nicolas",
+      "Gonzalez",
+      15,
+      "CM"
+    ],
+    [
+      "Thiago",
+      "Almada",
+      16,
+      "ST"
+    ],
+    [
+      "Giuliano",
+      "Simeone",
+      17,
+      "ST"
+    ],
+    [
+      "Nico",
+      "Paz",
+      18,
+      "ST"
+    ],
+    [
       "Nicolas",
       "Otamendi",
       19,
       "CB"
-    ],
-    [
-      "Marcos",
-      "Acuna",
-      8,
-      "LB"
-    ],
-    [
-      "Rodrigo",
-      "De Paul",
-      7,
-      "CM"
-    ],
-    [
-      "Enzo",
-      "Fernandez",
-      24,
-      "CM"
     ],
     [
       "Alexis",
@@ -2491,163 +5961,191 @@
       "CM"
     ],
     [
-      "Lionel",
-      "Messi",
-      10,
-      "RW"
-    ],
-    [
-      "Angel",
-      "Di Maria",
-      11,
-      "LW"
+      "Jose Manuel",
+      "Lopez",
+      21,
+      "ST"
     ],
     [
       "Lautaro",
       "Martinez",
-      9,
+      22,
       "ST"
     ],
     [
-      "Julian",
-      "Alvarez",
-      22,
-      "ST"
-    ]
-  ],
-  "ALG": [
-    [
-      "Ra\u00efs",
-      "M'Bolhi",
-      1,
+      "Emiliano",
+      "Martinez",
+      23,
       "GK"
     ],
     [
-      "Ramy",
-      "Bensebaini",
-      3,
-      "LB"
-    ],
-    [
-      "Aissa",
-      "Mandi",
-      2,
-      "CB"
-    ],
-    [
-      "Youcef",
-      "Atal",
-      2,
-      "RB"
-    ],
-    [
-      "Ismael",
-      "Bennacer",
-      6,
-      "CDM"
-    ],
-    [
-      "Riyad",
-      "Mahrez",
-      7,
-      "RW"
-    ],
-    [
-      "Youcef",
-      "Belaili",
-      11,
-      "LW"
-    ],
-    [
-      "Baghdad",
-      "Bounedjah",
-      9,
-      "ST"
-    ],
-    [
-      "Adam",
-      "Ounas",
-      10,
-      "CAM"
-    ],
-    [
-      "Houssem",
-      "Aouar",
-      8,
+      "Enzo",
+      "Fernandez",
+      24,
       "CM"
     ],
     [
-      "Islam",
-      "Slimani",
-      13,
-      "ST"
+      "Facundo",
+      "Medina",
+      25,
+      "CB"
+    ],
+    [
+      "Nahuel",
+      "Molina",
+      26,
+      "CB"
     ]
   ],
   "AUT": [
     [
-      "Patrick",
-      "Pentz",
+      "Alexander",
+      "Schlager",
       1,
       "GK"
     ],
     [
       "David",
-      "Alaba",
-      4,
+      "Affengruber",
+      2,
       "CB"
     ],
     [
-      "Marcel",
-      "Sabitzer",
-      6,
+      "Kevin",
+      "Danso",
+      3,
+      "CB"
+    ],
+    [
+      "Xaver",
+      "Schlager",
+      4,
       "CM"
     ],
     [
-      "Konrad",
-      "Laimer",
-      8,
+      "Stefan",
+      "Posch",
+      5,
+      "CB"
+    ],
+    [
+      "Nicolas",
+      "Seiwald",
+      6,
       "CM"
     ],
     [
       "Marko",
       "Arnautovic",
-      9,
+      7,
       "ST"
     ],
     [
-      "Christoph",
-      "Baumgartner",
+      "David",
+      "Alaba",
+      8,
+      "CB"
+    ],
+    [
+      "Marcel",
+      "Sabitzer",
+      9,
+      "CM"
+    ],
+    [
+      "Florian",
+      "Grillitsch",
       10,
-      "CAM"
+      "CM"
     ],
     [
       "Michael",
-      "Liendl",
+      "Gregoritsch",
       11,
-      "CM"
+      "ST"
+    ],
+    [
+      "Florian",
+      "Wiegele",
+      12,
+      "GK"
+    ],
+    [
+      "Patrick",
+      "Pentz",
+      13,
+      "GK"
+    ],
+    [
+      "Sasa",
+      "Kalajdzic",
+      14,
+      "ST"
     ],
     [
       "Philipp",
       "Lienhart",
-      3,
+      15,
       "CB"
     ],
     [
-      "Stefan",
-      "Posch",
-      2,
-      "RB"
+      "Phillipp",
+      "Mwene",
+      16,
+      "CB"
     ],
     [
-      "Andreas",
-      "Ulmer",
-      5,
-      "LB"
+      "Carney",
+      "Chukwuemeka",
+      17,
+      "CM"
     ],
     [
       "Romano",
       "Schmid",
       18,
+      "CM"
+    ],
+    [
+      "Konrad",
+      "Laimer",
+      20,
+      "CM"
+    ],
+    [
+      "Patrick",
+      "Wimmer",
+      21,
+      "ST"
+    ],
+    [
+      "Alexander",
+      "Prass",
+      22,
+      "CM"
+    ],
+    [
+      "Marco",
+      "Friedl",
+      23,
+      "CB"
+    ],
+    [
+      "Paul",
+      "Wanner",
+      24,
+      "CM"
+    ],
+    [
+      "Michael",
+      "Svoboda",
+      25,
+      "CB"
+    ],
+    [
+      "Alessandro",
+      "Schopf",
+      26,
       "CM"
     ]
   ],
@@ -2659,64 +6157,464 @@
       "GK"
     ],
     [
-      "Yazan",
-      "Al-Naimat",
-      9,
-      "ST"
+      "Mohammad",
+      "Abu Hashish",
+      2,
+      "CB"
     ],
     [
-      "Musa",
-      "Al-Taamari",
-      10,
-      "RW"
+      "Abdallah",
+      "Nasib",
+      3,
+      "CB"
     ],
     [
-      "Mahmoud",
-      "Al-Mardi",
+      "Husam",
+      "Abu Dahab",
       4,
       "CB"
     ],
     [
-      "Ihsan",
-      "Haddad",
-      2,
-      "RB"
+      "Yazan",
+      "Arab",
+      5,
+      "CB"
     ],
     [
-      "Nizar",
-      "Al-Rashdan",
+      "Amer",
+      "Jamous",
       6,
-      "CDM"
+      "CM"
     ],
     [
-      "Yaseen",
-      "Al-Bakhit",
+      "Mohammad",
+      "Abu Zrayq",
+      7,
+      "ST"
+    ],
+    [
+      "Noor",
+      "Rawabdeh",
       8,
       "CM"
     ],
     [
       "Ali",
       "Olwan",
-      7,
-      "LW"
+      9,
+      "ST"
     ],
     [
-      "Saleh",
-      "Ratib",
+      "Musa",
+      "Taamari",
+      10,
+      "ST"
+    ],
+    [
+      "Odeh",
+      "Fakhouri",
       11,
       "ST"
     ],
     [
+      "Nour",
+      "Bani Attiah",
+      12,
+      "GK"
+    ],
+    [
+      "Mahmoud",
+      "Mardi",
+      13,
+      "ST"
+    ],
+    [
+      "Rajaei",
+      "Ayed",
+      14,
+      "CM"
+    ],
+    [
+      "Ibrahim",
+      "Sadeh",
+      15,
+      "CM"
+    ],
+    [
+      "Mo",
+      "Abualnadi",
+      16,
+      "CB"
+    ],
+    [
+      "Salim",
+      "Obaid",
+      17,
+      "CB"
+    ],
+    [
+      "Saed",
+      "Rosan",
+      19,
+      "CB"
+    ],
+    [
+      "Mohannad",
+      "Abu Taha",
+      20,
+      "CM"
+    ],
+    [
+      "Nizar",
+      "Rashdan",
+      21,
+      "CM"
+    ],
+    [
       "Abdallah",
-      "Nasib",
+      "Fakhouri",
+      22,
+      "GK"
+    ],
+    [
+      "Ihsan",
+      "Haddad",
+      23,
+      "CB"
+    ],
+    [
+      "Ali",
+      "Azaizeh",
+      24,
+      "ST"
+    ],
+    [
+      "Mohammad",
+      "Dawoud",
+      25,
+      "CM"
+    ],
+    [
+      "Anas",
+      "Badawi",
+      26,
+      "CB"
+    ]
+  ],
+  "COL": [
+    [
+      "David",
+      "Ospina",
+      1,
+      "GK"
+    ],
+    [
+      "Daniel",
+      "Munoz",
+      2,
+      "CB"
+    ],
+    [
+      "Jhon",
+      "Lucumi",
+      3,
+      "CB"
+    ],
+    [
+      "Santiago",
+      "Arias",
+      4,
+      "CB"
+    ],
+    [
+      "Kevin",
+      "Castano",
+      5,
+      "CM"
+    ],
+    [
+      "Richard",
+      "Rios",
+      6,
+      "CM"
+    ],
+    [
+      "Luis",
+      "Diaz",
+      7,
+      "ST"
+    ],
+    [
+      "Jorge",
+      "Carrascal",
+      8,
+      "CM"
+    ],
+    [
+      "Jhon",
+      "Cordoba",
+      9,
+      "ST"
+    ],
+    [
+      "James",
+      "Rodriguez",
+      10,
+      "CM"
+    ],
+    [
+      "Jhon",
+      "Arias",
+      11,
+      "CM"
+    ],
+    [
+      "Camilo",
+      "Vargas",
+      12,
+      "GK"
+    ],
+    [
+      "Yerry",
+      "Mina",
+      13,
+      "CB"
+    ],
+    [
+      "Gustavo",
+      "Puerta",
+      14,
+      "CB"
+    ],
+    [
+      "Juan",
+      "Portilla",
+      15,
+      "CM"
+    ],
+    [
+      "Jefferson",
+      "Lerma",
+      16,
+      "CM"
+    ],
+    [
+      "Johan",
+      "Mojica",
+      17,
+      "CB"
+    ],
+    [
+      "Willer",
+      "Ditta",
+      18,
+      "CB"
+    ],
+    [
+      "Cucho",
+      "Hernandez",
+      19,
+      "ST"
+    ],
+    [
+      "Juan Fernando",
+      "Quintero",
+      20,
+      "CM"
+    ],
+    [
+      "Jaminton",
+      "Campaz",
+      21,
+      "ST"
+    ],
+    [
+      "Deiver",
+      "Machado",
+      22,
+      "CB"
+    ],
+    [
+      "Davinson",
+      "Sanchez",
+      23,
+      "CB"
+    ],
+    [
+      "Alvaro",
+      "Montero",
+      24,
+      "GK"
+    ],
+    [
+      "Luis",
+      "Suarez",
+      25,
+      "ST"
+    ],
+    [
+      "Andres",
+      "Gomez",
+      26,
+      "ST"
+    ]
+  ],
+  "COD": [
+    [
+      "Lionel",
+      "Mpasi",
+      1,
+      "GK"
+    ],
+    [
+      "Aaron",
+      "Wan-Bissaka",
+      2,
+      "CB"
+    ],
+    [
+      "Steve",
+      "Kapuadi",
+      3,
+      "CB"
+    ],
+    [
+      "Axel",
+      "Tuanzebe",
+      4,
+      "CB"
+    ],
+    [
+      "Dylan",
+      "Batubinsika",
       5,
       "CB"
     ],
     [
-      "Mohammad",
-      "Abu Hashesh",
-      3,
-      "LB"
+      "Ngalayel",
+      "Mukau",
+      6,
+      "CM"
+    ],
+    [
+      "Nathanael",
+      "Mbuku",
+      7,
+      "CM"
+    ],
+    [
+      "Samuel",
+      "Moutoussamy",
+      8,
+      "CM"
+    ],
+    [
+      "Brian",
+      "Cipenga",
+      9,
+      "ST"
+    ],
+    [
+      "Theo",
+      "Bongonda",
+      10,
+      "CM"
+    ],
+    [
+      "Gael",
+      "Kakuta",
+      11,
+      "ST"
+    ],
+    [
+      "Joris",
+      "Kayembe",
+      12,
+      "CB"
+    ],
+    [
+      "Meschak",
+      "Elia",
+      13,
+      "ST"
+    ],
+    [
+      "Noah",
+      "Sadiki",
+      14,
+      "CM"
+    ],
+    [
+      "Aaron",
+      "Tshibola",
+      15,
+      "CM"
+    ],
+    [
+      "Timothy",
+      "Fayulu",
+      16,
+      "GK"
+    ],
+    [
+      "Cedric",
+      "Bakambu",
+      17,
+      "ST"
+    ],
+    [
+      "Charles",
+      "Pickel",
+      18,
+      "CM"
+    ],
+    [
+      "Fiston",
+      "Mayele",
+      19,
+      "ST"
+    ],
+    [
+      "Yoane",
+      "Wissa",
+      20,
+      "ST"
+    ],
+    [
+      "Matthieu",
+      "Epolo",
+      21,
+      "GK"
+    ],
+    [
+      "Chancel",
+      "Mbemba",
+      22,
+      "CB"
+    ],
+    [
+      "Simon",
+      "Banza",
+      23,
+      "ST"
+    ],
+    [
+      "Gedeon",
+      "Kalulu",
+      24,
+      "CB"
+    ],
+    [
+      "Edo",
+      "Kayembe",
+      25,
+      "CM"
+    ],
+    [
+      "Arthur",
+      "Masuaku",
+      26,
+      "CB"
     ]
   ],
   "POR": [
@@ -2727,52 +6625,34 @@
       "GK"
     ],
     [
-      "Ruben",
-      "Dias",
-      4,
+      "Nelson",
+      "Semedo",
+      2,
       "CB"
     ],
     [
-      "Pepe",
-      "Pepe",
+      "Ruben",
+      "Dias",
       3,
       "CB"
     ],
     [
-      "Nuno",
-      "Mendes",
-      19,
-      "LB"
+      "Tomas",
+      "Araujo",
+      4,
+      "CB"
     ],
     [
-      "Joao",
-      "Cancelo",
-      20,
-      "RB"
+      "Diogo",
+      "Dalot",
+      5,
+      "CB"
     ],
     [
-      "Vitinha",
-      "Vitinha",
-      23,
+      "Matheus",
+      "Nunes",
+      6,
       "CM"
-    ],
-    [
-      "Bruno",
-      "Fernandes",
-      8,
-      "CAM"
-    ],
-    [
-      "Bernardo",
-      "Silva",
-      10,
-      "CM"
-    ],
-    [
-      "Rafael",
-      "Leao",
-      17,
-      "LW"
     ],
     [
       "Cristiano",
@@ -2781,282 +6661,276 @@
       "ST"
     ],
     [
+      "Bruno",
+      "Fernandes",
+      8,
+      "CM"
+    ],
+    [
       "Goncalo",
       "Ramos",
       9,
       "ST"
-    ]
-  ],
-  "COD": [
-    [
-      "Joel",
-      "Kiassumbua",
-      1,
-      "GK"
     ],
     [
-      "Chancel",
-      "Mbemba",
-      3,
-      "CB"
-    ],
-    [
-      "Marcel",
-      "Tisserand",
-      4,
-      "CB"
-    ],
-    [
-      "Youssouf",
-      "M'Changama",
-      2,
-      "RB"
-    ],
-    [
-      "Meschak",
-      "Elia",
+      "Bernardo",
+      "Silva",
       10,
-      "RW"
+      "CM"
     ],
     [
-      "Theo",
-      "Bongonda",
+      "Joao",
+      "Felix",
       11,
-      "LW"
-    ],
-    [
-      "Cedric",
-      "Bakambu",
-      9,
       "ST"
     ],
     [
-      "Ga\u00ebl",
-      "Kakuta",
-      8,
-      "CAM"
+      "Jose",
+      "Sa",
+      12,
+      "GK"
     ],
     [
-      "Arsenio",
-      "Zinga",
-      6,
-      "CDM"
+      "Renato",
+      "Veiga",
+      13,
+      "CB"
     ],
     [
-      "Fabrice",
-      "Nsakala",
-      5,
-      "LB"
+      "Goncalo",
+      "Inacio",
+      14,
+      "CB"
     ],
     [
-      "Jordan",
-      "Botomba",
-      7,
+      "Joao",
+      "Neves",
+      15,
       "CM"
+    ],
+    [
+      "Francisco",
+      "Trincao",
+      16,
+      "ST"
+    ],
+    [
+      "Rafael",
+      "Leao",
+      17,
+      "ST"
+    ],
+    [
+      "Pedro",
+      "Neto",
+      18,
+      "ST"
+    ],
+    [
+      "Goncalo",
+      "Guedes",
+      19,
+      "ST"
+    ],
+    [
+      "Joao",
+      "Cancelo",
+      20,
+      "CB"
+    ],
+    [
+      "Ruben",
+      "Neves",
+      21,
+      "CM"
+    ],
+    [
+      "Rui",
+      "Silva",
+      22,
+      "GK"
+    ],
+    [
+      "Vitinha",
+      "",
+      23,
+      "CM"
+    ],
+    [
+      "Samu",
+      "Costa",
+      24,
+      "CB"
+    ],
+    [
+      "Nuno",
+      "Mendes",
+      25,
+      "CB"
+    ],
+    [
+      "Francisco",
+      "Conceicao",
+      26,
+      "ST"
     ]
   ],
   "UZB": [
     [
       "Utkir",
-      "Boymurodov",
+      "Yusupov",
       1,
       "GK"
     ],
     [
-      "Eldor",
-      "Shomurodov",
-      9,
-      "ST"
+      "Abdukodir",
+      "Khusanov",
+      2,
+      "CB"
     ],
     [
-      "Odil",
-      "Ahmedov",
+      "Khojiakbar",
+      "Alijonov",
+      3,
+      "CB"
+    ],
+    [
+      "Farrukh",
+      "Sayfiev",
+      4,
+      "CB"
+    ],
+    [
+      "Rustam",
+      "Ashurmatov",
+      5,
+      "CB"
+    ],
+    [
+      "Akmal",
+      "Mozgovoy",
       6,
-      "CDM"
+      "CM"
+    ],
+    [
+      "Otabek",
+      "Shukurov",
+      7,
+      "CM"
+    ],
+    [
+      "Jamshid",
+      "Iskanderov",
+      8,
+      "CM"
+    ],
+    [
+      "Odiljon",
+      "Hamrobekov",
+      9,
+      "CM"
     ],
     [
       "Jaloliddin",
       "Masharipov",
       10,
-      "CAM"
+      "CM"
+    ],
+    [
+      "Oston",
+      "Urunov",
+      11,
+      "CM"
+    ],
+    [
+      "Abduvohid",
+      "Nematov",
+      12,
+      "GK"
+    ],
+    [
+      "Sherzod",
+      "Nasrullaev",
+      13,
+      "CB"
+    ],
+    [
+      "Eldor",
+      "Shomurodov",
+      14,
+      "ST"
+    ],
+    [
+      "Umar",
+      "Eshmurodov",
+      15,
+      "CB"
+    ],
+    [
+      "Botirali",
+      "Ergashev",
+      16,
+      "GK"
+    ],
+    [
+      "Dostonbek",
+      "Khamdamov",
+      17,
+      "CM"
+    ],
+    [
+      "Abdulla",
+      "Abdullaev",
+      18,
+      "CB"
+    ],
+    [
+      "Azizjon",
+      "Ganiev",
+      19,
+      "CM"
+    ],
+    [
+      "Azizbek",
+      "Amonov",
+      20,
+      "ST"
     ],
     [
       "Igor",
       "Sergeev",
-      11,
+      21,
       "ST"
     ],
     [
-      "Otabek",
-      "Shukurov",
-      8,
+      "Abbosbek",
+      "Fayzullaev",
+      22,
       "CM"
     ],
     [
-      "Farhod",
-      "Mirzaboev",
-      2,
-      "RB"
-    ],
-    [
-      "Akhmedjon",
-      "Haydarov",
-      4,
-      "CB"
-    ],
-    [
-      "Abdulla",
-      "Abdullayev",
-      7,
-      "LW"
-    ],
-    [
-      "Sanjar",
-      "Tursunov",
-      17,
-      "RW"
-    ],
-    [
-      "Iskandar",
-      "Alibekov",
-      3,
-      "CB"
-    ]
-  ],
-  "COL": [
-    [
-      "Camilo",
-      "Vargas",
-      1,
-      "GK"
-    ],
-    [
-      "Davinson",
-      "Sanchez",
-      3,
-      "CB"
-    ],
-    [
-      "Yerry",
-      "Mina",
-      4,
-      "CB"
-    ],
-    [
-      "Daniel",
-      "Munoz",
-      2,
-      "RB"
-    ],
-    [
-      "Jefferson",
-      "Lerma",
-      6,
-      "CDM"
-    ],
-    [
-      "James",
-      "Rodriguez",
-      10,
-      "CAM"
-    ],
-    [
-      "Luis",
-      "Diaz",
-      7,
-      "LW"
-    ],
-    [
-      "Luis",
-      "Sinisterra",
-      11,
-      "RW"
-    ],
-    [
-      "Rafael",
-      "Borr\u00e9",
-      9,
-      "ST"
-    ],
-    [
-      "Jhon",
-      "Dur\u00e1n",
-      19,
-      "ST"
-    ],
-    [
-      "Juan",
-      "Cuadrado",
-      8,
-      "RB"
-    ]
-  ],
-  "ENG": [
-    [
-      "Jordan",
-      "Pickford",
-      1,
-      "GK"
-    ],
-    [
-      "John",
-      "Stones",
-      5,
-      "CB"
-    ],
-    [
-      "Harry",
-      "Maguire",
-      6,
-      "CB"
-    ],
-    [
-      "Kyle",
-      "Walker",
-      2,
-      "RB"
-    ],
-    [
-      "Luke",
-      "Shaw",
-      3,
-      "LB"
-    ],
-    [
-      "Declan",
-      "Rice",
-      4,
-      "CDM"
-    ],
-    [
-      "Jude",
-      "Bellingham",
-      8,
+      "Sherzod",
+      "Esanov",
+      23,
       "CM"
     ],
     [
-      "Bukayo",
-      "Saka",
-      7,
-      "RW"
+      "Bekhruz",
+      "Karimov",
+      24,
+      "CB"
     ],
     [
-      "Phil",
-      "Foden",
-      10,
-      "CAM"
+      "Avazbek",
+      "Ulmasaliev",
+      25,
+      "CB"
     ],
     [
-      "Harry",
-      "Kane",
-      9,
-      "ST"
-    ],
-    [
-      "Ollie",
-      "Watkins",
-      11,
-      "ST"
+      "Jakhongir",
+      "Urozov",
+      26,
+      "CB"
     ]
   ],
   "CRO": [
@@ -3067,21 +6941,39 @@
       "GK"
     ],
     [
+      "Josip",
+      "Stanisic",
+      2,
+      "CB"
+    ],
+    [
+      "Marin",
+      "Pongracic",
+      3,
+      "CB"
+    ],
+    [
       "Josko",
       "Gvardiol",
       4,
       "CB"
     ],
     [
-      "Borna",
-      "Sosa",
-      3,
-      "LB"
+      "Duje",
+      "Caleta-Car",
+      5,
+      "CB"
     ],
     [
-      "Luka",
-      "Modric",
-      10,
+      "Josip",
+      "Sutalo",
+      6,
+      "CB"
+    ],
+    [
+      "Nikola",
+      "Moro",
+      7,
       "CM"
     ],
     [
@@ -3091,40 +6983,270 @@
       "CM"
     ],
     [
-      "Marcelo",
-      "Brozovic",
-      6,
-      "CDM"
-    ],
-    [
-      "Ivan",
-      "Perisic",
-      11,
-      "LW"
-    ],
-    [
-      "Bruno",
-      "Petkovic",
+      "Andrej",
+      "Kramaric",
       9,
       "ST"
     ],
     [
-      "Marko",
-      "Livaja",
+      "Luka",
+      "Modric",
+      10,
+      "CM"
+    ],
+    [
+      "Ante",
+      "Budimir",
+      11,
+      "ST"
+    ],
+    [
+      "Ivor",
+      "Pandur",
+      12,
+      "GK"
+    ],
+    [
+      "Nikola",
+      "Vlasic",
+      13,
+      "CM"
+    ],
+    [
+      "Ivan",
+      "Perisic",
       14,
       "ST"
     ],
     [
       "Mario",
       "Pasalic",
-      7,
-      "CAM"
+      15,
+      "CM"
     ],
     [
-      "Josip",
-      "Juranovic",
+      "Martin",
+      "Baturina",
+      16,
+      "CM"
+    ],
+    [
+      "Petar",
+      "Sucic",
+      17,
+      "CM"
+    ],
+    [
+      "Kristijan",
+      "Jakic",
+      18,
+      "CB"
+    ],
+    [
+      "Toni",
+      "Fruk",
+      19,
+      "CM"
+    ],
+    [
+      "Igor",
+      "Matanovic",
+      20,
+      "ST"
+    ],
+    [
+      "Luka",
+      "Sucic",
+      21,
+      "CM"
+    ],
+    [
+      "Luka",
+      "Vuskovic",
+      22,
+      "CB"
+    ],
+    [
+      "Dominik",
+      "Kotarski",
+      23,
+      "GK"
+    ],
+    [
+      "Marco",
+      "Pasalic",
+      24,
+      "ST"
+    ],
+    [
+      "Martin",
+      "Erlic",
+      25,
+      "CB"
+    ],
+    [
+      "Petar",
+      "Musa",
+      26,
+      "ST"
+    ]
+  ],
+  "ENG": [
+    [
+      "Jordan",
+      "Pickford",
+      1,
+      "GK"
+    ],
+    [
+      "Ezri",
+      "Konsa",
       2,
-      "RB"
+      "CB"
+    ],
+    [
+      "Nico",
+      "O'Reilly",
+      3,
+      "CB"
+    ],
+    [
+      "Declan",
+      "Rice",
+      4,
+      "CM"
+    ],
+    [
+      "John",
+      "Stones",
+      5,
+      "CB"
+    ],
+    [
+      "Marc",
+      "Guehi",
+      6,
+      "CB"
+    ],
+    [
+      "Bukayo",
+      "Saka",
+      7,
+      "ST"
+    ],
+    [
+      "Elliot",
+      "Anderson",
+      8,
+      "CM"
+    ],
+    [
+      "Harry",
+      "Kane",
+      9,
+      "ST"
+    ],
+    [
+      "Jude",
+      "Bellingham",
+      10,
+      "CM"
+    ],
+    [
+      "Marcus",
+      "Rashford",
+      11,
+      "ST"
+    ],
+    [
+      "Tino",
+      "Livramento",
+      12,
+      "CB"
+    ],
+    [
+      "Dean",
+      "Henderson",
+      13,
+      "GK"
+    ],
+    [
+      "Jordan",
+      "Henderson",
+      14,
+      "CM"
+    ],
+    [
+      "Dan",
+      "Burn",
+      15,
+      "CB"
+    ],
+    [
+      "Kobbie",
+      "Mainoo",
+      16,
+      "CM"
+    ],
+    [
+      "Morgan",
+      "Rogers",
+      17,
+      "CM"
+    ],
+    [
+      "Anthony",
+      "Gordon",
+      18,
+      "ST"
+    ],
+    [
+      "Ollie",
+      "Watkins",
+      19,
+      "ST"
+    ],
+    [
+      "Noni",
+      "Madueke",
+      20,
+      "ST"
+    ],
+    [
+      "Eberechi",
+      "Eze",
+      21,
+      "CM"
+    ],
+    [
+      "Ivan",
+      "Toney",
+      22,
+      "ST"
+    ],
+    [
+      "James",
+      "Trafford",
+      23,
+      "GK"
+    ],
+    [
+      "Reece",
+      "James",
+      24,
+      "CB"
+    ],
+    [
+      "Djed",
+      "Spence",
+      25,
+      "CB"
+    ],
+    [
+      "Jarell",
+      "Quansah",
+      26,
+      "CB"
     ]
   ],
   "GHA": [
@@ -3135,28 +7257,46 @@
       "GK"
     ],
     [
-      "Daniel",
-      "Amartey",
-      4,
+      "Alidu",
+      "Seidu",
+      2,
       "CB"
     ],
     [
-      "Alexander",
-      "Djiku",
-      5,
+      "Caleb",
+      "Yirenkyi",
+      3,
+      "CM"
+    ],
+    [
+      "Jonas",
+      "Adjetey",
+      4,
       "CB"
     ],
     [
       "Thomas",
       "Partey",
-      6,
-      "CDM"
+      5,
+      "CM"
     ],
     [
-      "Mohammed",
-      "Kudus",
-      10,
-      "RW"
+      "Abdul",
+      "Mumin",
+      6,
+      "CB"
+    ],
+    [
+      "Abdul",
+      "Fatawu",
+      7,
+      "ST"
+    ],
+    [
+      "Kwasi",
+      "Sibo",
+      8,
+      "CM"
     ],
     [
       "Jordan",
@@ -3165,48 +7305,126 @@
       "ST"
     ],
     [
-      "Inaki",
-      "Williams",
-      11,
+      "Brandon",
+      "Thomas-Asante",
+      10,
       "ST"
     ],
     [
-      "Andre",
-      "Ayew",
-      7,
-      "LW"
+      "Antoine",
+      "Semenyo",
+      11,
+      "CM"
     ],
     [
-      "Salis",
-      "Abdul Samed",
-      8,
-      "CDM"
+      "Joseph",
+      "Anang",
+      12,
+      "GK"
+    ],
+    [
+      "Christopher",
+      "Bonsu Baah",
+      13,
+      "ST"
     ],
     [
       "Gideon",
       "Mensah",
-      3,
-      "LB"
+      14,
+      "CB"
     ],
     [
-      "Tariqe",
-      "Fosu",
-      14,
-      "CAM"
+      "Elisha",
+      "Owusu",
+      15,
+      "CM"
+    ],
+    [
+      "Benjamin",
+      "Asare",
+      16,
+      "GK"
+    ],
+    [
+      "Abdul Rahman",
+      "Baba",
+      17,
+      "CB"
+    ],
+    [
+      "Jerome",
+      "Opoku",
+      18,
+      "CB"
+    ],
+    [
+      "Inaki",
+      "Williams",
+      19,
+      "ST"
+    ],
+    [
+      "Augustine",
+      "Boakye",
+      20,
+      "CM"
+    ],
+    [
+      "Kojo",
+      "Peprah Oppong",
+      21,
+      "CB"
+    ],
+    [
+      "Kamaldeen",
+      "Sulemana",
+      22,
+      "ST"
+    ],
+    [
+      "Derrick",
+      "Luckassen",
+      23,
+      "CB"
+    ],
+    [
+      "Ernest",
+      "Nuamah",
+      24,
+      "ST"
+    ],
+    [
+      "Prince Kwabena",
+      "Adu",
+      25,
+      "ST"
+    ],
+    [
+      "Marvin",
+      "Senaya",
+      26,
+      "CB"
     ]
   ],
   "PAN": [
     [
-      "Orlando",
-      "Mosquera",
+      "Luis",
+      "Mejia",
       1,
       "GK"
     ],
     [
-      "Michael",
-      "Murillo",
+      "Cesar",
+      "Blackman",
       2,
-      "RB"
+      "CB"
+    ],
+    [
+      "Jose",
+      "Cordoba",
+      3,
+      "CB"
     ],
     [
       "Fidel",
@@ -3215,22 +7433,22 @@
       "CB"
     ],
     [
-      "Harold",
-      "Cummings",
-      3,
+      "Edgardo",
+      "Farina",
+      5,
       "CB"
     ],
     [
-      "Eric",
-      "Davis",
-      15,
-      "LB"
+      "Cristian",
+      "Martinez",
+      6,
+      "CM"
     ],
     [
-      "Anibal",
-      "Godoy",
-      6,
-      "CDM"
+      "Jose Luis",
+      "Rodriguez",
+      7,
+      "CM"
     ],
     [
       "Adalberto",
@@ -3239,28 +7457,112 @@
       "CM"
     ],
     [
-      "Jose",
-      "Fajardo",
+      "Tomas",
+      "Rodriguez",
       9,
       "ST"
     ],
     [
       "Ismael",
       "Diaz",
+      10,
+      "CM"
+    ],
+    [
+      "Yoel",
+      "Barcenas",
       11,
+      "CM"
+    ],
+    [
+      "Cesar",
+      "Samudio",
+      12,
+      "GK"
+    ],
+    [
+      "Jiovany",
+      "Ramos",
+      13,
+      "CB"
+    ],
+    [
+      "Carlos",
+      "Harvey",
+      14,
+      "CB"
+    ],
+    [
+      "Eric",
+      "Davis",
+      15,
+      "CB"
+    ],
+    [
+      "Andres",
+      "Andrade",
+      16,
+      "CB"
+    ],
+    [
+      "Jose",
+      "Fajardo",
+      17,
+      "ST"
+    ],
+    [
+      "Cecilio",
+      "Waterman",
+      18,
       "ST"
     ],
     [
       "Alberto",
       "Quintero",
-      10,
-      "CAM"
+      19,
+      "CM"
     ],
     [
-      "Rolando",
-      "Blackburn",
-      7,
-      "LW"
+      "Anibal",
+      "Godoy",
+      20,
+      "CM"
+    ],
+    [
+      "Cesar",
+      "Yanis",
+      21,
+      "CM"
+    ],
+    [
+      "Orlando",
+      "Mosquera",
+      22,
+      "GK"
+    ],
+    [
+      "Michael Amir",
+      "Murillo",
+      23,
+      "CB"
+    ],
+    [
+      "Azarias",
+      "Londono",
+      24,
+      "ST"
+    ],
+    [
+      "Roderick",
+      "Miller",
+      25,
+      "CB"
+    ],
+    [
+      "Jorge",
+      "Gutierrez",
+      26,
+      "CB"
     ]
   ]
 }

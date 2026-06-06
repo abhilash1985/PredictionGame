@@ -1,3 +1,4 @@
+{% load tournament_tags %}
 <div class="table-responsive">
   <table class="table table-sm table-striped standings-table mb-0">
     <thead>
@@ -19,8 +20,10 @@
         <tr>
           <td>{{ forloop.counter }}</td>
           <td>
-            <span class="team-code">{{ row.team.short_name }}</span>
-            {{ row.team.name }}
+            <span class="d-inline-flex align-items-center gap-2">
+              {% team_badge row.team %}
+              <span class="text-muted small">{{ row.team.name }}</span>
+            </span>
           </td>
           <td class="text-center">{{ row.played }}</td>
           <td class="text-center">{{ row.won }}</td>

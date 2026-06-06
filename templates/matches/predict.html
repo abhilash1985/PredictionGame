@@ -4,9 +4,14 @@
 <div class="card card-football">
   <div class="card-header">
     Predict — {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}
+    {% if match.round %}<span class="badge bg-light text-dark ms-2">{{ match.round.name }}</span>{% endif %}
   </div>
   <div class="card-body">
-    <p class="text-muted">Boosters remaining: <strong>{{ boosters_remaining }}</strong></p>
+    {% if booster_allowed %}
+      <p class="text-muted">Point boosters remaining: <strong>{{ boosters_remaining }}</strong> (group stage only)</p>
+    {% else %}
+      <p class="text-muted"><i class="bi bi-info-circle"></i> Point boosters are not available for knockout matches.</p>
+    {% endif %}
     <form method="post">
       {% csrf_token %}
       {% for field in form %}

@@ -102,6 +102,10 @@ class Match(models.Model):
         return not self.has_started and self.status == self.Status.SCHEDULED
 
     @property
+    def is_group_stage(self):
+        return bool(self.round and self.round.name.startswith('Group '))
+
+    @property
     def total_question_points(self):
         return self.questions.aggregate(total=models.Sum('points'))['total'] or 0
 

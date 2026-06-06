@@ -31,7 +31,11 @@ def get_upcoming_matches(limit=10):
         return Match.objects.none()
 
     return (
-        Match.objects.filter(tournament=tournament, kickoff_at__gte=timezone.now())
+        Match.objects.filter(
+            tournament=tournament,
+            kickoff_at__gte=timezone.now(),
+            round__name__startswith='Group ',
+        )
         .select_related('team_home', 'team_away', 'stadium', 'round')
         .order_by('kickoff_at')[:limit]
     )

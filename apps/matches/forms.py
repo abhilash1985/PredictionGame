@@ -43,17 +43,25 @@ class MatchPredictionForm(forms.Form):
                     self.fields[field_name].initial = answer.user_answer
 
         profile = ensure_user_profile(user)
-        if profile.point_boosters_remaining <= 0 and not (existing and existing.point_booster_used):
+        booster_allowed = match.is_group_stage
+        if not booster_allowed:
+            del self.fields['point_booster']
+        elif profile.point_boosters_remaining <= 0 and not (existing and existing.point_booster_used):
             del self.fields['point_booster']
 
     def clean(self):
         cleaned = super().clean()
         if not self.match.is_prediction_open:
             raise ValidationError('Predictions are closed — this match has already started.')
+        use_booster = cleaned.get('point_booster', False)
+        if use_booster and not self.match.is_group_stage:
+            raise ValidationError('Point boosters are only available for group stage matches.')
         return cleaned
 
     def save(self):
         use_booster = self.cleaned_data.get('point_booster', False)
+        if use_booster and not self.match.is_group_stage:
+            raise ValidationError('Point boosters are only available for group stage matches.')
         prediction, created = MatchPrediction.objects.get_or_create(
             user=self.user,
             match=self.match,

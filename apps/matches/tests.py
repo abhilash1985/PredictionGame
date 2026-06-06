@@ -20,7 +20,7 @@ class MatchPredictionFormTests(TestCase):
             end_date=timezone.now().date(),
             is_active=True,
         )
-        rnd = Round.objects.create(tournament=tournament, name='GROUP', sort_order=1)
+        rnd = Round.objects.create(tournament=tournament, name='Group A', sort_order=1)
         home = Team.objects.create(name='Home', short_name='HOM', fifa_code='HOM')
         away = Team.objects.create(name='Away', short_name='AWY', fifa_code='AWY')
         stadium = Stadium.objects.create(name='Test Stadium', city='Test City', country='Test')
@@ -58,3 +58,24 @@ class MatchPredictionFormTests(TestCase):
 
         form = MatchPredictionForm(match=self.match, user=self.user)
         self.assertIsNotNone(form)
+        self.assertIn('point_booster', form.fields)
+
+    def test_point_booster_hidden_for_knockout(self):
+        knockout_round = Round.objects.create(
+            tournament=self.match.tournament,
+            name='Round of 16',
+            sort_order=99,
+        )
+        knockout_match = Match.objects.create(
+            tournament=self.match.tournament,
+            round=knockout_round,
+            match_number=2,
+            team_home=self.match.team_home,
+            team_away=self.match.team_away,
+            stadium=self.match.stadium,
+            kickoff_at=timezone.now() + timezone.timedelta(days=2),
+        )
+        form = MatchPredictionForm(match=knockout_match, user=self.user)
+        self.assertNotIn('point_booster', form.fields)
+        self.assertFalse(knockout_match.is_group_stage)
+        self.assertTrue(self.match.is_group_stage)

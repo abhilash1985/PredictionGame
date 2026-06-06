@@ -7,7 +7,7 @@ from apps.tournaments.models import PastWorldCupWinner, Player, Round, Stadium, 
 
 
 class Command(BaseCommand):
-    help = 'Seed full FIFA World Cup 2026 data from official fixture schedule'
+    help = 'Seed FIFA World Cup 2026 group stage data from official fixture schedule'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -54,18 +54,6 @@ class Command(BaseCommand):
             )
             teams[team_data['code']] = team
 
-        for code, name in data['knockout_teams'].items():
-            team, _ = Team.objects.update_or_create(
-                short_name=code,
-                defaults={
-                    'name': name,
-                    'fifa_code': code[:3],
-                    'group_letter': '',
-                    'fifa_ranking': None,
-                },
-            )
-            teams[code] = team
-
         rounds = {}
         for letter in 'ABCDEFGHIJKL':
             rnd, _ = Round.objects.update_or_create(
@@ -74,17 +62,6 @@ class Command(BaseCommand):
                 defaults={'sort_order': ord(letter) - ord('A') + 1},
             )
             rounds[f'Group {letter}'] = rnd
-
-        for idx, round_name in enumerate(
-            ['Round of 32', 'Round of 16', 'Quarter-final', 'Semi-final', 'Play-off for third place', 'Final'],
-            start=13,
-        ):
-            rnd, _ = Round.objects.update_or_create(
-                tournament=tournament,
-                name=round_name,
-                defaults={'sort_order': idx},
-            )
-            rounds[round_name] = rnd
 
         settings = GameSettings.load()
         settings.tournament_active = tournament
@@ -95,6 +72,10 @@ class Command(BaseCommand):
 
         if options['clear_matches']:
             Match.objects.filter(tournament=tournament).delete()
+
+        official_codes = {team_data['code'] for team_data in data['teams']}
+        Team.objects.exclude(short_name__in=official_codes).delete()
+        Round.objects.filter(tournament=tournament).exclude(name__startswith='Group ').delete()
 
         match_no = 1
         for fixture in data['group_matches']:
@@ -108,22 +89,11 @@ class Command(BaseCommand):
                 stadiums_meta=data['stadiums'],
             )
 
-        for fixture in data['knockout_matches']:
-            match_no = self._seed_match(
-                tournament=tournament,
-                match_no=match_no,
-                fixture=fixture,
-                round_obj=rounds[fixture['round']],
-                teams=teams,
-                stadiums=stadiums,
-                stadiums_meta=data['stadiums'],
-            )
-
         for year, country in data['past_winners']:
             PastWorldCupWinner.objects.update_or_create(year=year, defaults={'country': country})
 
         self.stdout.write(self.style.SUCCESS(
-            f'Seeded {match_no - 1} matches, {len(data["teams"])} teams, '
+            f'Seeded {match_no - 1} group stage matches, {len(data["teams"])} teams, '
             f'{sum(len(v) for v in squads.values())} players.'
         ))
 
@@ -191,16 +161,7 @@ class Command(BaseCommand):
         return match_no + 1
 
     def _create_match_questions(self, match):
-        real_team_ids = set(
-            Team.objects.filter(group_letter__gt='').values_list('id', flat=True)
-        )
-        home_is_real = match.team_home_id in real_team_ids
-        away_is_real = match.team_away_id in real_team_ids
-
         for template in QuestionTemplate.objects.filter(is_active=True):
-            if template.code == 'PLAYER_OF_MATCH' and not (home_is_real and away_is_real):
-                continue
-
             options = []
             if template.code == 'MATCH_WINNER':
                 options = [match.team_home.name, match.team_away.name, 'Draw']

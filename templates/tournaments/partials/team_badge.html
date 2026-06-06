@@ -1,0 +1,10 @@
+{% load tournament_tags %}
+<span class="team-badge d-inline-flex align-items-center gap-1">
+  {% with flag=team|team_flag_url %}
+    {% if flag %}
+      <img src="{{ flag }}" alt="{{ team.name }} flag" class="team-flag" width="24" height="18" loading="lazy">
+    {% endif %}
+  {% endwith %}
+  <span class="team-code">{{ team.short_name }}</span>
+  {% if show_name %}<span class="team-full-name">{{ team.name }}</span>{% endif %}
+</span>

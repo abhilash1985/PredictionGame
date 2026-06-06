@@ -1,10 +1,11 @@
+{% load tournament_tags %}
 <div class="list-group-item match-row py-3 px-3">
   <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
     <div class="flex-grow-1">
-      <div class="d-flex align-items-center gap-2 mb-1">
-        <span class="team-code">{{ match.team_home.short_name }}</span>
+      <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+        {% team_badge match.team_home %}
         <span class="text-muted small">vs</span>
-        <span class="team-code away">{{ match.team_away.short_name }}</span>
+        {% team_badge match.team_away %}
         {% if show_group and match.round.name %}
           <span class="badge rounded-pill bg-secondary ms-1">{{ match.round.name }}</span>
         {% endif %}
