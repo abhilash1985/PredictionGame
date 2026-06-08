@@ -4,7 +4,8 @@
 <div class="card card-football">
   <div class="card-header">
     Predict — {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}
-    {% if match.round %}<span class="badge bg-light text-dark ms-2">{{ match.round.name }}</span>{% endif %}
+    <span class="badge rounded-pill text-bg-warning text-dark ms-2">Match {{ match.match_number }}</span>
+    {% if match.round %}<span class="badge rounded-pill bg-secondary ms-2">{{ match.round.name }}</span>{% endif %}
   </div>
   <div class="card-body">
     {% if booster_allowed %}
@@ -29,7 +30,7 @@
         </div>
       {% endfor %}
       <button type="submit" class="btn btn-gold">Save Prediction</button>
-      <a href="{% url 'match_detail' match.pk %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+      <a href="{% url 'match_list' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
     </form>
   </div>
 </div>

@@ -3,13 +3,9 @@
 {% block content %}
 <h2 class="text-white mb-4">All Matches</h2>
 <div class="card card-football">
-  <div class="card-body p-0">
+  <div class="card-body p-3">
     {% if matches %}
-      <div class="list-group list-group-flush">
-        {% for match in matches %}
-          {% include 'tournaments/partials/match_row.html' with match=match %}
-        {% endfor %}
-      </div>
+      {% include 'tournaments/partials/match_grid.html' with matches=matches %}
     {% else %}
       <div class="p-4 text-muted">No matches available.</div>
     {% endif %}

@@ -1,12 +1,11 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.accounts.profile_service import ensure_user_profile
 from apps.matches.forms import MatchPredictionForm
-from apps.matches.models import Match, MatchPrediction
+from apps.matches.models import Match
 from apps.matches.services.scoring import ScoringService
 from apps.tournaments.models import Player
 
@@ -24,20 +23,6 @@ def match_list_view(request):
             .order_by('kickoff_at')
         )
     return render(request, 'matches/list.html', {'matches': matches})
-
-
-@login_required
-def match_detail_view(request, pk):
-    match = get_object_or_404(
-        Match.objects.select_related('team_home', 'team_away', 'stadium', 'round'),
-        pk=pk,
-    )
-    prediction = MatchPrediction.objects.filter(user=request.user, match=match).first()
-    return render(request, 'matches/detail.html', {
-        'match': match,
-        'prediction': prediction,
-        'prediction_open': match.is_prediction_open,
-    })
 
 
 @login_required
@@ -60,14 +45,14 @@ def predict_view(request, pk):
     )
     if not match.is_prediction_open:
         messages.error(request, 'Predictions are closed for this match.')
-        return redirect('match_detail', pk=pk)
+        return redirect('match_list')
 
     if request.method == 'POST':
         form = MatchPredictionForm(request.POST, match=match, user=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your prediction has been saved.')
-            return redirect('match_detail', pk=pk)
+            return redirect('match_list')
     else:
         form = MatchPredictionForm(match=match, user=request.user)
 

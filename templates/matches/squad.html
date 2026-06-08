@@ -2,7 +2,11 @@
 
 {% block content %}
 <div class="card card-football mb-4">
-  <div class="card-header">Squads — {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}</div>
+  <div class="card-header">
+    Squads — {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}
+    <span class="badge rounded-pill text-bg-warning text-dark ms-2">Match {{ match.match_number }}</span>
+    {% if match.round %}<span class="badge rounded-pill bg-secondary ms-2">{{ match.round.name }}</span>{% endif %}
+  </div>
   <div class="card-body">
     <div class="row">
       <div class="col-md-6">
@@ -40,7 +44,7 @@
         </table>
       </div>
     </div>
-    <a href="{% url 'match_detail' match.pk %}" class="btn btn-outline-secondary">Back</a>
+    <a href="{% url 'match_list' %}" class="btn btn-outline-secondary">Back to Matches</a>
   </div>
 </div>
 {% endblock %}

@@ -27,6 +27,20 @@ body {
   color: var(--gold) !important;
 }
 
+.navbar-fifa-icon,
+.fifa-logo {
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.navbar-fifa-icon {
+  border-radius: 4px;
+}
+
+.fifa-logo {
+  border-radius: 6px;
+}
+
 .main-content {
   padding: 2rem 0 4rem;
 }
@@ -71,13 +85,65 @@ body {
   background-color: #75aadb;
 }
 
-.match-row {
-  border-left: 4px solid var(--gold);
-  transition: transform 0.15s ease;
+.match-grid {
+  margin-bottom: 0;
 }
 
-.match-row:hover {
-  transform: translateX(4px);
+.match-grid .match-row {
+  background: var(--white);
+  border: 1px solid #dee2e6;
+  border-left: 4px solid var(--gold);
+  border-radius: 10px;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.match-grid .match-row:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.match-row-header {
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 0.5rem;
+}
+
+.match-row-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: start;
+}
+
+.match-row-main {
+  min-width: 0;
+}
+
+.match-row-meta {
+  word-break: break-word;
+}
+
+.match-row-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  min-width: 7.5rem;
+}
+
+@media (max-width: 575.98px) {
+  .match-row-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .match-row-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 .team-flag {
@@ -116,9 +182,42 @@ body {
 .winner-thumb {
   width: 100%;
   height: 80px;
-  object-fit: cover;
   border-radius: 8px;
   border: 2px solid var(--gold);
+  padding: 0.35rem;
+  gap: 0.2rem;
+}
+
+.winner-flag {
+  width: 40px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.winners-gallery {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.leaderboard-top-table th,
+.leaderboard-top-table td {
+  vertical-align: middle;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.leaderboard-top-table th:first-child,
+.leaderboard-top-table td:first-child {
+  width: 1.75rem;
+  padding-left: 0.5rem;
+}
+
+.leaderboard-top-table th:nth-child(2),
+.leaderboard-top-table td:nth-child(2) {
+  white-space: normal;
+  min-width: 4rem;
 }
 
 .btn-gold {

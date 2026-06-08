@@ -1,0 +1,7 @@
+<div class="match-grid row g-3">
+  {% for match in matches %}
+    <div class="col-lg-6">
+      {% include 'tournaments/partials/match_row.html' with match=match show_group=show_group %}
+    </div>
+  {% endfor %}
+</div>

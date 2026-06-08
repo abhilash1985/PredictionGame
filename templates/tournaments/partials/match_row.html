@@ -1,26 +1,31 @@
-{% load tournament_tags %}
-<div class="list-group-item match-row py-3 px-3">
-  <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
-    <div class="flex-grow-1">
+{% load tournament_tags tz %}
+<div class="match-row h-100 py-3 px-3">
+  <div class="match-row-layout h-100">
+    <div class="match-row-main">
+      <div class="match-row-header d-flex align-items-center gap-2 mb-2 flex-wrap">
+        <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
+        {% if match.round.name %}
+          <span class="badge rounded-pill bg-secondary">{{ match.round.name }}</span>
+        {% endif %}
+      </div>
       <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
         {% team_badge match.team_home %}
         <span class="text-muted small">vs</span>
         {% team_badge match.team_away %}
-        {% if show_group and match.round.name %}
-          <span class="badge rounded-pill bg-secondary ms-1">{{ match.round.name }}</span>
-        {% endif %}
       </div>
-      <div class="fw-semibold">{{ match.team_home.name }} vs {{ match.team_away.name }}</div>
-      <small class="text-muted d-block">
-        Match {{ match.match_number }} · {{ match.stadium.name }}, {{ match.stadium.city }}
+      <div class="fw-semibold small">{{ match.team_home.name }} vs {{ match.team_away.name }}</div>
+      <small class="text-muted d-block match-row-meta">
+        {{ match.stadium.name }}{% if match.stadium.city and match.stadium.city not in match.stadium.name %}, {{ match.stadium.city }}{% endif %}
       </small>
-      <small class="text-muted">{{ match.kickoff_at|date:"D, M j · H:i" }} UTC</small>
+      <small class="text-muted d-block match-row-meta">
+        {% include 'tournaments/partials/kickoff_local.html' with kickoff_at=match.kickoff_at format='match-row' %}
+      </small>
     </div>
-    <div class="text-end">
-      <span class="countdown d-inline-block mb-2" data-kickoff="{{ match.kickoff_at|date:'c' }}">...</span>
+    <div class="match-row-actions">
+      <span class="countdown d-inline-block" data-kickoff="{% timezone 'UTC' %}{{ match.kickoff_at|date:'c' }}{% endtimezone %}">...</span>
       {% if user.is_authenticated %}
-        <div class="d-flex gap-1 justify-content-end">
-          <a href="{% url 'match_detail' match.pk %}" class="btn btn-sm btn-outline-success">Details</a>
+        <div class="d-flex flex-column gap-1">
+          <a href="{% url 'match_predict' match.pk %}" class="btn btn-sm btn-gold">Predict</a>
           <a href="{% url 'match_squad' match.pk %}" class="btn btn-sm btn-outline-secondary">Squads</a>
         </div>
       {% endif %}
