@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Update User Prediction — Admin{% endblock %}
+
+{% block content %}
+<div class="card card-football">
+  <div class="card-header">Update User Prediction</div>
+  <div class="card-body">
+    <p class="text-muted small">
+      Create or update a user's prediction for any match. If correct answers are already set, points are recalculated on save.
+    </p>
+
+    <form method="get" class="row g-3 align-items-end mb-4">
+      <div class="col-md-5">
+        <label class="form-label" for="user_id">User</label>
+        <select name="user_id" id="user_id" class="form-select" required>
+          {% for value, label in user_choices %}
+            <option value="{{ value }}" {% if value == selected_user_id %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-5">
+        <label class="form-label" for="match_id">Match</label>
+        <select name="match_id" id="match_id" class="form-select" required>
+          {% for value, label in match_choices %}
+            <option value="{{ value }}" {% if value == selected_match_id %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-outline-secondary w-100">Load</button>
+      </div>
+    </form>
+
+    {% if target_user and match %}
+      <div class="mb-3">
+        <span class="fw-semibold">{{ target_user.display_name }}</span>
+        <span class="text-muted mx-1">·</span>
+        <span>Match {{ match.match_number }}: {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}</span>
+      </div>
+
+      {% if form and form.errors %}
+        <div class="alert alert-danger">
+          {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+              <div>{{ error }}</div>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ target_user.pk }}">
+        <input type="hidden" name="match_id" value="{{ match.pk }}">
+        {% for row in question_rows %}
+          <fieldset class="mb-4 pb-3 border-bottom">
+            <legend class="fs-6 fw-semibold mb-2">{{ row.question.question_text }}</legend>
+            {% include 'matches/partials/admin_question_radios.html' with question=row.question field_prefix='question_' selected_value=row.selected_value %}
+          </fieldset>
+        {% empty %}
+          <p class="text-muted">This match has no questions.</p>
+        {% endfor %}
+        {% if question_rows %}
+          <button type="submit" class="btn btn-gold">Update</button>
+        {% endif %}
+      </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

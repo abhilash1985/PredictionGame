@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
 from apps.accounts.profile_service import ensure_user_profile
@@ -87,3 +88,52 @@ class MatchPredictionForm(forms.Form):
         prediction.is_ai_generated = False
         prediction.save()
         return prediction
+
+
+class AdminMatchPredictionForm(MatchPredictionForm):
+    """Staff form to create or update a user's prediction regardless of kickoff."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields.pop('point_booster', None)
+
+    def clean(self):
+        return forms.Form.clean(self)
+
+    def save(self):
+        prediction, _created = MatchPrediction.objects.get_or_create(
+            user=self.user,
+            match=self.match,
+        )
+
+        for question in self.match.questions.all():
+            field_name = f'question_{question.id}'
+            answer_value = self.cleaned_data.get(field_name, '')
+            QuestionPrediction.objects.update_or_create(
+                match_prediction=prediction,
+                match_question=question,
+                defaults={'user_answer': answer_value},
+            )
+
+        prediction.is_ai_generated = False
+        prediction.save()
+        return prediction
+
+
+def admin_user_choices():
+    User = get_user_model()
+    choices = [('', '— Select user —')]
+    for user in User.objects.select_related('profile').filter(
+        is_active=True,
+        profile__isnull=False,
+    ).order_by('profile__display_name', 'email'):
+        choices.append((user.pk, user.display_name))
+    return choices
+
+
+def admin_match_choices(matches):
+    choices = [('', '— Select match —')]
+    for match in matches:
+        label = f'Match {match.match_number}: {match.team_home.short_name} vs {match.team_away.short_name}'
+        choices.append((match.pk, label))
+    return choices

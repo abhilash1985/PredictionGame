@@ -29,7 +29,7 @@ class MatchAdmin(admin.ModelAdmin):
     def score_link(self, obj):
         if not obj.pk:
             return '-'
-        url = reverse('admin_score_match', args=[obj.pk])
+        url = reverse('admin_score_answers') + f'?match_id={obj.pk}'
         return format_html('<a class="button" href="{}">Enter answers & score</a>', url)
 
     score_link.short_description = 'Scoring'

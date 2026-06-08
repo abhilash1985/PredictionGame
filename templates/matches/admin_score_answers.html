@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Score Match Answers — Admin{% endblock %}
+
+{% block content %}
+<div class="card card-football">
+  <div class="card-header">Score Match Answers</div>
+  <div class="card-body">
+    <p class="text-muted small">
+      Set the correct answer for each question. Saving will recalculate points for every prediction on this match.
+    </p>
+
+    <form method="get" class="row g-3 align-items-end mb-4">
+      <div class="col-md-8">
+        <label class="form-label" for="match_id">Match</label>
+        <select name="match_id" id="match_id" class="form-select" required>
+          {% for value, label in match_choices %}
+            <option value="{{ value }}" {% if value == selected_match_id %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-4">
+        <button type="submit" class="btn btn-outline-secondary w-100">Load Questions</button>
+      </div>
+    </form>
+
+    {% if match %}
+      <div class="mb-3">
+        <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
+        {% if match.round.name %}
+          <span class="badge rounded-pill bg-secondary">{{ match.round.name }}</span>
+        {% endif %}
+        <span class="ms-2 fw-semibold">{{ match.team_home.name }} vs {{ match.team_away.name }}</span>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="match_id" value="{{ match.pk }}">
+        {% for question in match.questions.all %}
+          <fieldset class="mb-4 pb-3 border-bottom">
+            <legend class="fs-6 fw-semibold mb-2">{{ question.question_text }}</legend>
+            <small class="text-muted d-block mb-2">{{ question.points }} points</small>
+            {% include 'matches/partials/admin_question_radios.html' with question=question field_prefix='answer_' selected_value=question.correct_answer %}
+          </fieldset>
+        {% empty %}
+          <p class="text-muted">This match has no questions.</p>
+        {% endfor %}
+        {% if match.questions.exists %}
+          <button type="submit" class="btn btn-gold">Save Answers &amp; Score</button>
+        {% endif %}
+      </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
