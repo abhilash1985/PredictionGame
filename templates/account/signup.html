@@ -1,26 +1,33 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}Sign Up — WC 2026{% endblock %}
+{% block body_class %}page-auth{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-lg-6">
-    <div class="card card-football auth-card">
-      <div class="card-header">Create Account</div>
-      <div class="card-body">
-        <form method="post" action="{% url 'account_signup' %}">
-          {% csrf_token %}
-          {% for field in form %}
-            <div class="mb-3">
-              <label class="form-label">{{ field.label }}</label>
-              {{ field }}
-              {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
-            </div>
-          {% endfor %}
-          <button type="submit" class="btn btn-gold w-100">Sign Up</button>
-        </form>
-        <p class="text-center small mt-3 mb-0">Already have an account? <a href="{% url 'account_login' %}">Sign in</a></p>
+<div class="auth-page-shell">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-xl-5">
+      <div class="card auth-panel auth-card">
+        <div class="card-header text-center">
+          <img src="{% static 'images/fifa.png' %}" alt="" class="auth-panel-logo mb-2" width="48" height="48">
+          <div>Create Account</div>
+        </div>
+        <div class="card-body">
+          <form method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="mb-3">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+              </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-gold w-100 btn-lg">Sign Up</button>
+          </form>
+          <p class="text-center small mt-3 mb-0">Already have an account? <a href="{% url 'account_login' %}">Sign in</a></p>
+          <p class="text-center small mt-2 mb-0"><a href="{% url 'landing' %}">← Back to home</a></p>
+        </div>
       </div>
     </div>
   </div>

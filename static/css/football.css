@@ -1,20 +1,24 @@
 :root {
-  --pitch-green: #1a5f2a;
-  --pitch-dark: #0d3d18;
-  --gold: #f4c430;
+  --fifa-red: #e11b22;
+  --fifa-red-dark: #7a0910;
+  --fifa-red-mid: #b91419;
+  --fifa-pink: #f06292;
+  --pitch-green: var(--fifa-red-mid);
+  --pitch-dark: var(--fifa-red-dark);
+  --gold: #d4af37;
   --white: #ffffff;
-  --off-white: #f5f7f5;
+  --off-white: #faf8f5;
 }
 
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
-  background: linear-gradient(160deg, var(--pitch-dark) 0%, var(--pitch-green) 45%, #2d7a3e 100%);
+  background: linear-gradient(160deg, var(--fifa-red-dark) 0%, var(--fifa-red) 42%, #c41e3a 100%);
   min-height: 100vh;
   color: #1a1a1a;
 }
 
 .site-navbar {
-  background: rgba(13, 61, 24, 0.95) !important;
+  background: rgba(122, 9, 16, 0.95) !important;
   border-bottom: 3px solid var(--gold);
 }
 
@@ -74,9 +78,9 @@ body {
 }
 
 .hero-wc2026 {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-    url('/static/images/wc2026-banner.svg');
-  background-color: var(--pitch-dark);
+  background-image: linear-gradient(105deg, rgba(122, 9, 16, 0.88) 0%, rgba(225, 27, 34, 0.72) 50%, rgba(240, 98, 146, 0.45) 100%),
+    url('/static/images/fifa-wc-auth.jpg');
+  background-color: var(--fifa-red-dark);
 }
 
 .hero-argentina2022 {
@@ -110,11 +114,15 @@ body {
 .match-row-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
+  grid-template-areas:
+    'main actions'
+    'countdown countdown';
+  gap: 0.75rem 1rem;
   align-items: start;
 }
 
 .match-row-main {
+  grid-area: main;
   min-width: 0;
 }
 
@@ -123,27 +131,28 @@ body {
 }
 
 .match-row-actions {
+  grid-area: actions;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 0.5rem;
+  align-items: stretch;
   flex-shrink: 0;
-  min-width: 7.5rem;
+  min-width: 5.5rem;
 }
 
-@media (max-width: 575.98px) {
-  .match-row-layout {
-    grid-template-columns: 1fr;
-  }
+.match-row-actions .btn {
+  min-width: 5.5rem;
+}
 
-  .match-row-actions {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    min-width: 0;
-  }
+.match-row-countdown {
+  grid-area: countdown;
+  padding-top: 0.25rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.match-row-layout-no-actions {
+  grid-template-areas:
+    'main main'
+    'countdown countdown';
 }
 
 .team-flag {
@@ -157,7 +166,7 @@ body {
 .countdown {
   font-family: 'Courier New', monospace;
   font-weight: bold;
-  color: var(--pitch-dark);
+  color: var(--fifa-red-dark);
   background: var(--gold);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
@@ -228,8 +237,8 @@ body {
 }
 
 .btn-gold:hover {
-  background: #ddb520;
-  border-color: #ddb520;
+  background: #c9a030;
+  border-color: #c9a030;
   color: #1a1a1a;
 }
 
@@ -238,15 +247,60 @@ body {
   margin: 0 auto;
 }
 
+body.page-auth .main-content {
+  background-image: linear-gradient(105deg, rgba(122, 9, 16, 0.93) 0%, rgba(225, 27, 34, 0.78) 38%, rgba(240, 98, 146, 0.35) 100%),
+    url('/static/images/fifa-wc-auth.jpg');
+  background-size: cover;
+  background-position: center right;
+  background-attachment: fixed;
+  padding: 2.5rem 0 3rem;
+}
+
+.auth-page-shell {
+  min-height: calc(100vh - 10rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-panel {
+  background: rgba(255, 255, 255, 0.97);
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.auth-panel .card-header {
+  background: linear-gradient(135deg, var(--fifa-red-dark), var(--fifa-red));
+  color: var(--white);
+  font-weight: 600;
+  border-bottom: 2px solid var(--gold);
+}
+
+.auth-panel-glass {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+}
+
+.auth-panel-logo {
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+body.page-auth footer.site-footer {
+  background: rgba(122, 9, 16, 0.95);
+}
+
 footer.site-footer {
-  background: rgba(13, 61, 24, 0.9);
+  background: rgba(122, 9, 16, 0.9);
   color: rgba(255, 255, 255, 0.8);
   padding: 1rem 0;
   margin-top: auto;
 }
 
 .group-tabs .nav-link {
-  color: var(--pitch-dark);
+  color: var(--fifa-red-dark);
   border: 1px solid #dee2e6;
   margin: 0.15rem;
   font-weight: 600;
