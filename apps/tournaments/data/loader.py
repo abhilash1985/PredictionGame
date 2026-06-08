@@ -18,8 +18,7 @@ def load_wc2026_squads():
         return json.load(handle)
 
 
-def parse_kickoff(date_str, time_str, stadium_key, stadiums):
-    stadium = stadiums[stadium_key]
-    tz_name = stadium[3]
-    local_dt = datetime.strptime(f'{date_str} {time_str}', '%Y-%m-%d %H:%M')
-    return local_dt.replace(tzinfo=ZoneInfo(tz_name))
+def parse_kickoff(date_str, time_str, stadium_key=None, stadiums=None):
+    """Parse kickoff from FIFA fixtures (date/time are UTC on fifa.com)."""
+    kickoff = datetime.strptime(f'{date_str} {time_str}', '%Y-%m-%d %H:%M')
+    return kickoff.replace(tzinfo=ZoneInfo('UTC'))

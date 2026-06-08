@@ -7,7 +7,7 @@ from apps.tournaments.models import PastWorldCupWinner, Player, Round, Stadium, 
 
 
 class Command(BaseCommand):
-    help = 'Seed FIFA World Cup 2026 group stage data from official fixture schedule'
+    help = 'Seed FIFA World Cup 2026 group stage data (fifa.com fixture times are UTC)'
 
     def add_arguments(self, parser):
         parser.add_argument(
