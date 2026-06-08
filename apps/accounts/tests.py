@@ -49,6 +49,18 @@ class ProfileFormTests(TestCase):
 
         form = ProfileForm(instance=profile, user=user)
         self.assertEqual(form.user, user)
+        self.assertIn('timezone', form.fields)
+
+    def test_rejects_invalid_timezone(self):
+        user = User.objects.create_user(email='tz@example.com', password='testpass123')
+        profile = ensure_user_profile(user)
+        form = ProfileForm(
+            {'display_name': profile.display_name, 'timezone': 'Not/A/Zone', 'ai_predict_enabled': False},
+            instance=profile,
+            user=user,
+        )
+        self.assertFalse(form.is_valid())
+        self.assertIn('timezone', form.errors)
 
 
 class SignupFormTests(TestCase):

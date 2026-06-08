@@ -6,6 +6,7 @@ from allauth.account.forms import SignupForm
 
 from apps.accounts.models import UserProfile
 from apps.accounts.profile_service import ensure_user_profile
+from apps.accounts.timezones import BROWSER_DEFAULT, is_valid_timezone, timezone_choices
 
 
 class SignupForm(SignupForm):
@@ -39,10 +40,17 @@ class SignupForm(SignupForm):
 class ProfileForm(forms.ModelForm):
     first_name = forms.CharField(max_length=150, required=False)
     last_name = forms.CharField(max_length=150, required=False)
+    timezone = forms.ChoiceField(
+        choices=[],
+        required=False,
+        label='Timezone',
+        help_text='Leave as browser default to use your device timezone, or pick a fixed zone for match times.',
+        widget=forms.Select(attrs={'class': 'form-select'}),
+    )
 
     class Meta:
         model = UserProfile
-        fields = ['display_name', 'favorite_team', 'ai_predict_enabled']
+        fields = ['display_name', 'favorite_team', 'timezone', 'ai_predict_enabled']
         widgets = {
             'display_name': forms.TextInput(attrs={'class': 'form-control'}),
             'favorite_team': forms.Select(attrs={'class': 'form-select'}),
@@ -54,6 +62,7 @@ class ProfileForm(forms.ModelForm):
             raise TypeError('ProfileForm requires a user keyword argument.')
         self.user = user
         super().__init__(*args, **kwargs)
+        self.fields['timezone'].choices = timezone_choices()
         self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
         self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
         self.fields['first_name'].initial = self.user.first_name
@@ -65,6 +74,12 @@ class ProfileForm(forms.ModelForm):
         if exists:
             raise ValidationError('This display name is already taken.')
         return display_name
+
+    def clean_timezone(self):
+        timezone_name = self.cleaned_data.get('timezone', BROWSER_DEFAULT)
+        if timezone_name and not is_valid_timezone(timezone_name):
+            raise ValidationError('Select a valid timezone.')
+        return timezone_name
 
     def save(self, commit=True):
         profile = super().save(commit=False)

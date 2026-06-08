@@ -8,6 +8,20 @@ from apps.accounts.forms import OnboardingForm, ProfileForm
 from apps.accounts.profile_service import ensure_user_profile
 
 
+def _sync_timezone_cookie(response, profile):
+    if profile.timezone:
+        response.set_cookie(
+            'django_timezone',
+            profile.timezone,
+            max_age=31536000,
+            path='/',
+            samesite='Lax',
+        )
+    else:
+        response.delete_cookie('django_timezone', path='/')
+    return response
+
+
 @login_required
 def onboarding_view(request):
     profile = ensure_user_profile(request.user)
@@ -32,9 +46,10 @@ def profile_view(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=profile, user=request.user)
         if form.is_valid():
-            form.save()
+            profile = form.save()
             messages.success(request, 'Profile updated.')
-            return redirect('profile')
+            response = redirect('profile')
+            return _sync_timezone_cookie(response, profile)
     else:
         form = ProfileForm(instance=profile, user=request.user)
 

@@ -68,6 +68,7 @@ class UserProfile(models.Model):
     ai_predict_enabled = models.BooleanField(default=False)
     onboarding_completed = models.BooleanField(default=False)
     point_boosters_remaining = models.PositiveIntegerField(default=5)
+    timezone = models.CharField(max_length=63, blank=True, default='')
 
     class Meta:
         ordering = ['display_name']

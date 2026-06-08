@@ -1,0 +1,2 @@
+{% load tz %}
+<time class="local-datetime" datetime="{% timezone 'UTC' %}{{ kickoff_at|date:'c' }}{% endtimezone %}" data-format="{{ format|default:'match-row' }}">...</time>
