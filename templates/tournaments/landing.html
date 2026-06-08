@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <section class="hero-banner hero-wc2026 mb-4">
   <div class="w-100">
     <span class="badge bg-warning text-dark mb-2">11 June – 19 July 2026</span>
-    <h1 class="display-5 fw-bold mb-2">FIFA World Cup 2026</h1>
+    <h1 class="display-5 fw-bold mb-2 d-flex align-items-center gap-3">
+      <img src="{% static 'images/fifa.png' %}" alt="FIFA" class="fifa-logo" width="56" height="56">
+      FIFA World Cup 2026
+    </h1>
     <p class="lead mb-0">Canada · Mexico · USA — Predict every match before kickoff.</p>
   </div>
 </section>
 
 <div class="row g-4">
-  <div class="col-xl-8">
+  <div class="col-xl-9">
     <div class="card card-football mb-4">
       <div class="card-header d-flex justify-content-between align-items-center">
         <span>Next Matches</span>
-        <small class="text-white-50">Kickoffs in UTC</small>
+        <small class="text-white-50" data-timezone-label>Kickoffs in your local time</small>
       </div>
-      <div class="card-body p-0">
+      <div class="card-body p-3">
         {% if upcoming_matches %}
-          <div class="list-group list-group-flush">
-            {% for match in upcoming_matches %}
-              {% include 'tournaments/partials/match_row.html' with match=match show_group=True %}
-            {% endfor %}
-          </div>
+          {% include 'tournaments/partials/match_grid.html' with matches=upcoming_matches show_group=True %}
         {% else %}
           <div class="p-4 text-muted">Run <code>python manage.py seed_wc2026</code> to load fixtures.</div>
         {% endif %}
@@ -37,15 +37,27 @@
     </div>
   </div>
 
-  <div class="col-xl-4">
-    <div class="card card-football mb-4 sticky-auth">
-      <div class="card-header text-center">Join the Prediction Game</div>
-      <div class="card-body text-center">
-        <p class="text-muted">Pick winners, goals, player of the match, and more. Climb the leaderboard.</p>
-        <a href="{% url 'account_signup' %}" class="btn btn-gold w-100 mb-2 btn-lg">Create Account</a>
-        <a href="{% url 'account_login' %}" class="btn btn-outline-success w-100 btn-lg">Sign In</a>
+  <div class="col-xl-3">
+    {% if user.is_authenticated %}
+      <div class="card card-football mb-4 sticky-auth">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Leaderboard</span>
+          <a href="{% url 'leaderboard' %}" class="small text-white-50">View all</a>
+        </div>
+        <div class="card-body p-0">
+          {% include 'tournaments/partials/leaderboard_top.html' with leaderboard_top=leaderboard_top %}
+        </div>
       </div>
-    </div>
+    {% else %}
+      <div class="card card-football mb-4 sticky-auth">
+        <div class="card-header text-center">Join the Prediction Game</div>
+        <div class="card-body text-center">
+          <p class="text-muted">Pick winners, goals, player of the match, and more. Climb the leaderboard.</p>
+          <a href="{% url 'account_signup' %}" class="btn btn-gold w-100 mb-2 btn-lg">Create Account</a>
+          <a href="{% url 'account_login' %}" class="btn btn-outline-success w-100 btn-lg">Sign In</a>
+        </div>
+      </div>
+    {% endif %}
 
     <div class="card card-football mb-4">
       <div class="card-header">Tournament Facts</div>
@@ -60,12 +72,15 @@
 
     <div class="card card-football">
       <div class="card-header">Past World Cup Winners</div>
-      <div class="card-body">
+      <div class="card-body winners-gallery">
         <div class="row g-2">
           {% for winner in winners %}
             <div class="col-4 text-center">
-              <div class="winner-thumb bg-dark d-flex align-items-center justify-content-center text-warning fw-bold small">
-                {{ winner.year }}
+              <div class="winner-thumb bg-dark d-flex flex-column align-items-center justify-content-center">
+                {% if winner.flag_url %}
+                  <img src="{{ winner.flag_url }}" alt="{{ winner.country }} flag" class="winner-flag" loading="lazy">
+                {% endif %}
+                <span class="text-warning fw-bold small">{{ winner.year }}</span>
               </div>
               <small class="d-block mt-1">{{ winner.country }}</small>
             </div>
