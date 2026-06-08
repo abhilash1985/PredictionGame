@@ -1250,53 +1250,27 @@
     }
   ],
   "past_winners": [
-    [
-      2022,
-      "Argentina"
-    ],
-    [
-      2018,
-      "France"
-    ],
-    [
-      2014,
-      "Germany"
-    ],
-    [
-      2010,
-      "Spain"
-    ],
-    [
-      2006,
-      "Italy"
-    ],
-    [
-      2002,
-      "Brazil"
-    ],
-    [
-      1998,
-      "France"
-    ],
-    [
-      1994,
-      "Brazil"
-    ],
-    [
-      1990,
-      "Germany"
-    ],
-    [
-      1986,
-      "Argentina"
-    ],
-    [
-      1982,
-      "Italy"
-    ],
-    [
-      1978,
-      "Argentina"
-    ]
+    [2022, "Argentina"],
+    [2018, "France"],
+    [2014, "Germany"],
+    [2010, "Spain"],
+    [2006, "Italy"],
+    [2002, "Brazil"],
+    [1998, "France"],
+    [1994, "Brazil"],
+    [1990, "Germany"],
+    [1986, "Argentina"],
+    [1982, "Italy"],
+    [1978, "Argentina"],
+    [1974, "Germany"],
+    [1970, "Brazil"],
+    [1966, "England"],
+    [1962, "Brazil"],
+    [1958, "Brazil"],
+    [1954, "Germany"],
+    [1950, "Uruguay"],
+    [1938, "Italy"],
+    [1934, "Italy"],
+    [1930, "Uruguay"]
   ]
 }

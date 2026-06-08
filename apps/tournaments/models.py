@@ -101,3 +101,8 @@ class PastWorldCupWinner(models.Model):
 
     def __str__(self):
         return f'{self.year} — {self.country}'
+
+    @property
+    def flag_url(self):
+        from apps.tournaments.team_flags import flag_url_for_country
+        return flag_url_for_country(self.country)
