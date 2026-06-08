@@ -288,6 +288,23 @@ body.page-auth .main-content {
   object-fit: contain;
 }
 
+.predict-options-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.predict-options-column .form-check {
+  margin-bottom: 0;
+  padding-left: 1.75rem;
+}
+
+.predict-question-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
 body.page-auth footer.site-footer {
   background: rgba(122, 9, 16, 0.95);
 }

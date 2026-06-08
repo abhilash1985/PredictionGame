@@ -26,9 +26,9 @@ class MatchPredictionForm(forms.Form):
             if question.options:
                 self.fields[field_name] = forms.ChoiceField(
                     label=question.question_text,
-                    choices=[('', '— Select —')] + [(opt, opt) for opt in question.options],
+                    choices=[(opt, opt) for opt in question.options],
                     required=True,
-                    widget=forms.Select(attrs={'class': 'form-select'}),
+                    widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
                 )
             else:
                 self.fields[field_name] = forms.CharField(
