@@ -6,7 +6,14 @@ from django.urls import reverse
 
 from apps.accounts.profile_service import ensure_user_profile
 from apps.matches.forms import AdminMatchPredictionForm, MatchPredictionForm, admin_match_choices, admin_user_choices
-from apps.matches.models import Match
+from apps.matches.models import Match, MatchQuestion, QuestionTemplate
+from apps.matches.question_builder import (
+    existing_question_rows,
+    post_question_indices,
+    question_row_from_post,
+    save_match_questions,
+    template_defaults_for_match,
+)
 from apps.matches.services.scoring import ScoringService
 from apps.tournaments.models import Player
 
@@ -165,6 +172,72 @@ def admin_update_prediction_view(request):
         'selected_user_id': int(user_id) if user_id else '',
         'selected_match_id': int(match_id) if match_id else '',
         'question_rows': question_rows,
+    })
+
+
+@staff_member_required
+def admin_manage_match_questions_view(request):
+    matches = _active_tournament_matches()
+    match_id = request.GET.get('match_id') or request.POST.get('match_id')
+    match = None
+    question_rows = []
+    question_templates = QuestionTemplate.objects.filter(is_active=True).order_by('category', 'code')
+    template_defaults = {}
+
+    if match_id:
+        match = get_object_or_404(
+            matches.select_related('team_home', 'team_away'),
+            pk=match_id,
+        )
+        template_defaults = template_defaults_for_match(match)
+
+    if request.method == 'POST' and match:
+        parsed_rows = []
+        for index in post_question_indices(request):
+            row = question_row_from_post(request, index)
+            if row:
+                row['index'] = index
+                parsed_rows.append(row)
+        try:
+            saved_count = save_match_questions(match, parsed_rows)
+            messages.success(request, f'Saved {saved_count} prediction question(s) for this match.')
+            return redirect(f'{reverse("admin_manage_match_questions")}?match_id={match.pk}')
+        except (QuestionTemplate.DoesNotExist, MatchQuestion.DoesNotExist):
+            messages.error(request, 'Could not save questions. Check your selections and try again.')
+            question_rows = parsed_rows
+    elif match:
+        question_rows = existing_question_rows(match)
+        for index, row in enumerate(question_rows):
+            row['index'] = index
+
+    if match and not question_rows:
+        question_rows = [{
+            'index': 0,
+            'id': '',
+            'template_id': '',
+            'question_text': '',
+            'points': '',
+            'options': '',
+            'delete': False,
+        }]
+
+    return render(request, 'matches/admin_manage_questions.html', {
+        'matches': matches,
+        'match': match,
+        'match_choices': admin_match_choices(matches),
+        'selected_match_id': int(match_id) if match_id else '',
+        'question_templates': question_templates,
+        'question_rows': question_rows,
+        'template_defaults': template_defaults,
+        'blank_row': {
+            'index': '__INDEX__',
+            'id': '',
+            'template_id': '',
+            'question_text': '',
+            'points': '',
+            'options': '',
+            'delete': False,
+        },
     })
 
 

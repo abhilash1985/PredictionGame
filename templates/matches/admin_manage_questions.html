@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Match Questions — Admin{% endblock %}
+
+{% block content %}
+<div class="card card-football">
+  <div class="card-header">Manage Match Prediction Questions</div>
+  <div class="card-body">
+    <p class="text-muted small">
+      Choose a match, add or edit prediction questions, and save. Saved questions appear on the Predict page for that match.
+    </p>
+
+    <form method="get" class="row g-3 align-items-end mb-4">
+      <div class="col-md-8">
+        <label class="form-label" for="match_id">Match</label>
+        <select name="match_id" id="match_id" class="form-select" required>
+          {% for value, label in match_choices %}
+            <option value="{{ value }}" {% if value == selected_match_id %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-4">
+        <button type="submit" class="btn btn-outline-secondary w-100">Load Match</button>
+      </div>
+    </form>
+
+    {% if match %}
+      <div class="mb-3">
+        <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
+        {% if match.round.name %}
+          <span class="badge rounded-pill bg-secondary">{{ match.round.name }}</span>
+        {% endif %}
+        <span class="ms-2 fw-semibold">{{ match.team_home.name }} vs {{ match.team_away.name }}</span>
+      </div>
+
+      <form method="post" id="match-questions-form">
+        {% csrf_token %}
+        <input type="hidden" name="match_id" value="{{ match.pk }}">
+        <div id="question-rows">
+          {% for row in question_rows %}
+            {% include 'matches/partials/admin_question_editor_row.html' with row=row question_templates=question_templates %}
+          {% endfor %}
+        </div>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <button type="button" class="btn btn-outline-secondary" id="add-question-row">Add Question</button>
+          <button type="submit" class="btn btn-gold">Save Questions</button>
+        </div>
+      </form>
+    {% endif %}
+  </div>
+</div>
+
+{% if match %}
+  {{ template_defaults|json_script:"template-defaults" }}
+  <template id="question-row-template">
+    {% with row=blank_row %}
+      {% include 'matches/partials/admin_question_editor_row.html' with row=row question_templates=question_templates %}
+    {% endwith %}
+  </template>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{% if match %}
+<script>
+(function () {
+  var templateDefaults = JSON.parse(document.getElementById('template-defaults').textContent);
+  var rowsContainer = document.getElementById('question-rows');
+  var rowTemplate = document.getElementById('question-row-template');
+  var nextIndex = {{ question_rows|length|default:1 }};
+
+  function applyTemplateDefaults(row, templateId) {
+    var defaults = templateDefaults[templateId];
+    if (!defaults) {
+      return;
+    }
+    row.querySelector('.question-text').value = defaults.question_text;
+    row.querySelector('.question-points').value = defaults.points;
+    row.querySelector('.question-options').value = defaults.options;
+  }
+
+  function bindRow(row) {
+    var select = row.querySelector('.template-select');
+    if (!select) {
+      return;
+    }
+    select.addEventListener('change', function () {
+      if (select.value) {
+        applyTemplateDefaults(row, select.value);
+      }
+    });
+  }
+
+  rowsContainer.querySelectorAll('.admin-question-row').forEach(bindRow);
+
+  document.getElementById('add-question-row').addEventListener('click', function () {
+    var html = rowTemplate.innerHTML.replaceAll('__INDEX__', String(nextIndex));
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = html.trim();
+    var row = wrapper.firstElementChild;
+    row.dataset.rowIndex = String(nextIndex);
+    rowsContainer.appendChild(row);
+    bindRow(row);
+    nextIndex += 1;
+  });
+})();
+</script>
+{% endif %}
+{% endblock %}
