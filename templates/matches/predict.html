@@ -15,32 +15,38 @@
     {% endif %}
     <form method="post">
       {% csrf_token %}
-      {% for field in form %}
-        <div class="mb-4">
-          {% if field.field.widget.input_type == 'checkbox' %}
-            <div class="form-check">
+      {% for item in question_fields %}
+        {% with field=item.field %}
+          <div class="mb-4">
+            {% if field.field.widget.input_type == 'radio' %}
+              <fieldset class="predict-question-fieldset">
+                <legend class="form-label fs-6 fw-semibold mb-2">{{ field.label }}</legend>
+                <div class="predict-options-{{ item.layout }}">
+                  {% for radio in field %}
+                    <div class="form-check">
+                      {{ radio.tag }}
+                      <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                    </div>
+                  {% endfor %}
+                </div>
+              </fieldset>
+            {% else %}
+              <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
               {{ field }}
-              <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-            </div>
-          {% elif field.field.widget.input_type == 'radio' %}
-            <fieldset class="predict-question-fieldset">
-              <legend class="form-label fs-6 fw-semibold mb-2">{{ field.label }}</legend>
-              <div class="predict-options-column">
-                {% for radio in field %}
-                  <div class="form-check">
-                    {{ radio.tag }}
-                    <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
-                  </div>
-                {% endfor %}
-              </div>
-            </fieldset>
-          {% else %}
-            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-          {% endif %}
-          {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
-        </div>
+            {% endif %}
+            {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+          </div>
+        {% endwith %}
       {% endfor %}
+      {% if booster_field %}
+        <div class="mb-4">
+          <div class="form-check">
+            {{ booster_field }}
+            <label class="form-check-label" for="{{ booster_field.id_for_label }}">{{ booster_field.label }}</label>
+          </div>
+          {% if booster_field.errors %}<div class="text-danger small">{{ booster_field.errors }}</div>{% endif %}
+        </div>
+      {% endif %}
       <button type="submit" class="btn btn-gold">Save Prediction</button>
       <a href="{% url 'match_list' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
     </form>

@@ -62,7 +62,7 @@ def match_squad_view(request, pk):
 @login_required
 def predict_view(request, pk):
     match = get_object_or_404(
-        Match.objects.prefetch_related('questions').select_related('team_home', 'team_away'),
+        Match.objects.prefetch_related('questions__question_template').select_related('team_home', 'team_away'),
         pk=pk,
     )
     if not match.is_prediction_open:
@@ -78,10 +78,24 @@ def predict_view(request, pk):
     else:
         form = MatchPredictionForm(match=match, user=request.user)
 
+    question_fields = []
+    for question in match.questions.all():
+        field_name = f'question_{question.id}'
+        if field_name not in form.fields:
+            continue
+        template_code = question.question_template.code if question.question_template else ''
+        layout = 'grid' if template_code == 'PLAYER_OF_MATCH' else 'row'
+        question_fields.append({
+            'field': form[field_name],
+            'layout': layout,
+        })
+
     profile = ensure_user_profile(request.user)
     return render(request, 'matches/predict.html', {
         'match': match,
         'form': form,
+        'question_fields': question_fields,
+        'booster_field': form['point_booster'] if 'point_booster' in form.fields else None,
         'boosters_remaining': profile.point_boosters_remaining,
         'booster_allowed': match.is_group_stage,
     })
