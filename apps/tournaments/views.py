@@ -67,15 +67,25 @@ def dashboard_view(request):
                     verdict_error = 'You have not predicted this match yet.'
                     verdict_context = None
 
+    leaderboard_rows = LeaderboardService.user_stats(tournament)
+    user_leaderboard = next(
+        (row for row in leaderboard_rows if row['user_id'] == request.user.id),
+        None,
+    )
+    tab = request.GET.get('tab')
+
     return render(request, 'tournaments/dashboard.html', {
         'tournament': tournament,
         'upcoming_matches': upcoming_matches,
         'predicted_match_ids': predicted_match_ids(request.user, upcoming_matches),
         'dashboard_stats': DashboardStatsService.stats(tournament, user_timezone),
+        'user_leaderboard': user_leaderboard,
+        'leaderboard_total': len(leaderboard_rows),
         'show_predict': True,
         'verdict_matches': verdict_matches,
         'selected_verdict_match': selected_verdict_match,
         'verdict_context': verdict_context,
         'verdict_error': verdict_error,
-        'open_verdict_tab': bool(request.GET.get('verdict_match')),
+        'open_stats_tab': tab == 'stats',
+        'open_verdict_tab': bool(request.GET.get('verdict_match')) or tab == 'verdict',
     })

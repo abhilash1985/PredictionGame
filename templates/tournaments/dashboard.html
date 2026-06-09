@@ -12,23 +12,43 @@
     {% endif %}
   </div>
 
-  <div class="row g-3 mb-4 dashboard-summary">
-    <div class="col-6 col-lg-3">
-      <div class="dashboard-summary-card">
+  <div class="row g-3 mb-3 dashboard-summary">
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="dashboard-summary-card h-100">
+        <div class="dashboard-summary-icon text-warning"><i class="bi bi-bar-chart-fill"></i></div>
+        <div class="dashboard-summary-label">Total points</div>
+        <div class="dashboard-summary-value">
+          {% if user_leaderboard %}{{ user_leaderboard.total_points }}{% else %}0{% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="dashboard-summary-card h-100">
+        <div class="dashboard-summary-icon"><i class="bi bi-trophy"></i></div>
+        <div class="dashboard-summary-label">Rank</div>
+        <div class="dashboard-summary-value">
+          {% if user_leaderboard %}#{{ user_leaderboard.rank }} <span class="account-stat-of">/ {{ leaderboard_total }}</span>{% else %}—{% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="dashboard-summary-card h-100">
+        <div class="dashboard-summary-icon"><i class="bi bi-percent"></i></div>
+        <div class="dashboard-summary-label">Accuracy</div>
+        <div class="dashboard-summary-value">
+          {% if user_leaderboard %}{{ user_leaderboard.prediction_percentage }}%{% else %}—{% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="dashboard-summary-card h-100">
         <div class="dashboard-summary-icon text-success"><i class="bi bi-lightning-charge-fill"></i></div>
         <div class="dashboard-summary-label">Boosters left</div>
         <div class="dashboard-summary-value text-success">{{ user.profile.point_boosters_remaining }}</div>
       </div>
     </div>
-    <div class="col-6 col-lg-3">
-      <div class="dashboard-summary-card">
-        <div class="dashboard-summary-icon"><i class="bi bi-robot"></i></div>
-        <div class="dashboard-summary-label">AI Predict</div>
-        <div class="dashboard-summary-value">{% if user.profile.ai_predict_enabled %}ON{% else %}OFF{% endif %}</div>
-      </div>
-    </div>
-    <div class="col-6 col-lg-3">
-      <div class="dashboard-summary-card">
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="dashboard-summary-card h-100">
         <div class="dashboard-summary-icon"><i class="bi bi-flag-fill"></i></div>
         <div class="dashboard-summary-label">Favorite team</div>
         <div class="dashboard-summary-value dashboard-summary-team">
@@ -40,12 +60,31 @@
         </div>
       </div>
     </div>
-    <div class="col-6 col-lg-3">
-      <a href="{% url 'match_list' %}" class="dashboard-summary-card dashboard-summary-cta h-100 text-decoration-none">
-        <div class="dashboard-summary-icon text-warning"><i class="bi bi-pencil-square"></i></div>
-        <div class="dashboard-summary-label">Quick action</div>
-        <div class="dashboard-summary-value text-warning">Predict Matches</div>
-      </a>
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="dashboard-summary-card h-100">
+        <div class="dashboard-summary-icon"><i class="bi bi-robot"></i></div>
+        <div class="dashboard-summary-label">AI Predict</div>
+        <div class="dashboard-summary-value">{% if user.profile.ai_predict_enabled %}ON{% else %}OFF{% endif %}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4 dashboard-summary-actions">
+    <div class="col-6">
+      <button type="button" class="dashboard-summary-card dashboard-summary-cta w-100 border-0"
+              data-dashboard-tab="stats-tab">
+        <div class="dashboard-summary-icon"><i class="bi bi-graph-up"></i></div>
+        <div class="dashboard-summary-label">Explore</div>
+        <div class="dashboard-summary-value">View Stats</div>
+      </button>
+    </div>
+    <div class="col-6">
+      <button type="button" class="dashboard-summary-card dashboard-summary-cta w-100 border-0"
+              data-dashboard-tab="verdict-tab">
+        <div class="dashboard-summary-icon"><i class="bi bi-clipboard-data"></i></div>
+        <div class="dashboard-summary-label">Explore</div>
+        <div class="dashboard-summary-value">Match Verdict</div>
+      </button>
     </div>
   </div>
 
@@ -61,7 +100,7 @@
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="verdict-tab" data-bs-toggle="tab" data-bs-target="#dashboard-verdict-pane"
                   type="button" role="tab" aria-controls="dashboard-verdict-pane" aria-selected="false">
-            <i class="bi bi-trophy me-1"></i> Winners / Match Verdict
+            <i class="bi bi-clipboard-data me-1"></i> Match Verdict
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -100,14 +139,30 @@
 {% endblock %}
 
 {% block extra_js %}
-{% if open_verdict_tab %}
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var tab = document.getElementById('verdict-tab');
-    if (tab && window.bootstrap) {
-      bootstrap.Tab.getOrCreateInstance(tab).show();
+    document.querySelectorAll('[data-dashboard-tab]').forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        var tab = document.getElementById(trigger.dataset.dashboardTab);
+        if (tab && window.bootstrap) {
+          bootstrap.Tab.getOrCreateInstance(tab).show();
+        }
+      });
+    });
+
+    {% if open_stats_tab %}
+    var statsTab = document.getElementById('stats-tab');
+    if (statsTab && window.bootstrap) {
+      bootstrap.Tab.getOrCreateInstance(statsTab).show();
     }
+    {% endif %}
+
+    {% if open_verdict_tab %}
+    var verdictTab = document.getElementById('verdict-tab');
+    if (verdictTab && window.bootstrap) {
+      bootstrap.Tab.getOrCreateInstance(verdictTab).show();
+    }
+    {% endif %}
   });
 </script>
-{% endif %}
 {% endblock %}
