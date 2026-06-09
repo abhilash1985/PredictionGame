@@ -1,6 +1,7 @@
+import json
+
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
-import json
 
 from apps.leaderboard.services import LeaderboardService
 from apps.tournaments.context_processors import get_active_tournament
@@ -26,8 +27,21 @@ def team_points_view(request):
 
 def prediction_graph_view(request):
     tournament = get_active_tournament()
-    graph_data = LeaderboardService.prediction_graph_data(tournament)
+    matches = LeaderboardService.graph_match_choices(tournament)
+    selected_match = None
+
+    match_id = request.GET.get('match_id')
+    if match_id:
+        selected_match = matches.filter(pk=match_id).first()
+
+    if not selected_match:
+        selected_match = LeaderboardService.default_graph_match(tournament)
+
+    graph_data = LeaderboardService.prediction_graph_data_for_match(selected_match)
+
     return render(request, 'leaderboard/graphs.html', {
+        'matches': matches,
+        'selected_match': selected_match,
         'graph_data': graph_data,
         'graph_data_json': mark_safe(json.dumps(graph_data)),
         'tournament': tournament,

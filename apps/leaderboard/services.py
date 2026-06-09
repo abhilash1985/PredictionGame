@@ -1,13 +1,14 @@
 from collections import Counter, defaultdict
 
 from django.db.models import Count, F, Sum
+from django.utils import timezone
 
 from apps.accounts.models import UserProfile
-from apps.matches.models import Match, MatchPrediction, MatchQuestion, QuestionPrediction
+from apps.matches.models import Match, MatchPrediction, MatchQuestion, QuestionPrediction, QuestionTemplate
 from apps.tournaments.context_processors import get_active_tournament
 from apps.tournaments.models import Team
 
-class LeaderboardService:
+
 class LeaderboardService:
     @staticmethod
     def user_stats(tournament=None):
@@ -168,23 +169,106 @@ class LeaderboardService:
             key=lambda row: (-row['total_points'], -row['fan_count'], row['team'].name.lower()),
         )
 
-
     @staticmethod
-    def prediction_graph_data(tournament=None):
+    def graph_match_choices(tournament=None):
         tournament = tournament or get_active_tournament()
         if not tournament:
+            return Match.objects.none()
+
+        return (
+            Match.objects.filter(tournament=tournament)
+            .select_related('team_home', 'team_away', 'round', 'stadium')
+            .annotate(prediction_count=Count('predictions'))
+            .order_by('kickoff_at', 'match_number')
+        )
+
+    @staticmethod
+    def default_graph_match(tournament=None):
+        matches = LeaderboardService.graph_match_choices(tournament)
+        upcoming = matches.filter(kickoff_at__gte=timezone.now()).first()
+        if upcoming:
+            return upcoming
+        return matches.first()
+
+    @staticmethod
+    def prediction_graph_data_for_match(match):
+        if not match:
             return []
 
-        questions = MatchQuestion.objects.filter(match__tournament=tournament).select_related('match')
         graph_data = []
+        questions = match.questions.select_related('question_template').order_by('sort_order', 'id')
         for question in questions:
             answers = question.predictions.values_list('user_answer', flat=True)
             counter = Counter(answers)
+            labels, counts = LeaderboardService._sorted_graph_labels(counter, question.question_template)
+            template = question.question_template
+            chart_type = LeaderboardService._chart_type_for_question(template)
             graph_data.append({
+                'question_id': question.id,
                 'question': question.question_text,
-                'match': str(question.match),
-                'labels': list(counter.keys()),
-                'counts': list(counter.values()),
-                'total': sum(counter.values()),
+                'labels': labels,
+                'counts': counts,
+                'total': sum(counts),
+                'points': question.points,
+                'chart_type': chart_type,
+                'chart_label': LeaderboardService._chart_label_for_type(chart_type),
             })
         return graph_data
+
+    @staticmethod
+    def _sorted_graph_labels(counter, template):
+        labels = list(counter.keys())
+        counts = [counter[label] for label in labels]
+        if not labels:
+            return [], []
+
+        if template and template.question_type == QuestionTemplate.QuestionType.NUMERIC:
+            pairs = sorted(
+                zip(labels, counts),
+                key=lambda pair: (LeaderboardService._numeric_sort_key(pair[0]), pair[0].lower()),
+            )
+            labels, counts = zip(*pairs)
+            return list(labels), list(counts)
+
+        pairs = sorted(zip(labels, counts), key=lambda pair: (-pair[1], pair[0].lower()))
+        labels, counts = zip(*pairs)
+        return list(labels), list(counts)
+
+    @staticmethod
+    def _numeric_sort_key(value):
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return float('inf')
+
+    @staticmethod
+    def _chart_type_for_question(template):
+        if not template:
+            return 'bar'
+
+        if template.code == 'MATCH_WINNER' or template.category == QuestionTemplate.Category.WINNER:
+            return 'doughnut'
+
+        if template.question_type == QuestionTemplate.QuestionType.NUMERIC:
+            return 'bar'
+
+        if template.question_type == QuestionTemplate.QuestionType.PLAYER_PICK:
+            return 'horizontalBar'
+
+        if template.category in {QuestionTemplate.Category.GOALS, QuestionTemplate.Category.STATS}:
+            return 'bar'
+
+        if template.category == QuestionTemplate.Category.PLAYER:
+            return 'horizontalBar'
+
+        return 'polarArea'
+
+    @staticmethod
+    def _chart_label_for_type(chart_type):
+        labels = {
+            'doughnut': 'Pie chart',
+            'bar': 'Bar chart',
+            'horizontalBar': 'Horizontal bar',
+            'polarArea': 'Polar chart',
+        }
+        return labels.get(chart_type, 'Chart')

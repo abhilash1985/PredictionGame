@@ -1,55 +1,157 @@
 {% extends 'base.html' %}
+{% load tz %}
 
 {% block body_class %}page-app page-graphs{% endblock %}
 
 {% block content %}
 <div class="ranks-page">
+  <div class="ranks-page-nav mb-3">
+    {% include 'partials/page_back_button.html' %}
+  </div>
   <div class="ranks-page-header mb-4">
     <h2 class="page-heading mb-1">Prediction Graphs</h2>
     {% if tournament %}
-      <p class="ranks-page-subtitle mb-0">{{ tournament.name }} — how the crowd answered each question</p>
+      <p class="ranks-page-subtitle mb-0">{{ tournament.name }} — crowd predictions by match and question</p>
     {% endif %}
   </div>
-  <div id="graph-data" data-charts="{{ graph_data_json|escape }}"></div>
-  {% for item in graph_data %}
+
+  {% if matches %}
     <div class="card card-football ranks-card mb-4">
       <div class="ranks-card-header">
-        <span><i class="bi bi-pie-chart me-1"></i> {{ item.match }}</span>
+        <span><i class="bi bi-funnel me-1"></i> Select match</span>
       </div>
       <div class="account-card-body">
-        <p class="small text-muted mb-3">{{ item.question }}</p>
-        <canvas id="chart_{{ forloop.counter0 }}" height="120"></canvas>
+        <form method="get" class="graph-match-form">
+          <label class="form-label fw-semibold" for="graph_match">Match</label>
+          <select name="match_id" id="graph_match" class="form-select" onchange="this.form.submit()">
+            {% for match in matches %}
+              <option value="{{ match.pk }}" {% if selected_match and selected_match.pk == match.pk %}selected{% endif %}>
+                Match {{ match.match_number }} — {{ match.team_home.name }} vs {{ match.team_away.name }}
+                ({{ match.prediction_count }} prediction{{ match.prediction_count|pluralize }})
+              </option>
+            {% endfor %}
+          </select>
+        </form>
       </div>
     </div>
-  {% empty %}
+
+    {% if selected_match %}
+      <div class="graph-match-summary mb-4">
+        <span class="badge rounded-pill text-bg-warning text-dark me-2">Match {{ selected_match.match_number }}</span>
+        {% if selected_match.round %}<span class="badge rounded-pill badge-group-name me-2">{{ selected_match.round.name }}</span>{% endif %}
+        <span class="graph-match-teams">{{ selected_match.team_home.name }} vs {{ selected_match.team_away.name }}</span>
+        <span class="graph-match-kickoff text-white-50 ms-2">
+          {% include 'tournaments/partials/kickoff_local.html' with kickoff_at=selected_match.kickoff_at format='detail' %}
+        </span>
+      </div>
+
+      <div id="graph-data" data-charts="{{ graph_data_json|escape }}"></div>
+
+      {% for item in graph_data %}
+        <div class="card card-football ranks-card graph-question-card mb-4">
+          <div class="ranks-card-header graph-question-header">
+            <span class="graph-question-title"><i class="bi bi-bar-chart me-1"></i> {{ item.question }}</span>
+            <div class="graph-question-meta">
+              <span class="graph-chart-type-badge">{{ item.chart_label }}</span>
+              <span class="graph-points-badge">{{ item.points }} pts</span>
+              <span class="graph-total-badge">{{ item.total }} answer{{ item.total|pluralize }}</span>
+            </div>
+          </div>
+          <div class="account-card-body graph-chart-body">
+            {% if item.total %}
+              <canvas id="chart_{{ forloop.counter0 }}" height="140"></canvas>
+            {% else %}
+              <div class="graph-empty text-muted">No predictions for this question yet.</div>
+            {% endif %}
+          </div>
+        </div>
+      {% empty %}
+        <div class="card card-football ranks-card">
+          <div class="ranks-empty text-muted p-4">This match has no prediction questions configured yet.</div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% else %}
     <div class="card card-football ranks-card">
-      <div class="ranks-empty text-muted p-4">No prediction data to graph yet.</div>
+      <div class="ranks-empty text-muted p-4">No matches available to graph yet.</div>
     </div>
-  {% endfor %}
+  {% endif %}
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
+  const CHART_COLORS = [
+    '#1a5f2a',
+    '#d4af37',
+    '#0d3d56',
+    '#c41e3a',
+    '#2e86ab',
+    '#a23b72',
+    '#f18f01',
+    '#3b1f2b',
+    '#5c8001',
+    '#6c757d',
+  ];
+
+  function chartColors(count) {
+    return Array.from({ length: count }, (_, index) => CHART_COLORS[index % CHART_COLORS.length]);
+  }
+
+  function buildChartConfig(item) {
+    const chartType = item.chart_type === 'horizontalBar' ? 'bar' : item.chart_type;
+    const colors = chartColors(item.labels.length);
+
+    return {
+      type: chartType,
+      data: {
+        labels: item.labels,
+        datasets: [{
+          label: 'Predictions',
+          data: item.counts,
+          backgroundColor: colors,
+          borderColor: chartType === 'doughnut' || chartType === 'polarArea' ? '#ffffff' : colors,
+          borderWidth: chartType === 'doughnut' || chartType === 'polarArea' ? 2 : 0,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        indexAxis: item.chart_type === 'horizontalBar' ? 'y' : 'x',
+        plugins: {
+          legend: {
+            display: chartType === 'doughnut' || chartType === 'polarArea',
+            position: chartType === 'doughnut' ? 'right' : 'bottom',
+          },
+        },
+        scales: chartType === 'doughnut' || chartType === 'polarArea'
+          ? {}
+          : {
+              x: {
+                ticks: { maxRotation: 45, minRotation: 0 },
+              },
+              y: {
+                beginAtZero: true,
+                ticks: { precision: 0 },
+              },
+            },
+      },
+    };
+  }
+
   const raw = document.getElementById('graph-data')?.dataset.charts;
   if (raw) {
     const charts = JSON.parse(raw);
     charts.forEach(function(item, index) {
+      if (!item.total) {
+        return;
+      }
       const canvas = document.getElementById('chart_' + index);
-      if (!canvas) return;
-      new Chart(canvas, {
-        type: 'bar',
-        data: {
-          labels: item.labels,
-          datasets: [{
-            label: 'Answers',
-            data: item.counts,
-            backgroundColor: '#1a5f2a'
-          }]
-        },
-        options: { responsive: true, plugins: { legend: { display: false } } }
-      });
+      if (!canvas) {
+        return;
+      }
+      new Chart(canvas, buildChartConfig(item));
     });
   }
 </script>
