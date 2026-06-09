@@ -15,8 +15,6 @@
     </div>
   </div>
 
-  {% block auth_quick_actions %}{% endblock %}
-
   <div class="row g-4 align-items-stretch">
     <div class="col-lg-5">
       <div class="card card-football account-card mx-lg-0 mx-auto auth-form-card">
@@ -28,8 +26,8 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-7 d-flex flex-column gap-4">
-      <div class="card card-football landing-section-card">
+    <div class="col-lg-7">
+      <div class="card card-football landing-section-card h-100">
         <div class="ranks-card-header">
           <span><i class="bi bi-table me-1"></i> Group Standings</span>
           <span class="ranks-card-count">Live tournament table</span>
@@ -38,7 +36,6 @@
           {% include 'tournaments/partials/standings_tabs.html' with tab_prefix=auth_tab_prefix|default:'auth' %}
         </div>
       </div>
-      {% block auth_sidebar_extra %}{% endblock %}
     </div>
   </div>
 </div>

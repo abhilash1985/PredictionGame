@@ -1,46 +1,10 @@
 {% extends 'account/auth_layout.html' %}
-{% load i18n tournament_tags %}
+{% load i18n %}
 
 {% block title %}Sign In — WC 2026{% endblock %}
 
 {% block auth_page_title %}Welcome back{% endblock %}
 {% block auth_page_subtitle %}Sign in to track your predictions, stats, and leaderboard rank.{% endblock %}
-
-{% block auth_quick_actions %}
-<div class="row g-3 mb-4 landing-quick-actions">
-  <div class="col-md-6">
-    <a href="{% url 'match_points' %}" class="dashboard-summary-card h-100 text-decoration-none">
-      <div class="dashboard-summary-icon text-warning"><i class="bi bi-grid-3x3-gap-fill"></i></div>
-      <div class="dashboard-summary-label">Breakdown</div>
-      <div class="dashboard-summary-value">Match Points</div>
-    </a>
-  </div>
-  <div class="col-md-6">
-    <a href="{% url 'leaderboard' %}" class="dashboard-summary-card h-100 text-decoration-none">
-      <div class="dashboard-summary-icon text-warning"><i class="bi bi-bar-chart-steps"></i></div>
-      <div class="dashboard-summary-label">Standings</div>
-      <div class="dashboard-summary-value">View Leaderboard</div>
-    </a>
-  </div>
-</div>
-{% endblock %}
-
-{% block auth_sidebar_extra %}
-<div class="card card-football landing-section-card">
-  <div class="ranks-card-header">
-    <span><i class="bi bi-bar-chart-fill me-1"></i> Leaderboard</span>
-    <a href="{% url 'leaderboard' %}" class="landing-sidebar-link">View all</a>
-  </div>
-  <div class="landing-section-body landing-section-body-flush p-0">
-    {% leaderboard_top_preview %}
-  </div>
-  <div class="landing-section-footer px-3 py-2 border-top border-light-subtle">
-    <a href="{% url 'match_points' %}" class="landing-sidebar-link">
-      <i class="bi bi-grid-3x3-gap-fill me-1"></i> Match Points
-    </a>
-  </div>
-</div>
-{% endblock %}
 
 {% block auth_heading %}<i class="bi bi-box-arrow-in-right me-1"></i> Sign In{% endblock %}
 
