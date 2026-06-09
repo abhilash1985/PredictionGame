@@ -46,6 +46,11 @@ body.page-graphs {
     url('../images/2022-wc-3.webp');
 }
 
+body.page-team-points {
+  background-image: linear-gradient(180deg, rgba(6, 18, 36, 0.42) 0%, rgba(6, 18, 36, 0.18) 42%, rgba(0, 0, 0, 0.48) 100%),
+    url('../images/2022-wc-2.webp');
+}
+
 .site-navbar {
   background: var(--theme-navbar) !important;
   border-bottom: 3px solid var(--gold);
@@ -1952,6 +1957,114 @@ body.page-auth .main-content {
 .auth-form-footer a:hover {
   color: var(--theme-navy-mid);
   text-decoration: underline;
+}
+
+.password-change-back {
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.password-change-back:hover {
+  color: var(--gold);
+}
+
+.password-security-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.password-security-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: var(--theme-navy-mid);
+  font-size: 1rem;
+}
+
+.password-security-panel-head i {
+  color: var(--theme-navy-light);
+  font-size: 1.15rem;
+}
+
+.password-security-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid #eef1f5;
+  font-size: 0.88rem;
+  color: #495057;
+  line-height: 1.4;
+}
+
+.password-security-list li:last-child {
+  border-bottom: none;
+}
+
+.password-security-list li i {
+  color: #198754;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.password-security-user {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid #e3e8ef;
+}
+
+.password-security-user-label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6c757d;
+  margin-bottom: 0.15rem;
+}
+
+.password-security-user-name {
+  font-weight: 700;
+  color: var(--theme-navy-mid);
+}
+
+.password-change-card-subtitle {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 400;
+}
+
+.password-input-wrap {
+  position: relative;
+}
+
+.password-input-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--theme-navy-light);
+  pointer-events: none;
+}
+
+.password-input-wrap .form-control {
+  padding-left: 2.35rem;
+}
+
+.password-change-form .form-text ul {
+  margin-bottom: 0;
+  padding-left: 1.1rem;
+  font-size: 0.8rem;
 }
 
 .predict-options-row {

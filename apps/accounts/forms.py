@@ -2,6 +2,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 
+from django.contrib.auth.forms import PasswordChangeForm
+
 from allauth.account.forms import LoginForm, ResetPasswordForm, ResetPasswordKeyForm, SignupForm
 
 from apps.accounts.form_helpers import configure_favorite_team_field
@@ -17,6 +19,12 @@ def _apply_form_control(form):
         existing = field.widget.attrs.get('class', '')
         if 'form-control' not in existing and 'form-select' not in existing:
             field.widget.attrs['class'] = f'{existing} form-control'.strip()
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        _apply_form_control(self)
 
 
 class LoginForm(LoginForm):
