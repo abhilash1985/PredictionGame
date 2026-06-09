@@ -28,7 +28,7 @@
       <div class="mb-3">
         <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
         {% if match.round.name %}
-          <span class="badge rounded-pill bg-secondary">{{ match.round.name }}</span>
+          <span class="badge rounded-pill badge-group-name">{{ match.round.name }}</span>
         {% endif %}
         <span class="ms-2 fw-semibold">{{ match.team_home.name }} vs {{ match.team_away.name }}</span>
       </div>

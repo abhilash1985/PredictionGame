@@ -5,7 +5,7 @@
   <div class="card-header">
     Squads — {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}
     <span class="badge rounded-pill text-bg-warning text-dark ms-2">Match {{ match.match_number }}</span>
-    {% if match.round %}<span class="badge rounded-pill bg-secondary ms-2">{{ match.round.name }}</span>{% endif %}
+    {% if match.round %}<span class="badge rounded-pill badge-group-name ms-2">{{ match.round.name }}</span>{% endif %}
   </div>
   <div class="card-body">
     <div class="row">

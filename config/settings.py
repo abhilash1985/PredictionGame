@@ -145,6 +145,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'landing'
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 14
 
 # django-allauth
 ACCOUNT_LOGIN_METHODS = {'email'}
@@ -153,8 +154,12 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_ADAPTER = 'apps.accounts.adapters.AccountAdapter'
+ACCOUNT_SESSION_REMEMBER = None
 ACCOUNT_FORMS = {
+    'login': 'apps.accounts.forms.LoginForm',
     'signup': 'apps.accounts.forms.SignupForm',
+    'reset_password': 'apps.accounts.forms.ResetPasswordForm',
+    'reset_password_from_key': 'apps.accounts.forms.ResetPasswordKeyForm',
 }
 
 SOCIALACCOUNT_PROVIDERS = {

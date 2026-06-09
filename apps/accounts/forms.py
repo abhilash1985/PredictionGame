@@ -2,17 +2,54 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 
-from allauth.account.forms import SignupForm
+from allauth.account.forms import LoginForm, ResetPasswordForm, ResetPasswordKeyForm, SignupForm
 
 from apps.accounts.models import UserProfile
 from apps.accounts.profile_service import ensure_user_profile
 from apps.accounts.timezones import BROWSER_DEFAULT, is_valid_timezone, timezone_choices
 
 
+def _apply_form_control(form):
+    for field in form.fields.values():
+        if isinstance(field.widget, forms.CheckboxInput):
+            continue
+        existing = field.widget.attrs.get('class', '')
+        if 'form-control' not in existing and 'form-select' not in existing:
+            field.widget.attrs['class'] = f'{existing} form-control'.strip()
+
+
+class LoginForm(LoginForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        _apply_form_control(self)
+        if 'remember' in self.fields:
+            self.fields['remember'].label = 'Remember me'
+            self.fields['remember'].widget.attrs.update({'class': 'form-check-input'})
+
+
+class ResetPasswordForm(ResetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        _apply_form_control(self)
+
+
+class ResetPasswordKeyForm(ResetPasswordKeyForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        _apply_form_control(self)
+
+
 class SignupForm(SignupForm):
     first_name = forms.CharField(max_length=150, label='First name', widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(max_length=150, label='Last name', widget=forms.TextInput(attrs={'class': 'form-control'}))
     display_name = forms.CharField(max_length=50, label='Display name', widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs.setdefault('class', 'form-control')
+        self.fields['last_name'].widget.attrs.setdefault('class', 'form-control')
+        self.fields['display_name'].widget.attrs.setdefault('class', 'form-control')
+        _apply_form_control(self)
 
     def clean_display_name(self):
         display_name = self.cleaned_data['display_name'].strip()

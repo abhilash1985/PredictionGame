@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body_class %}page-auth{% endblock %}
+
+{% block content %}
+<div class="auth-page-shell">
+  <div class="row g-4 align-items-stretch">
+    <div class="col-lg-5">
+      <div class="card auth-panel mx-lg-0 mx-auto">
+        <div class="card-header text-center">
+          <img src="{% static 'images/fifa.png' %}" alt="" class="auth-panel-logo mb-2" width="48" height="48">
+          <div>{% block auth_heading %}{% endblock %}</div>
+        </div>
+        <div class="card-body">
+          {% block auth_body %}{% endblock %}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="card auth-panel auth-panel-glass h-100">
+        <div class="card-header">FIFA World Cup 2026 — Group Standings</div>
+        <div class="card-body">
+          {% include 'tournaments/partials/standings_tabs.html' with tab_prefix=auth_tab_prefix|default:'auth' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

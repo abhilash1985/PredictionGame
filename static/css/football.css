@@ -1,24 +1,27 @@
 :root {
+  --theme-navy: #061224;
+  --theme-navy-mid: #0a1e38;
+  --theme-navy-light: #1e4a72;
+  --theme-navbar: rgba(6, 18, 36, 0.88);
+  --theme-footer: rgba(6, 18, 36, 0.92);
   --fifa-red: #e11b22;
   --fifa-red-dark: #7a0910;
   --fifa-red-mid: #b91419;
-  --fifa-pink: #f06292;
-  --pitch-green: var(--fifa-red-mid);
-  --pitch-dark: var(--fifa-red-dark);
   --gold: #d4af37;
+  --gold-light: #e8c547;
   --white: #ffffff;
   --off-white: #faf8f5;
 }
 
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
-  background: linear-gradient(160deg, var(--fifa-red-dark) 0%, var(--fifa-red) 42%, #c41e3a 100%);
+  background-color: var(--theme-navy);
   min-height: 100vh;
   color: #1a1a1a;
 }
 
 .site-navbar {
-  background: rgba(122, 9, 16, 0.95) !important;
+  background: var(--theme-navbar) !important;
   border-bottom: 3px solid var(--gold);
 }
 
@@ -47,6 +50,7 @@ body {
 
 .main-content {
   padding: 2rem 0 4rem;
+  background: transparent;
 }
 
 .card-football {
@@ -58,7 +62,7 @@ body {
 }
 
 .card-football .card-header {
-  background: var(--pitch-green);
+  background: linear-gradient(135deg, var(--theme-navy-mid), var(--theme-navy-light));
   color: var(--white);
   font-weight: 600;
   border-bottom: 2px solid var(--gold);
@@ -77,10 +81,10 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.hero-wc2026 {
-  background-image: linear-gradient(105deg, rgba(122, 9, 16, 0.88) 0%, rgba(225, 27, 34, 0.72) 50%, rgba(240, 98, 146, 0.45) 100%),
-    url('/static/images/fifa-wc-auth.jpg');
-  background-color: var(--fifa-red-dark);
+.hero-glass {
+  background: rgba(6, 18, 36, 0.55);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
 }
 
 .match-grid {
@@ -157,10 +161,15 @@ body {
   border: 1px solid #ccc;
 }
 
+.badge-group-name {
+  background-color: var(--fifa-red-mid) !important;
+  color: var(--white) !important;
+}
+
 .countdown {
   font-family: 'Courier New', monospace;
   font-weight: bold;
-  color: var(--fifa-red-dark);
+  color: var(--theme-navy);
   background: var(--gold);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
@@ -168,7 +177,7 @@ body {
 }
 
 .countdown.closed {
-  background: #dc3545;
+  background: var(--fifa-red);
   color: var(--white);
 }
 
@@ -230,16 +239,32 @@ body {
 }
 
 .btn-gold {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: #1a1a1a;
-  font-weight: 600;
+  background: linear-gradient(135deg, #c9a030, var(--gold-light));
+  border-color: #c9a030;
+  color: var(--theme-navy);
+  font-weight: 700;
 }
 
 .btn-gold:hover {
-  background: #c9a030;
-  border-color: #c9a030;
-  color: #1a1a1a;
+  background: linear-gradient(135deg, var(--gold-light), #f5d76e);
+  border-color: var(--gold-light);
+  color: var(--theme-navy);
+}
+
+.btn-outline-gold {
+  border-color: var(--gold);
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.btn-outline-gold:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--theme-navy);
+}
+
+.page-heading {
+  color: var(--white);
 }
 
 .auth-card {
@@ -248,15 +273,6 @@ body {
 }
 
 body.page-auth .main-content {
-  background-image: linear-gradient(105deg, rgba(122, 9, 16, 0.93) 0%, rgba(225, 27, 34, 0.78) 38%, rgba(240, 98, 146, 0.35) 100%),
-    url('/static/images/fifa-wc-auth.jpg');
-  background-size: cover;
-  background-position: center right;
-  background-attachment: fixed;
-  padding: 2.5rem 0 3rem;
-}
-
-body.page-app .main-content {
   padding: 2.5rem 0 3rem;
 }
 
@@ -271,20 +287,20 @@ body.page-app .main-content {
   background: rgba(255, 255, 255, 0.97);
   border: none;
   border-radius: 14px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
   overflow: hidden;
 }
 
 .auth-panel .card-header {
-  background: linear-gradient(135deg, var(--fifa-red-dark), var(--fifa-red));
+  background: linear-gradient(135deg, var(--theme-navy-mid), var(--theme-navy-light));
   color: var(--white);
   font-weight: 600;
   border-bottom: 2px solid var(--gold);
 }
 
 .auth-panel-glass {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
 }
 
 .auth-panel-logo {
@@ -328,29 +344,24 @@ body.page-app .main-content {
   margin: 0;
 }
 
-body.page-auth footer.site-footer,
-body.page-app footer.site-footer {
-  background: rgba(122, 9, 16, 0.95);
-}
-
 footer.site-footer {
-  background: rgba(122, 9, 16, 0.9);
+  background: var(--theme-footer);
   color: rgba(255, 255, 255, 0.8);
   padding: 1rem 0;
   margin-top: auto;
 }
 
 .group-tabs .nav-link {
-  color: var(--fifa-red-dark);
+  color: var(--theme-navy-mid);
   border: 1px solid #dee2e6;
   margin: 0.15rem;
   font-weight: 600;
 }
 
 .group-tabs .nav-link.active {
-  background: var(--pitch-green);
+  background: var(--fifa-red-mid);
   color: var(--white);
-  border-color: var(--pitch-green);
+  border-color: var(--fifa-red-mid);
 }
 
 .standings-table thead th {
@@ -364,7 +375,7 @@ footer.site-footer {
   display: inline-block;
   min-width: 2.5rem;
   text-align: center;
-  background: var(--pitch-green);
+  background: var(--fifa-red-mid);
   color: var(--white);
   font-weight: 700;
   font-size: 0.7rem;
@@ -373,7 +384,7 @@ footer.site-footer {
 }
 
 .team-code.away {
-  background: #495057;
+  background: var(--fifa-red-dark);
 }
 
 .sticky-auth {
