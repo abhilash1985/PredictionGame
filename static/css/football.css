@@ -16,8 +16,24 @@
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
   background-color: var(--theme-navy);
+  background-image: linear-gradient(180deg, rgba(6, 18, 36, 0.42) 0%, rgba(6, 18, 36, 0.18) 42%, rgba(0, 0, 0, 0.48) 100%),
+    url('../images/fifa-wc4.avif');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
   color: #1a1a1a;
+}
+
+body.page-dashboard {
+  background-image: linear-gradient(180deg, rgba(6, 18, 36, 0.42) 0%, rgba(6, 18, 36, 0.18) 42%, rgba(0, 0, 0, 0.48) 100%),
+    url('../images/2022-wc-1.webp');
+}
+
+body.page-graphs {
+  background-image: linear-gradient(180deg, rgba(6, 18, 36, 0.42) 0%, rgba(6, 18, 36, 0.18) 42%, rgba(0, 0, 0, 0.48) 100%),
+    url('../images/2022-wc-3.webp');
 }
 
 .site-navbar {

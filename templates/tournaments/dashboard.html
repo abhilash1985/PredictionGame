@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load tournament_tags %}
 
+{% block body_class %}page-app page-dashboard{% endblock %}
+
 {% block content %}
 <h2 class="page-heading fw-bold mb-4">Welcome, {{ user.display_name }}!</h2>
 

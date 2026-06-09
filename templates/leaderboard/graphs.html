@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block body_class %}page-app page-graphs{% endblock %}
+
 {% block content %}
 <h2 class="page-heading mb-4">Prediction Graphs</h2>
 <div id="graph-data" data-charts="{{ graph_data_json|escape }}"></div>
