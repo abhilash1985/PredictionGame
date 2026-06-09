@@ -83,12 +83,6 @@ body {
   background-color: var(--fifa-red-dark);
 }
 
-.hero-argentina2022 {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
-    url('/static/images/argentina2022.svg');
-  background-color: #75aadb;
-}
-
 .match-grid {
   margin-bottom: 0;
 }
@@ -190,24 +184,30 @@ body {
 
 .winner-thumb {
   width: 100%;
-  height: 80px;
+  height: 56px;
   border-radius: 8px;
   border: 2px solid var(--gold);
-  padding: 0.35rem;
-  gap: 0.2rem;
+  padding: 0.25rem;
+  gap: 0.15rem;
 }
 
 .winner-flag {
-  width: 40px;
-  height: 30px;
+  width: 32px;
+  height: 24px;
   object-fit: cover;
   border-radius: 2px;
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-.winners-gallery {
-  max-height: 420px;
-  overflow-y: auto;
+.winner-country {
+  font-size: 0.7rem;
+  line-height: 1.2;
+}
+
+.winners-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: 0.5rem 0.75rem;
 }
 
 .leaderboard-top-table th,
@@ -256,6 +256,10 @@ body.page-auth .main-content {
   padding: 2.5rem 0 3rem;
 }
 
+body.page-app .main-content {
+  padding: 2.5rem 0 3rem;
+}
+
 .auth-page-shell {
   min-height: calc(100vh - 10rem);
   display: flex;
@@ -288,15 +292,34 @@ body.page-auth .main-content {
   object-fit: contain;
 }
 
-.predict-options-column {
+.predict-options-row {
   display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
 }
 
-.predict-options-column .form-check {
+.predict-options-row .form-check {
   margin-bottom: 0;
   padding-left: 1.75rem;
+  white-space: nowrap;
+}
+
+.predict-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.35rem 1rem;
+}
+
+.predict-options-grid .form-check {
+  margin-bottom: 0;
+  padding-left: 1.75rem;
+  min-width: 0;
+}
+
+.predict-options-grid .form-check-label {
+  word-break: break-word;
 }
 
 .predict-question-fieldset {
@@ -305,7 +328,8 @@ body.page-auth .main-content {
   margin: 0;
 }
 
-body.page-auth footer.site-footer {
+body.page-auth footer.site-footer,
+body.page-app footer.site-footer {
   background: rgba(122, 9, 16, 0.95);
 }
 

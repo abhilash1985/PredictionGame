@@ -69,26 +69,26 @@
         </ul>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="card card-football">
-      <div class="card-header">Past World Cup Winners</div>
-      <div class="card-body winners-gallery">
-        <div class="row g-2">
-          {% for winner in winners %}
-            <div class="col-4 text-center">
-              <div class="winner-thumb bg-dark d-flex flex-column align-items-center justify-content-center">
-                {% if winner.flag_url %}
-                  <img src="{{ winner.flag_url }}" alt="{{ winner.country }} flag" class="winner-flag" loading="lazy">
-                {% endif %}
-                <span class="text-warning fw-bold small">{{ winner.year }}</span>
-              </div>
-              <small class="d-block mt-1">{{ winner.country }}</small>
-            </div>
-          {% empty %}
-            <p class="text-muted small mb-0">Winner history loads with seed data.</p>
-          {% endfor %}
+<div class="card card-football">
+  <div class="card-header">Past World Cup Winners</div>
+  <div class="card-body winners-gallery">
+    <div class="winners-gallery-grid">
+      {% for winner in winners %}
+        <div class="winner-item text-center">
+          <div class="winner-thumb bg-dark d-flex flex-column align-items-center justify-content-center">
+            {% if winner.flag_url %}
+              <img src="{{ winner.flag_url }}" alt="{{ winner.country }} flag" class="winner-flag" loading="lazy">
+            {% endif %}
+            <span class="text-warning fw-bold small">{{ winner.year }}</span>
+          </div>
+          <small class="d-block mt-1 winner-country">{{ winner.country }}</small>
         </div>
-      </div>
+      {% empty %}
+        <p class="text-muted small mb-0">Winner history loads with seed data.</p>
+      {% endfor %}
     </div>
   </div>
 </div>
