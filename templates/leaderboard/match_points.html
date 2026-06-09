@@ -32,6 +32,7 @@
               {% for column in match_columns %}
                 <th class="text-center ranks-col-match" title="{{ column.tooltip }}">{{ column.label }}</th>
               {% endfor %}
+              <th class="text-end match-points-total-col">Total</th>
             </tr>
           </thead>
           <tbody>
@@ -59,10 +60,11 @@
                     {% endif %}
                   </td>
                 {% endfor %}
+                <td class="text-end match-points-total-col ranks-points-cell">{{ row.row_total }}</td>
               </tr>
             {% empty %}
               <tr>
-                <td colspan="{{ match_columns|length|add:1 }}" class="ranks-empty text-muted">No predictions for completed matches yet.</td>
+                <td colspan="{{ match_columns|length|add:2 }}" class="ranks-empty text-muted">No players registered yet.</td>
               </tr>
             {% endfor %}
           </tbody>

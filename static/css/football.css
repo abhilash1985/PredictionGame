@@ -1920,6 +1920,16 @@ body.page-team-points {
   font-size: 0.85rem;
 }
 
+.match-points-total-col {
+  min-width: 4rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.landing-section-footer {
+  background: rgba(255, 255, 255, 0.04);
+}
+
 .ranks-empty {
   text-align: center;
   padding: 2.5rem 1rem !important;

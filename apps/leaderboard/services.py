@@ -210,19 +210,15 @@ class LeaderboardService:
         for profile in UserProfile.objects.select_related('user').all():
             cells = []
             row_total = 0
-            has_prediction = False
             for match in completed_matches:
                 points = points_by_user_match.get(profile.user_id, {}).get(match.id)
                 if points is not None:
-                    has_prediction = True
                     row_total += points
                 max_points = max_points_by_match[match.id]
                 cells.append({
                     'points': points,
                     'is_top': points is not None and points > 0 and points == max_points,
                 })
-            if not has_prediction:
-                continue
             rows.append({
                 'user_id': profile.user_id,
                 'display_name': profile.display_name,

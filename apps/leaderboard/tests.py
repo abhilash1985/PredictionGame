@@ -129,6 +129,15 @@ class MatchPointsMatrixTests(TestCase):
         self.assertFalse(bob_row['cells'][0]['is_top'])
         self.assertEqual(alice_row['cells'][0]['points'], 12)
         self.assertEqual(bob_row['cells'][0]['points'], 8)
+        self.assertEqual(alice_row['row_total'], 12)
+        self.assertEqual(bob_row['row_total'], 8)
+
+    def test_match_points_matrix_includes_users_without_predictions(self):
+        charlie = User.objects.create_user(email='charlie@example.com', password='testpass123')
+        matrix = LeaderboardService.match_points_matrix(self.tournament)
+        charlie_row = next(row for row in matrix['rows'] if row['user_id'] == charlie.id)
+        self.assertEqual(charlie_row['row_total'], 0)
+        self.assertIsNone(charlie_row['cells'][0]['points'])
 
     def test_match_points_view_renders(self):
         response = self.client.get(reverse('match_points'))
@@ -137,3 +146,4 @@ class MatchPointsMatrixTests(TestCase):
         self.assertContains(response, 'M1')
         self.assertContains(response, 'MEX vs SA')
         self.assertContains(response, self.alice.display_name)
+        self.assertContains(response, 'Total')
