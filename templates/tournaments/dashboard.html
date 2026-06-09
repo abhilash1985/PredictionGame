@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 
+{% block body_class %}page-app page-dashboard{% endblock %}
+
 {% block content %}
-<div class="hero-banner hero-argentina2022 mb-4">
-  <div>
-    <h2 class="fw-bold">Welcome, {{ user.display_name }}!</h2>
-    <p class="mb-0">{% if winner_2022 %}{{ winner_2022.country }} — {{ winner_2022.year }} Champions{% else %}FIFA World Cup 2022 — Argentina 🏆{% endif %}</p>
-  </div>
-</div>
+<h2 class="text-white fw-bold mb-4">Welcome, {{ user.display_name }}!</h2>
 
 <div class="row g-3 mb-4">
   <div class="col-md-3">

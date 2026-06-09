@@ -22,8 +22,6 @@ def landing_view(request):
 @login_required
 def dashboard_view(request):
     upcoming_matches = get_upcoming_matches(limit=20)
-    winner_2022 = PastWorldCupWinner.objects.filter(year=2022).first()
     return render(request, 'tournaments/dashboard.html', {
         'upcoming_matches': upcoming_matches,
-        'winner_2022': winner_2022,
     })
