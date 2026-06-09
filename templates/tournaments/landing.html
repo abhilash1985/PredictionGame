@@ -1,81 +1,116 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block body_class %}page-app page-landing{% endblock %}
+
 {% block content %}
-<section class="hero-banner hero-glass mb-4">
-  <div class="w-100">
-    <span class="badge bg-warning text-dark mb-2">11 June – 19 July 2026</span>
-    <h1 class="display-5 fw-bold mb-2 d-flex align-items-center gap-3">
-      <img src="{% static 'images/fifa.png' %}" alt="FIFA" class="fifa-logo" width="56" height="56">
-      FIFA World Cup 2026
-    </h1>
-    <p class="lead mb-0">Canada · Mexico · USA — Predict every match before kickoff.</p>
-  </div>
-</section>
+<div class="landing-page">
+  <section class="hero-banner hero-glass mb-4">
+    <div class="w-100">
+      <span class="badge bg-warning text-dark mb-2">11 June – 19 July 2026</span>
+      <h1 class="display-5 fw-bold mb-2 d-flex align-items-center gap-3">
+        <img src="{% static 'images/fifa.png' %}" alt="FIFA" class="fifa-logo" width="56" height="56">
+        FIFA World Cup 2026
+      </h1>
+      <p class="lead mb-0">Canada · Mexico · USA — Predict every match before kickoff.</p>
+    </div>
+  </section>
 
-<div class="row g-4">
-  <div class="col-xl-9">
-    <div class="card card-football mb-4">
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <span>Next Matches</span>
-        <small class="text-white-50" data-timezone-label>Kickoffs in your local time</small>
+  {% if user.is_authenticated %}
+    <div class="row g-3 mb-4 landing-quick-actions">
+      <div class="col-md-6">
+        <a href="{% url 'dashboard' %}" class="dashboard-summary-card dashboard-summary-cta h-100 text-decoration-none">
+          <div class="dashboard-summary-icon"><i class="bi bi-speedometer2"></i></div>
+          <div class="dashboard-summary-label">Your hub</div>
+          <div class="dashboard-summary-value">Go to Dashboard</div>
+        </a>
       </div>
-      <div class="card-body p-3">
-        {% if upcoming_matches %}
-          {% include 'tournaments/partials/match_grid.html' with matches=upcoming_matches show_group=True predicted_match_ids=predicted_match_ids %}
-        {% else %}
-          <div class="p-4 text-muted">Run <code>python manage.py seed_wc2026</code> to load fixtures.</div>
-        {% endif %}
+      <div class="col-md-6">
+        <a href="{% url 'match_list' %}" class="dashboard-summary-card dashboard-summary-cta h-100 text-decoration-none">
+          <div class="dashboard-summary-icon text-warning"><i class="bi bi-pencil-square"></i></div>
+          <div class="dashboard-summary-label">Quick action</div>
+          <div class="dashboard-summary-value">Predict Matches</div>
+        </a>
+      </div>
+    </div>
+  {% else %}
+    <div class="row g-3 mb-4 landing-quick-actions">
+      <div class="col-md-6">
+        <a href="{% url 'account_signup' %}" class="dashboard-summary-card dashboard-summary-cta h-100 text-decoration-none">
+          <div class="dashboard-summary-icon text-warning"><i class="bi bi-person-plus"></i></div>
+          <div class="dashboard-summary-label">Get started</div>
+          <div class="dashboard-summary-value">Create Account</div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="{% url 'account_login' %}" class="dashboard-summary-card h-100 text-decoration-none">
+          <div class="dashboard-summary-icon"><i class="bi bi-box-arrow-in-right"></i></div>
+          <div class="dashboard-summary-label">Returning player</div>
+          <div class="dashboard-summary-value">Sign In</div>
+        </a>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row g-4">
+    <div class="col-xl-9">
+      <div class="card card-football landing-section-card mb-4">
+        <div class="ranks-card-header">
+          <span><i class="bi bi-calendar-event me-1"></i> Next 6 Matches</span>
+          <span class="ranks-card-count" data-timezone-label>Kickoffs in your local time</span>
+        </div>
+        <div class="landing-section-body">
+          {% if upcoming_matches %}
+            {% include 'matches/partials/match_list_grid.html' with matches=upcoming_matches predicted_match_ids=predicted_match_ids show_predict=show_predict %}
+          {% else %}
+            <div class="landing-section-empty text-muted">Run <code>python manage.py seed_wc2026</code> to load fixtures.</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="card card-football landing-section-card">
+        <div class="ranks-card-header">
+          <span><i class="bi bi-table me-1"></i> Group Standings</span>
+        </div>
+        <div class="landing-section-body">
+          {% include 'tournaments/partials/standings_tabs.html' with tab_prefix='landing' %}
+        </div>
       </div>
     </div>
 
-    <div class="card card-football">
-      <div class="card-header">Group Standings</div>
-      <div class="card-body">
-        {% include 'tournaments/partials/standings_tabs.html' with tab_prefix='landing' %}
-      </div>
-    </div>
-  </div>
+    <div class="col-xl-3">
+      {% if user.is_authenticated %}
+        <div class="card card-football landing-section-card mb-4 sticky-auth">
+          <div class="ranks-card-header">
+            <span><i class="bi bi-bar-chart-fill me-1"></i> Leaderboard</span>
+            <a href="{% url 'leaderboard' %}" class="landing-sidebar-link">View all</a>
+          </div>
+          <div class="landing-section-body landing-section-body-flush p-0">
+            {% include 'tournaments/partials/leaderboard_top.html' with leaderboard_top=leaderboard_top %}
+          </div>
+        </div>
+      {% endif %}
 
-  <div class="col-xl-3">
-    {% if user.is_authenticated %}
-      <div class="card card-football mb-4 sticky-auth">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <span>Leaderboard</span>
-          <a href="{% url 'leaderboard' %}" class="small text-white-50">View all</a>
+      <div class="card card-football landing-section-card mb-4">
+        <div class="ranks-card-header">
+          <span><i class="bi bi-trophy-fill me-1"></i> Past World Cup Winners</span>
         </div>
-        <div class="card-body p-0">
-          {% include 'tournaments/partials/leaderboard_top.html' with leaderboard_top=leaderboard_top %}
-        </div>
-      </div>
-    {% else %}
-      <div class="card card-football mb-4 sticky-auth">
-        <div class="card-header text-center">Join the Prediction Game</div>
-        <div class="card-body text-center">
-          <p class="text-muted">Pick winners, goals, player of the match, and more. Climb the leaderboard.</p>
-          <a href="{% url 'account_signup' %}" class="btn btn-gold w-100 mb-2 btn-lg">Create Account</a>
-          <a href="{% url 'account_login' %}" class="btn btn-outline-gold w-100 btn-lg">Sign In</a>
-        </div>
-      </div>
-    {% endif %}
-
-    <div class="card card-football mb-4">
-      <div class="card-header">Past World Cup Winners</div>
-      <div class="card-body winners-gallery">
-        <div class="winners-gallery-grid winners-gallery-sidebar">
-          {% for winner in winners %}
-            <div class="winner-item text-center">
-              <div class="winner-thumb bg-dark d-flex flex-column align-items-center justify-content-center">
-                {% if winner.flag_url %}
-                  <img src="{{ winner.flag_url }}" alt="{{ winner.country }} flag" class="winner-flag" loading="lazy">
-                {% endif %}
-                <span class="text-warning fw-bold small">{{ winner.year }}</span>
+        <div class="landing-section-body">
+          <div class="winners-gallery-grid winners-gallery-sidebar">
+            {% for winner in winners %}
+              <div class="winner-item text-center">
+                <div class="winner-thumb bg-dark d-flex flex-column align-items-center justify-content-center">
+                  {% if winner.flag_url %}
+                    <img src="{{ winner.flag_url }}" alt="{{ winner.country }} flag" class="winner-flag" loading="lazy">
+                  {% endif %}
+                  <span class="text-warning fw-bold small">{{ winner.year }}</span>
+                </div>
+                <small class="d-block mt-1 winner-country">{{ winner.country }}</small>
               </div>
-              <small class="d-block mt-1 winner-country">{{ winner.country }}</small>
-            </div>
-          {% empty %}
-            <p class="text-muted small mb-0">Winner history loads with seed data.</p>
-          {% endfor %}
+            {% empty %}
+              <p class="landing-section-empty text-muted mb-0">Winner history loads with seed data.</p>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>

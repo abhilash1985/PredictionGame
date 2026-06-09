@@ -31,6 +31,16 @@ body.page-dashboard {
     url('../images/2022-wc-1.webp');
 }
 
+body.page-landing {
+  background-image: linear-gradient(180deg, rgba(6, 18, 36, 0.42) 0%, rgba(6, 18, 36, 0.18) 42%, rgba(0, 0, 0, 0.48) 100%),
+    url('../images/fifa-wc4.avif');
+}
+
+body.page-auth {
+  background-image: linear-gradient(180deg, rgba(6, 18, 36, 0.42) 0%, rgba(6, 18, 36, 0.18) 42%, rgba(0, 0, 0, 0.48) 100%),
+    url('../images/fifa-wc4.avif');
+}
+
 body.page-graphs {
   background-image: linear-gradient(180deg, rgba(6, 18, 36, 0.42) 0%, rgba(6, 18, 36, 0.18) 42%, rgba(0, 0, 0, 0.48) 100%),
     url('../images/2022-wc-3.webp');
@@ -251,9 +261,51 @@ body.page-graphs {
   color: var(--white) !important;
 }
 
-.dashboard-welcome-subtitle {
+.dashboard-welcome-subtitle,
+.landing-page-subtitle,
+.matches-page-subtitle {
   color: rgba(255, 255, 255, 0.82);
   font-size: 0.95rem;
+}
+
+.landing-page-logo {
+  border-radius: 10px;
+  object-fit: contain;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.landing-quick-actions .dashboard-summary-card {
+  min-height: 6.5rem;
+}
+
+.landing-section-card {
+  overflow: hidden;
+}
+
+.landing-section-body {
+  padding: 1.25rem;
+  background: var(--off-white);
+}
+
+.landing-section-body-flush {
+  background: var(--white);
+}
+
+.landing-section-empty {
+  padding: 1rem 0;
+  font-size: 0.92rem;
+}
+
+.landing-sidebar-link {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+}
+
+.landing-sidebar-link:hover {
+  color: var(--gold);
 }
 
 .dashboard-summary-card {
@@ -505,11 +557,6 @@ body.page-graphs {
   .dashboard-leaderboard-link {
     width: 100%;
   }
-}
-
-.matches-page-subtitle {
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.95rem;
 }
 
 .matches-page-card .card-body {
@@ -1863,45 +1910,48 @@ body.page-graphs {
   color: var(--white);
 }
 
-.auth-card {
-  max-width: 480px;
+.auth-page {
+  max-width: 1140px;
   margin: 0 auto;
 }
 
 body.page-auth .main-content {
-  padding: 2.5rem 0 3rem;
+  padding: 2rem 0 3rem;
 }
 
-.auth-page-shell {
-  min-height: calc(100vh - 10rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.auth-form-card {
+  max-width: 28rem;
 }
 
-.auth-panel {
-  background: rgba(255, 255, 255, 0.97);
-  border: none;
-  border-radius: 14px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
-  overflow: hidden;
+.auth-form-intro {
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
 }
 
-.auth-panel .card-header {
-  background: linear-gradient(135deg, var(--theme-navy-mid), var(--theme-navy-light));
-  color: var(--white);
+.auth-form .form-label {
   font-weight: 600;
-  border-bottom: 2px solid var(--gold);
+  color: var(--theme-navy-mid);
+  font-size: 0.88rem;
 }
 
-.auth-panel-glass {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
+.auth-form-footer {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e3e8ef;
+  text-align: center;
+  font-size: 0.88rem;
+  color: #6c757d;
 }
 
-.auth-panel-logo {
-  border-radius: 8px;
-  object-fit: contain;
+.auth-form-footer a {
+  color: var(--theme-navy-light);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-form-footer a:hover {
+  color: var(--theme-navy-mid);
+  text-decoration: underline;
 }
 
 .predict-options-row {

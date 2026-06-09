@@ -14,7 +14,10 @@ from apps.tournaments.models import PastWorldCupWinner
 def landing_view(request):
     tournament = get_active_tournament()
     winners = PastWorldCupWinner.objects.all()
-    upcoming_matches = get_upcoming_matches(limit=10)
+    upcoming_matches = (
+        get_upcoming_matches(limit=6)
+        .annotate(prediction_count=Count('predictions'))
+    )
     leaderboard_top = LeaderboardService.user_stats(tournament)[:10]
     return render(request, 'tournaments/landing.html', {
         'winners': winners,
@@ -22,6 +25,7 @@ def landing_view(request):
         'tournament': tournament,
         'leaderboard_top': leaderboard_top,
         'predicted_match_ids': predicted_match_ids(request.user, upcoming_matches),
+        'show_predict': request.user.is_authenticated,
     })
 
 

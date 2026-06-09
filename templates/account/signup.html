@@ -3,16 +3,22 @@
 
 {% block title %}Sign Up — WC 2026{% endblock %}
 
+{% block auth_page_title %}Join the prediction game{% endblock %}
+{% block auth_page_subtitle %}Create an account to pick winners, goals, MVPs, and more.{% endblock %}
+
 {% block auth_heading %}<i class="bi bi-person-plus me-1"></i> Create Account{% endblock %}
 
 {% block auth_body %}
-<p class="text-muted small mb-3">Join the prediction game — pick winners, goals, player of the match, and climb the leaderboard.</p>
-<form method="post" action="{% url 'account_signup' %}">
+<p class="auth-form-intro text-muted">Choose your display name and favorite team to get started.</p>
+<form method="post" action="{% url 'account_signup' %}" class="auth-form">
   {% csrf_token %}
   {% include 'account/partials/auth_form_fields.html' with form=form %}
-  <button type="submit" class="btn btn-gold w-100 btn-lg">Sign Up</button>
+  <button type="submit" class="btn btn-gold w-100">
+    <i class="bi bi-person-check me-1"></i> Sign Up
+  </button>
 </form>
-<hr>
-<p class="text-center small mb-0">Already have an account? <a href="{% url 'account_login' %}">Sign in</a></p>
-<p class="text-center small mt-2 mb-0"><a href="{% url 'landing' %}">← Back to home</a></p>
+<div class="auth-form-footer">
+  <p class="mb-2">Already have an account? <a href="{% url 'account_login' %}">Sign in</a></p>
+  <p class="mb-0"><a href="{% url 'landing' %}"><i class="bi bi-arrow-left me-1"></i>Back to home</a></p>
+</div>
 {% endblock %}

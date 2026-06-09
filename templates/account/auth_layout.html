@@ -1,26 +1,38 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block body_class %}page-auth{% endblock %}
+{% block body_class %}page-app page-auth{% endblock %}
 
 {% block content %}
-<div class="auth-page-shell">
+<div class="auth-page">
+  <div class="landing-page-header mb-4 text-center text-lg-start">
+    <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3">
+      <img src="{% static 'images/fifa.png' %}" alt="FIFA" class="landing-page-logo mx-auto mx-lg-0" width="52" height="52">
+      <div>
+        <h1 class="page-heading fw-bold mb-1">{% block auth_page_title %}FIFA World Cup 2026{% endblock %}</h1>
+        <p class="landing-page-subtitle mb-0">{% block auth_page_subtitle %}Sign in to predict matches and climb the leaderboard.{% endblock %}</p>
+      </div>
+    </div>
+  </div>
+
   <div class="row g-4 align-items-stretch">
     <div class="col-lg-5">
-      <div class="card auth-panel mx-lg-0 mx-auto">
-        <div class="card-header text-center">
-          <img src="{% static 'images/fifa.png' %}" alt="" class="auth-panel-logo mb-2" width="48" height="48">
-          <div>{% block auth_heading %}{% endblock %}</div>
+      <div class="card card-football account-card mx-lg-0 mx-auto auth-form-card">
+        <div class="account-card-header account-card-header-center">
+          <span class="account-card-title">{% block auth_heading %}{% endblock %}</span>
         </div>
-        <div class="card-body">
+        <div class="account-card-body">
           {% block auth_body %}{% endblock %}
         </div>
       </div>
     </div>
     <div class="col-lg-7">
-      <div class="card auth-panel auth-panel-glass h-100">
-        <div class="card-header">FIFA World Cup 2026 — Group Standings</div>
-        <div class="card-body">
+      <div class="card card-football landing-section-card h-100">
+        <div class="ranks-card-header">
+          <span><i class="bi bi-table me-1"></i> Group Standings</span>
+          <span class="ranks-card-count">Live tournament table</span>
+        </div>
+        <div class="landing-section-body">
           {% include 'tournaments/partials/standings_tabs.html' with tab_prefix=auth_tab_prefix|default:'auth' %}
         </div>
       </div>
