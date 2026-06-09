@@ -1,0 +1,7 @@
+<div class="match-list-grid row g-3">
+  {% for match in matches %}
+    <div class="col-lg-6">
+      {% include 'matches/partials/match_list_row.html' with match=match %}
+    </div>
+  {% endfor %}
+</div>

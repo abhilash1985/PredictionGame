@@ -43,11 +43,12 @@ def match_list_view(request):
         matches = (
             Match.objects.filter(tournament=tournament, round__name__startswith='Group ')
             .select_related('team_home', 'team_away', 'stadium', 'round')
+            .prefetch_related('questions__question_template')
             .order_by('kickoff_at')
         )
     return render(request, 'matches/list.html', {
         'matches': matches,
-        'predicted_match_ids': predicted_match_ids(request.user, matches),
+        'tournament': tournament,
     })
 
 

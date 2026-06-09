@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 
+{% block body_class %}page-app page-matches{% endblock %}
+
 {% block content %}
-<h2 class="page-heading mb-4">All Matches</h2>
-<div class="card card-football">
+<div class="matches-page-header mb-4">
+  <h2 class="page-heading mb-1">All Matches</h2>
+  {% if tournament %}
+    <p class="matches-page-subtitle mb-0">{{ tournament.name }} — Group stage fixtures and results</p>
+  {% endif %}
+</div>
+
+<div class="card card-football matches-page-card">
   <div class="card-body p-3">
     {% if matches %}
-      {% include 'tournaments/partials/match_grid.html' with matches=matches predicted_match_ids=predicted_match_ids %}
+      {% include 'matches/partials/match_list_grid.html' with matches=matches %}
     {% else %}
       <div class="p-4 text-muted">No matches available.</div>
     {% endif %}

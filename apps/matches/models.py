@@ -109,6 +109,53 @@ class Match(models.Model):
     def total_question_points(self):
         return self.questions.aggregate(total=models.Sum('points'))['total'] or 0
 
+    @property
+    def display_home_score(self):
+        if self.home_score is not None:
+            return self.home_score
+        home_score, _away_score = self._goal_scores_from_questions()
+        return home_score
+
+    @property
+    def display_away_score(self):
+        if self.away_score is not None:
+            return self.away_score
+        _home_score, away_score = self._goal_scores_from_questions()
+        return away_score
+
+    @property
+    def has_result(self):
+        return self.display_home_score is not None and self.display_away_score is not None
+
+    @property
+    def is_completed(self):
+        return self.status == self.Status.FINISHED or self.has_result
+
+    def _goal_scores_from_questions(self):
+        if hasattr(self, '_cached_goal_scores'):
+            return self._cached_goal_scores
+
+        home_score = None
+        away_score = None
+        for question in self.questions.all():
+            template = question.question_template
+            if not template or not question.correct_answer:
+                continue
+            if template.code == 'HOME_GOALS':
+                home_score = self._parse_goal_score(question.correct_answer)
+            elif template.code == 'AWAY_GOALS':
+                away_score = self._parse_goal_score(question.correct_answer)
+
+        self._cached_goal_scores = (home_score, away_score)
+        return self._cached_goal_scores
+
+    @staticmethod
+    def _parse_goal_score(value):
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return value
+
 
 class MatchQuestion(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='questions')

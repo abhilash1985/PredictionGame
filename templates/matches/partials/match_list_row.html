@@ -1,0 +1,66 @@
+{% load tournament_tags tz %}
+<div class="match-list-row h-100{% if match.is_completed %} match-list-row--completed{% endif %}{% if match.status == 'live' %} match-list-row--live{% endif %}">
+  <div class="match-list-row-top">
+    <div class="match-list-badges d-flex flex-wrap align-items-center gap-2">
+      <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
+      {% if match.round %}
+        <span class="badge rounded-pill badge-group-name">{{ match.round.name }}</span>
+      {% endif %}
+      {% if match.status == 'live' %}
+        <span class="badge rounded-pill match-list-badge-live">Live</span>
+      {% elif match.is_completed %}
+        <span class="badge rounded-pill match-list-badge-final">Full Time</span>
+      {% endif %}
+    </div>
+    <a href="{% url 'match_squad' match.pk %}" class="btn btn-sm btn-outline-secondary">Squads</a>
+  </div>
+
+  <div class="match-list-teams">
+    <div class="match-list-team">
+      {% with flag=match.team_home|team_flag_url:"w40" %}
+        {% if flag %}
+          <img src="{{ flag }}" alt="{{ match.team_home.name }} flag" class="match-list-flag" loading="lazy">
+        {% endif %}
+      {% endwith %}
+      <span class="match-list-team-name">{{ match.team_home.name }}</span>
+    </div>
+
+    <div class="match-list-center">
+      {% if match.has_result %}
+        <div class="match-list-score" aria-label="Final score">
+          <span class="match-list-score-home">{{ match.display_home_score }}</span>
+          <span class="match-list-score-sep">:</span>
+          <span class="match-list-score-away">{{ match.display_away_score }}</span>
+        </div>
+      {% else %}
+        <span class="match-list-vs">vs</span>
+      {% endif %}
+    </div>
+
+    <div class="match-list-team">
+      {% with flag=match.team_away|team_flag_url:"w40" %}
+        {% if flag %}
+          <img src="{{ flag }}" alt="{{ match.team_away.name }} flag" class="match-list-flag" loading="lazy">
+        {% endif %}
+      {% endwith %}
+      <span class="match-list-team-name">{{ match.team_away.name }}</span>
+    </div>
+  </div>
+
+  <div class="match-list-meta">
+    <span class="match-list-meta-item">
+      <i class="bi bi-geo-alt"></i>
+      {{ match.stadium.name }}{% if match.stadium.city and match.stadium.city not in match.stadium.name %}, {{ match.stadium.city }}{% endif %}
+    </span>
+    <span class="match-list-meta-item">
+      <i class="bi bi-calendar3"></i>
+      {% include 'tournaments/partials/kickoff_local.html' with kickoff_at=match.kickoff_at format='match-row' %}
+    </span>
+  </div>
+
+  {% if not match.is_completed and match.status != 'live' %}
+    <div class="match-list-footer">
+      <span class="countdown" data-kickoff="{% timezone 'UTC' %}{{ match.kickoff_at|date:'c' }}{% endtimezone %}">...</span>
+    </div>
+  {% endif %}
+</div>

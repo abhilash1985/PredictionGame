@@ -1,6 +1,6 @@
 from django.db import transaction
 
-from apps.matches.models import MatchPrediction, QuestionPrediction
+from apps.matches.models import Match, MatchPrediction, QuestionPrediction
 
 
 class ScoringService:
@@ -42,4 +42,30 @@ class ScoringService:
             if key in answers_dict:
                 question.correct_answer = answers_dict[key]
                 question.save(update_fields=['correct_answer'])
+        ScoringService._sync_match_result_from_questions(match)
         return ScoringService.score_match(match)
+
+    @staticmethod
+    def _sync_match_result_from_questions(match):
+        home_score = None
+        away_score = None
+        for question in match.questions.select_related('question_template'):
+            template = question.question_template
+            if not template or not question.correct_answer:
+                continue
+            try:
+                goals = int(question.correct_answer)
+            except (TypeError, ValueError):
+                continue
+            if template.code == 'HOME_GOALS':
+                home_score = goals
+            elif template.code == 'AWAY_GOALS':
+                away_score = goals
+
+        if home_score is None or away_score is None:
+            return
+
+        match.home_score = home_score
+        match.away_score = away_score
+        match.status = Match.Status.FINISHED
+        match.save(update_fields=['home_score', 'away_score', 'status'])
