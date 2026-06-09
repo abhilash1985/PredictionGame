@@ -22,6 +22,16 @@ def team_points_view(request):
     })
 
 
+def match_points_view(request):
+    tournament = get_active_tournament()
+    matrix = LeaderboardService.match_points_matrix(tournament)
+    return render(request, 'leaderboard/match_points.html', {
+        'match_columns': matrix['matches'],
+        'rows': matrix['rows'],
+        'tournament': tournament,
+    })
+
+
 def prediction_graph_view(request):
     tournament = get_active_tournament()
     matches = LeaderboardService.graph_match_choices(tournament)

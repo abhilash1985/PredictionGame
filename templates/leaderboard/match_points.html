@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block body_class %}page-app page-match-points{% endblock %}
+
+{% block content %}
+<div class="ranks-page">
+  <div class="ranks-page-nav mb-3">
+    {% include 'partials/page_back_button.html' %}
+  </div>
+  <div class="ranks-page-header mb-4">
+    <h2 class="page-heading mb-1">Match Points</h2>
+    {% if tournament %}
+      <p class="ranks-page-subtitle mb-0">{{ tournament.name }} — points earned per completed match</p>
+    {% else %}
+      <p class="ranks-page-subtitle mb-0">Points earned per completed match</p>
+    {% endif %}
+  </div>
+
+  <div class="card card-football ranks-card">
+    <div class="ranks-card-header">
+      <span><i class="bi bi-grid-3x3-gap-fill me-1"></i> Predictor match breakdown</span>
+      {% if match_columns %}
+        <span class="ranks-card-count">{{ rows|length }} predictor{{ rows|length|pluralize }} · {{ match_columns|length }} match{{ match_columns|length|pluralize }}</span>
+      {% endif %}
+    </div>
+    <div class="ranks-table-wrap">
+      {% if match_columns %}
+        <table class="table ranks-table match-points-table mb-0">
+          <thead>
+            <tr>
+              <th class="match-points-sticky-col ranks-col-name">Predictor</th>
+              {% for column in match_columns %}
+                <th class="text-center ranks-col-match" title="{{ column.tooltip }}">{{ column.label }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in rows %}
+              <tr class="ranks-row{% if user.is_authenticated and row.user_id == user.id %} ranks-row-self{% endif %}">
+                <td class="match-points-sticky-col ranks-col-name">
+                  <span class="ranks-player-name">{{ row.display_name }}</span>
+                  {% if user.is_authenticated and row.user_id == user.id %}
+                    <span class="ranks-you-badge">You</span>
+                  {% endif %}
+                </td>
+                {% for cell in row.cells %}
+                  <td class="text-center match-points-cell{% if cell.is_top %} match-points-cell-top{% endif %}">
+                    {% if cell.points is not None %}
+                      {% if cell.is_top %}
+                        <span class="match-points-top-value" title="Top score for this match">
+                          <i class="bi bi-trophy-fill match-points-top-icon" aria-hidden="true"></i>
+                          {{ cell.points }}
+                        </span>
+                      {% else %}
+                        {{ cell.points }}
+                      {% endif %}
+                    {% else %}
+                      <span class="text-muted">—</span>
+                    {% endif %}
+                  </td>
+                {% endfor %}
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="{{ match_columns|length|add:1 }}" class="ranks-empty text-muted">No predictions for completed matches yet.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="match-points-empty text-muted mb-0">No completed matches yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1872,6 +1872,54 @@ body.page-team-points {
   color: var(--theme-navy-light);
 }
 
+.match-points-empty {
+  padding: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.match-points-table .ranks-col-match {
+  min-width: 3.25rem;
+  cursor: help;
+}
+
+.match-points-table .match-points-sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #fff;
+  box-shadow: 1px 0 0 #eef1f5;
+}
+
+.match-points-table thead .match-points-sticky-col {
+  z-index: 3;
+  background: #f4f6f9;
+}
+
+.match-points-table .ranks-row-self .match-points-sticky-col {
+  background: #f3f7fb;
+}
+
+.match-points-cell {
+  font-variant-numeric: tabular-nums;
+}
+
+.match-points-cell-top {
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.18), rgba(212, 175, 55, 0.06));
+}
+
+.match-points-top-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 800;
+  color: var(--theme-navy-mid);
+}
+
+.match-points-top-icon {
+  color: var(--gold);
+  font-size: 0.85rem;
+}
+
 .ranks-empty {
   text-align: center;
   padding: 2.5rem 1rem !important;

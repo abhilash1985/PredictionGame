@@ -171,6 +171,72 @@ class LeaderboardService:
         )
 
     @staticmethod
+    def match_points_matrix(tournament=None):
+        tournament = tournament or get_active_tournament()
+        if not tournament:
+            return {'matches': [], 'rows': []}
+
+        all_matches = (
+            Match.objects.filter(tournament=tournament)
+            .select_related('team_home', 'team_away')
+            .prefetch_related('questions')
+            .order_by('kickoff_at', 'match_number')
+        )
+        completed_matches = [match for match in all_matches if match.is_completed]
+        if not completed_matches:
+            return {'matches': [], 'rows': []}
+
+        match_ids = [match.id for match in completed_matches]
+        predictions = MatchPrediction.objects.filter(match_id__in=match_ids).select_related('user__profile')
+
+        points_by_user_match = defaultdict(dict)
+        max_points_by_match = {match.id: 0 for match in completed_matches}
+        for prediction in predictions:
+            points_by_user_match[prediction.user_id][prediction.match_id] = prediction.total_points
+            if prediction.total_points > max_points_by_match[prediction.match_id]:
+                max_points_by_match[prediction.match_id] = prediction.total_points
+
+        match_columns = [
+            {
+                'match_id': match.id,
+                'label': f'M{match.match_number}',
+                'tooltip': f'{match.team_home.short_name} vs {match.team_away.short_name}',
+                'max_points': max_points_by_match[match.id],
+            }
+            for match in completed_matches
+        ]
+
+        rows = []
+        for profile in UserProfile.objects.select_related('user').all():
+            cells = []
+            row_total = 0
+            has_prediction = False
+            for match in completed_matches:
+                points = points_by_user_match.get(profile.user_id, {}).get(match.id)
+                if points is not None:
+                    has_prediction = True
+                    row_total += points
+                max_points = max_points_by_match[match.id]
+                cells.append({
+                    'points': points,
+                    'is_top': points is not None and points > 0 and points == max_points,
+                })
+            if not has_prediction:
+                continue
+            rows.append({
+                'user_id': profile.user_id,
+                'display_name': profile.display_name,
+                'cells': cells,
+                'row_total': row_total,
+            })
+
+        rows.sort(key=lambda row: (-row['row_total'], row['display_name'].lower()))
+        return {
+            'matches': match_columns,
+            'rows': rows,
+        }
+
+    @staticmethod
     def graph_match_choices(tournament=None):
         tournament = tournament or get_active_tournament()
         if not tournament:
