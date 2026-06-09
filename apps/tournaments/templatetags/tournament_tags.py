@@ -1,5 +1,7 @@
 from django import template
 
+from apps.leaderboard.services import LeaderboardService
+from apps.tournaments.context_processors import get_active_tournament
 from apps.tournaments.models import Team
 from apps.tournaments.team_flags import flag_url_for_team
 
@@ -33,3 +35,11 @@ def team_badge(team, show_name=False, show_short=True, show_ranking=False):
         'show_short': show_short,
         'show_ranking': show_ranking,
     }
+
+
+@register.inclusion_tag('tournaments/partials/leaderboard_top.html')
+def leaderboard_top_preview(limit=10):
+    tournament = get_active_tournament()
+    if not tournament:
+        return {'leaderboard_top': []}
+    return {'leaderboard_top': LeaderboardService.user_stats(tournament)[:limit]}
