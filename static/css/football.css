@@ -981,35 +981,78 @@ body.page-graphs {
 
 @media (max-width: 575px) {
   .match-list-teams {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 0.4rem;
   }
 
   .match-list-center {
-    order: -1;
-    margin-bottom: 0.25rem;
+    order: 0;
+    margin-bottom: 0;
   }
 
   .match-list-team {
-    flex-direction: row;
-    text-align: left;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.3rem;
   }
 
   .match-list-team-name {
-    flex: 1;
+    flex: none;
+    font-size: 0.78rem;
+    line-height: 1.15;
+  }
+
+  .match-list-flag {
+    width: 40px;
+    height: 30px;
+  }
+
+  .match-list-vs {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.72rem;
+  }
+
+  .match-list-score {
+    font-size: 1.35rem;
   }
 
   .match-list-toolbar {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0.35rem;
+    padding: 0.35rem;
   }
 
   .match-list-toolbar-timer {
-    width: 100%;
+    width: auto;
     min-width: 0;
+    max-width: 38%;
+    padding: 0.35rem 0.45rem;
+    font-size: 0.68rem;
+  }
+
+  .match-list-toolbar-timer .bi {
+    font-size: 0.72rem;
   }
 
   .match-list-toolbar-actions {
-    width: 100%;
+    width: auto;
+    flex: 1;
+    min-width: 0;
+    gap: 0.25rem;
+  }
+
+  .match-list-btn {
+    min-height: 2rem;
+    padding: 0.3rem 0.25rem;
+    font-size: 0.68rem;
+  }
+
+  .match-list-btn-verdict .match-list-btn-label {
+    display: none;
   }
 }
 
