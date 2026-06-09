@@ -94,6 +94,79 @@
     detail: formatDetail,
   };
 
+  function hidePredictActions(container) {
+    if (!container) {
+      return;
+    }
+    container.querySelectorAll('.match-list-predict-btn').forEach(function (button) {
+      button.classList.add('d-none');
+    });
+  }
+
+  function disablePredictForm(form) {
+    if (!form) {
+      return;
+    }
+    form.querySelectorAll('input, select, textarea, button').forEach(function (field) {
+      field.disabled = true;
+    });
+  }
+
+  function autoSubmitForm(selector) {
+    if (!selector) {
+      return;
+    }
+    var form = document.querySelector(selector);
+    if (!form || form.dataset.kickoffSubmitted === '1') {
+      return;
+    }
+    form.dataset.kickoffSubmitted = '1';
+    disablePredictForm(form);
+    if (typeof form.requestSubmit === 'function') {
+      form.requestSubmit();
+      return;
+    }
+    form.submit();
+  }
+
+  function handleKickoffClosed(el) {
+    el.textContent = el.dataset.closedLabel || 'Started';
+    el.classList.add('closed');
+    hidePredictActions(el.closest('.match-list-row'));
+    if (el.dataset.autoSubmit) {
+      autoSubmitForm(el.dataset.autoSubmit);
+    }
+  }
+
+  function formatCountdown(diff) {
+    var h = Math.floor(diff / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    return h + 'h ' + m + 'm ' + s + 's';
+  }
+
+  function startCountdown(el) {
+    var kickoff = new Date(el.dataset.kickoff);
+    if (isNaN(kickoff.getTime())) {
+      return;
+    }
+
+    function tick() {
+      var diff = kickoff - new Date();
+      if (diff <= 0) {
+        if (el.dataset.kickoffClosed !== '1') {
+          el.dataset.kickoffClosed = '1';
+          handleKickoffClosed(el);
+        }
+        return;
+      }
+      el.textContent = formatCountdown(diff);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  }
+
   document.querySelectorAll('time.local-datetime').forEach(function (el) {
     var iso = el.getAttribute('datetime');
     if (!iso) {
@@ -114,27 +187,5 @@
     el.textContent = tz ? 'Kickoffs in ' + tz : 'Kickoffs in your local time';
   });
 
-  document.querySelectorAll('[data-kickoff]').forEach(function (el) {
-    var kickoff = new Date(el.dataset.kickoff);
-    if (isNaN(kickoff.getTime())) {
-      return;
-    }
-
-    function tick() {
-      var now = new Date();
-      var diff = kickoff - now;
-      if (diff <= 0) {
-        el.textContent = 'Started';
-        el.classList.add('closed');
-        return;
-      }
-      var h = Math.floor(diff / 3600000);
-      var m = Math.floor((diff % 3600000) / 60000);
-      var s = Math.floor((diff % 60000) / 1000);
-      el.textContent = h + 'h ' + m + 'm ' + s + 's';
-    }
-
-    tick();
-    setInterval(tick, 1000);
-  });
+  document.querySelectorAll('[data-kickoff]').forEach(startCountdown);
 })();

@@ -76,9 +76,9 @@
     <div class="match-list-toolbar-actions">
       {% if show_predict is not False and match.is_prediction_open %}
         {% if predicted_match_ids and match.pk in predicted_match_ids %}
-          <a href="{% url 'match_predict' match.pk %}" class="match-list-btn match-list-btn-edit">Edit</a>
+          <a href="{% url 'match_predict' match.pk %}" class="match-list-btn match-list-btn-edit match-list-predict-btn">Edit</a>
         {% else %}
-          <a href="{% url 'match_predict' match.pk %}" class="match-list-btn match-list-btn-primary">Predict</a>
+          <a href="{% url 'match_predict' match.pk %}" class="match-list-btn match-list-btn-primary match-list-predict-btn">Predict</a>
         {% endif %}
       {% endif %}
       {% if show_verdict is not False and match.prediction_count %}

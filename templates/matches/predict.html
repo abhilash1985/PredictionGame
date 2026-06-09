@@ -63,6 +63,15 @@
         <span class="predict-toolbar-value">{{ boosters_remaining }}</span>
       </div>
     {% endif %}
+    {% if match.is_prediction_open %}
+      <div class="predict-toolbar-item predict-toolbar-countdown ms-md-auto">
+        <span class="predict-toolbar-label">Time left to predict</span>
+        <span class="countdown predict-countdown"
+              data-kickoff="{% timezone 'UTC' %}{{ match.kickoff_at|date:'c' }}{% endtimezone %}"
+              data-auto-submit="#predict-form"
+              data-closed-label="Submitting...">...</span>
+      </div>
+    {% endif %}
   </div>
 
   <div class="card-body predict-body">
@@ -72,7 +81,7 @@
       </div>
     {% endif %}
 
-    <form method="post" class="predict-form">
+    <form method="post" class="predict-form" id="predict-form">
       {% csrf_token %}
       {% for item in question_fields %}
         {% with field=item.field %}

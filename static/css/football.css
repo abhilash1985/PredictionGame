@@ -2469,6 +2469,16 @@ body.page-auth .main-content {
   color: var(--theme-navy-mid);
 }
 
+.predict-toolbar-countdown .predict-countdown {
+  display: inline-block;
+  min-width: 7.5rem;
+  text-align: center;
+}
+
+.predict-toolbar-countdown .countdown.closed {
+  min-width: auto;
+}
+
 .predict-body {
   padding: 1.5rem 1.75rem 1.75rem;
   background: var(--off-white);
