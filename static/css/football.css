@@ -519,8 +519,8 @@ body.page-graphs {
 .match-list-row {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  padding: 1rem 1.1rem;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem 0.85rem;
   background: var(--white);
   border: 1px solid #e3e8ef;
   border-left: 4px solid var(--gold);
@@ -553,12 +553,133 @@ body.page-graphs {
 .match-list-row-top {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 0.75rem;
 }
 
-.match-list-actions .btn {
-  min-width: 5.5rem;
+.match-list-toolbar {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+  padding: 0.45rem;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f4f8 100%);
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+}
+
+.match-list-toolbar--no-timer .match-list-toolbar-actions {
+  width: 100%;
+}
+
+.match-list-toolbar-timer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 7.25rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--theme-navy-mid), var(--theme-navy-light));
+  color: var(--gold-light);
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.match-list-toolbar-timer--live {
+  background: linear-gradient(135deg, var(--fifa-red-dark), var(--fifa-red-mid));
+  color: var(--white);
+}
+
+.match-list-toolbar-timer .match-list-countdown,
+.match-list-toolbar-timer .countdown {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  font-size: inherit;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.02em;
+}
+
+.match-list-toolbar-timer .countdown.closed {
+  color: #ffc9c9;
+}
+
+.match-list-toolbar-actions {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.match-list-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 2.15rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.match-list-btn-primary {
+  background: linear-gradient(135deg, #c9a030, var(--gold-light));
+  border-color: #c9a030;
+  color: var(--theme-navy);
+}
+
+.match-list-btn-primary:hover {
+  background: linear-gradient(135deg, var(--gold-light), #f5d76e);
+  border-color: var(--gold-light);
+  color: var(--theme-navy);
+}
+
+.match-list-btn-edit {
+  background: var(--white);
+  border-color: #198754;
+  color: #146c43;
+}
+
+.match-list-btn-edit:hover {
+  background: #e8f5e9;
+  color: #146c43;
+}
+
+.match-list-btn-verdict {
+  background: var(--white);
+  border-color: var(--theme-navy-light);
+  color: var(--theme-navy-light);
+}
+
+.match-list-btn-verdict:hover {
+  background: #eef4fa;
+  color: var(--theme-navy-mid);
+  border-color: var(--theme-navy-mid);
+}
+
+.match-list-btn-squads {
+  background: var(--white);
+  border-color: #ced4da;
+  color: #495057;
+}
+
+.match-list-btn-squads:hover {
+  background: #f8f9fa;
+  color: var(--theme-navy-mid);
+  border-color: #adb5bd;
 }
 
 .match-list-badge-live {
@@ -645,7 +766,7 @@ body.page-graphs {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1.25rem;
-  padding-top: 0.65rem;
+  padding-top: 0.5rem;
   border-top: 1px solid #e9ecef;
   font-size: 0.82rem;
   color: #6c757d;
@@ -655,11 +776,6 @@ body.page-graphs {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-}
-
-.match-list-footer {
-  display: flex;
-  justify-content: flex-start;
 }
 
 .squad-card {
@@ -881,6 +997,19 @@ body.page-graphs {
 
   .match-list-team-name {
     flex: 1;
+  }
+
+  .match-list-toolbar {
+    flex-direction: column;
+  }
+
+  .match-list-toolbar-timer {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .match-list-toolbar-actions {
+    width: 100%;
   }
 }
 

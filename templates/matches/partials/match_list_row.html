@@ -15,21 +15,6 @@
         <span class="badge rounded-pill match-list-badge-final">Full Time</span>
       {% endif %}
     </div>
-    <div class="match-list-actions d-flex flex-column gap-1">
-      {% if show_predict and match.is_prediction_open %}
-        {% if predicted_match_ids and match.pk in predicted_match_ids %}
-          <a href="{% url 'match_predict' match.pk %}" class="btn btn-sm btn-outline-success">Edit</a>
-        {% else %}
-          <a href="{% url 'match_predict' match.pk %}" class="btn btn-sm btn-gold">Predict</a>
-        {% endif %}
-      {% endif %}
-      {% if match.prediction_count %}
-        <a href="{% url 'match_scorecard' match.pk %}" class="btn btn-sm btn-outline-primary">
-          <i class="bi bi-clipboard-data me-1"></i> Match Verdict
-        </a>
-      {% endif %}
-      <a href="{% url 'match_squad' match.pk %}" class="btn btn-sm btn-outline-secondary">Squads</a>
-    </div>
   </div>
 
   <div class="match-list-teams">
@@ -75,9 +60,33 @@
     </span>
   </div>
 
-  {% if not match.is_completed and match.status != 'live' %}
-    <div class="match-list-footer">
-      <span class="countdown" data-kickoff="{% timezone 'UTC' %}{{ match.kickoff_at|date:'c' }}{% endtimezone %}">...</span>
+  <div class="match-list-toolbar{% if match.is_completed or match.status == 'live' %} match-list-toolbar--no-timer{% endif %}">
+    {% if not match.is_completed and match.status != 'live' %}
+      <div class="match-list-toolbar-timer" aria-label="Time until kickoff">
+        <i class="bi bi-clock-fill" aria-hidden="true"></i>
+        <span class="countdown match-list-countdown" data-kickoff="{% timezone 'UTC' %}{{ match.kickoff_at|date:'c' }}{% endtimezone %}">...</span>
+      </div>
+    {% elif match.status == 'live' %}
+      <div class="match-list-toolbar-timer match-list-toolbar-timer--live" aria-label="Match status">
+        <i class="bi bi-broadcast-pin" aria-hidden="true"></i>
+        <span>Live</span>
+      </div>
+    {% endif %}
+
+    <div class="match-list-toolbar-actions">
+      {% if show_predict and match.is_prediction_open %}
+        {% if predicted_match_ids and match.pk in predicted_match_ids %}
+          <a href="{% url 'match_predict' match.pk %}" class="match-list-btn match-list-btn-edit">Edit</a>
+        {% else %}
+          <a href="{% url 'match_predict' match.pk %}" class="match-list-btn match-list-btn-primary">Predict</a>
+        {% endif %}
+      {% endif %}
+      {% if match.prediction_count %}
+        <a href="{% url 'match_scorecard' match.pk %}" class="match-list-btn match-list-btn-verdict">
+          <i class="bi bi-clipboard-data" aria-hidden="true"></i> Verdict
+        </a>
+      {% endif %}
+      <a href="{% url 'match_squad' match.pk %}" class="match-list-btn match-list-btn-squads">Squads</a>
     </div>
-  {% endif %}
+  </div>
 </div>
