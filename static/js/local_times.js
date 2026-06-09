@@ -2,6 +2,8 @@
   var savedTimezone = document.body.dataset.userTimezone || '';
   var browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   var activeTimezone = savedTimezone || browserTimezone;
+  var countdownElements = [];
+  var pageReloadScheduled = false;
 
   var LOCALE_BY_TIMEZONE = {
     'Asia/Kolkata': 'en-IN',
@@ -94,48 +96,61 @@
     detail: formatDetail,
   };
 
+  function parseKickoffMs(el) {
+    if (el.dataset.kickoffAt) {
+      return parseFloat(el.dataset.kickoffAt) * 1000;
+    }
+    if (el.dataset.kickoff) {
+      return new Date(el.dataset.kickoff).getTime();
+    }
+    return NaN;
+  }
+
   function hidePredictActions(container) {
     if (!container) {
       return;
     }
+    var actions = container.querySelector('.match-list-toolbar-actions');
+    if (actions) {
+      actions.classList.add('match-list-predictions-closed');
+    }
     container.querySelectorAll('.match-list-predict-btn').forEach(function (button) {
+      button.setAttribute('hidden', 'hidden');
       button.classList.add('d-none');
     });
   }
 
-  function disablePredictForm(form) {
-    if (!form) {
-      return;
-    }
-    form.querySelectorAll('input, select, textarea, button').forEach(function (field) {
-      field.disabled = true;
-    });
-  }
-
-  function autoSubmitForm(selector) {
-    if (!selector) {
-      return;
-    }
-    var form = document.querySelector(selector);
-    if (!form || form.dataset.kickoffSubmitted === '1') {
-      return;
-    }
-    form.dataset.kickoffSubmitted = '1';
-    disablePredictForm(form);
-    if (typeof form.requestSubmit === 'function') {
-      form.requestSubmit();
-      return;
-    }
-    form.submit();
-  }
-
-  function handleKickoffClosed(el) {
+  function showKickoffClosed(el) {
     el.textContent = el.dataset.closedLabel || 'Started';
     el.classList.add('closed');
+    el.dataset.kickoffClosed = '1';
     hidePredictActions(el.closest('.match-list-row'));
-    if (el.dataset.autoSubmit) {
-      autoSubmitForm(el.dataset.autoSubmit);
+  }
+
+  function schedulePageReload(delayMs) {
+    if (pageReloadScheduled) {
+      return;
     }
+    pageReloadScheduled = true;
+    window.setTimeout(function () {
+      window.location.reload();
+    }, delayMs || 300);
+  }
+
+  function handleKickoffExpired(el) {
+    showKickoffClosed(el);
+
+    if (el.dataset.autoSubmit) {
+      var form = document.querySelector(el.dataset.autoSubmit);
+      if (form && form.dataset.kickoffSubmitted !== '1') {
+        form.dataset.kickoffSubmitted = '1';
+        form.submit();
+      }
+      schedulePageReload(500);
+      return;
+    }
+
+    schedulePageReload(300);
   }
 
   function formatCountdown(diff) {
@@ -145,26 +160,51 @@
     return h + 'h ' + m + 'm ' + s + 's';
   }
 
-  function startCountdown(el) {
-    var kickoff = new Date(el.dataset.kickoff);
-    if (isNaN(kickoff.getTime())) {
+  function tickCountdown(el) {
+    var kickoffMs = parseKickoffMs(el);
+    if (isNaN(kickoffMs)) {
+      el.textContent = '—';
       return;
     }
 
-    function tick() {
-      var diff = kickoff - new Date();
-      if (diff <= 0) {
-        if (el.dataset.kickoffClosed !== '1') {
-          el.dataset.kickoffClosed = '1';
-          handleKickoffClosed(el);
-        }
+    var diff = kickoffMs - Date.now();
+    if (diff <= 0) {
+      if (el.dataset.kickoffClosed === '1') {
         return;
       }
-      el.textContent = formatCountdown(diff);
+      if (el.dataset.kickoffWasOpen === '1') {
+        handleKickoffExpired(el);
+      } else {
+        showKickoffClosed(el);
+      }
+      return;
     }
 
-    tick();
-    setInterval(tick, 1000);
+    el.dataset.kickoffWasOpen = '1';
+    el.textContent = formatCountdown(diff);
+  }
+
+  function startCountdown(el) {
+    var kickoffMs = parseKickoffMs(el);
+    if (isNaN(kickoffMs)) {
+      el.textContent = '—';
+      return;
+    }
+
+    countdownElements.push(el);
+    tickCountdown(el);
+
+    if (el.dataset.kickoffClosed === '1') {
+      return;
+    }
+
+    window.setInterval(function () {
+      tickCountdown(el);
+    }, 1000);
+  }
+
+  function refreshAllCountdowns() {
+    countdownElements.forEach(tickCountdown);
   }
 
   document.querySelectorAll('time.local-datetime').forEach(function (el) {
@@ -187,5 +227,11 @@
     el.textContent = tz ? 'Kickoffs in ' + tz : 'Kickoffs in your local time';
   });
 
-  document.querySelectorAll('[data-kickoff]').forEach(startCountdown);
+  document.querySelectorAll('[data-kickoff-at], [data-kickoff]').forEach(startCountdown);
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') {
+      refreshAllCountdowns();
+    }
+  });
 })();

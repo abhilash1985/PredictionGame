@@ -67,7 +67,7 @@
       <div class="predict-toolbar-item predict-toolbar-countdown ms-md-auto">
         <span class="predict-toolbar-label">Time left to predict</span>
         <span class="countdown predict-countdown"
-              data-kickoff="{% timezone 'UTC' %}{{ match.kickoff_at|date:'c' }}{% endtimezone %}"
+              {% include 'partials/kickoff_countdown_data.html' with kickoff_at=match.kickoff_at %}
               data-auto-submit="#predict-form"
               data-closed-label="Submitting...">...</span>
       </div>

@@ -745,6 +745,10 @@ body.page-team-points {
   display: none;
 }
 
+.match-list-toolbar-actions.match-list-predictions-closed .match-list-predict-btn {
+  display: none !important;
+}
+
 .match-list-btn {
   display: inline-flex;
   align-items: center;
