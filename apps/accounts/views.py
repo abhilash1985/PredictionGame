@@ -4,7 +4,7 @@ from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 
-from apps.accounts.forms import CustomPasswordChangeForm
+from apps.accounts.forms import CustomPasswordChangeForm, OnboardingForm, ProfileForm
 from apps.accounts.profile_service import ensure_user_profile
 from apps.leaderboard.services import LeaderboardService
 from apps.tournaments.context_processors import get_active_tournament
