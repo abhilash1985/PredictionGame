@@ -1799,6 +1799,83 @@ body.page-team-points {
   padding: 2.5rem 1rem !important;
 }
 
+.graph-match-form {
+  max-width: 720px;
+}
+
+.graph-match-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 12px;
+  color: var(--white);
+}
+
+.graph-match-teams {
+  font-weight: 600;
+}
+
+.graph-question-header {
+  flex-wrap: wrap;
+}
+
+.graph-question-title {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.graph-question-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.graph-chart-type-badge,
+.graph-points-badge,
+.graph-total-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.graph-chart-type-badge {
+  background: rgba(212, 175, 55, 0.22);
+  color: #ffe08a;
+}
+
+.graph-points-badge {
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.graph-total-badge {
+  background: rgba(26, 95, 42, 0.35);
+  color: #b8f0c6;
+}
+
+.graph-chart-body {
+  min-height: 220px;
+}
+
+.graph-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  background: #f8fafc;
+  border: 1px dashed #ced4da;
+  border-radius: 10px;
+}
+
 .account-page {
   max-width: 1100px;
   margin: 0 auto;
@@ -1959,15 +2036,22 @@ body.page-auth .main-content {
   text-decoration: underline;
 }
 
+.ranks-page-back,
+.ranks-page-back,
 .password-change-back {
   display: inline-flex;
   align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.88rem;
   font-weight: 600;
   text-decoration: none;
 }
 
+.ranks-page-back:hover,
 .password-change-back:hover {
   color: var(--gold);
 }
