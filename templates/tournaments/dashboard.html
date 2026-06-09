@@ -4,46 +4,110 @@
 {% block body_class %}page-app page-dashboard{% endblock %}
 
 {% block content %}
-<h2 class="page-heading fw-bold mb-4">Welcome, {{ user.display_name }}!</h2>
+<div class="dashboard-page">
+  <div class="dashboard-welcome mb-4">
+    <h2 class="page-heading fw-bold mb-1">Welcome, {{ user.display_name }}!</h2>
+    {% if tournament %}
+      <p class="dashboard-welcome-subtitle mb-0">{{ tournament.name }} — predict matches and track your progress</p>
+    {% endif %}
+  </div>
 
-<div class="row g-3 mb-4">
-  <div class="col-md-3">
-    <div class="card card-football text-center p-3">
-      <div class="text-muted small">Boosters left</div>
-      <div class="fs-3 fw-bold text-success">{{ user.profile.point_boosters_remaining }}</div>
+  <div class="row g-3 mb-4 dashboard-summary">
+    <div class="col-6 col-lg-3">
+      <div class="dashboard-summary-card">
+        <div class="dashboard-summary-icon text-success"><i class="bi bi-lightning-charge-fill"></i></div>
+        <div class="dashboard-summary-label">Boosters left</div>
+        <div class="dashboard-summary-value text-success">{{ user.profile.point_boosters_remaining }}</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="dashboard-summary-card">
+        <div class="dashboard-summary-icon"><i class="bi bi-robot"></i></div>
+        <div class="dashboard-summary-label">AI Predict</div>
+        <div class="dashboard-summary-value">{% if user.profile.ai_predict_enabled %}ON{% else %}OFF{% endif %}</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="dashboard-summary-card">
+        <div class="dashboard-summary-icon"><i class="bi bi-flag-fill"></i></div>
+        <div class="dashboard-summary-label">Favorite team</div>
+        <div class="dashboard-summary-value dashboard-summary-team">
+          {% if user.profile.favorite_team %}
+            {% team_badge user.profile.favorite_team show_name=True show_short=False %}
+          {% else %}
+            —
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <a href="{% url 'match_list' %}" class="dashboard-summary-card dashboard-summary-cta h-100 text-decoration-none">
+        <div class="dashboard-summary-icon text-warning"><i class="bi bi-pencil-square"></i></div>
+        <div class="dashboard-summary-label">Quick action</div>
+        <div class="dashboard-summary-value text-warning">Predict Matches</div>
+      </a>
     </div>
   </div>
-  <div class="col-md-3">
-    <div class="card card-football text-center p-3">
-      <div class="text-muted small">AI Predict</div>
-      <div class="fs-5 fw-bold">{% if user.profile.ai_predict_enabled %}ON{% else %}OFF{% endif %}</div>
+
+  <div class="card card-football dashboard-main-card">
+    <div class="dashboard-tabs-bar">
+      <ul class="nav nav-pills dashboard-tabs" id="dashboardTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="matches-tab" data-bs-toggle="tab" data-bs-target="#dashboard-matches-pane"
+                  type="button" role="tab" aria-controls="dashboard-matches-pane" aria-selected="true">
+            <i class="bi bi-calendar-event me-1"></i> Upcoming Matches
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="verdict-tab" data-bs-toggle="tab" data-bs-target="#dashboard-verdict-pane"
+                  type="button" role="tab" aria-controls="dashboard-verdict-pane" aria-selected="false">
+            <i class="bi bi-trophy me-1"></i> Winners / Match Verdict
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="stats-tab" data-bs-toggle="tab" data-bs-target="#dashboard-stats-pane"
+                  type="button" role="tab" aria-controls="dashboard-stats-pane" aria-selected="false">
+            <i class="bi bi-graph-up me-1"></i> Stats
+          </button>
+        </li>
+      </ul>
+      <a href="{% url 'leaderboard' %}" class="btn btn-sm btn-outline-light dashboard-leaderboard-link">Full Leaderboard</a>
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card card-football text-center p-3">
-      <div class="text-muted small">Favorite team</div>
-      <div class="fs-6 fw-bold d-flex justify-content-center">
-        {% if user.profile.favorite_team %}
-          {% team_badge user.profile.favorite_team show_name=True show_short=False %}
-        {% else %}
-          —
-        {% endif %}
+
+    <div class="tab-content dashboard-tab-content">
+      <div class="tab-pane fade show active" id="dashboard-matches-pane" role="tabpanel" aria-labelledby="matches-tab" tabindex="0">
+        <div class="dashboard-pane-body">
+          {% if upcoming_matches %}
+            {% include 'matches/partials/match_list_grid.html' with matches=upcoming_matches predicted_match_ids=predicted_match_ids show_predict=show_predict %}
+          {% else %}
+            <div class="p-4 text-muted">No matches scheduled yet.</div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="tab-pane fade" id="dashboard-verdict-pane" role="tabpanel" aria-labelledby="verdict-tab" tabindex="0">
+        <div class="dashboard-pane-body">
+          {% include 'tournaments/partials/dashboard_verdict.html' %}
+        </div>
+      </div>
+      <div class="tab-pane fade" id="dashboard-stats-pane" role="tabpanel" aria-labelledby="stats-tab" tabindex="0">
+        <div class="dashboard-pane-body">
+          {% include 'tournaments/partials/dashboard_stats.html' %}
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-3">
-    <a href="{% url 'match_list' %}" class="btn btn-gold w-100 h-100 d-flex align-items-center justify-content-center">Predict Matches</a>
-  </div>
 </div>
+{% endblock %}
 
-<div class="card card-football">
-  <div class="card-header">Upcoming Matches</div>
-  <div class="card-body p-3">
-    {% if upcoming_matches %}
-      {% include 'tournaments/partials/match_grid.html' with matches=upcoming_matches predicted_match_ids=predicted_match_ids %}
-    {% else %}
-      <div class="p-4 text-muted">No matches scheduled yet.</div>
-    {% endif %}
-  </div>
-</div>
+{% block extra_js %}
+{% if open_verdict_tab %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var tab = document.getElementById('verdict-tab');
+    if (tab && window.bootstrap) {
+      bootstrap.Tab.getOrCreateInstance(tab).show();
+    }
+  });
+</script>
+{% endif %}
 {% endblock %}

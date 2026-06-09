@@ -1,0 +1,185 @@
+{% load tournament_tags %}
+<div class="dashboard-stats-grid row g-3">
+  <div class="col-lg-6">
+    <section class="dashboard-stat-card h-100">
+      <header class="dashboard-stat-card-head">
+        <i class="bi bi-trophy-fill dashboard-stat-icon"></i>
+        <div>
+          <h3 class="dashboard-stat-title">Yesterday's Results</h3>
+          <p class="dashboard-stat-subtitle mb-0">Completed matches from the previous day</p>
+        </div>
+      </header>
+      <div class="dashboard-stat-body">
+        {% if dashboard_stats.previous_day_results %}
+          <ul class="dashboard-results-list list-unstyled mb-0">
+            {% for item in dashboard_stats.previous_day_results %}
+              <li class="dashboard-results-item">
+                <div class="dashboard-results-match">
+                  <span class="badge rounded-pill text-bg-warning text-dark">Match {{ item.match.match_number }}</span>
+                  {% if item.match.round %}
+                    <span class="badge rounded-pill badge-group-name">{{ item.match.round.name }}</span>
+                  {% endif %}
+                </div>
+                <div class="dashboard-results-teams">
+                  <span>{% team_badge item.match.team_home show_name=True show_short=False %}</span>
+                  <span class="dashboard-results-score">
+                    {{ item.home_score }} : {{ item.away_score }}
+                  </span>
+                  <span>{% team_badge item.match.team_away show_name=True show_short=False %}</span>
+                </div>
+                <div class="dashboard-results-winner small">
+                  {% if item.is_draw %}
+                    <i class="bi bi-dash-circle me-1"></i> Draw
+                  {% elif item.winner %}
+                    <i class="bi bi-trophy me-1 text-warning"></i> Winner: {% team_badge item.winner show_name=True show_short=False %}
+                  {% else %}
+                    <span class="text-muted">Result recorded</span>
+                  {% endif %}
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="dashboard-stat-empty text-muted mb-0">No completed matches from yesterday yet.</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+
+  <div class="col-lg-6">
+    <section class="dashboard-stat-card h-100">
+      <header class="dashboard-stat-card-head">
+        <i class="bi bi-bar-chart-fill dashboard-stat-icon"></i>
+        <div>
+          <h3 class="dashboard-stat-title">Leaderboard Top 3</h3>
+          <p class="dashboard-stat-subtitle mb-0">Highest total prediction points</p>
+        </div>
+      </header>
+      <div class="dashboard-stat-body">
+        {% if dashboard_stats.leaderboard_top %}
+          <ol class="dashboard-mini-ranking list-unstyled mb-0">
+            {% for row in dashboard_stats.leaderboard_top %}
+              <li class="dashboard-mini-ranking-item">
+                <span class="dashboard-mini-rank">{{ forloop.counter }}</span>
+                <span class="dashboard-mini-name">{{ row.display_name }}</span>
+                <span class="dashboard-mini-value">{{ row.total_points }} pts</span>
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <p class="dashboard-stat-empty text-muted mb-0">No predictions yet.</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+
+  <div class="col-lg-4">
+    <section class="dashboard-stat-card h-100">
+      <header class="dashboard-stat-card-head">
+        <i class="bi bi-bullseye dashboard-stat-icon"></i>
+        <div>
+          <h3 class="dashboard-stat-title">Top Winner Pickers</h3>
+          <p class="dashboard-stat-subtitle mb-0">Most correct match-winner predictions</p>
+        </div>
+      </header>
+      <div class="dashboard-stat-body">
+        {% if dashboard_stats.top_winner_predictors %}
+          <ol class="dashboard-mini-ranking list-unstyled mb-0">
+            {% for row in dashboard_stats.top_winner_predictors %}
+              <li class="dashboard-mini-ranking-item">
+                <span class="dashboard-mini-rank">{{ forloop.counter }}</span>
+                <span class="dashboard-mini-name">{{ row.display_name }}</span>
+                <span class="dashboard-mini-value">{{ row.correct_count }}</span>
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <p class="dashboard-stat-empty text-muted mb-0">No scored winner predictions yet.</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+
+  <div class="col-lg-4">
+    <section class="dashboard-stat-card h-100">
+      <header class="dashboard-stat-card-head">
+        <i class="bi bi-lightning-charge-fill dashboard-stat-icon"></i>
+        <div>
+          <h3 class="dashboard-stat-title">Top Points</h3>
+          <p class="dashboard-stat-subtitle mb-0">Best overall scorers</p>
+        </div>
+      </header>
+      <div class="dashboard-stat-body">
+        {% if dashboard_stats.top_points %}
+          <ol class="dashboard-mini-ranking list-unstyled mb-0">
+            {% for row in dashboard_stats.top_points %}
+              <li class="dashboard-mini-ranking-item">
+                <span class="dashboard-mini-rank">{{ forloop.counter }}</span>
+                <span class="dashboard-mini-name">{{ row.display_name }}</span>
+                <span class="dashboard-mini-value">{{ row.total_points }} pts</span>
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <p class="dashboard-stat-empty text-muted mb-0">No points scored yet.</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+
+  <div class="col-lg-4">
+    <section class="dashboard-stat-card h-100">
+      <header class="dashboard-stat-card-head">
+        <i class="bi bi-percent dashboard-stat-icon"></i>
+        <div>
+          <h3 class="dashboard-stat-title">Best Accuracy</h3>
+          <p class="dashboard-stat-subtitle mb-0">Highest prediction percentage</p>
+        </div>
+      </header>
+      <div class="dashboard-stat-body">
+        {% if dashboard_stats.top_accuracy %}
+          <ol class="dashboard-mini-ranking list-unstyled mb-0">
+            {% for row in dashboard_stats.top_accuracy %}
+              <li class="dashboard-mini-ranking-item">
+                <span class="dashboard-mini-rank">{{ forloop.counter }}</span>
+                <span class="dashboard-mini-name">{{ row.display_name }}</span>
+                <span class="dashboard-mini-value">{{ row.prediction_percentage }}%</span>
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <p class="dashboard-stat-empty text-muted mb-0">No accuracy data yet.</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+
+  <div class="col-12">
+    <section class="dashboard-stat-card">
+      <header class="dashboard-stat-card-head">
+        <i class="bi bi-clipboard-check-fill dashboard-stat-icon"></i>
+        <div>
+          <h3 class="dashboard-stat-title">Most Active Predictors</h3>
+          <p class="dashboard-stat-subtitle mb-0">Players with the most matches predicted</p>
+        </div>
+      </header>
+      <div class="dashboard-stat-body">
+        {% if dashboard_stats.top_matches_predicted %}
+          <div class="row g-2">
+            {% for row in dashboard_stats.top_matches_predicted %}
+              <div class="col-md-4">
+                <div class="dashboard-active-pill">
+                  <span class="dashboard-mini-rank">{{ forloop.counter }}</span>
+                  <span class="dashboard-mini-name">{{ row.display_name }}</span>
+                  <span class="dashboard-mini-value">{{ row.matches_predicted }} matches</span>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="dashboard-stat-empty text-muted mb-0">No predictions submitted yet.</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+</div>
