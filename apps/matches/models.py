@@ -131,6 +131,36 @@ class Match(models.Model):
     def is_completed(self):
         return self.status == self.Status.FINISHED or self.has_result
 
+    @property
+    def is_draw(self):
+        if not self.has_result:
+            return self._winner_label_from_questions() == 'Draw'
+        return self.display_home_score == self.display_away_score
+
+    @property
+    def winning_team(self):
+        if self.is_draw:
+            return None
+        if self.has_result:
+            if self.display_home_score > self.display_away_score:
+                return self.team_home
+            if self.display_away_score > self.display_home_score:
+                return self.team_away
+
+        winner_label = self._winner_label_from_questions()
+        if winner_label == self.team_home.name:
+            return self.team_home
+        if winner_label == self.team_away.name:
+            return self.team_away
+        return None
+
+    def _winner_label_from_questions(self):
+        for question in self.questions.all():
+            template = question.question_template
+            if template and template.code == 'MATCH_WINNER' and question.correct_answer:
+                return question.correct_answer
+        return None
+
     def _goal_scores_from_questions(self):
         if hasattr(self, '_cached_goal_scores'):
             return self._cached_goal_scores

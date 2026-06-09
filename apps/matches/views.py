@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -15,6 +16,7 @@ from apps.matches.question_builder import (
     template_defaults_for_match,
 )
 from apps.matches.prediction_lookup import predicted_match_ids
+from apps.matches.scorecard_service import MatchScorecardService
 from apps.matches.services.scoring import ScoringService
 from apps.tournaments.models import Player
 
@@ -44,11 +46,36 @@ def match_list_view(request):
             Match.objects.filter(tournament=tournament, round__name__startswith='Group ')
             .select_related('team_home', 'team_away', 'stadium', 'round')
             .prefetch_related('questions__question_template')
+            .annotate(prediction_count=Count('predictions'))
             .order_by('kickoff_at')
         )
     return render(request, 'matches/list.html', {
         'matches': matches,
         'tournament': tournament,
+        'predicted_match_ids': predicted_match_ids(request.user, matches),
+        'show_predict': False,
+    })
+
+
+@login_required
+def match_scorecard_view(request, pk):
+    match = get_object_or_404(
+        Match.objects.select_related('team_home', 'team_away', 'stadium', 'round')
+        .prefetch_related('questions__question_template'),
+        pk=pk,
+    )
+    verdict_context = MatchScorecardService.context_for_match(match, request.user)
+    if not verdict_context['has_predictions']:
+        messages.info(request, 'No predictions submitted for this match yet.')
+        return redirect('match_list')
+
+    if not verdict_context['rows']:
+        messages.info(request, 'You have not predicted this match yet.')
+        return redirect('match_list')
+
+    return render(request, 'matches/scorecard.html', {
+        'match': match,
+        **verdict_context,
     })
 
 

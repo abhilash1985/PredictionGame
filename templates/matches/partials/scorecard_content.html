@@ -1,0 +1,123 @@
+{% load tournament_tags %}
+<div class="scorecard-hero">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+    <span class="scorecard-hero-label"><i class="bi bi-clipboard-data me-1"></i> Match Verdict</span>
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
+      {% if match.round %}<span class="badge rounded-pill badge-group-name">{{ match.round.name }}</span>{% endif %}
+      {% if is_scored %}
+        <span class="badge rounded-pill match-list-badge-final">Scored</span>
+      {% elif match_started %}
+        <span class="badge rounded-pill match-list-badge-live">In progress</span>
+      {% else %}
+        <span class="badge rounded-pill text-bg-secondary">Awaiting kickoff</span>
+      {% endif %}
+    </div>
+  </div>
+  <div class="scorecard-hero-teams row align-items-center g-3">
+    <div class="col-md-5 text-center">
+      {% with flag=match.team_home|team_flag_url:"w80" %}
+        {% if flag %}<img src="{{ flag }}" alt="" class="scorecard-team-flag" loading="lazy">{% endif %}
+      {% endwith %}
+      <div class="scorecard-team-name">{{ match.team_home.name }}</div>
+    </div>
+    <div class="col-md-2 text-center">
+      {% if match.has_result %}
+        <div class="scorecard-hero-score">{{ match.display_home_score }} : {{ match.display_away_score }}</div>
+      {% else %}
+        <span class="scorecard-vs">VS</span>
+      {% endif %}
+    </div>
+    <div class="col-md-5 text-center">
+      {% with flag=match.team_away|team_flag_url:"w80" %}
+        {% if flag %}<img src="{{ flag }}" alt="" class="scorecard-team-flag" loading="lazy">{% endif %}
+      {% endwith %}
+      <div class="scorecard-team-name">{{ match.team_away.name }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="scorecard-body{% if embedded %} scorecard-body-embedded{% endif %}">
+  {% if not can_see_all %}
+    <div class="scorecard-notice scorecard-notice-private">
+      <i class="bi bi-eye-slash me-1"></i>
+      Predictions stay private until kickoff. You can only see your own picks right now.
+    </div>
+  {% elif match_started %}
+    <div class="scorecard-notice scorecard-notice-public">
+      <i class="bi bi-people me-1"></i>
+      The match has started — all predictions are visible.
+    </div>
+  {% endif %}
+
+  <div class="scorecard-table-wrap">
+    <table class="table scorecard-matrix mb-0">
+      <thead>
+        <tr class="scorecard-matrix-head-questions">
+          <th class="scorecard-sticky-col" rowspan="2">Predictor</th>
+          <th class="scorecard-col-booster" rowspan="2">Booster</th>
+          {% for question in questions %}
+            <th class="scorecard-col-q">
+              <span class="scorecard-q-num">Q{{ forloop.counter }}</span>
+              <span class="scorecard-q-title">{{ question.question_text }}</span>
+            </th>
+          {% endfor %}
+          <th class="scorecard-col-total" rowspan="2">Total</th>
+        </tr>
+        <tr class="scorecard-matrix-head-answers">
+          {% for question in questions %}
+            <th class="scorecard-col-q-meta">
+              <div class="scorecard-q-answer">
+                {% if is_scored and question.correct_answer %}
+                  <i class="bi bi-check-circle-fill text-success me-1"></i>{{ question.correct_answer }}
+                {% else %}
+                  <span class="text-muted">Pending</span>
+                {% endif %}
+              </div>
+              <span class="scorecard-q-points">{{ question.points }} pts</span>
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr class="scorecard-matrix-row{% if row.is_current_user %} scorecard-row-self{% endif %}{% if row.is_top_scorer %} scorecard-row-winner{% endif %}">
+            <th scope="row" class="scorecard-sticky-col scorecard-predictor-name">
+              {% if row.is_top_scorer %}
+                <i class="bi bi-trophy-fill scorecard-winner-cup" title="Top scorer"></i>
+              {% endif %}
+              {{ row.display_name }}
+              {% if row.is_current_user %}<span class="scorecard-you-badge">You</span>{% endif %}
+            </th>
+            <td class="scorecard-col-booster text-center">
+              {% if row.point_booster_used %}
+                <span class="booster-badge" title="Point Booster used (2×)">
+                  <i class="bi bi-lightning-charge-fill"></i>
+                </span>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+            {% for answer in row.answer_rows %}
+              <td class="scorecard-answer-cell scorecard-answer-{{ answer.status }}">
+                <span class="scorecard-answer-text">{{ answer.user_answer }}</span>
+                {% if is_scored and answer.points_awarded is not None and answer.status != 'pending' %}
+                  <span class="scorecard-cell-points">{{ answer.points_awarded }} pt{{ answer.points_awarded|pluralize }}</span>
+                {% endif %}
+              </td>
+            {% endfor %}
+            <td class="scorecard-total-cell">
+              <div class="scorecard-total-value">{{ row.total_points }} pts</div>
+              {% if is_scored and row.point_booster_used and row.booster_bonus %}
+                <div class="scorecard-total-breakdown">
+                  <span>{{ row.base_points }} base</span>
+                  <span class="scorecard-booster-bonus">+{{ row.booster_bonus }} booster</span>
+                </div>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
