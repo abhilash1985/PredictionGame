@@ -1,8 +1,11 @@
 {% load tournament_tags tz %}
-<div class="match-list-row h-100{% if match.is_completed %} match-list-row--completed{% endif %}{% if match.status == 'live' %} match-list-row--live{% endif %}">
+<div class="match-list-row h-100{% if predicted_match_ids and match.pk in predicted_match_ids %} match-list-row--predicted{% endif %}{% if match.is_completed %} match-list-row--completed{% endif %}{% if match.status == 'live' %} match-list-row--live{% endif %}">
   <div class="match-list-row-top">
     <div class="match-list-badges d-flex flex-wrap align-items-center gap-2">
       <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
+      {% if predicted_match_ids and match.pk in predicted_match_ids %}
+        <span class="badge rounded-pill badge-predicted"><i class="bi bi-check-circle-fill me-1"></i>Predicted</span>
+      {% endif %}
       {% if match.round %}
         <span class="badge rounded-pill badge-group-name">{{ match.round.name }}</span>
       {% endif %}
@@ -12,7 +15,21 @@
         <span class="badge rounded-pill match-list-badge-final">Full Time</span>
       {% endif %}
     </div>
-    <a href="{% url 'match_squad' match.pk %}" class="btn btn-sm btn-outline-secondary">Squads</a>
+    <div class="match-list-actions d-flex flex-column gap-1">
+      {% if show_predict and match.is_prediction_open %}
+        {% if predicted_match_ids and match.pk in predicted_match_ids %}
+          <a href="{% url 'match_predict' match.pk %}" class="btn btn-sm btn-outline-success">Edit</a>
+        {% else %}
+          <a href="{% url 'match_predict' match.pk %}" class="btn btn-sm btn-gold">Predict</a>
+        {% endif %}
+      {% endif %}
+      {% if match.prediction_count %}
+        <a href="{% url 'match_scorecard' match.pk %}" class="btn btn-sm btn-outline-primary">
+          <i class="bi bi-clipboard-data me-1"></i> Match Verdict
+        </a>
+      {% endif %}
+      <a href="{% url 'match_squad' match.pk %}" class="btn btn-sm btn-outline-secondary">Squads</a>
+    </div>
   </div>
 
   <div class="match-list-teams">
