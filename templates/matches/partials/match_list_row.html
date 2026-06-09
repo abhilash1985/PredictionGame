@@ -74,20 +74,22 @@
     {% endif %}
 
     <div class="match-list-toolbar-actions">
-      {% if show_predict and match.is_prediction_open %}
+      {% if show_predict is not False and match.is_prediction_open %}
         {% if predicted_match_ids and match.pk in predicted_match_ids %}
           <a href="{% url 'match_predict' match.pk %}" class="match-list-btn match-list-btn-edit">Edit</a>
         {% else %}
           <a href="{% url 'match_predict' match.pk %}" class="match-list-btn match-list-btn-primary">Predict</a>
         {% endif %}
       {% endif %}
-      {% if match.prediction_count %}
+      {% if show_verdict is not False and match.prediction_count %}
         <a href="{% url 'match_scorecard' match.pk %}" class="match-list-btn match-list-btn-verdict" aria-label="Match Verdict">
           <i class="bi bi-clipboard-data" aria-hidden="true"></i>
           <span class="match-list-btn-label">Verdict</span>
         </a>
       {% endif %}
-      <a href="{% url 'match_squad' match.pk %}" class="match-list-btn match-list-btn-squads">Squads</a>
+      {% if show_squads is not False %}
+        <a href="{% url 'match_squad' match.pk %}" class="match-list-btn match-list-btn-squads">Squads</a>
+      {% endif %}
     </div>
   </div>
 </div>

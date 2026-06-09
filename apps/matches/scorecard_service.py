@@ -62,6 +62,14 @@ class MatchScorecardService:
         for row in rows:
             row['is_top_scorer'] = row['user_id'] in top_scorer_ids
 
+        rows.sort(
+            key=lambda row: (
+                -int(row['is_top_scorer']),
+                -row['total_points'],
+                row['display_name'].lower(),
+            ),
+        )
+
         return {
             'questions': scorecard_data['questions'],
             'is_scored': scorecard_data['is_scored'],

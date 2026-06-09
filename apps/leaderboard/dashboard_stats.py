@@ -16,7 +16,7 @@ class DashboardStatsService:
         leaderboard = LeaderboardService.user_stats(tournament)
         return {
             'recent_match_results': DashboardStatsService.recent_match_results(tournament),
-            'leaderboard_top': leaderboard[:3],
+            'leaderboard_top': leaderboard[:5],
             'top_points': leaderboard[:3],
             'top_winner_predictors': DashboardStatsService.top_winner_predictors(tournament, limit=3),
             'top_accuracy': DashboardStatsService.top_by_accuracy(leaderboard, limit=3),

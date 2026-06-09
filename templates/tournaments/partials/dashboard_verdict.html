@@ -13,18 +13,18 @@
       </select>
     </div>
     <div class="col-md-4">
-      <button type="submit" class="btn btn-gold w-100">
+      <button type="submit" class="btn btn-gold w-100" name="tab" value="verdict">
         <i class="bi bi-trophy me-1"></i> Show Match Verdict
       </button>
     </div>
   </form>
 
-  {% if verdict_error %}
-    <div class="alert alert-warning mb-0">{{ verdict_error }}</div>
-  {% elif verdict_context and selected_verdict_match %}
+  {% if verdict_context and selected_verdict_match %}
     <div class="dashboard-verdict-result scorecard-card">
       {% include 'matches/partials/scorecard_content.html' with match=selected_verdict_match embedded=True questions=verdict_context.questions is_scored=verdict_context.is_scored rows=verdict_context.rows can_see_all=verdict_context.can_see_all match_started=verdict_context.match_started %}
     </div>
+  {% elif selected_verdict_match and verdict_error %}
+    <div class="alert alert-warning mb-0">{{ verdict_error }}</div>
   {% else %}
     <div class="dashboard-verdict-empty text-muted text-center py-5">
       <i class="bi bi-trophy display-6 d-block mb-2 opacity-50"></i>

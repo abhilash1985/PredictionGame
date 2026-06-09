@@ -25,6 +25,7 @@
             <th class="ranks-col-name">Name</th>
             <th class="text-center">Matches</th>
             <th class="text-end">Points</th>
+            <th class="text-end" title="Maximum points available from predicted matches">Total pts</th>
             <th class="text-center">%</th>
             <th class="text-center" title="Correct match-winner predictions">Win picks</th>
             <th class="text-center" title="Times top scorer on a match">MVPs</th>
@@ -53,6 +54,7 @@
               </td>
               <td class="text-center">{{ row.matches_predicted }}</td>
               <td class="text-end ranks-points-cell">{{ row.total_points }}</td>
+              <td class="text-end">{{ row.max_points }}</td>
               <td class="text-center">{{ row.prediction_percentage }}%</td>
               <td class="text-center">{{ row.winner_picks }}</td>
               <td class="text-center">{{ row.match_tops }}</td>
@@ -60,7 +62,7 @@
             </tr>
           {% empty %}
             <tr>
-              <td colspan="8" class="ranks-empty text-muted">No players registered yet.</td>
+              <td colspan="9" class="ranks-empty text-muted">No players registered yet.</td>
             </tr>
           {% endfor %}
         </tbody>

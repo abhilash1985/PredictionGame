@@ -101,46 +101,99 @@
     return Array.from({ length: count }, (_, index) => CHART_COLORS[index % CHART_COLORS.length]);
   }
 
+  function toPercentages(counts) {
+    const total = counts.reduce(function(sum, count) {
+      return sum + count;
+    }, 0);
+    if (total === 0) {
+      return counts.map(function() {
+        return 0;
+      });
+    }
+    return counts.map(function(count) {
+      return Math.round((count / total) * 1000) / 10;
+    });
+  }
+
+  function percentageTooltipLabel(context) {
+    const index = context.dataIndex;
+    const percentage = context.dataset.data[index];
+    const label = context.label || '';
+    return label + ': ' + percentage + '%';
+  }
+
   function buildChartConfig(item) {
     const chartType = item.chart_type === 'horizontalBar' ? 'bar' : item.chart_type;
     const colors = chartColors(item.labels.length);
+    const percentages = toPercentages(item.counts);
+    const isHorizontal = item.chart_type === 'horizontalBar';
+    const isCircular = chartType === 'doughnut' || chartType === 'polarArea';
+    const valueAxis = isHorizontal ? 'x' : 'y';
+
+    const percentageScale = {
+      beginAtZero: true,
+      max: 100,
+      ticks: {
+        callback: function(value) {
+          return value + '%';
+        },
+      },
+    };
 
     return {
       type: chartType,
       data: {
         labels: item.labels,
         datasets: [{
-          label: 'Predictions',
-          data: item.counts,
+          label: 'Share of answers',
+          data: percentages,
           backgroundColor: colors,
-          borderColor: chartType === 'doughnut' || chartType === 'polarArea' ? '#ffffff' : colors,
-          borderWidth: chartType === 'doughnut' || chartType === 'polarArea' ? 2 : 0,
+          borderColor: isCircular ? '#ffffff' : colors,
+          borderWidth: isCircular ? 2 : 0,
         }],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        indexAxis: item.chart_type === 'horizontalBar' ? 'y' : 'x',
+        indexAxis: isHorizontal ? 'y' : 'x',
         plugins: {
           legend: {
-            display: chartType === 'doughnut' || chartType === 'polarArea',
+            display: isCircular,
             position: chartType === 'doughnut' ? 'right' : 'bottom',
             labels: {
               boxWidth: 10,
               font: { size: 11 },
+              generateLabels: function(chart) {
+                const data = chart.data;
+                if (!data.labels.length || !data.datasets.length) {
+                  return [];
+                }
+                return data.labels.map(function(label, index) {
+                  return {
+                    text: label + ' (' + data.datasets[0].data[index] + '%)',
+                    fillStyle: data.datasets[0].backgroundColor[index],
+                    strokeStyle: data.datasets[0].borderColor[index],
+                    lineWidth: data.datasets[0].borderWidth,
+                    hidden: false,
+                    index: index,
+                  };
+                });
+              },
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return percentageTooltipLabel(context);
+              },
             },
           },
         },
-        scales: chartType === 'doughnut' || chartType === 'polarArea'
+        scales: isCircular
           ? {}
           : {
-              x: {
-                ticks: { maxRotation: 45, minRotation: 0 },
-              },
-              y: {
-                beginAtZero: true,
-                ticks: { precision: 0 },
-              },
+              x: isHorizontal ? percentageScale : { ticks: { maxRotation: 45, minRotation: 0 } },
+              y: isHorizontal ? { beginAtZero: true, ticks: { precision: 0 } } : percentageScale,
             },
       },
     };

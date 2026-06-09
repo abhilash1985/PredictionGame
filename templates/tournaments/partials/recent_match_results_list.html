@@ -1,0 +1,43 @@
+{% load tournament_tags %}
+{% if recent_match_results %}
+  <ul class="dashboard-results-list list-unstyled mb-0">
+    {% for item in recent_match_results %}
+      <li class="dashboard-results-item">
+        <div class="dashboard-results-match">
+          <span class="badge rounded-pill text-bg-warning text-dark">Match {{ item.match.match_number }}</span>
+          {% if item.match.round %}
+            <span class="badge rounded-pill badge-group-name">{{ item.match.round.name }}</span>
+          {% endif %}
+        </div>
+        <div class="dashboard-results-lineup{% if use_short_names %} dashboard-results-lineup--compact{% endif %}">
+          <span class="dashboard-results-team dashboard-results-team-home">
+            {% if use_short_names %}
+              {% team_badge item.match.team_home show_short=True show_name=False %}
+            {% else %}
+              {% team_badge item.match.team_home show_short=False show_name=True %}
+            {% endif %}
+          </span>
+          <span class="dashboard-results-score">{{ item.home_score }} : {{ item.away_score }}</span>
+          <span class="dashboard-results-team dashboard-results-team-away">
+            {% if use_short_names %}
+              {% team_badge item.match.team_away show_short=True show_name=False %}
+            {% else %}
+              {% team_badge item.match.team_away show_short=False show_name=True %}
+            {% endif %}
+          </span>
+        </div>
+        <div class="dashboard-results-winner small">
+          {% if item.prediction_winners_label %}
+            <i class="bi bi-award me-1 text-warning"></i>
+            Prediction MVP:
+            <span class="fw-semibold">{{ item.prediction_winners_label }}</span>{% if item.prediction_winner_points %} ({{ item.prediction_winner_points }} pts){% endif %}
+          {% else %}
+            <span class="text-muted">No prediction MVP yet</span>
+          {% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="dashboard-stat-empty text-muted mb-0">No completed matches yet.</p>
+{% endif %}

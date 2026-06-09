@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.shortcuts import render
+from django.utils import timezone
 
 from apps.leaderboard.dashboard_stats import DashboardStatsService
 from apps.leaderboard.services import LeaderboardService
@@ -11,6 +12,22 @@ from apps.tournaments.context_processors import get_active_tournament, get_upcom
 from apps.tournaments.models import PastWorldCupWinner
 
 
+def default_verdict_match(verdict_matches):
+    past_matches = verdict_matches.filter(kickoff_at__lt=timezone.now()).order_by('-kickoff_at', '-match_number')
+    return past_matches.filter(prediction_count__gt=0).first() or past_matches.first()
+
+
+def verdict_context_for_user(match, user):
+    if not match:
+        return None, None
+    if match.prediction_count == 0:
+        return None, 'No predictions submitted for this match yet.'
+    verdict_context = MatchScorecardService.context_for_match(match, user)
+    if not verdict_context['rows']:
+        return None, 'You have not predicted this match yet.'
+    return verdict_context, None
+
+
 def landing_view(request):
     tournament = get_active_tournament()
     winners = PastWorldCupWinner.objects.all()
@@ -19,13 +36,14 @@ def landing_view(request):
         .annotate(prediction_count=Count('predictions'))
     )
     leaderboard_top = LeaderboardService.user_stats(tournament)[:10]
+    recent_match_results = DashboardStatsService.recent_match_results(tournament)
     return render(request, 'tournaments/landing.html', {
         'winners': winners,
         'upcoming_matches': upcoming_matches,
         'tournament': tournament,
         'leaderboard_top': leaderboard_top,
+        'recent_match_results': recent_match_results,
         'predicted_match_ids': predicted_match_ids(request.user, upcoming_matches),
-        'show_predict': request.user.is_authenticated,
     })
 
 
@@ -60,16 +78,11 @@ def dashboard_view(request):
             selected_verdict_match = verdict_matches.filter(pk=verdict_match_id).first()
             if not selected_verdict_match:
                 verdict_error = 'Select a valid match.'
-            elif selected_verdict_match.prediction_count == 0:
-                verdict_error = 'No predictions submitted for this match yet.'
-            else:
-                verdict_context = MatchScorecardService.context_for_match(
-                    selected_verdict_match,
-                    request.user,
-                )
-                if not verdict_context['rows']:
-                    verdict_error = 'You have not predicted this match yet.'
-                    verdict_context = None
+        else:
+            selected_verdict_match = default_verdict_match(verdict_matches)
+
+        if selected_verdict_match and not verdict_error:
+            verdict_context, verdict_error = verdict_context_for_user(selected_verdict_match, request.user)
 
     leaderboard_rows = LeaderboardService.user_stats(tournament)
     user_leaderboard = next(

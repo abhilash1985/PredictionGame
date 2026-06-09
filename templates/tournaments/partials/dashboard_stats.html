@@ -9,39 +9,8 @@
           <p class="dashboard-stat-subtitle mb-0">Recent scores with prediction MVPs</p>
         </div>
       </header>
-      <div class="dashboard-stat-body">
-        {% if dashboard_stats.recent_match_results %}
-          <ul class="dashboard-results-list list-unstyled mb-0">
-            {% for item in dashboard_stats.recent_match_results %}
-              <li class="dashboard-results-item">
-                <div class="dashboard-results-match">
-                  <span class="badge rounded-pill text-bg-warning text-dark">Match {{ item.match.match_number }}</span>
-                  {% if item.match.round %}
-                    <span class="badge rounded-pill badge-group-name">{{ item.match.round.name }}</span>
-                  {% endif %}
-                </div>
-                <div class="dashboard-results-teams">
-                  <span>{% team_badge item.match.team_home show_name=True show_short=False %}</span>
-                  <span class="dashboard-results-score">
-                    {{ item.home_score }} : {{ item.away_score }}
-                  </span>
-                  <span>{% team_badge item.match.team_away show_name=True show_short=False %}</span>
-                </div>
-                <div class="dashboard-results-winner small">
-                  {% if item.prediction_winners_label %}
-                    <i class="bi bi-award me-1 text-warning"></i>
-                    Prediction MVP:
-                    <span class="fw-semibold">{{ item.prediction_winners_label }}</span>{% if item.prediction_winner_points %} ({{ item.prediction_winner_points }} pts){% endif %}
-                  {% else %}
-                    <span class="text-muted">No prediction MVP yet</span>
-                  {% endif %}
-                </div>
-              </li>
-            {% endfor %}
-          </ul>
-        {% else %}
-          <p class="dashboard-stat-empty text-muted mb-0">No completed matches yet.</p>
-        {% endif %}
+      <div class="dashboard-stat-body dashboard-recent-results">
+        {% include 'tournaments/partials/recent_match_results_list.html' with recent_match_results=dashboard_stats.recent_match_results %}
       </div>
     </section>
   </div>
@@ -51,7 +20,7 @@
       <header class="dashboard-stat-card-head">
         <i class="bi bi-bar-chart-fill dashboard-stat-icon"></i>
         <div>
-          <h3 class="dashboard-stat-title">Leaderboard Top 3</h3>
+          <h3 class="dashboard-stat-title">Leaderboard Top 5</h3>
           <p class="dashboard-stat-subtitle mb-0">Highest total prediction points</p>
         </div>
       </header>

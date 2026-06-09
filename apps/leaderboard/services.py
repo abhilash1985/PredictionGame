@@ -63,6 +63,7 @@ class LeaderboardService:
                 'display_name': entry['display_name'],
                 'matches_predicted': entry['matches_predicted'],
                 'total_points': entry['total_points'],
+                'max_points': entry['max_points'],
                 'prediction_percentage': percentage,
                 'boosters_used': entry['boosters_used'],
                 'winner_picks': winner_picks_by_user.get(user_id, 0),
