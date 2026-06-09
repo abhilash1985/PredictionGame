@@ -1,7 +1,4 @@
-import json
-
 from django.shortcuts import render
-from django.utils.safestring import mark_safe
 
 from apps.leaderboard.services import LeaderboardService
 from apps.tournaments.context_processors import get_active_tournament
@@ -43,6 +40,5 @@ def prediction_graph_view(request):
         'matches': matches,
         'selected_match': selected_match,
         'graph_data': graph_data,
-        'graph_data_json': mark_safe(json.dumps(graph_data)),
         'tournament': tournament,
     })

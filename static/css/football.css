@@ -1863,14 +1863,39 @@ body.page-team-points {
 }
 
 .graph-chart-body {
-  min-height: 220px;
+  min-height: 0;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.graph-chart-canvas-wrap {
+  position: relative;
+  height: 100px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.graph-chart-canvas-wrap--bar {
+  height: 110px;
+  max-width: 420px;
+}
+
+.graph-chart-canvas-wrap--horizontalBar {
+  height: 130px;
+  max-width: 100%;
+}
+
+.graph-chart-canvas-wrap--doughnut,
+.graph-chart-canvas-wrap--polarArea {
+  height: 110px;
+  max-width: 240px;
 }
 
 .graph-empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 180px;
+  min-height: 80px;
   background: #f8fafc;
   border: 1px dashed #ced4da;
   border-radius: 10px;

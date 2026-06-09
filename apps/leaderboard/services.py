@@ -198,9 +198,13 @@ class LeaderboardService:
         graph_data = []
         questions = match.questions.select_related('question_template').order_by('sort_order', 'id')
         for question in questions:
-            answers = question.predictions.values_list('user_answer', flat=True)
+            answers = (
+                question.predictions
+                .exclude(user_answer='')
+                .values_list('user_answer', flat=True)
+            )
             counter = Counter(answers)
-            labels, counts = LeaderboardService._sorted_graph_labels(counter, question.question_template)
+            labels, counts = LeaderboardService._graph_labels_from_answers(question, counter)
             template = question.question_template
             chart_type = LeaderboardService._chart_type_for_question(template)
             graph_data.append({
@@ -214,6 +218,23 @@ class LeaderboardService:
                 'chart_label': LeaderboardService._chart_label_for_type(chart_type),
             })
         return graph_data
+
+    @staticmethod
+    def _graph_labels_from_answers(question, counter):
+        template = question.question_template
+        if question.options:
+            labels = [str(option) for option in question.options]
+            counts = [counter.get(label, 0) for label in labels]
+            if template and template.question_type == QuestionTemplate.QuestionType.NUMERIC:
+                pairs = sorted(
+                    zip(labels, counts),
+                    key=lambda pair: (LeaderboardService._numeric_sort_key(pair[0]), pair[0].lower()),
+                )
+                labels, counts = zip(*pairs)
+                return list(labels), list(counts)
+            return labels, counts
+
+        return LeaderboardService._sorted_graph_labels(counter, template)
 
     @staticmethod
     def _sorted_graph_labels(counter, template):

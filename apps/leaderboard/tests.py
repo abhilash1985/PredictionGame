@@ -62,6 +62,8 @@ class PredictionGraphServiceTests(TestCase):
         self.assertEqual(graph_data[0]['chart_type'], 'doughnut')
         self.assertEqual(graph_data[0]['points'], 5)
         self.assertEqual(graph_data[0]['total'], 0)
+        self.assertEqual(graph_data[0]['labels'], ['Home FC', 'Draw', 'Away FC'])
+        self.assertEqual(graph_data[0]['counts'], [0, 0, 0])
 
     def test_graph_match_choices_orders_by_kickoff(self):
         matches = list(LeaderboardService.graph_match_choices(self.tournament))
