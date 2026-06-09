@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 
 from apps.accounts.forms import OnboardingForm, ProfileForm
 from apps.accounts.profile_service import ensure_user_profile
+from apps.leaderboard.services import LeaderboardService
+from apps.tournaments.context_processors import get_active_tournament
 
 
 def _sync_timezone_cookie(response, profile):
@@ -54,7 +56,18 @@ def profile_view(request):
     else:
         form = ProfileForm(instance=profile, user=request.user)
 
-    return render(request, 'accounts/profile.html', {'form': form})
+    tournament = get_active_tournament()
+    leaderboard_rows = LeaderboardService.user_stats(tournament)
+    user_leaderboard = next(
+        (row for row in leaderboard_rows if row['user_id'] == request.user.id),
+        None,
+    )
+    return render(request, 'accounts/profile.html', {
+        'form': form,
+        'user_leaderboard': user_leaderboard,
+        'leaderboard_total': len(leaderboard_rows),
+        'tournament': tournament,
+    })
 
 
 class CustomPasswordChangeView(PasswordChangeView):
