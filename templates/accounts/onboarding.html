@@ -2,27 +2,14 @@
 
 {% block content %}
 <div class="row justify-content-center">
-  <div class="col-lg-6">
+  <div class="col-lg-8">
     <div class="card card-football">
-      <div class="card-header">Welcome — Set Your Preferences</div>
+      <div class="card-header">Welcome — Set Up Your Profile</div>
       <div class="card-body">
-        <p class="text-muted">Choose your favorite team and optionally enable AI Predict before you start.</p>
+        <p class="text-muted">Before you start predicting, set your display name, favorite team, timezone, and AI Predict preference.</p>
         <form method="post">
           {% csrf_token %}
-          {% for field in form %}
-            <div class="mb-3">
-              {% if field.field.widget.input_type == 'checkbox' %}
-                <div class="form-check">
-                  {{ field }}
-                  <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                </div>
-              {% else %}
-                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
-              {% endif %}
-              {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
-            </div>
-          {% endfor %}
+          {% include 'accounts/partials/profile_form_fields.html' with form=form %}
           <button type="submit" class="btn btn-gold w-100">Continue to Dashboard</button>
         </form>
       </div>

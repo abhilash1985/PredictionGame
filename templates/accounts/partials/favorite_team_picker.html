@@ -1,0 +1,20 @@
+{% load tournament_tags %}
+<div class="team-picker-grid">
+  <label class="team-picker-option">
+    <input type="radio" name="{{ field.html_name }}" value="" class="team-picker-input"
+           {% if not field.value %}checked{% endif %}>
+    <span class="team-picker-label text-muted small">No preference</span>
+  </label>
+  {% for team in field.field.queryset %}
+    <label class="team-picker-option">
+      <input type="radio" name="{{ field.html_name }}" value="{{ team.pk }}" class="team-picker-input"
+             {% if field.value|stringformat:"s" == team.pk|stringformat:"s" %}checked{% endif %}>
+      {% with flag=team|team_flag_url %}
+        {% if flag %}
+          <img src="{{ flag }}" alt="{{ team.name }} flag" class="team-flag" width="32" height="24" loading="lazy">
+        {% endif %}
+      {% endwith %}
+      <span class="team-picker-label">{{ team.name }}</span>
+    </label>
+  {% endfor %}
+</div>

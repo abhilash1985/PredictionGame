@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
+{% load tournament_tags %}
 
 {% block content %}
 <div class="card card-football mb-4">
-  <div class="card-header">
-    Squads — {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}
+  <div class="card-header d-flex flex-wrap align-items-center gap-2">
+    <span>Squads —</span>
+    {% team_badge match.team_home show_name=True %}
+    <span class="text-white-50">vs</span>
+    {% team_badge match.team_away show_name=True %}
     <span class="badge rounded-pill text-bg-warning text-dark ms-2">Match {{ match.match_number }}</span>
     {% if match.round %}<span class="badge rounded-pill badge-group-name ms-2">{{ match.round.name }}</span>{% endif %}
   </div>
   <div class="card-body">
     <div class="row">
       <div class="col-md-6">
-        <h5>{{ match.team_home.name }}</h5>
+        <h5 class="d-flex align-items-center gap-2">{% team_badge match.team_home show_name=True %}</h5>
         <table class="table table-sm">
           <thead><tr><th>#</th><th>Name</th><th>Pos</th></tr></thead>
           <tbody>
@@ -27,7 +31,7 @@
         </table>
       </div>
       <div class="col-md-6">
-        <h5>{{ match.team_away.name }}</h5>
+        <h5 class="d-flex align-items-center gap-2">{% team_badge match.team_away show_name=True %}</h5>
         <table class="table table-sm">
           <thead><tr><th>#</th><th>Name</th><th>Pos</th></tr></thead>
           <tbody>

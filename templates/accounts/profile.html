@@ -8,21 +8,7 @@
       <div class="card-body">
         <form method="post">
           {% csrf_token %}
-          {% for field in form %}
-            <div class="mb-3">
-              {% if field.field.widget.input_type == 'checkbox' %}
-                <div class="form-check">
-                  {{ field }}
-                  <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                </div>
-              {% else %}
-                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
-              {% endif %}
-              {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
-              {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
-            </div>
-          {% endfor %}
+          {% include 'accounts/partials/profile_form_fields.html' with form=form %}
           <button type="submit" class="btn btn-gold">Save Profile</button>
           <a href="{% url 'password_change' %}" class="btn btn-outline-secondary ms-2">Change Password</a>
         </form>

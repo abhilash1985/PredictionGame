@@ -65,11 +65,25 @@ class LeaderboardService:
 
         team_totals = (
             MatchPrediction.objects.filter(match__tournament=tournament, user__profile__favorite_team__isnull=False)
-            .values('user__profile__favorite_team__name', 'user__profile__favorite_team__short_name')
+            .values('user__profile__favorite_team_id')
             .annotate(total_points=Sum('total_points'), fan_count=Count('user', distinct=True))
             .order_by('-total_points')
         )
-        return list(team_totals)
+
+        from apps.tournaments.models import Team
+
+        team_ids = [row['user__profile__favorite_team_id'] for row in team_totals]
+        teams_by_id = Team.objects.in_bulk(team_ids)
+
+        results = []
+        for row in team_totals:
+            team = teams_by_id.get(row['user__profile__favorite_team_id'])
+            results.append({
+                'team': team,
+                'total_points': row['total_points'],
+                'fan_count': row['fan_count'],
+            })
+        return results
 
     @staticmethod
     def prediction_graph_data(tournament=None):

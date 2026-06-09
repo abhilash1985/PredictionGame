@@ -29,13 +29,14 @@ def onboarding_view(request):
         return redirect('dashboard')
 
     if request.method == 'POST':
-        form = OnboardingForm(request.POST, instance=profile)
+        form = OnboardingForm(request.POST, instance=profile, user=request.user)
         if form.is_valid():
-            form.save()
+            profile = form.save()
             messages.success(request, 'Welcome! Your preferences have been saved.')
-            return redirect('dashboard')
+            response = redirect('dashboard')
+            return _sync_timezone_cookie(response, profile)
     else:
-        form = OnboardingForm(instance=profile)
+        form = OnboardingForm(instance=profile, user=request.user)
 
     return render(request, 'accounts/onboarding.html', {'form': form})
 

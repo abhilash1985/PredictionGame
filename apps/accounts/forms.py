@@ -4,6 +4,7 @@ from django.db import IntegrityError
 
 from allauth.account.forms import LoginForm, ResetPasswordForm, ResetPasswordKeyForm, SignupForm
 
+from apps.accounts.form_helpers import configure_favorite_team_field
 from apps.accounts.models import UserProfile
 from apps.accounts.profile_service import ensure_user_profile
 from apps.accounts.timezones import BROWSER_DEFAULT, is_valid_timezone, timezone_choices
@@ -105,6 +106,8 @@ class ProfileForm(forms.ModelForm):
         self.fields['first_name'].initial = self.user.first_name
         self.fields['last_name'].initial = self.user.last_name
         self.fields['ai_predict_enabled'].label = 'Enable AI Predict'
+        configure_favorite_team_field(self.fields['favorite_team'])
+        self.order_fields(['display_name', 'first_name', 'last_name', 'favorite_team', 'timezone', 'ai_predict_enabled'])
 
     def clean_display_name(self):
         display_name = self.cleaned_data['display_name'].strip()
@@ -130,21 +133,55 @@ class ProfileForm(forms.ModelForm):
 
 
 class OnboardingForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=150, label='First name', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(max_length=150, label='Last name', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    timezone = forms.ChoiceField(
+        choices=[],
+        required=False,
+        label='Timezone',
+        help_text='Leave as browser default to use your device timezone, or pick a fixed zone for match times.',
+        widget=forms.Select(attrs={'class': 'form-select'}),
+    )
+
     class Meta:
         model = UserProfile
-        fields = ['favorite_team', 'ai_predict_enabled']
+        fields = ['display_name', 'favorite_team', 'timezone', 'ai_predict_enabled']
         widgets = {
-            'favorite_team': forms.Select(attrs={'class': 'form-select'}),
+            'display_name': forms.TextInput(attrs={'class': 'form-control'}),
             'ai_predict_enabled': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=None, **kwargs):
+        if user is None:
+            raise TypeError('OnboardingForm requires a user keyword argument.')
+        self.user = user
         super().__init__(*args, **kwargs)
+        self.fields['timezone'].choices = timezone_choices()
+        self.fields['first_name'].initial = self.user.first_name
+        self.fields['last_name'].initial = self.user.last_name
         self.fields['ai_predict_enabled'].label = 'Enable AI Predict'
+        configure_favorite_team_field(self.fields['favorite_team'])
+        self.order_fields(['display_name', 'first_name', 'last_name', 'favorite_team', 'timezone', 'ai_predict_enabled'])
+
+    def clean_display_name(self):
+        display_name = self.cleaned_data['display_name'].strip()
+        exists = UserProfile.objects.filter(display_name__iexact=display_name).exclude(pk=self.instance.pk).exists()
+        if exists:
+            raise ValidationError('This display name is already taken.')
+        return display_name
+
+    def clean_timezone(self):
+        timezone_name = self.cleaned_data.get('timezone', BROWSER_DEFAULT)
+        if timezone_name and not is_valid_timezone(timezone_name):
+            raise ValidationError('Select a valid timezone.')
+        return timezone_name
 
     def save(self, commit=True):
         profile = super().save(commit=False)
         profile.onboarding_completed = True
+        self.user.first_name = self.cleaned_data['first_name']
+        self.user.last_name = self.cleaned_data['last_name']
+        self.user.save(update_fields=['first_name', 'last_name'])
         if commit:
             profile.save()
         return profile

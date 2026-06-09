@@ -329,35 +329,262 @@ body.page-auth .main-content {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1.5rem;
+  gap: 0.5rem;
 }
 
 .predict-options-row .form-check {
   margin-bottom: 0;
-  padding-left: 1.75rem;
-  white-space: nowrap;
+  padding-left: 0;
 }
 
 .predict-options-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-  gap: 0.35rem 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  gap: 0.5rem;
 }
 
 .predict-options-grid .form-check {
   margin-bottom: 0;
-  padding-left: 1.75rem;
+  padding-left: 0;
   min-width: 0;
 }
 
-.predict-options-grid .form-check-label {
+.predict-option-pill .form-check-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.predict-option-pill {
+  position: relative;
+  margin: 0;
+}
+
+.predict-option-pill .form-check-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.45rem 0.9rem;
+  border: 2px solid #dee2e6;
+  border-radius: 999px;
+  background: var(--white);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
   word-break: break-word;
+}
+
+.predict-options-grid .predict-option-pill .form-check-label {
+  border-radius: 10px;
+  width: 100%;
+  min-height: 2.35rem;
+  font-size: 0.85rem;
+}
+
+.predict-option-pill .form-check-input:checked + .form-check-label {
+  border-color: var(--gold);
+  background: #f0f7ff;
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.35);
+  font-weight: 600;
+}
+
+.predict-option-pill .form-check-input:focus + .form-check-label {
+  box-shadow: 0 0 0 3px rgba(30, 74, 114, 0.2);
 }
 
 .predict-question-fieldset {
   border: none;
   padding: 0;
   margin: 0;
+}
+
+.predict-card {
+  overflow: hidden;
+}
+
+.predict-hero {
+  background: linear-gradient(135deg, var(--theme-navy-mid), var(--theme-navy-light));
+  color: var(--white);
+  padding: 1.5rem 1.75rem;
+  border-bottom: 3px solid var(--gold);
+}
+
+.predict-hero-label {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.predict-team-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.35rem;
+}
+
+.predict-team-flag {
+  width: 56px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.predict-team-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.predict-team-rank {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.predict-vs-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 2px solid var(--gold);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--gold);
+}
+
+.predict-hero-meta {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.predict-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 0.85rem 1.75rem;
+  background: #eef2f7;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.predict-toolbar-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6c757d;
+}
+
+.predict-toolbar-value {
+  font-weight: 700;
+  color: var(--theme-navy-mid);
+}
+
+.predict-body {
+  padding: 1.5rem 1.75rem 1.75rem;
+  background: var(--off-white);
+}
+
+.predict-notice {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #fff8e6;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: #5c4a00;
+  font-size: 0.9rem;
+}
+
+.predict-question-card {
+  background: var(--white);
+  border: 1px solid #e3e8ef;
+  border-left: 4px solid var(--theme-navy-light);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.predict-question-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.predict-question-num {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--theme-navy-light);
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.predict-question-title {
+  flex-grow: 1;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #1a1a1a;
+}
+
+.predict-points-badge {
+  flex-shrink: 0;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--theme-navy);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.predict-booster-box {
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fff9e6, #fff3cc);
+  border: 2px solid var(--gold);
+}
+
+.predict-booster-box .form-check-input {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.15rem;
+}
+
+.predict-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e3e8ef;
+}
+
+@media (max-width: 767px) {
+  .predict-hero,
+  .predict-toolbar,
+  .predict-body {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .predict-team-block {
+    padding: 0.5rem 0;
+  }
+
+  .predict-vs-badge {
+    min-width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.85rem;
+  }
 }
 
 footer.site-footer {
@@ -401,6 +628,44 @@ footer.site-footer {
 
 .team-code.away {
   background: var(--fifa-red-dark);
+}
+
+.team-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: 0.5rem;
+}
+
+.team-picker-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.6rem 0.4rem;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  background: var(--white);
+  cursor: pointer;
+  text-align: center;
+  min-height: 100%;
+}
+
+.team-picker-option:has(.team-picker-input:checked) {
+  border-color: var(--gold);
+  background: #f0f7ff;
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.35);
+}
+
+.team-picker-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.team-picker-label {
+  font-size: 0.75rem;
+  line-height: 1.2;
 }
 
 .sticky-auth {

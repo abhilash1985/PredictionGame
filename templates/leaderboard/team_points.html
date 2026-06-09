@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load tournament_tags %}
 
 {% block content %}
 <h2 class="page-heading mb-4">Team Points (Fan Clubs)</h2>
@@ -17,7 +18,13 @@
         {% for row in rows %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ row.user__profile__favorite_team__name }} ({{ row.user__profile__favorite_team__short_name }})</td>
+            <td>
+              {% if row.team %}
+                {% team_badge row.team show_name=True show_short=False %}
+              {% else %}
+                —
+              {% endif %}
+            </td>
             <td>{{ row.fan_count }}</td>
             <td><strong>{{ row.total_points }}</strong></td>
           </tr>

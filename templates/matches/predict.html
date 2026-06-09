@@ -1,54 +1,135 @@
 {% extends 'base.html' %}
+{% load tournament_tags tz %}
 
 {% block content %}
-<div class="card card-football">
-  <div class="card-header">
-    Predict — {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}
-    <span class="badge rounded-pill text-bg-warning text-dark ms-2">Match {{ match.match_number }}</span>
-    {% if match.round %}<span class="badge rounded-pill badge-group-name ms-2">{{ match.round.name }}</span>{% endif %}
+<div class="card card-football predict-card">
+  <div class="predict-hero">
+    <div class="predict-hero-top d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+      <span class="predict-hero-label"><i class="bi bi-pencil-square me-1"></i> Match Prediction</span>
+      <div class="d-flex flex-wrap gap-2">
+        <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
+        {% if match.round %}<span class="badge rounded-pill badge-group-name">{{ match.round.name }}</span>{% endif %}
+      </div>
+    </div>
+    <div class="predict-teams row align-items-center g-3">
+      <div class="col-md-5">
+        <div class="predict-team-block predict-team-home">
+          {% with flag=match.team_home|team_flag_url:"w80" %}
+            {% if flag %}
+              <img src="{{ flag }}" alt="{{ match.team_home.name }} flag" class="predict-team-flag" loading="lazy">
+            {% endif %}
+          {% endwith %}
+          <div class="predict-team-name">{{ match.team_home.name }}</div>
+          {% if match.team_home.fifa_ranking %}
+            <div class="predict-team-rank">FIFA ranking #{{ match.team_home.fifa_ranking }}</div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-md-2 text-center">
+        <span class="predict-vs-badge">VS</span>
+      </div>
+      <div class="col-md-5">
+        <div class="predict-team-block predict-team-away">
+          {% with flag=match.team_away|team_flag_url:"w80" %}
+            {% if flag %}
+              <img src="{{ flag }}" alt="{{ match.team_away.name }} flag" class="predict-team-flag" loading="lazy">
+            {% endif %}
+          {% endwith %}
+          <div class="predict-team-name">{{ match.team_away.name }}</div>
+          {% if match.team_away.fifa_ranking %}
+            <div class="predict-team-rank">FIFA ranking #{{ match.team_away.fifa_ranking }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="predict-hero-meta mt-3 small">
+      {% if match.stadium %}
+        <span><i class="bi bi-geo-alt me-1"></i>{{ match.stadium.name }}{% if match.stadium.city %}, {{ match.stadium.city }}{% endif %}</span>
+        <span class="mx-2 text-white-50">·</span>
+      {% endif %}
+      <span>Kickoff:</span>
+      {% include 'tournaments/partials/kickoff_local.html' with kickoff_at=match.kickoff_at format='detail' %}
+    </div>
   </div>
-  <div class="card-body">
+
+  <div class="predict-toolbar">
+    <div class="predict-toolbar-item">
+      <span class="predict-toolbar-label">Max points</span>
+      <span class="predict-toolbar-value">{{ total_points }} pts</span>
+    </div>
     {% if booster_allowed %}
-      <p class="text-muted">Point boosters remaining: <strong>{{ boosters_remaining }}</strong> (group stage only)</p>
-    {% else %}
-      <p class="text-muted"><i class="bi bi-info-circle"></i> Point boosters are not available for knockout matches.</p>
+      <div class="predict-toolbar-item">
+        <span class="predict-toolbar-label">Boosters left</span>
+        <span class="predict-toolbar-value">{{ boosters_remaining }}</span>
+      </div>
     {% endif %}
-    <form method="post">
+  </div>
+
+  <div class="card-body predict-body">
+    {% if not booster_allowed %}
+      <div class="predict-notice mb-4">
+        <i class="bi bi-info-circle me-1"></i> Point boosters are not available for knockout matches.
+      </div>
+    {% endif %}
+
+    <form method="post" class="predict-form">
       {% csrf_token %}
       {% for item in question_fields %}
         {% with field=item.field %}
-          <div class="mb-4">
+          <section class="predict-question-card">
+            <div class="predict-question-head">
+              <span class="predict-question-num">{{ forloop.counter }}</span>
+              <h3 class="predict-question-title">{{ field.label }}</h3>
+              <span class="predict-points-badge">{{ item.points }} pts</span>
+            </div>
+
             {% if field.field.widget.input_type == 'radio' %}
               <fieldset class="predict-question-fieldset">
-                <legend class="form-label fs-6 fw-semibold mb-2">{{ field.label }}</legend>
+                <legend class="visually-hidden">{{ field.label }}</legend>
                 <div class="predict-options-{{ item.layout }}">
                   {% for radio in field %}
-                    <div class="form-check">
+                    <div class="form-check predict-option-pill">
                       {{ radio.tag }}
-                      <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                      <label class="form-check-label" for="{{ radio.id_for_label }}">
+                        {% with flag=radio.choice_label|team_flag_for_label %}
+                          {% if flag %}
+                            <img src="{{ flag }}" alt="" class="team-flag" width="22" height="16" loading="lazy">
+                          {% endif %}
+                        {% endwith %}
+                        <span>{{ radio.choice_label }}</span>
+                      </label>
                     </div>
                   {% endfor %}
                 </div>
               </fieldset>
             {% else %}
-              <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              <label class="visually-hidden" for="{{ field.id_for_label }}">{{ field.label }}</label>
               {{ field }}
             {% endif %}
-            {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
-          </div>
+
+            {% if field.errors %}<div class="text-danger small mt-2">{{ field.errors }}</div>{% endif %}
+          </section>
         {% endwith %}
       {% endfor %}
+
       {% if booster_field %}
-        <div class="mb-4">
-          <div class="form-check">
+        <div class="predict-booster-box">
+          <div class="form-check mb-0">
             {{ booster_field }}
-            <label class="form-check-label" for="{{ booster_field.id_for_label }}">{{ booster_field.label }}</label>
+            <label class="form-check-label fw-semibold" for="{{ booster_field.id_for_label }}">
+              {{ booster_field.label }}
+            </label>
           </div>
-          {% if booster_field.errors %}<div class="text-danger small">{{ booster_field.errors }}</div>{% endif %}
+          {% if booster_field.errors %}<div class="text-danger small mt-2">{{ booster_field.errors }}</div>{% endif %}
         </div>
       {% endif %}
-      <button type="submit" class="btn btn-gold">Save Prediction</button>
-      <a href="{% url 'match_list' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+
+      <div class="predict-actions">
+        <button type="submit" class="btn btn-gold btn-lg">
+          <i class="bi bi-check2-circle me-1"></i> Save Prediction
+        </button>
+        <a href="{% url 'match_list' %}" class="btn btn-outline-secondary btn-lg">Cancel</a>
+      </div>
     </form>
   </div>
 </div>

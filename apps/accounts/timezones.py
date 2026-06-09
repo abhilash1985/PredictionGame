@@ -67,8 +67,9 @@ def timezone_label(name):
 
 
 def timezone_choices():
-    choices = [(BROWSER_DEFAULT, 'Browser default (auto-detect)')]
+    browser_default = [(BROWSER_DEFAULT, 'Browser default (auto-detect)')]
     seen = set()
+    choices = []
 
     for name in COMMON_TIMEZONES:
         if name not in seen and is_valid_timezone(name):
@@ -78,7 +79,9 @@ def timezone_choices():
     for name in sorted(zoneinfo.available_timezones()):
         if name in seen or '/' not in name:
             continue
-        choices.append((name, timezone_label(name)))
-        seen.add(name)
+        if is_valid_timezone(name):
+            choices.append((name, timezone_label(name)))
+            seen.add(name)
 
-    return choices
+    choices.sort(key=lambda item: item[1].lower())
+    return browser_default + choices

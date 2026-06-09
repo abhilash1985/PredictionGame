@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load tournament_tags %}
 
 {% block content %}
 <h2 class="page-heading fw-bold mb-4">Welcome, {{ user.display_name }}!</h2>
@@ -19,7 +20,13 @@
   <div class="col-md-3">
     <div class="card card-football text-center p-3">
       <div class="text-muted small">Favorite team</div>
-      <div class="fs-6 fw-bold">{% if user.profile.favorite_team %}{{ user.profile.favorite_team.short_name }}{% else %}—{% endif %}</div>
+      <div class="fs-6 fw-bold d-flex justify-content-center">
+        {% if user.profile.favorite_team %}
+          {% team_badge user.profile.favorite_team show_name=True show_short=False %}
+        {% else %}
+          —
+        {% endif %}
+      </div>
     </div>
   </div>
   <div class="col-md-3">
