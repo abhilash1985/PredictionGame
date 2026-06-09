@@ -1,29 +1,34 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block body_class %}page-app page-onboarding{% endblock %}
 
 {% block content %}
-<div class="account-page">
+<div class="account-page onboarding-page">
+  <div class="onboarding-hero text-center mb-4">
+    <span class="onboarding-hero-badge"><i class="bi bi-stars me-1"></i> One-time setup</span>
+    <h2 class="page-heading mb-2">Welcome to WC 2026 Predict</h2>
+    <p class="ranks-page-subtitle mb-0 mx-auto onboarding-hero-copy">
+      Set your display name, choose AI Predict, and pick the nation you support.
+    </p>
+  </div>
+
   <div class="row justify-content-center">
-    <div class="col-lg-8">
-      <div class="ranks-page-header text-center mb-4">
-        <h2 class="page-heading mb-1">Welcome!</h2>
-        <p class="ranks-page-subtitle mb-0">Set up your profile before you start predicting</p>
-      </div>
-      <div class="card card-football account-card">
-        <div class="account-card-header account-card-header-center">
-          <span class="account-card-title"><i class="bi bi-person-plus me-1"></i> Your profile</span>
+    <div class="col-xl-10">
+      <form method="post" class="account-form onboarding-form">
+        {% csrf_token %}
+        {% include 'accounts/partials/onboarding_form_fields.html' with form=form %}
+        <div class="onboarding-submit-wrap">
+          <button type="submit" class="btn btn-gold btn-lg w-100">
+            <i class="bi bi-arrow-right-circle me-1"></i> Continue to Dashboard
+          </button>
         </div>
-        <div class="account-card-body">
-          <p class="account-intro text-muted">Choose your display name, favorite team, timezone, and whether to enable AI Predict.</p>
-          <form method="post" class="account-form">
-            {% csrf_token %}
-            {% include 'accounts/partials/profile_form_fields.html' with form=form %}
-            <button type="submit" class="btn btn-gold w-100">
-              <i class="bi bi-arrow-right-circle me-1"></i> Continue to Dashboard
-            </button>
-          </form>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/team_picker.js' %}"></script>
 {% endblock %}

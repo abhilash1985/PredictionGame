@@ -1,0 +1,18 @@
+<div class="ai-predict-panel{% if field.value %} ai-predict-panel-on{% endif %}" data-ai-predict-panel>
+  <div class="ai-predict-panel-copy">
+    <div class="ai-predict-feature-list">
+      <span><i class="bi bi-lightning-charge-fill me-1"></i> Fills predictions before kickoff</span>
+      <span><i class="bi bi-shield-check me-1"></i> Uses rankings and match data</span>
+      <span><i class="bi bi-toggle-on me-1"></i> You can turn it off anytime</span>
+    </div>
+  </div>
+  <div class="ai-predict-toggle-wrap">
+    <span class="ai-predict-state-label" data-ai-predict-state>
+      {% if field.value %}ON{% else %}OFF{% endif %}
+    </span>
+    <div class="form-check form-switch ai-predict-switch mb-0">
+      {{ field }}
+      <label class="form-check-label visually-hidden" for="{{ field.id_for_label }}">AI Predict</label>
+    </div>
+  </div>
+</div>

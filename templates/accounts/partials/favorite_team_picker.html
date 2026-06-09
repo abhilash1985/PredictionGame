@@ -1,20 +1,53 @@
 {% load tournament_tags %}
-<div class="team-picker-grid">
-  <label class="team-picker-option">
-    <input type="radio" name="{{ field.html_name }}" value="" class="team-picker-input"
-           {% if not field.value %}checked{% endif %}>
-    <span class="team-picker-label text-muted small">No preference</span>
-  </label>
-  {% for team in field.field.queryset %}
-    <label class="team-picker-option">
-      <input type="radio" name="{{ field.html_name }}" value="{{ team.pk }}" class="team-picker-input"
-             {% if field.value|stringformat:"s" == team.pk|stringformat:"s" %}checked{% endif %}>
-      {% with flag=team|team_flag_url %}
-        {% if flag %}
-          <img src="{{ flag }}" alt="{{ team.name }} flag" class="team-flag" width="32" height="24" loading="lazy">
-        {% endif %}
-      {% endwith %}
-      <span class="team-picker-label">{{ team.name }}</span>
+<div class="team-picker" data-team-picker>
+  {% if show_filters %}
+    <div class="team-picker-toolbar">
+      <div class="team-picker-search-wrap">
+        <i class="bi bi-search team-picker-search-icon" aria-hidden="true"></i>
+        <input type="search" class="form-control team-picker-search" placeholder="Search teams..."
+               autocomplete="off" data-team-picker-search aria-label="Search teams">
+      </div>
+      <div class="team-picker-groups" data-team-picker-groups role="tablist" aria-label="Filter by group">
+        <button type="button" class="team-picker-group is-active" data-group-filter="" aria-pressed="true">All</button>
+        {% regroup field.field.queryset by group_letter as grouped_teams %}
+        {% for group in grouped_teams %}
+          {% if group.grouper %}
+            <button type="button" class="team-picker-group" data-group-filter="{{ group.grouper }}"
+                    aria-pressed="false">Group {{ group.grouper }}</button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="team-picker-selection" data-team-picker-selection>
+      <span class="team-picker-selection-label">Selected:</span>
+      <span class="team-picker-selection-value" data-team-picker-selection-value>No preference</span>
+    </div>
+  {% endif %}
+
+  <div class="team-picker-grid">
+    <label class="team-picker-option" data-team-name="no preference" data-group-letter="">
+      <input type="radio" name="{{ field.html_name }}" value="" class="team-picker-input"
+             {% if not field.value %}checked{% endif %}>
+      <span class="team-picker-icon team-picker-icon-neutral"><i class="bi bi-globe2"></i></span>
+      <span class="team-picker-label">No preference</span>
     </label>
-  {% endfor %}
+    {% for team in field.field.queryset %}
+      <label class="team-picker-option"
+             data-team-name="{{ team.name|lower }} {{ team.short_name|lower }}"
+             data-group-letter="{{ team.group_letter|default:'' }}">
+        <input type="radio" name="{{ field.html_name }}" value="{{ team.pk }}" class="team-picker-input"
+               {% if field.value|stringformat:"s" == team.pk|stringformat:"s" %}checked{% endif %}>
+        {% with flag=team|team_flag_url %}
+          {% if flag %}
+            <img src="{{ flag }}" alt="{{ team.name }} flag" class="team-picker-flag" loading="lazy">
+          {% else %}
+            <span class="team-picker-icon"><i class="bi bi-flag"></i></span>
+          {% endif %}
+        {% endwith %}
+        <span class="team-picker-label">{{ team.name }}</span>
+        {% if team.group_letter %}<span class="team-picker-group-tag">Grp {{ team.group_letter }}</span>{% endif %}
+      </label>
+    {% endfor %}
+  </div>
+  <p class="team-picker-empty text-muted small mb-0 d-none" data-team-picker-empty>No teams match your search.</p>
 </div>

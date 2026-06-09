@@ -1,0 +1,76 @@
+{% if form.non_field_errors %}
+  <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+{% endif %}
+
+<section class="onboarding-section onboarding-section-highlight">
+  <div class="onboarding-section-head">
+    <span class="onboarding-step">1</span>
+    <div>
+      <h3 class="onboarding-section-title">Display name</h3>
+      <p class="onboarding-section-copy mb-0">Choose how you appear on the leaderboard and match verdicts.</p>
+    </div>
+  </div>
+  <div class="onboarding-field-stack">
+    <label class="form-label" for="{{ form.display_name.id_for_label }}">{{ form.display_name.label }}</label>
+    <div class="onboarding-display-name-wrap">
+      <span class="onboarding-display-prefix" aria-hidden="true">@</span>
+      {{ form.display_name }}
+    </div>
+    {% if form.display_name.help_text %}<div class="form-text">{{ form.display_name.help_text }}</div>{% endif %}
+    {% if form.display_name.errors %}<div class="text-danger small">{{ form.display_name.errors }}</div>{% endif %}
+  </div>
+  <div class="row g-3 onboarding-name-row">
+    <div class="col-md-6">
+      <label class="form-label" for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+      {{ form.first_name }}
+      {% if form.first_name.errors %}<div class="text-danger small">{{ form.first_name.errors }}</div>{% endif %}
+    </div>
+    <div class="col-md-6">
+      <label class="form-label" for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+      {{ form.last_name }}
+      {% if form.last_name.errors %}<div class="text-danger small">{{ form.last_name.errors }}</div>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="onboarding-section onboarding-section-ai">
+  <div class="onboarding-section-head">
+    <span class="onboarding-step onboarding-step-ai">2</span>
+    <div>
+      <h3 class="onboarding-section-title">AI Predict</h3>
+      <p class="onboarding-section-copy mb-0">Let the game submit smart predictions for you before each match closes.</p>
+    </div>
+  </div>
+  {% include 'accounts/partials/ai_predict_toggle.html' with field=form.ai_predict_enabled %}
+  {% if form.ai_predict_enabled.errors %}<div class="text-danger small mt-2">{{ form.ai_predict_enabled.errors }}</div>{% endif %}
+</section>
+
+<section class="onboarding-section onboarding-section-highlight">
+  <div class="onboarding-section-head">
+    <span class="onboarding-step">3</span>
+    <div>
+      <h3 class="onboarding-section-title">Favorite team</h3>
+      <p class="onboarding-section-copy mb-0">Pick the nation you support. You can change this later in your profile.</p>
+    </div>
+  </div>
+  <div class="onboarding-field-stack">
+    {% include 'accounts/partials/favorite_team_picker.html' with field=form.favorite_team show_filters=True %}
+    {% if form.favorite_team.errors %}<div class="text-danger small">{{ form.favorite_team.errors }}</div>{% endif %}
+  </div>
+</section>
+
+<section class="onboarding-section onboarding-section-muted">
+  <div class="onboarding-section-head onboarding-section-head-compact">
+    <span class="onboarding-step onboarding-step-muted"><i class="bi bi-clock"></i></span>
+    <div>
+      <h3 class="onboarding-section-title">Match times</h3>
+      <p class="onboarding-section-copy mb-0">Choose a timezone for kickoff displays across the app.</p>
+    </div>
+  </div>
+  <div class="onboarding-field-stack">
+    <label class="form-label" for="{{ form.timezone.id_for_label }}">{{ form.timezone.label }}</label>
+    {{ form.timezone }}
+    {% if form.timezone.help_text %}<div class="form-text">{{ form.timezone.help_text }}</div>{% endif %}
+    {% if form.timezone.errors %}<div class="text-danger small">{{ form.timezone.errors }}</div>{% endif %}
+  </div>
+</section>

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load tournament_tags %}
+{% load tournament_tags static %}
 
 {% block content %}
 <div class="account-page">
@@ -85,4 +85,8 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/team_picker.js' %}"></script>
 {% endblock %}

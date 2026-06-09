@@ -113,7 +113,11 @@ class ProfileForm(forms.ModelForm):
         self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
         self.fields['first_name'].initial = self.user.first_name
         self.fields['last_name'].initial = self.user.last_name
-        self.fields['ai_predict_enabled'].label = 'Enable AI Predict'
+        self.fields['ai_predict_enabled'].label = ''
+        self.fields['ai_predict_enabled'].widget.attrs.update({
+            'class': 'form-check-input ai-predict-switch-input',
+            'role': 'switch',
+        })
         configure_favorite_team_field(self.fields['favorite_team'])
         self.order_fields(['display_name', 'first_name', 'last_name', 'favorite_team', 'timezone', 'ai_predict_enabled'])
 
@@ -155,8 +159,8 @@ class OnboardingForm(forms.ModelForm):
         model = UserProfile
         fields = ['display_name', 'favorite_team', 'timezone', 'ai_predict_enabled']
         widgets = {
-            'display_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'ai_predict_enabled': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'display_name': forms.TextInput(attrs={'class': 'form-control onboarding-display-input'}),
+            'ai_predict_enabled': forms.CheckboxInput(attrs={'class': 'form-check-input ai-predict-switch-input', 'role': 'switch'}),
         }
 
     def __init__(self, *args, user=None, **kwargs):
@@ -167,9 +171,14 @@ class OnboardingForm(forms.ModelForm):
         self.fields['timezone'].choices = timezone_choices()
         self.fields['first_name'].initial = self.user.first_name
         self.fields['last_name'].initial = self.user.last_name
-        self.fields['ai_predict_enabled'].label = 'Enable AI Predict'
+        self.fields['display_name'].help_text = 'This is how other players see you on the leaderboard.'
+        self.fields['display_name'].widget.attrs.update({
+            'placeholder': 'Choose a unique display name',
+            'autocomplete': 'nickname',
+        })
+        self.fields['ai_predict_enabled'].label = ''
         configure_favorite_team_field(self.fields['favorite_team'])
-        self.order_fields(['display_name', 'first_name', 'last_name', 'favorite_team', 'timezone', 'ai_predict_enabled'])
+        self.order_fields(['display_name', 'first_name', 'last_name', 'ai_predict_enabled', 'favorite_team', 'timezone'])
 
     def clean_display_name(self):
         display_name = self.cleaned_data['display_name'].strip()
