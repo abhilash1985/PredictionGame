@@ -1,54 +1,74 @@
 {% extends 'base.html' %}
-{% load tournament_tags %}
+{% load tournament_tags tz %}
 
 {% block content %}
-<div class="card card-football mb-4">
-  <div class="card-header d-flex flex-wrap align-items-center gap-2">
-    <span>Squads —</span>
-    {% team_badge match.team_home show_name=True %}
-    <span class="text-white-50">vs</span>
-    {% team_badge match.team_away show_name=True %}
-    <span class="badge rounded-pill text-bg-warning text-dark ms-2">Match {{ match.match_number }}</span>
-    {% if match.round %}<span class="badge rounded-pill badge-group-name ms-2">{{ match.round.name }}</span>{% endif %}
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-6">
-        <h5 class="d-flex align-items-center gap-2">{% team_badge match.team_home show_name=True %}</h5>
-        <table class="table table-sm">
-          <thead><tr><th>#</th><th>Name</th><th>Pos</th></tr></thead>
-          <tbody>
-            {% for p in home_players %}
-              <tr>
-                <td>{{ p.jersey_number }}</td>
-                <td>{{ p.full_name }}</td>
-                <td><span class="badge position-badge {% if p.position == 'GK' %}position-gk{% elif p.position in 'CB,LB,RB' %}position-def{% elif p.position in 'ST,LW,RW' %}position-fwd{% else %}position-mid{% endif %}">{{ p.position }}</span></td>
-              </tr>
-            {% empty %}
-              <tr><td colspan="3" class="text-muted">Squad not loaded.</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      <div class="col-md-6">
-        <h5 class="d-flex align-items-center gap-2">{% team_badge match.team_away show_name=True %}</h5>
-        <table class="table table-sm">
-          <thead><tr><th>#</th><th>Name</th><th>Pos</th></tr></thead>
-          <tbody>
-            {% for p in away_players %}
-              <tr>
-                <td>{{ p.jersey_number }}</td>
-                <td>{{ p.full_name }}</td>
-                <td><span class="badge position-badge {% if p.position == 'GK' %}position-gk{% elif p.position in 'CB,LB,RB' %}position-def{% elif p.position in 'ST,LW,RW' %}position-fwd{% else %}position-mid{% endif %}">{{ p.position }}</span></td>
-              </tr>
-            {% empty %}
-              <tr><td colspan="3" class="text-muted">Squad not loaded.</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
+<div class="card card-football squad-card">
+  <div class="squad-hero">
+    <div class="squad-hero-top d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+      <span class="squad-hero-label"><i class="bi bi-people-fill me-1"></i> Match Squads</span>
+      <div class="d-flex flex-wrap gap-2">
+        <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
+        {% if match.round %}<span class="badge rounded-pill badge-group-name">{{ match.round.name }}</span>{% endif %}
       </div>
     </div>
-    <a href="{% url 'match_list' %}" class="btn btn-outline-secondary">Back to Matches</a>
+
+    <div class="squad-hero-teams row align-items-center g-3">
+      <div class="col-md-5">
+        <div class="squad-hero-team">
+          {% with flag=match.team_home|team_flag_url:"w80" %}
+            {% if flag %}
+              <img src="{{ flag }}" alt="{{ match.team_home.name }} flag" class="squad-hero-flag" loading="lazy">
+            {% endif %}
+          {% endwith %}
+          <div class="squad-hero-team-name">{{ match.team_home.name }}</div>
+          {% if match.team_home.fifa_ranking %}
+            <div class="squad-hero-team-rank">FIFA ranking #{{ match.team_home.fifa_ranking }}</div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-md-2 text-center">
+        <span class="squad-vs-badge">VS</span>
+      </div>
+      <div class="col-md-5">
+        <div class="squad-hero-team">
+          {% with flag=match.team_away|team_flag_url:"w80" %}
+            {% if flag %}
+              <img src="{{ flag }}" alt="{{ match.team_away.name }} flag" class="squad-hero-flag" loading="lazy">
+            {% endif %}
+          {% endwith %}
+          <div class="squad-hero-team-name">{{ match.team_away.name }}</div>
+          {% if match.team_away.fifa_ranking %}
+            <div class="squad-hero-team-rank">FIFA ranking #{{ match.team_away.fifa_ranking }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% if match.stadium %}
+      <div class="squad-hero-meta mt-3 small">
+        <span><i class="bi bi-geo-alt me-1"></i>{{ match.stadium.name }}{% if match.stadium.city %}, {{ match.stadium.city }}{% endif %}</span>
+        <span class="mx-2 text-white-50">·</span>
+        <span>Kickoff:</span>
+        {% include 'tournaments/partials/kickoff_local.html' with kickoff_at=match.kickoff_at format='detail' %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="squad-body">
+    <div class="row g-3">
+      <div class="col-lg-6">
+        {% include 'matches/partials/squad_team_panel.html' with team=match.team_home players=home_players %}
+      </div>
+      <div class="col-lg-6">
+        {% include 'matches/partials/squad_team_panel.html' with team=match.team_away players=away_players %}
+      </div>
+    </div>
+
+    <div class="squad-actions">
+      <a href="{% url 'match_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i> Back to Matches
+      </a>
+    </div>
   </div>
 </div>
 {% endblock %}

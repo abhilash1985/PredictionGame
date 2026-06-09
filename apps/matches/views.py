@@ -54,7 +54,10 @@ def match_list_view(request):
 
 @login_required
 def match_squad_view(request, pk):
-    match = get_object_or_404(Match.objects.select_related('team_home', 'team_away'), pk=pk)
+    match = get_object_or_404(
+        Match.objects.select_related('team_home', 'team_away', 'stadium', 'round'),
+        pk=pk,
+    )
     home_players = Player.objects.filter(team=match.team_home, is_active=True).order_by('jersey_number')
     away_players = Player.objects.filter(team=match.team_away, is_active=True).order_by('jersey_number')
     return render(request, 'matches/squad.html', {

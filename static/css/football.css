@@ -395,6 +395,207 @@ body.page-graphs {
   justify-content: flex-start;
 }
 
+.squad-card {
+  overflow: hidden;
+}
+
+.squad-hero {
+  background: linear-gradient(135deg, var(--theme-navy-mid), var(--theme-navy-light));
+  color: var(--white);
+  padding: 1.5rem 1.75rem;
+  border-bottom: 3px solid var(--gold);
+}
+
+.squad-hero-label {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.squad-hero-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.35rem;
+}
+
+.squad-hero-flag {
+  width: 56px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.squad-hero-team-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.squad-hero-team-rank {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.squad-vs-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 2px solid var(--gold);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--gold);
+}
+
+.squad-hero-meta {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.squad-body {
+  padding: 1.5rem 1.75rem 1.75rem;
+  background: var(--off-white);
+}
+
+.squad-panel {
+  background: var(--white);
+  border: 1px solid #e3e8ef;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.squad-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  background: linear-gradient(135deg, #f8fafc, #eef2f7);
+  border-bottom: 2px solid var(--gold);
+}
+
+.squad-panel-team {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.squad-panel-flag {
+  width: 44px;
+  height: 33px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #d0d7de;
+  flex-shrink: 0;
+}
+
+.squad-panel-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--theme-navy-mid);
+}
+
+.squad-panel-rank {
+  font-size: 0.78rem;
+  color: #6c757d;
+}
+
+.squad-panel-count {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #6c757d;
+  background: #eef2f7;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+}
+
+.squad-panel-body {
+  max-height: 28rem;
+  overflow-y: auto;
+}
+
+.squad-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--theme-navy-light);
+  color: var(--white);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: none;
+  padding: 0.55rem 0.85rem;
+}
+
+.squad-table tbody td {
+  padding: 0.55rem 0.85rem;
+  vertical-align: middle;
+  border-color: #edf1f5;
+}
+
+.squad-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.squad-table tbody tr:hover {
+  background: #f0f7ff;
+}
+
+.squad-jersey {
+  width: 2.5rem;
+  font-weight: 700;
+  color: var(--theme-navy-mid);
+  font-variant-numeric: tabular-nums;
+}
+
+.squad-player-name {
+  font-weight: 500;
+}
+
+.squad-position-badge {
+  min-width: 2.25rem;
+}
+
+.squad-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.squad-actions {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e3e8ef;
+}
+
+@media (max-width: 767px) {
+  .squad-hero,
+  .squad-body {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .squad-panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .squad-panel-body {
+    max-height: none;
+  }
+}
+
 @media (max-width: 575px) {
   .match-list-teams {
     grid-template-columns: 1fr;

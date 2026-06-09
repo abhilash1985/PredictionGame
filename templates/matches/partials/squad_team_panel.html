@@ -1,0 +1,52 @@
+{% load tournament_tags %}
+<section class="squad-panel h-100">
+  <header class="squad-panel-header">
+    <div class="squad-panel-team">
+      {% with flag=team|team_flag_url:"w80" %}
+        {% if flag %}
+          <img src="{{ flag }}" alt="{{ team.name }} flag" class="squad-panel-flag" loading="lazy">
+        {% endif %}
+      {% endwith %}
+      <div class="squad-panel-team-text">
+        <h3 class="squad-panel-name">{{ team.name }}</h3>
+        {% if team.fifa_ranking %}
+          <div class="squad-panel-rank">FIFA ranking #{{ team.fifa_ranking }}</div>
+        {% endif %}
+      </div>
+    </div>
+    <span class="squad-panel-count">{{ players|length }} players</span>
+  </header>
+
+  <div class="squad-panel-body">
+    {% if players %}
+      <table class="table squad-table mb-0">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Pos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for player in players %}
+            <tr>
+              <td class="squad-jersey">{{ player.jersey_number }}</td>
+              <td class="squad-player-name">{{ player.full_name }}</td>
+              <td>
+                <span class="badge position-badge squad-position-badge
+                  {% if player.position == 'GK' %}position-gk
+                  {% elif player.position == 'CB' or player.position == 'LB' or player.position == 'RB' %}position-def
+                  {% elif player.position == 'ST' or player.position == 'LW' or player.position == 'RW' %}position-fwd
+                  {% else %}position-mid{% endif %}">
+                  {{ player.position }}
+                </span>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="squad-empty text-muted">Squad not loaded.</div>
+    {% endif %}
+  </div>
+</section>
