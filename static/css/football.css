@@ -219,6 +219,22 @@ body {
   gap: 0.5rem 0.75rem;
 }
 
+.winners-gallery-sidebar {
+  grid-template-columns: repeat(auto-fill, minmax(4.25rem, 1fr));
+}
+
+.match-grid .match-row-predicted {
+  background: #f0faf4;
+  border-color: #198754;
+  border-left-color: #198754;
+  box-shadow: 0 0 0 1px rgba(25, 135, 84, 0.15);
+}
+
+.badge-predicted {
+  background-color: #198754 !important;
+  color: var(--white) !important;
+}
+
 .leaderboard-top-table th,
 .leaderboard-top-table td {
   vertical-align: middle;

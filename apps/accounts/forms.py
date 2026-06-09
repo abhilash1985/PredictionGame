@@ -104,6 +104,7 @@ class ProfileForm(forms.ModelForm):
         self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
         self.fields['first_name'].initial = self.user.first_name
         self.fields['last_name'].initial = self.user.last_name
+        self.fields['ai_predict_enabled'].label = 'Enable AI Predict'
 
     def clean_display_name(self):
         display_name = self.cleaned_data['display_name'].strip()
@@ -136,6 +137,10 @@ class OnboardingForm(forms.ModelForm):
             'favorite_team': forms.Select(attrs={'class': 'form-select'}),
             'ai_predict_enabled': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['ai_predict_enabled'].label = 'Enable AI Predict'
 
     def save(self, commit=True):
         profile = super().save(commit=False)

@@ -1,0 +1,9 @@
+{% load tournament_tags %}
+<div class="match-team-stack">
+  {% with flag=team|team_flag_url %}
+    {% if flag %}
+      <img src="{{ flag }}" alt="{{ team.name }} flag" class="match-team-flag" loading="lazy">
+    {% endif %}
+  {% endwith %}
+  <span class="match-team-name">{{ team.short_name }}</span>
+</div>

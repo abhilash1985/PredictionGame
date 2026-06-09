@@ -5,7 +5,7 @@
 <div class="card card-football">
   <div class="card-body p-3">
     {% if matches %}
-      {% include 'tournaments/partials/match_grid.html' with matches=matches %}
+      {% include 'tournaments/partials/match_grid.html' with matches=matches predicted_match_ids=predicted_match_ids %}
     {% else %}
       <div class="p-4 text-muted">No matches available.</div>
     {% endif %}

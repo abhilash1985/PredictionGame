@@ -22,7 +22,7 @@
       </div>
       <div class="card-body p-3">
         {% if upcoming_matches %}
-          {% include 'tournaments/partials/match_grid.html' with matches=upcoming_matches show_group=True %}
+          {% include 'tournaments/partials/match_grid.html' with matches=upcoming_matches show_group=True predicted_match_ids=predicted_match_ids %}
         {% else %}
           <div class="p-4 text-muted">Run <code>python manage.py seed_wc2026</code> to load fixtures.</div>
         {% endif %}
@@ -60,35 +60,24 @@
     {% endif %}
 
     <div class="card card-football mb-4">
-      <div class="card-header">Tournament Facts</div>
-      <div class="card-body">
-        <ul class="list-unstyled mb-0 tournament-facts">
-          <li><strong>48</strong> teams · <strong>12</strong> groups · <strong>72</strong> group matches</li>
-          <li><strong>16</strong> host cities</li>
-          <li>Source: <a href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/scores-fixtures" target="_blank" rel="noopener">FIFA fixtures</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="card card-football">
-  <div class="card-header">Past World Cup Winners</div>
-  <div class="card-body winners-gallery">
-    <div class="winners-gallery-grid">
-      {% for winner in winners %}
-        <div class="winner-item text-center">
-          <div class="winner-thumb bg-dark d-flex flex-column align-items-center justify-content-center">
-            {% if winner.flag_url %}
-              <img src="{{ winner.flag_url }}" alt="{{ winner.country }} flag" class="winner-flag" loading="lazy">
-            {% endif %}
-            <span class="text-warning fw-bold small">{{ winner.year }}</span>
-          </div>
-          <small class="d-block mt-1 winner-country">{{ winner.country }}</small>
+      <div class="card-header">Past World Cup Winners</div>
+      <div class="card-body winners-gallery">
+        <div class="winners-gallery-grid winners-gallery-sidebar">
+          {% for winner in winners %}
+            <div class="winner-item text-center">
+              <div class="winner-thumb bg-dark d-flex flex-column align-items-center justify-content-center">
+                {% if winner.flag_url %}
+                  <img src="{{ winner.flag_url }}" alt="{{ winner.country }} flag" class="winner-flag" loading="lazy">
+                {% endif %}
+                <span class="text-warning fw-bold small">{{ winner.year }}</span>
+              </div>
+              <small class="d-block mt-1 winner-country">{{ winner.country }}</small>
+            </div>
+          {% empty %}
+            <p class="text-muted small mb-0">Winner history loads with seed data.</p>
+          {% endfor %}
         </div>
-      {% empty %}
-        <p class="text-muted small mb-0">Winner history loads with seed data.</p>
-      {% endfor %}
+      </div>
     </div>
   </div>
 </div>
