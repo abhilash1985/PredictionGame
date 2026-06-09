@@ -978,12 +978,12 @@ body.page-graphs {
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
-.scorecard-row-winner .scorecard-sticky-col {
-  background: #fff9e6;
+.scorecard-row-winner td {
+  background: #fffdf5;
 }
 
-.scorecard-row-winner td:not(.scorecard-total-cell) {
-  background: #fffdf5;
+.scorecard-row-winner .scorecard-sticky-col {
+  background: #fff9e6;
 }
 
 .scorecard-notice {
@@ -1013,29 +1013,31 @@ body.page-graphs {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
+.scorecard-table-hint {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
 .scorecard-matrix thead th {
   background: var(--theme-navy-light);
   color: var(--white);
-  vertical-align: top;
+  vertical-align: middle;
   font-size: 0.78rem;
   border: none;
-  padding: 0.65rem 0.75rem;
+  padding: 0.55rem 0.5rem;
+  text-align: center;
 }
 
-.scorecard-matrix-head-answers th {
-  background: var(--theme-navy-mid);
-  font-weight: 500;
+.scorecard-matrix-head .scorecard-sticky-col {
+  text-align: left;
+  padding-left: 0.85rem;
 }
 
 .scorecard-sticky-col {
   position: sticky;
   left: 0;
   z-index: 2;
-  min-width: 8.5rem;
-  background: var(--theme-navy-light);
-}
-
-.scorecard-matrix-head-answers .scorecard-sticky-col {
+  min-width: 7.5rem;
   background: var(--theme-navy-light);
 }
 
@@ -1045,6 +1047,8 @@ body.page-graphs {
   color: var(--theme-navy-mid);
   vertical-align: middle;
   border-right: 1px solid #e3e8ef;
+  text-align: left;
+  padding-left: 0.85rem;
 }
 
 .scorecard-row-self .scorecard-sticky-col {
@@ -1052,57 +1056,159 @@ body.page-graphs {
 }
 
 .scorecard-col-booster {
-  min-width: 4.5rem;
-  width: 4.5rem;
+  min-width: 3rem;
+  width: 3rem;
 }
 
 .scorecard-col-q {
-  min-width: 10rem;
-}
-
-.scorecard-col-q-meta {
-  min-width: 10rem;
+  min-width: 5.75rem;
+  max-width: 7rem;
 }
 
 .scorecard-col-total {
-  min-width: 7.5rem;
-  background: rgba(0, 0, 0, 0.12) !important;
+  min-width: 6.5rem;
 }
 
-.scorecard-q-num {
-  display: inline-block;
-  margin-right: 0.35rem;
-  padding: 0.1rem 0.4rem;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.15);
+.scorecard-q-chip-static {
+  cursor: default;
+}
+
+.scorecard-q-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.scorecard-q-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  cursor: help;
+  outline: none;
+  transition: background 0.15s ease;
+}
+
+.scorecard-q-chip:hover,
+.scorecard-q-chip:focus {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.scorecard-q-icon {
+  font-size: 0.85rem;
+  color: var(--gold);
+}
+
+.scorecard-q-icon-card {
+  color: #f5d547;
+  font-size: 0.65rem;
+}
+
+.scorecard-q-short {
   font-size: 0.68rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
-.scorecard-q-title {
-  display: block;
+.scorecard-q-tooltip {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  z-index: 20;
+  min-width: 10rem;
+  max-width: 14rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  background: var(--theme-navy);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: normal;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+}
+
+.scorecard-q-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: var(--theme-navy);
+}
+
+.scorecard-q-chip:hover .scorecard-q-tooltip,
+.scorecard-q-chip:focus .scorecard-q-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.scorecard-q-result {
+  width: 100%;
+  min-height: 1.25rem;
+}
+
+.scorecard-q-correct {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  max-width: 100%;
+  font-size: 0.68rem;
   font-weight: 600;
-  line-height: 1.25;
-  margin-top: 0.25rem;
+  color: #b8f0c8;
 }
 
-.scorecard-q-answer {
-  font-size: 0.75rem;
-  margin-bottom: 0.25rem;
+.scorecard-q-correct-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 6.5rem;
+}
+
+.scorecard-q-pending {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-style: italic;
 }
 
 .scorecard-q-points {
   display: inline-block;
-  padding: 0.1rem 0.45rem;
+  padding: 0.08rem 0.4rem;
   border-radius: 999px;
   background: var(--gold);
   color: var(--theme-navy);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 700;
 }
 
 .scorecard-predictor-name {
   white-space: nowrap;
+}
+
+.scorecard-predictor-label {
+  vertical-align: middle;
+}
+
+.scorecard-booster-empty {
+  color: #adb5bd;
+  font-size: 0.85rem;
 }
 
 .scorecard-you-badge {
@@ -1117,26 +1223,54 @@ body.page-graphs {
   vertical-align: middle;
 }
 
-.scorecard-matrix-row:nth-child(even) td:not(.scorecard-total-cell) {
+.scorecard-matrix-row:nth-child(even) td {
   background: #fafbfc;
 }
 
-.scorecard-matrix-row:hover td:not(.scorecard-total-cell) {
+.scorecard-matrix-row:hover td {
   background: #f0f7ff;
 }
 
-.scorecard-row-self td:not(.scorecard-total-cell) {
+.scorecard-row-self td {
   background: #f4fbf6;
 }
 
 .scorecard-answer-cell {
-  font-weight: 500;
+  text-align: center;
   vertical-align: middle;
-  min-width: 8rem;
+  padding: 0.55rem 0.4rem !important;
+  font-weight: 500;
+  min-width: 5.75rem;
+}
+
+.scorecard-answer-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  max-width: 100%;
+}
+
+.scorecard-answer-status {
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.scorecard-answer-status-correct {
+  color: #198754;
+}
+
+.scorecard-answer-status-wrong {
+  color: #dc3545;
 }
 
 .scorecard-answer-text {
-  display: block;
+  font-weight: 600;
+  font-size: 0.82rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 5.5rem;
 }
 
 .scorecard-answer-correct {
@@ -1156,19 +1290,21 @@ body.page-graphs {
 
 .scorecard-cell-points {
   display: block;
-  font-size: 0.68rem;
-  margin-top: 0.25rem;
+  font-size: 0.62rem;
+  margin-top: 0.15rem;
+  font-weight: 600;
   opacity: 0.85;
 }
 
 .scorecard-total-cell {
-  background: #fff9e6;
   vertical-align: middle;
-  min-width: 7rem;
+  min-width: 6.5rem;
+  text-align: center;
+  border-left: 2px solid #e3e8ef;
 }
 
 .scorecard-total-value {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--theme-navy-mid);
 }

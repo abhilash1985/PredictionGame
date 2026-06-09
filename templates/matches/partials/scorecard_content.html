@@ -50,33 +50,29 @@
     </div>
   {% endif %}
 
+  <p class="scorecard-table-hint mb-2">
+    <i class="bi bi-info-circle me-1"></i> Hover or focus a column header to read the full question.
+  </p>
+
   <div class="scorecard-table-wrap">
     <table class="table scorecard-matrix mb-0">
       <thead>
-        <tr class="scorecard-matrix-head-questions">
-          <th class="scorecard-sticky-col" rowspan="2">Predictor</th>
-          <th class="scorecard-col-booster" rowspan="2">Booster</th>
+        <tr class="scorecard-matrix-head">
+          <th class="scorecard-sticky-col">Predictor</th>
+          <th class="scorecard-col-booster" title="Point booster (2×)">
+            <i class="bi bi-lightning-charge-fill" aria-hidden="true"></i>
+          </th>
           {% for question in questions %}
-            <th class="scorecard-col-q">
-              <span class="scorecard-q-num">Q{{ forloop.counter }}</span>
-              <span class="scorecard-q-title">{{ question.question_text }}</span>
-            </th>
+            {% include 'matches/partials/scorecard_question_head.html' with qnum=forloop.counter %}
           {% endfor %}
-          <th class="scorecard-col-total" rowspan="2">Total</th>
-        </tr>
-        <tr class="scorecard-matrix-head-answers">
-          {% for question in questions %}
-            <th class="scorecard-col-q-meta">
-              <div class="scorecard-q-answer">
-                {% if is_scored and question.correct_answer %}
-                  <i class="bi bi-check-circle-fill text-success me-1"></i>{{ question.correct_answer }}
-                {% else %}
-                  <span class="text-muted">Pending</span>
-                {% endif %}
-              </div>
-              <span class="scorecard-q-points">{{ question.points }} pts</span>
-            </th>
-          {% endfor %}
+          <th class="scorecard-col-total">
+            <div class="scorecard-q-head">
+              <span class="scorecard-q-chip scorecard-q-chip-static">
+                <i class="bi bi-calculator-fill scorecard-q-icon" aria-hidden="true"></i>
+                <span class="scorecard-q-short">Total</span>
+              </span>
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -86,7 +82,7 @@
               {% if row.is_top_scorer %}
                 <i class="bi bi-trophy-fill scorecard-winner-cup" title="Top scorer"></i>
               {% endif %}
-              {{ row.display_name }}
+              <span class="scorecard-predictor-label">{{ row.display_name }}</span>
               {% if row.is_current_user %}<span class="scorecard-you-badge">You</span>{% endif %}
             </th>
             <td class="scorecard-col-booster text-center">
@@ -95,12 +91,19 @@
                   <i class="bi bi-lightning-charge-fill"></i>
                 </span>
               {% else %}
-                <span class="text-muted">—</span>
+                <span class="scorecard-booster-empty">—</span>
               {% endif %}
             </td>
             {% for answer in row.answer_rows %}
               <td class="scorecard-answer-cell scorecard-answer-{{ answer.status }}">
-                <span class="scorecard-answer-text">{{ answer.user_answer }}</span>
+                <div class="scorecard-answer-inner">
+                  {% if is_scored and answer.status == 'correct' %}
+                    <i class="bi bi-check-circle-fill scorecard-answer-status scorecard-answer-status-correct" aria-hidden="true"></i>
+                  {% elif is_scored and answer.status == 'wrong' %}
+                    <i class="bi bi-x-circle-fill scorecard-answer-status scorecard-answer-status-wrong" aria-hidden="true"></i>
+                  {% endif %}
+                  <span class="scorecard-answer-text">{{ answer.user_answer }}</span>
+                </div>
                 {% if is_scored and answer.points_awarded is not None and answer.status != 'pending' %}
                   <span class="scorecard-cell-points">{{ answer.points_awarded }} pt{{ answer.points_awarded|pluralize }}</span>
                 {% endif %}

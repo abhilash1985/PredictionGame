@@ -4,7 +4,9 @@ from apps.matches.models import MatchPrediction
 class MatchScorecardService:
     @staticmethod
     def build(match):
-        questions = list(match.questions.order_by('sort_order', 'id'))
+        questions = list(
+            match.questions.select_related('question_template').order_by('sort_order', 'id')
+        )
         is_scored = any(question.correct_answer for question in questions)
 
         predictions = (

@@ -1,0 +1,38 @@
+{% with code=question.question_template.code|default:'' %}
+<th class="scorecard-col-q">
+  <div class="scorecard-q-head">
+    <span class="scorecard-q-chip" tabindex="0">
+      {% if code == 'MATCH_WINNER' %}
+        <i class="bi bi-trophy-fill scorecard-q-icon" aria-hidden="true"></i>
+        <span class="scorecard-q-short">Winner</span>
+      {% elif code == 'HOME_GOALS' %}
+        <i class="bi bi-bullseye scorecard-q-icon" aria-hidden="true"></i>
+        <span class="scorecard-q-short">{{ match.team_home.short_name }}</span>
+      {% elif code == 'AWAY_GOALS' %}
+        <i class="bi bi-bullseye scorecard-q-icon" aria-hidden="true"></i>
+        <span class="scorecard-q-short">{{ match.team_away.short_name }}</span>
+      {% elif code == 'PLAYER_OF_MATCH' %}
+        <i class="bi bi-person-badge-fill scorecard-q-icon" aria-hidden="true"></i>
+        <span class="scorecard-q-short">MVP</span>
+      {% elif code == 'TOTAL_YELLOW_CARDS' %}
+        <i class="bi bi-square-fill scorecard-q-icon scorecard-q-icon-card" aria-hidden="true"></i>
+        <span class="scorecard-q-short">Cards</span>
+      {% else %}
+        <span class="scorecard-q-short">Q{{ qnum }}</span>
+      {% endif %}
+      <span class="scorecard-q-tooltip" role="tooltip">{{ question.question_text }}</span>
+    </span>
+    <div class="scorecard-q-result">
+      {% if is_scored and question.correct_answer %}
+        <span class="scorecard-q-correct" title="Correct answer">
+          <i class="bi bi-check-lg" aria-hidden="true"></i>
+          <span class="scorecard-q-correct-text">{{ question.correct_answer }}</span>
+        </span>
+      {% else %}
+        <span class="scorecard-q-pending">Pending</span>
+      {% endif %}
+    </div>
+    <span class="scorecard-q-points">{{ question.points }} pts</span>
+  </div>
+</th>
+{% endwith %}
