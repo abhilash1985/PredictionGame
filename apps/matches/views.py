@@ -53,7 +53,7 @@ def match_list_view(request):
         'matches': matches,
         'tournament': tournament,
         'predicted_match_ids': predicted_match_ids(request.user, matches),
-        'show_predict': False,
+        'show_predict': True,
     })
 
 
