@@ -70,7 +70,15 @@
   </div>
 
   <div class="row g-3 mb-4 dashboard-summary-actions">
-    <div class="col-6">
+    <div class="col-12 col-md-4">
+      <button type="button" class="dashboard-summary-card dashboard-summary-cta w-100 border-0"
+              data-dashboard-tab="matches-tab">
+        <div class="dashboard-summary-icon text-warning"><i class="bi bi-pencil-square"></i></div>
+        <div class="dashboard-summary-label">Quick action</div>
+        <div class="dashboard-summary-value">Predict Matches</div>
+      </button>
+    </div>
+    <div class="col-12 col-md-4">
       <button type="button" class="dashboard-summary-card dashboard-summary-cta w-100 border-0"
               data-dashboard-tab="stats-tab">
         <div class="dashboard-summary-icon"><i class="bi bi-graph-up"></i></div>
@@ -78,7 +86,7 @@
         <div class="dashboard-summary-value">View Stats</div>
       </button>
     </div>
-    <div class="col-6">
+    <div class="col-12 col-md-4">
       <button type="button" class="dashboard-summary-card dashboard-summary-cta w-100 border-0"
               data-dashboard-tab="verdict-tab">
         <div class="dashboard-summary-icon"><i class="bi bi-clipboard-data"></i></div>
@@ -147,8 +155,19 @@
         if (tab && window.bootstrap) {
           bootstrap.Tab.getOrCreateInstance(tab).show();
         }
+        var mainCard = document.querySelector('.dashboard-main-card');
+        if (mainCard) {
+          mainCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
+
+    {% if open_matches_tab %}
+    var matchesTab = document.getElementById('matches-tab');
+    if (matchesTab && window.bootstrap) {
+      bootstrap.Tab.getOrCreateInstance(matchesTab).show();
+    }
+    {% endif %}
 
     {% if open_stats_tab %}
     var statsTab = document.getElementById('stats-tab');

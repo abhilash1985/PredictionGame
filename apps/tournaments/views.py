@@ -88,4 +88,5 @@ def dashboard_view(request):
         'verdict_error': verdict_error,
         'open_stats_tab': tab == 'stats',
         'open_verdict_tab': bool(request.GET.get('verdict_match')) or tab == 'verdict',
+        'open_matches_tab': tab == 'matches',
     })
