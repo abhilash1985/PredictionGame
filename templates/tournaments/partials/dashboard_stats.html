@@ -5,14 +5,14 @@
       <header class="dashboard-stat-card-head">
         <i class="bi bi-trophy-fill dashboard-stat-icon"></i>
         <div>
-          <h3 class="dashboard-stat-title">Yesterday's Results</h3>
-          <p class="dashboard-stat-subtitle mb-0">Completed matches from the previous day</p>
+          <h3 class="dashboard-stat-title">Last 5 Match Results</h3>
+          <p class="dashboard-stat-subtitle mb-0">Recent scores with prediction MVPs</p>
         </div>
       </header>
       <div class="dashboard-stat-body">
-        {% if dashboard_stats.previous_day_results %}
+        {% if dashboard_stats.recent_match_results %}
           <ul class="dashboard-results-list list-unstyled mb-0">
-            {% for item in dashboard_stats.previous_day_results %}
+            {% for item in dashboard_stats.recent_match_results %}
               <li class="dashboard-results-item">
                 <div class="dashboard-results-match">
                   <span class="badge rounded-pill text-bg-warning text-dark">Match {{ item.match.match_number }}</span>
@@ -28,19 +28,19 @@
                   <span>{% team_badge item.match.team_away show_name=True show_short=False %}</span>
                 </div>
                 <div class="dashboard-results-winner small">
-                  {% if item.is_draw %}
-                    <i class="bi bi-dash-circle me-1"></i> Draw
-                  {% elif item.winner %}
-                    <i class="bi bi-trophy me-1 text-warning"></i> Winner: {% team_badge item.winner show_name=True show_short=False %}
+                  {% if item.prediction_winners_label %}
+                    <i class="bi bi-award me-1 text-warning"></i>
+                    Prediction MVP:
+                    <span class="fw-semibold">{{ item.prediction_winners_label }}</span>{% if item.prediction_winner_points %} ({{ item.prediction_winner_points }} pts){% endif %}
                   {% else %}
-                    <span class="text-muted">Result recorded</span>
+                    <span class="text-muted">No prediction MVP yet</span>
                   {% endif %}
                 </div>
               </li>
             {% endfor %}
           </ul>
         {% else %}
-          <p class="dashboard-stat-empty text-muted mb-0">No completed matches from yesterday yet.</p>
+          <p class="dashboard-stat-empty text-muted mb-0">No completed matches yet.</p>
         {% endif %}
       </div>
     </section>
@@ -73,7 +73,7 @@
     </section>
   </div>
 
-  <div class="col-lg-4">
+  <div class="col-6 col-lg-3">
     <section class="dashboard-stat-card h-100">
       <header class="dashboard-stat-card-head">
         <i class="bi bi-bullseye dashboard-stat-icon"></i>
@@ -100,7 +100,7 @@
     </section>
   </div>
 
-  <div class="col-lg-4">
+  <div class="col-6 col-lg-3">
     <section class="dashboard-stat-card h-100">
       <header class="dashboard-stat-card-head">
         <i class="bi bi-lightning-charge-fill dashboard-stat-icon"></i>
@@ -127,7 +127,7 @@
     </section>
   </div>
 
-  <div class="col-lg-4">
+  <div class="col-6 col-lg-3">
     <section class="dashboard-stat-card h-100">
       <header class="dashboard-stat-card-head">
         <i class="bi bi-percent dashboard-stat-icon"></i>
@@ -149,6 +149,33 @@
           </ol>
         {% else %}
           <p class="dashboard-stat-empty text-muted mb-0">No accuracy data yet.</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+
+  <div class="col-6 col-lg-3">
+    <section class="dashboard-stat-card h-100">
+      <header class="dashboard-stat-card-head">
+        <i class="bi bi-award dashboard-stat-icon"></i>
+        <div>
+          <h3 class="dashboard-stat-title">Top MVPs</h3>
+          <p class="dashboard-stat-subtitle mb-0">Most match prediction MVPs</p>
+        </div>
+      </header>
+      <div class="dashboard-stat-body">
+        {% if dashboard_stats.top_mvps %}
+          <ol class="dashboard-mini-ranking list-unstyled mb-0">
+            {% for row in dashboard_stats.top_mvps %}
+              <li class="dashboard-mini-ranking-item">
+                <span class="dashboard-mini-rank">{{ forloop.counter }}</span>
+                <span class="dashboard-mini-name">{{ row.display_name }}</span>
+                <span class="dashboard-mini-value">{{ row.match_tops }}</span>
+              </li>
+            {% endfor %}
+          </ol>
+        {% else %}
+          <p class="dashboard-stat-empty text-muted mb-0">No match MVPs yet.</p>
         {% endif %}
       </div>
     </section>

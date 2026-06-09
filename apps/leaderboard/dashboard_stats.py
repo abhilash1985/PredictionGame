@@ -1,11 +1,8 @@
-from datetime import datetime, time, timedelta
-import zoneinfo
-
 from django.db.models import Count, F
-from django.utils import timezone
 
 from apps.leaderboard.services import LeaderboardService
 from apps.matches.models import Match, QuestionPrediction
+from apps.matches.scorecard_service import MatchScorecardService
 from apps.tournaments.context_processors import get_active_tournament
 
 
@@ -18,66 +15,48 @@ class DashboardStatsService:
 
         leaderboard = LeaderboardService.user_stats(tournament)
         return {
-            'previous_day_results': DashboardStatsService.previous_day_results(tournament, user_timezone),
+            'recent_match_results': DashboardStatsService.recent_match_results(tournament),
             'leaderboard_top': leaderboard[:3],
             'top_points': leaderboard[:3],
             'top_winner_predictors': DashboardStatsService.top_winner_predictors(tournament, limit=3),
             'top_accuracy': DashboardStatsService.top_by_accuracy(leaderboard, limit=3),
+            'top_mvps': DashboardStatsService.top_by_match_tops(leaderboard, limit=3),
             'top_matches_predicted': DashboardStatsService.top_by_matches_predicted(leaderboard, limit=3),
         }
 
     @staticmethod
     def _empty_stats():
         return {
-            'previous_day_results': [],
+            'recent_match_results': [],
             'leaderboard_top': [],
             'top_points': [],
             'top_winner_predictors': [],
             'top_accuracy': [],
+            'top_mvps': [],
             'top_matches_predicted': [],
         }
 
     @staticmethod
-    def _resolve_timezone(user_timezone):
-        if user_timezone:
-            try:
-                return zoneinfo.ZoneInfo(user_timezone)
-            except zoneinfo.ZoneInfoNotFoundError:
-                pass
-        return timezone.get_current_timezone()
-
-    @staticmethod
-    def previous_day_results(tournament, user_timezone=None, limit=10):
-        tz = DashboardStatsService._resolve_timezone(user_timezone)
-        now_local = timezone.now().astimezone(tz)
-        yesterday = now_local.date() - timedelta(days=1)
-        start_local = datetime.combine(yesterday, time.min, tzinfo=tz)
-        end_local = start_local + timedelta(days=1)
-        utc = zoneinfo.ZoneInfo('UTC')
-        start_utc = start_local.astimezone(utc)
-        end_utc = end_local.astimezone(utc)
-
+    def recent_match_results(tournament, limit=5):
         matches = (
-            Match.objects.filter(
-                tournament=tournament,
-                kickoff_at__gte=start_utc,
-                kickoff_at__lt=end_utc,
-            )
+            Match.objects.filter(tournament=tournament)
             .select_related('team_home', 'team_away', 'round')
             .prefetch_related('questions__question_template')
-            .order_by('kickoff_at')
+            .order_by('-kickoff_at')
         )
 
         results = []
         for match in matches:
             if not match.is_completed:
                 continue
+            prediction_winners = DashboardStatsService._match_prediction_winners(match)
             results.append({
                 'match': match,
-                'winner': match.winning_team,
-                'is_draw': match.is_draw,
                 'home_score': match.display_home_score,
                 'away_score': match.display_away_score,
+                'prediction_winners': prediction_winners,
+                'prediction_winners_label': DashboardStatsService._prediction_winners_label(prediction_winners),
+                'prediction_winner_points': prediction_winners[0]['total_points'] if prediction_winners else None,
             })
             if len(results) >= limit:
                 break
@@ -105,6 +84,33 @@ class DashboardStatsService:
             for row in rows
             if row['match_prediction__user__profile__display_name']
         ]
+
+    @staticmethod
+    def _match_prediction_winners(match):
+        scorecard = MatchScorecardService.build(match)
+        if not scorecard['is_scored'] or not scorecard['rows']:
+            return []
+
+        top_scorer_ids = MatchScorecardService.top_scorer_user_ids(scorecard['rows'])
+        winners = [
+            {
+                'display_name': row['display_name'],
+                'total_points': row['total_points'],
+            }
+            for row in scorecard['rows']
+            if row['user_id'] in top_scorer_ids
+        ]
+        winners.sort(key=lambda row: row['display_name'].lower())
+        return winners
+
+    @staticmethod
+    def _prediction_winners_label(winners):
+        return ', '.join(winner['display_name'] for winner in winners)
+
+    @staticmethod
+    def top_by_match_tops(leaderboard, limit=3):
+        eligible = [row for row in leaderboard if row['match_tops'] > 0]
+        return sorted(eligible, key=lambda row: row['match_tops'], reverse=True)[:limit]
 
     @staticmethod
     def top_by_accuracy(leaderboard, limit=3):
