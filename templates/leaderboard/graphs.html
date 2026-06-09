@@ -3,19 +3,30 @@
 {% block body_class %}page-app page-graphs{% endblock %}
 
 {% block content %}
-<h2 class="page-heading mb-4">Prediction Graphs</h2>
-<div id="graph-data" data-charts="{{ graph_data_json|escape }}"></div>
-{% for item in graph_data %}
-  <div class="card card-football mb-4">
-    <div class="card-header">{{ item.match }}</div>
-    <div class="card-body">
-      <p class="small text-muted">{{ item.question }}</p>
-      <canvas id="chart_{{ forloop.counter0 }}" height="120"></canvas>
-    </div>
+<div class="ranks-page">
+  <div class="ranks-page-header mb-4">
+    <h2 class="page-heading mb-1">Prediction Graphs</h2>
+    {% if tournament %}
+      <p class="ranks-page-subtitle mb-0">{{ tournament.name }} — how the crowd answered each question</p>
+    {% endif %}
   </div>
-{% empty %}
-  <div class="card card-football p-4 text-muted">No prediction data to graph yet.</div>
-{% endfor %}
+  <div id="graph-data" data-charts="{{ graph_data_json|escape }}"></div>
+  {% for item in graph_data %}
+    <div class="card card-football ranks-card mb-4">
+      <div class="ranks-card-header">
+        <span><i class="bi bi-pie-chart me-1"></i> {{ item.match }}</span>
+      </div>
+      <div class="account-card-body">
+        <p class="small text-muted mb-3">{{ item.question }}</p>
+        <canvas id="chart_{{ forloop.counter0 }}" height="120"></canvas>
+      </div>
+    </div>
+  {% empty %}
+    <div class="card card-football ranks-card">
+      <div class="ranks-empty text-muted p-4">No prediction data to graph yet.</div>
+    </div>
+  {% endfor %}
+</div>
 {% endblock %}
 
 {% block extra_js %}

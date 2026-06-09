@@ -2,37 +2,72 @@
 {% load tournament_tags %}
 
 {% block content %}
-<h2 class="page-heading mb-4">Team Points (Fan Clubs)</h2>
-<div class="card card-football">
-  <div class="table-responsive">
-    <table class="table table-striped mb-0">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Team</th>
-          <th>Fans</th>
-          <th>Total Points</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in rows %}
+<div class="ranks-page">
+  <div class="ranks-page-header mb-4">
+    <h2 class="page-heading mb-1">Team Points</h2>
+    {% if tournament %}
+      <p class="ranks-page-subtitle mb-0">{{ tournament.name }} — fan clubs ranked by combined prediction points</p>
+    {% else %}
+      <p class="ranks-page-subtitle mb-0">Fan clubs ranked by combined prediction points</p>
+    {% endif %}
+  </div>
+
+  <div class="card card-football ranks-card">
+    <div class="ranks-card-header">
+      <span><i class="bi bi-flag-fill me-1"></i> Fan club standings</span>
+      <span class="ranks-card-count">{{ rows|length }} team{{ rows|length|pluralize }}</span>
+    </div>
+    <div class="ranks-table-wrap">
+      <table class="table ranks-table mb-0">
+        <thead>
           <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>
-              {% if row.team %}
-                {% team_badge row.team show_name=True show_short=False %}
-              {% else %}
-                —
-              {% endif %}
-            </td>
-            <td>{{ row.fan_count }}</td>
-            <td><strong>{{ row.total_points }}</strong></td>
+            <th class="ranks-col-rank">#</th>
+            <th class="ranks-col-team">Team</th>
+            <th class="text-center">Fans</th>
+            <th class="text-end">Total points</th>
           </tr>
-        {% empty %}
-          <tr><td colspan="4" class="text-muted p-4">No team data yet.</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr class="ranks-row{% if forloop.counter <= 3 %} ranks-row-top ranks-row-top-{{ forloop.counter }}{% endif %}">
+              <td class="ranks-col-rank">
+                {% if forloop.counter == 1 %}
+                  <span class="rank-badge rank-badge-gold" title="1st place"><i class="bi bi-trophy-fill"></i></span>
+                {% elif forloop.counter == 2 %}
+                  <span class="rank-badge rank-badge-silver">2</span>
+                {% elif forloop.counter == 3 %}
+                  <span class="rank-badge rank-badge-bronze">3</span>
+                {% else %}
+                  <span class="rank-badge rank-badge-default">{{ forloop.counter }}</span>
+                {% endif %}
+              </td>
+              <td class="ranks-col-team">
+                {% if row.team %}
+                  <div class="ranks-team-cell">
+                    {% with flag=row.team|team_flag_url:"w40" %}
+                      {% if flag %}
+                        <img src="{{ flag }}" alt="" class="ranks-team-flag" loading="lazy">
+                      {% endif %}
+                    {% endwith %}
+                    <span class="ranks-team-name">{{ row.team.name }}</span>
+                  </div>
+                {% else %}
+                  —
+                {% endif %}
+              </td>
+              <td class="text-center">
+                <span class="ranks-fan-badge">{{ row.fan_count }}</span>
+              </td>
+              <td class="text-end ranks-points-cell">{{ row.total_points }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" class="ranks-empty text-muted">No team data yet.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 {% endblock %}

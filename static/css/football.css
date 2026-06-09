@@ -280,6 +280,11 @@ body.page-graphs {
 .dashboard-summary-cta {
   background: linear-gradient(135deg, #fff9e6, #fff3cc);
   border-color: var(--gold);
+  cursor: pointer;
+}
+
+.dashboard-summary-actions .dashboard-summary-cta:hover {
+  background: linear-gradient(135deg, #fff3cc, #ffe9a8);
 }
 
 .dashboard-summary-icon {
@@ -1194,23 +1199,331 @@ body.page-graphs {
   }
 }
 
-.leaderboard-top-table th,
-.leaderboard-top-table td {
-  vertical-align: middle;
+.leaderboard-top-list {
+  padding: 0.35rem 0;
+}
+
+.leaderboard-top-item {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid #eef1f5;
+  font-size: 0.85rem;
+}
+
+.leaderboard-top-item:last-child {
+  border-bottom: none;
+}
+
+.leaderboard-top-item-1 {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.12), transparent);
+}
+
+.leaderboard-top-item-2 {
+  background: linear-gradient(90deg, rgba(192, 192, 192, 0.1), transparent);
+}
+
+.leaderboard-top-item-3 {
+  background: linear-gradient(90deg, rgba(205, 127, 50, 0.1), transparent);
+}
+
+.leaderboard-top-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--theme-navy-light);
+}
+
+.leaderboard-top-name {
+  font-weight: 600;
+  color: var(--theme-navy-mid);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaderboard-top-points {
+  font-weight: 700;
+  color: var(--gold);
   font-size: 0.8rem;
   white-space: nowrap;
 }
 
-.leaderboard-top-table th:first-child,
-.leaderboard-top-table td:first-child {
-  width: 1.75rem;
-  padding-left: 0.5rem;
+.leaderboard-top-empty {
+  text-align: center;
 }
 
-.leaderboard-top-table th:nth-child(2),
-.leaderboard-top-table td:nth-child(2) {
-  white-space: normal;
-  min-width: 4rem;
+.ranks-page-subtitle {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.95rem;
+}
+
+.ranks-card {
+  overflow: hidden;
+}
+
+.ranks-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  background: linear-gradient(135deg, var(--theme-navy-mid), var(--theme-navy-light));
+  color: var(--white);
+  font-weight: 600;
+  border-bottom: 2px solid var(--gold);
+}
+
+.ranks-card-count {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.ranks-table-wrap {
+  overflow-x: auto;
+}
+
+.ranks-table {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+.ranks-table thead th {
+  background: #f4f6f9;
+  color: var(--theme-navy-mid);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  border-bottom: 2px solid #e3e8ef;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 0.75rem 0.85rem;
+}
+
+.ranks-table tbody td {
+  vertical-align: middle;
+  padding: 0.7rem 0.85rem;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.ranks-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ranks-col-rank {
+  width: 3.5rem;
+  text-align: center;
+}
+
+.ranks-col-name,
+.ranks-col-team {
+  min-width: 8rem;
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.rank-badge-gold {
+  background: linear-gradient(135deg, #e8c547, #c9a030);
+  color: var(--theme-navy);
+  box-shadow: 0 2px 6px rgba(212, 175, 55, 0.45);
+}
+
+.rank-badge-silver {
+  background: linear-gradient(135deg, #e8e8e8, #b0b0b0);
+  color: var(--theme-navy);
+}
+
+.rank-badge-bronze {
+  background: linear-gradient(135deg, #e0a86a, #b87333);
+  color: var(--white);
+}
+
+.rank-badge-default {
+  background: #eef1f5;
+  color: var(--theme-navy-light);
+  font-size: 0.75rem;
+}
+
+.ranks-row-top-1 {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent);
+}
+
+.ranks-row-top-2 {
+  background: linear-gradient(90deg, rgba(192, 192, 192, 0.08), transparent);
+}
+
+.ranks-row-top-3 {
+  background: linear-gradient(90deg, rgba(205, 127, 50, 0.08), transparent);
+}
+
+.ranks-row-self {
+  background: linear-gradient(90deg, rgba(30, 74, 114, 0.12), rgba(30, 74, 114, 0.04));
+  box-shadow: inset 3px 0 0 var(--theme-navy-light);
+}
+
+.ranks-player-name {
+  font-weight: 600;
+  color: var(--theme-navy-mid);
+}
+
+.ranks-you-badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: var(--theme-navy-light);
+  color: var(--white);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
+.ranks-points-cell {
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 1rem;
+}
+
+.ranks-team-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.ranks-team-flag {
+  width: 2rem;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.ranks-team-name {
+  font-weight: 600;
+  color: var(--theme-navy-mid);
+}
+
+.ranks-fan-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  padding: 0.15rem 0.5rem;
+  background: #eef1f5;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--theme-navy-light);
+}
+
+.ranks-empty {
+  text-align: center;
+  padding: 2.5rem 1rem !important;
+}
+
+.account-page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.account-card {
+  overflow: hidden;
+}
+
+.account-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, var(--theme-navy-mid), var(--theme-navy-light));
+  color: var(--white);
+  border-bottom: 2px solid var(--gold);
+}
+
+.account-card-header-center {
+  justify-content: center;
+  text-align: center;
+}
+
+.account-card-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.account-favorite-team {
+  font-size: 0.9rem;
+}
+
+.account-ai-badge {
+  flex-shrink: 0;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.account-ai-on {
+  background: rgba(25, 135, 84, 0.25);
+  color: #a8e6c0;
+  border: 1px solid rgba(25, 135, 84, 0.5);
+}
+
+.account-ai-off {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.account-card-body {
+  padding: 1.25rem 1.5rem;
+  background: var(--off-white);
+}
+
+.account-intro {
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+}
+
+.account-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.5rem;
+}
+
+.account-meta {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e3e8ef;
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.account-stat-of {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6c757d;
 }
 
 .btn-gold {

@@ -1,35 +1,68 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 class="page-heading mb-4">Leaderboard{% if tournament %} — {{ tournament.name }}{% endif %}</h2>
-<div class="card card-football">
-  <div class="table-responsive">
-    <table class="table table-striped mb-0">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Matches</th>
-          <th>Points</th>
-          <th>%</th>
-          <th>Boosters</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in rows %}
+<div class="ranks-page">
+  <div class="ranks-page-header mb-4">
+    <h2 class="page-heading mb-1">Leaderboard</h2>
+    {% if tournament %}
+      <p class="ranks-page-subtitle mb-0">{{ tournament.name }} — ranked by total prediction points</p>
+    {% endif %}
+  </div>
+
+  <div class="card card-football ranks-card">
+    <div class="ranks-card-header">
+      <span><i class="bi bi-bar-chart-steps me-1"></i> Player standings</span>
+      <span class="ranks-card-count">{{ rows|length }} player{{ rows|length|pluralize }}</span>
+    </div>
+    <div class="ranks-table-wrap">
+      <table class="table ranks-table mb-0">
+        <thead>
           <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ row.display_name }}</td>
-            <td>{{ row.matches_predicted }}</td>
-            <td><strong>{{ row.total_points }}</strong></td>
-            <td>{{ row.prediction_percentage }}%</td>
-            <td>{{ row.boosters_used }}</td>
+            <th class="ranks-col-rank">#</th>
+            <th class="ranks-col-name">Name</th>
+            <th class="text-center">Matches</th>
+            <th class="text-end">Points</th>
+            <th class="text-center">%</th>
+            <th class="text-center" title="Correct match-winner predictions">Win picks</th>
+            <th class="text-center" title="Times top scorer on a match">MVPs</th>
+            <th class="text-center">Boosters</th>
           </tr>
-        {% empty %}
-          <tr><td colspan="6" class="text-muted p-4">No predictions yet.</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr class="ranks-row{% if row.rank <= 3 %} ranks-row-top ranks-row-top-{{ row.rank }}{% endif %}{% if user.is_authenticated and row.user_id == user.id %} ranks-row-self{% endif %}">
+              <td class="ranks-col-rank">
+                {% if row.rank == 1 %}
+                  <span class="rank-badge rank-badge-gold" title="1st place"><i class="bi bi-trophy-fill"></i></span>
+                {% elif row.rank == 2 %}
+                  <span class="rank-badge rank-badge-silver">2</span>
+                {% elif row.rank == 3 %}
+                  <span class="rank-badge rank-badge-bronze">3</span>
+                {% else %}
+                  <span class="rank-badge rank-badge-default">{{ row.rank }}</span>
+                {% endif %}
+              </td>
+              <td class="ranks-col-name">
+                <span class="ranks-player-name">{{ row.display_name }}</span>
+                {% if user.is_authenticated and row.user_id == user.id %}
+                  <span class="ranks-you-badge">You</span>
+                {% endif %}
+              </td>
+              <td class="text-center">{{ row.matches_predicted }}</td>
+              <td class="text-end ranks-points-cell">{{ row.total_points }}</td>
+              <td class="text-center">{{ row.prediction_percentage }}%</td>
+              <td class="text-center">{{ row.winner_picks }}</td>
+              <td class="text-center">{{ row.match_tops }}</td>
+              <td class="text-center">{{ row.boosters_used }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="8" class="ranks-empty text-muted">No predictions yet. Be the first to score!</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 {% endblock %}
