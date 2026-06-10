@@ -32,7 +32,7 @@ Group-stage only: knockout placeholders are not seeded, and point boosters apply
 
 ## Production deployment
 
-This app is a standard Django project with Gunicorn, WhiteNoise (static files), and optional Celery + Redis (AI auto-predict). See also [Question Bank](docs/QUESTION-BANK.md) for seeding match questions.
+This app is a standard Django project with Gunicorn, WhiteNoise (static files), and optional Celery + Redis (AI auto-predict). See [Question Bank](docs/QUESTION-BANK.md) for match questions and [AI Predict plan](docs/AI-PREDICT.md) for the Gemini/ADK design.
 
 ### Database: will SQLite work in production?
 
@@ -477,6 +477,7 @@ In Django admin, open the user's email address record (django-allauth) and use *
 
 - [Architecture Plan](docs/ARCHITECTURE-PLAN.md)
 - [Question Bank](docs/QUESTION-BANK.md)
+- [AI Predict (Gemini / ADK plan)](docs/AI-PREDICT.md)
 
 ## Modules
 
