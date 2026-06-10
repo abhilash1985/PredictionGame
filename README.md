@@ -232,7 +232,7 @@ DJANGO_SUPERUSER_EMAIL=admin@myprediction.today
 DJANGO_SUPERUSER_PASSWORD=your-secure-password
 ```
 
-`bootstrap_admin` creates the superuser only if that email does not exist yet. Remove the password variable after the first successful deploy if you prefer.
+`bootstrap_admin` creates a new superuser or promotes an existing account with that email. Remove `DJANGO_SUPERUSER_PASSWORD` after the first successful deploy if you prefer (password is only required when creating a new user).
 
 **Option B — Run locally with the public database URL**
 
