@@ -3,14 +3,13 @@
 
 {% block title %}Sign Up — WC 2026{% endblock %}
 
-{% block auth_page_title %}Join the prediction game{% endblock %}
+{% block auth_page_title %}Join the Prediction Game{% endblock %}
 {% block auth_page_subtitle %}Create an account to pick winners, goals, MVPs, and more.{% endblock %}
 
 {% block auth_heading %}<i class="bi bi-person-plus me-1"></i> Create Account{% endblock %}
 
 {% block auth_body %}
 {% include 'account/partials/google_signin.html' %}
-<p class="auth-form-intro text-muted">Sign up with email, or use Google. You will set your display name and favorite team on the next step.</p>
 <form method="post" action="{% url 'account_signup' %}" class="auth-form">
   {% csrf_token %}
   {% include 'account/partials/auth_form_fields.html' with form=form %}

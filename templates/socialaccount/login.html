@@ -1,0 +1,26 @@
+{% extends 'account/auth_layout.html' %}
+{% load i18n %}
+
+{% block title %}Sign In Via Google — WC 2026{% endblock %}
+{% block auth_page_title %}Continue with Google{% endblock %}
+{% block auth_page_subtitle %}Confirm to redirect to Google and complete sign in.{% endblock %}
+{% block auth_heading %}<i class="bi bi-google me-1"></i> Google Sign In{% endblock %}
+
+{% block auth_body %}
+<p class="auth-form-intro text-muted mb-4">
+  {% if process == 'connect' %}
+  You are about to connect your Google account to this profile.
+  {% else %}
+  You are about to sign in using your Google account. You will be redirected to Google to continue.
+  {% endif %}
+</p>
+<form method="post" class="auth-form">
+  {% csrf_token %}
+  <div class="d-grid gap-2">
+    <button type="submit" class="btn btn-gold w-100">
+      <i class="bi bi-box-arrow-in-right me-1"></i> Continue
+    </button>
+    <a href="{% url 'account_login' %}" class="btn btn-outline-secondary w-100">Cancel</a>
+  </div>
+</form>
+{% endblock %}

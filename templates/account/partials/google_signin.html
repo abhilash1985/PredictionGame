@@ -1,14 +1,56 @@
 {% load socialaccount %}
 {% if google_oauth_enabled %}
-<div class="auth-oauth">
-  <a href="{% provider_login_url 'google' %}" class="btn btn-google w-100">
-    <span class="btn-google-icon" aria-hidden="true">
-      <i class="bi bi-google"></i>
+<div class="auth-oauth-block">
+  <button
+    type="button"
+    class="auth-google-btn"
+    data-bs-toggle="modal"
+    data-bs-target="#googleAuthModal"
+    aria-haspopup="dialog"
+    aria-controls="googleAuthModal"
+  >
+    <span class="auth-google-btn__logo" aria-hidden="true">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6.01c4.54-4.18 7.15-10.36 7.15-17.66z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6.01c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>
     </span>
-    Continue with Google
-  </a>
+    <span class="auth-google-btn__text">Continue with Google</span>
+  </button>
+  <div class="auth-or-divider" role="separator" aria-label="Or continue with email">
+    <span class="auth-or-divider__line" aria-hidden="true"></span>
+    <span class="auth-or-divider__label">OR</span>
+    <span class="auth-or-divider__line" aria-hidden="true"></span>
+  </div>
 </div>
-<div class="auth-divider" role="separator" aria-label="Or sign up with email">
-  <span>OR</span>
+
+<div class="modal fade app-modal" id="googleAuthModal" tabindex="-1" aria-labelledby="googleAuthModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content app-modal__content">
+      <div class="modal-header app-modal__header">
+        <div class="app-modal__title-wrap">
+          <span class="app-modal__icon app-modal__icon--google" aria-hidden="true">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6.01c4.54-4.18 7.15-10.36 7.15-17.66z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6.01c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+          </span>
+          <h5 class="modal-title app-modal__title" id="googleAuthModalLabel">Continue with Google</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body app-modal__body">
+        <p class="mb-0">You will be redirected to Google to sign in or create your account. We only use your email and name to set up your profile.</p>
+      </div>
+      <div class="modal-footer app-modal__footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <a href="{% provider_login_url 'google' %}" class="btn btn-gold">Continue</a>
+      </div>
+    </div>
+  </div>
 </div>
 {% endif %}

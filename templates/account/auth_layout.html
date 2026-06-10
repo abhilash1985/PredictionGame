@@ -3,6 +3,10 @@
 
 {% block body_class %}page-app page-auth{% endblock %}
 
+{% block extra_head %}
+{% include 'account/partials/auth_oauth_styles.html' %}
+{% endblock %}
+
 {% block content %}
 <div class="auth-page">
   <div class="landing-page-header mb-4 text-center text-lg-start">

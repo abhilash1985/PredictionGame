@@ -158,4 +158,5 @@ class GoogleOAuthTests(TestCase):
     def test_login_page_shows_google_button(self):
         response = self.client.get(reverse('account_login'))
         self.assertContains(response, 'Continue with Google')
-        self.assertContains(response, 'btn-google')
+        self.assertContains(response, 'auth-google-btn')
+        self.assertContains(response, 'googleAuthModal')
