@@ -243,14 +243,15 @@ With `DEBUG=False`, `ACCOUNT_EMAIL_VERIFICATION` defaults to **`mandatory`** onl
 
 ### Disable email / avoid signup 500 errors (temporary)
 
-If SendGrid is not working yet, set on Railway:
+If SendGrid is not working yet, set on Railway and **deploy the latest code**:
 
 ```text
 EMAIL_FAIL_SILENTLY=True
-ACCOUNT_EMAIL_VERIFICATION=optional
 ```
 
-Signup and password reset will succeed; failed emails are logged instead of crashing the request. Re-enable mandatory verification after SendGrid DNS and API key are working.
+You do not need `ACCOUNT_EMAIL_VERIFICATION=optional` — when `EMAIL_FAIL_SILENTLY=True`, verification is forced to **`none`** (no confirmation emails, signup completes and logs in).
+
+Signup and password reset will succeed; emails are skipped and logged instead of crashing the request. Re-enable mail after SendGrid is working.
 
 ### View logs on Railway
 

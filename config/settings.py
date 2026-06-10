@@ -197,12 +197,12 @@ EMAIL_BACKEND = os.environ.get(
 )
 EMAIL_FAIL_SILENTLY = os.environ.get('EMAIL_FAIL_SILENTLY', 'False').lower() in ('true', '1', 'yes')
 _email_configured = bool(EMAIL_HOST_PASSWORD)
-ACCOUNT_EMAIL_VERIFICATION = os.environ.get(
-    'ACCOUNT_EMAIL_VERIFICATION',
-    'optional'
-    if DEBUG or not _email_configured or EMAIL_FAIL_SILENTLY
-    else 'mandatory',
-)
+if EMAIL_FAIL_SILENTLY:
+    ACCOUNT_EMAIL_VERIFICATION = 'none'
+elif 'ACCOUNT_EMAIL_VERIFICATION' in os.environ:
+    ACCOUNT_EMAIL_VERIFICATION = os.environ['ACCOUNT_EMAIL_VERIFICATION']
+else:
+    ACCOUNT_EMAIL_VERIFICATION = 'optional' if DEBUG or not _email_configured else 'mandatory'
 
 # Celery
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379/0')

@@ -31,7 +31,10 @@ def ensure_user_profile(user, display_name=None):
     if profile is not None:
         if display_name and profile.display_name != display_name:
             profile.display_name = display_name
-            profile.save(update_fields=['display_name'])
+            try:
+                profile.save(update_fields=['display_name'])
+            except IntegrityError:
+                profile.refresh_from_db()
         return profile
 
     base_name = _base_display_name(user)

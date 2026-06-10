@@ -87,8 +87,20 @@ class SignupFormTests(TestCase):
 
 class AccountAdapterEmailTests(TestCase):
     @override_settings(EMAIL_FAIL_SILENTLY=True)
+    def test_should_not_send_confirmation_when_fail_silent(self):
+        adapter = AccountAdapter()
+        self.assertFalse(adapter.should_send_confirmation_mail(None, None, True))
+
+    @override_settings(EMAIL_FAIL_SILENTLY=True)
     @patch.object(DefaultAccountAdapter, 'send_mail', side_effect=Exception('smtp down'))
-    def test_send_mail_does_not_raise_when_fail_silent(self, mock_send):
+    def test_send_mail_skips_smtp_when_fail_silent(self, mock_send):
         adapter = AccountAdapter()
         adapter.send_mail('account/email/email_confirmation', 'user@example.com', {})
-        mock_send.assert_called_once()
+        mock_send.assert_not_called()
+
+    @override_settings(EMAIL_FAIL_SILENTLY=False)
+    @patch.object(DefaultAccountAdapter, 'send_mail', side_effect=Exception('smtp down'))
+    def test_send_mail_raises_when_not_fail_silent(self, mock_send):
+        adapter = AccountAdapter()
+        with self.assertRaises(Exception):
+            adapter.send_mail('account/email/email_confirmation', 'user@example.com', {})

@@ -1,6 +1,5 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
 
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -71,15 +70,7 @@ class SignupForm(SignupForm):
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.save(update_fields=['first_name', 'last_name'])
-
-        desired_name = self.cleaned_data['display_name']
-        profile = ensure_user_profile(user)
-        if profile.display_name != desired_name:
-            profile.display_name = desired_name
-            try:
-                profile.save(update_fields=['display_name'])
-            except IntegrityError as exc:
-                raise ValidationError({'display_name': 'This display name is already taken.'}) from exc
+        ensure_user_profile(user, display_name=self.cleaned_data['display_name'])
         return user
 
 

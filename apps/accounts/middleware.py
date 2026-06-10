@@ -1,6 +1,8 @@
 from django.shortcuts import redirect
 from django.urls import reverse
 
+from apps.accounts.profile_service import ensure_user_profile
+
 
 class OnboardingRequiredMiddleware:
     """Redirect authenticated users to onboarding until completed."""
@@ -20,8 +22,8 @@ class OnboardingRequiredMiddleware:
         if request.user.is_authenticated and not request.user.is_staff:
             path = request.path
             if not path.startswith(self.EXEMPT_PREFIXES):
-                profile = getattr(request.user, 'profile', None)
-                if profile and not profile.onboarding_completed:
+                profile = ensure_user_profile(request.user)
+                if not profile.onboarding_completed:
                     return redirect(reverse('onboarding'))
 
         return self.get_response(request)
