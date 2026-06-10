@@ -10,7 +10,7 @@
 
 {% block auth_body %}
 {% include 'account/partials/google_signin.html' %}
-<p class="auth-form-intro text-muted">Choose your display name and favorite team to get started.</p>
+<p class="auth-form-intro text-muted">Sign up with email, or use Google. You will set your display name and favorite team on the next step.</p>
 <form method="post" action="{% url 'account_signup' %}" class="auth-form">
   {% csrf_token %}
   {% include 'account/partials/auth_form_fields.html' with form=form %}

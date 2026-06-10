@@ -71,22 +71,23 @@ class ProfileFormTests(TestCase):
 
 
 class SignupFormTests(TestCase):
-    def test_save_sets_display_name_when_profile_missing(self):
+    def test_signup_form_excludes_onboarding_fields(self):
+        form = SignupForm()
+        self.assertNotIn('display_name', form.fields)
+        self.assertNotIn('first_name', form.fields)
+        self.assertNotIn('last_name', form.fields)
+
+    def test_save_creates_profile_from_email_when_profile_missing(self):
         user = User.objects.create_user(email='signup@example.com', password='testpass123')
         UserProfile.objects.filter(user=user).delete()
 
         form = SignupForm()
-        form.cleaned_data = {
-            'first_name': 'Test',
-            'last_name': 'User',
-            'display_name': 'TestPlayer',
-        }
 
         with patch('allauth.account.forms.SignupForm.save', return_value=user):
             saved = form.save(request=None)
 
         profile = UserProfile.objects.get(user=saved)
-        self.assertEqual(profile.display_name, 'TestPlayer')
+        self.assertEqual(profile.display_name, 'signup')
 
 
 class AccountAdapterEmailTests(TestCase):
@@ -125,6 +126,7 @@ class GoogleOAuthTests(TestCase):
             'google': {'APP': {'client_id': '', 'secret': '', 'key': ''}},
         },
     )
+    @patch.dict(os.environ, {'GOOGLE_CLIENT_ID': '', 'GOOGLE_CLIENT_SECRET': ''})
     def test_google_oauth_disabled_without_credentials(self):
         self.assertFalse(google_oauth_configured())
         self.assertFalse(auth_context(None)['google_oauth_enabled'])

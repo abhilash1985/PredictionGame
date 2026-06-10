@@ -48,29 +48,13 @@ class ResetPasswordKeyForm(ResetPasswordKeyForm):
 
 
 class SignupForm(SignupForm):
-    first_name = forms.CharField(max_length=150, label='First name', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    last_name = forms.CharField(max_length=150, label='Last name', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    display_name = forms.CharField(max_length=50, label='Display name', widget=forms.TextInput(attrs={'class': 'form-control'}))
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['first_name'].widget.attrs.setdefault('class', 'form-control')
-        self.fields['last_name'].widget.attrs.setdefault('class', 'form-control')
-        self.fields['display_name'].widget.attrs.setdefault('class', 'form-control')
         _apply_form_control(self)
-
-    def clean_display_name(self):
-        display_name = self.cleaned_data['display_name'].strip()
-        if UserProfile.objects.filter(display_name__iexact=display_name).exists():
-            raise ValidationError('This display name is already taken.')
-        return display_name
 
     def save(self, request):
         user = super().save(request)
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.save(update_fields=['first_name', 'last_name'])
-        ensure_user_profile(user, display_name=self.cleaned_data['display_name'])
+        ensure_user_profile(user)
         return user
 
 
