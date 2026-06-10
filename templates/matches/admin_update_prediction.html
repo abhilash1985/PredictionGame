@@ -3,68 +3,134 @@
 {% block title %}Update User Prediction — Admin{% endblock %}
 
 {% block content %}
-<div class="card card-football">
-  <div class="card-header">Update User Prediction</div>
-  <div class="card-body">
-    <p class="text-muted small">
-      Create or update a user's prediction for any match. If correct answers are already set, points are recalculated on save.
-    </p>
+<div class="card card-football admin-tool-page">
+  <div class="card-body admin-tool-body">
+    {% include 'matches/partials/admin_page_header.html' with page_icon='person-gear' page_title='Update User Prediction' page_description="Create or update a user's prediction for any match. If correct answers are already set, points are recalculated on save." %}
 
-    <form method="get" class="row g-3 align-items-end mb-4">
-      <div class="col-md-5">
-        <label class="form-label" for="user_id">User</label>
-        <select name="user_id" id="user_id" class="form-select" required>
-          {% for value, label in user_choices %}
-            <option value="{{ value }}" {% if value == selected_user_id %}selected{% endif %}>{{ label }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-5">
-        <label class="form-label" for="match_id">Match</label>
-        <select name="match_id" id="match_id" class="form-select" required>
-          {% for value, label in match_choices %}
-            <option value="{{ value }}" {% if value == selected_match_id %}selected{% endif %}>{{ label }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-2">
-        <button type="submit" class="btn btn-outline-secondary w-100">Load</button>
-      </div>
-    </form>
+    <div class="admin-selector-panel">
+      <form method="get" class="admin-selector-form">
+        <div class="row g-3 align-items-end">
+          <div class="col-lg-5">
+            <label class="form-label" for="user_id">User</label>
+            <select name="user_id" id="user_id" class="form-select" required>
+              {% for value, label in user_choices %}
+                <option value="{{ value }}" {% if value == selected_user_id %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-lg-5">
+            <label class="form-label" for="match_id">Match</label>
+            <select name="match_id" id="match_id" class="form-select" required>
+              {% for value, label in match_choices %}
+                <option value="{{ value }}" {% if value == selected_match_id %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-lg-2">
+            <button type="submit" class="btn btn-outline-secondary w-100">
+              <i class="bi bi-arrow-repeat me-1"></i> Load
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
 
     {% if target_user and match %}
-      <div class="mb-3">
-        <span class="fw-semibold">{{ target_user.display_name }}</span>
-        <span class="text-muted mx-1">·</span>
-        <span>Match {{ match.match_number }}: {{ match.team_home.short_name }} vs {{ match.team_away.short_name }}</span>
+      {% include 'matches/partials/admin_match_hero.html' with match=match hero_icon='person-gear' hero_label='Editing prediction' %}
+
+      <div class="admin-context-toolbar">
+        <div class="admin-context-toolbar-item">
+          <span class="admin-context-toolbar-label">Player</span>
+          <span class="admin-context-toolbar-value">{{ target_user.display_name }}</span>
+        </div>
+        {% if booster_allowed %}
+          <div class="admin-context-toolbar-item">
+            <span class="admin-context-toolbar-label">Boosters left</span>
+            <span class="admin-context-toolbar-value">{{ boosters_remaining }}</span>
+          </div>
+        {% endif %}
+        {% if existing_prediction %}
+          <div class="admin-context-toolbar-item">
+            <span class="admin-context-toolbar-label">Current points</span>
+            <span class="admin-context-toolbar-value">{{ existing_prediction.total_points }} pts</span>
+          </div>
+          {% if existing_prediction.point_booster_used %}
+            <div class="admin-context-toolbar-item">
+              <span class="admin-context-toolbar-label">Booster</span>
+              <span class="admin-context-toolbar-value text-success">
+                <i class="bi bi-lightning-charge-fill me-1"></i> Active (2×)
+              </span>
+            </div>
+          {% endif %}
+        {% endif %}
       </div>
 
-      {% if form and form.errors %}
-        <div class="alert alert-danger">
-          {% for field, errors in form.errors.items %}
-            {% for error in errors %}
-              <div>{{ error }}</div>
+      <div class="admin-work-panel">
+        {% if form and form.errors %}
+          <div class="alert alert-danger admin-form-alert">
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <div>{{ error }}</div>
+              {% endfor %}
             {% endfor %}
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      <form method="post">
-        {% csrf_token %}
-        <input type="hidden" name="user_id" value="{{ target_user.pk }}">
-        <input type="hidden" name="match_id" value="{{ match.pk }}">
-        {% for row in question_rows %}
-          <fieldset class="mb-4 pb-3 border-bottom">
-            <legend class="fs-6 fw-semibold mb-2">{{ row.question.question_text }}</legend>
-            {% include 'matches/partials/admin_question_radios.html' with question=row.question field_prefix='question_' selected_value=row.selected_value %}
-          </fieldset>
-        {% empty %}
-          <p class="text-muted">This match has no questions.</p>
-        {% endfor %}
-        {% if question_rows %}
-          <button type="submit" class="btn btn-gold">Update</button>
+          </div>
         {% endif %}
-      </form>
+
+        <form method="post" class="admin-action-form">
+          {% csrf_token %}
+          <input type="hidden" name="user_id" value="{{ target_user.pk }}">
+          <input type="hidden" name="match_id" value="{{ match.pk }}">
+
+          {% for row in question_rows %}
+            <section class="predict-question-card admin-question-card">
+              <div class="predict-question-head">
+                <span class="predict-question-num">{{ forloop.counter }}</span>
+                <h3 class="predict-question-title">{{ row.question.question_text }}</h3>
+                <span class="predict-points-badge">{{ row.question.points }} pts</span>
+              </div>
+              {% include 'matches/partials/admin_question_radios.html' with question=row.question field_prefix='question_' selected_value=row.selected_value %}
+            </section>
+          {% empty %}
+            <div class="admin-empty-state admin-empty-state-inline">
+              <p class="mb-0">This match has no questions yet. Add questions from Manage Match Questions first.</p>
+            </div>
+          {% endfor %}
+
+          {% if not booster_allowed %}
+            <div class="predict-notice mb-4">
+              <i class="bi bi-info-circle me-1"></i> Point boosters are not available for knockout matches.
+            </div>
+          {% elif booster_field %}
+            <div class="predict-booster-box">
+              <div class="form-check mb-0">
+                {{ booster_field }}
+                <label class="form-check-label fw-semibold" for="{{ booster_field.id_for_label }}">
+                  {{ booster_field.label }}
+                </label>
+              </div>
+              <p class="admin-booster-hint mb-0 mt-2">
+                Admin can enable a booster even when the player has none left. Unchecking refunds one booster if it was previously used on this prediction.
+              </p>
+              {% if booster_field.errors %}
+                <div class="text-danger small mt-2">{{ booster_field.errors }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if question_rows %}
+            <div class="admin-form-actions">
+              <button type="submit" class="btn btn-gold">
+                <i class="bi bi-check2-circle me-1"></i> Update Prediction
+              </button>
+            </div>
+          {% endif %}
+        </form>
+      </div>
+    {% else %}
+      <div class="admin-empty-state">
+        <i class="bi bi-person-gear admin-empty-state-icon" aria-hidden="true"></i>
+        <p class="mb-0">Select a user and match above to view or edit their prediction.</p>
+      </div>
     {% endif %}
   </div>
 </div>

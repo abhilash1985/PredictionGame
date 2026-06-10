@@ -3,52 +3,65 @@
 {% block title %}Score Match Answers — Admin{% endblock %}
 
 {% block content %}
-<div class="card card-football">
-  <div class="card-header">Score Match Answers</div>
-  <div class="card-body">
-    <p class="text-muted small">
-      Set the correct answer for each question. Saving will recalculate points for every prediction on this match.
-    </p>
+<div class="card card-football admin-tool-page">
+  <div class="card-body admin-tool-body">
+    {% include 'matches/partials/admin_page_header.html' with page_icon='clipboard-check' page_title='Score Match Answers' page_description='Set the correct answer for each question. Saving recalculates points for every prediction on this match.' %}
 
-    <form method="get" class="row g-3 align-items-end mb-4">
-      <div class="col-md-8">
-        <label class="form-label" for="match_id">Match</label>
-        <select name="match_id" id="match_id" class="form-select" required>
-          {% for value, label in match_choices %}
-            <option value="{{ value }}" {% if value == selected_match_id %}selected{% endif %}>{{ label }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-4">
-        <button type="submit" class="btn btn-outline-secondary w-100">Load Questions</button>
-      </div>
-    </form>
+    <div class="admin-selector-panel">
+      <form method="get" class="admin-selector-form">
+        <div class="row g-3 align-items-end">
+          <div class="col-lg-9">
+            <label class="form-label" for="match_id">Match</label>
+            <select name="match_id" id="match_id" class="form-select" required>
+              {% for value, label in match_choices %}
+                <option value="{{ value }}" {% if value == selected_match_id %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-lg-3">
+            <button type="submit" class="btn btn-outline-secondary w-100">
+              <i class="bi bi-arrow-repeat me-1"></i> Load Questions
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
 
     {% if match %}
-      <div class="mb-3">
-        <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
-        {% if match.round.name %}
-          <span class="badge rounded-pill badge-group-name">{{ match.round.name }}</span>
-        {% endif %}
-        <span class="ms-2 fw-semibold">{{ match.team_home.name }} vs {{ match.team_away.name }}</span>
-      </div>
+      {% include 'matches/partials/admin_match_hero.html' with match=match hero_icon='clipboard-check' hero_label='Scoring answers' %}
 
-      <form method="post">
-        {% csrf_token %}
-        <input type="hidden" name="match_id" value="{{ match.pk }}">
-        {% for question in match.questions.all %}
-          <fieldset class="mb-4 pb-3 border-bottom">
-            <legend class="fs-6 fw-semibold mb-2">{{ question.question_text }}</legend>
-            <small class="text-muted d-block mb-2">{{ question.points }} points</small>
-            {% include 'matches/partials/admin_question_radios.html' with question=question field_prefix='answer_' selected_value=question.correct_answer %}
-          </fieldset>
-        {% empty %}
-          <p class="text-muted">This match has no questions.</p>
-        {% endfor %}
-        {% if match.questions.exists %}
-          <button type="submit" class="btn btn-gold">Save Answers &amp; Score</button>
-        {% endif %}
-      </form>
+      <div class="admin-work-panel">
+        <form method="post" class="admin-action-form">
+          {% csrf_token %}
+          <input type="hidden" name="match_id" value="{{ match.pk }}">
+          {% for question in match.questions.all %}
+            <section class="predict-question-card admin-question-card">
+              <div class="predict-question-head">
+                <span class="predict-question-num">{{ forloop.counter }}</span>
+                <h3 class="predict-question-title">{{ question.question_text }}</h3>
+                <span class="predict-points-badge">{{ question.points }} pts</span>
+              </div>
+              {% include 'matches/partials/admin_question_radios.html' with question=question field_prefix='answer_' selected_value=question.correct_answer %}
+            </section>
+          {% empty %}
+            <div class="admin-empty-state admin-empty-state-inline">
+              <p class="mb-0">This match has no questions yet. Add questions from Manage Match Questions first.</p>
+            </div>
+          {% endfor %}
+          {% if match.questions.exists %}
+            <div class="admin-form-actions">
+              <button type="submit" class="btn btn-gold">
+                <i class="bi bi-check2-circle me-1"></i> Save Answers &amp; Score
+              </button>
+            </div>
+          {% endif %}
+        </form>
+      </div>
+    {% else %}
+      <div class="admin-empty-state">
+        <i class="bi bi-clipboard-check admin-empty-state-icon" aria-hidden="true"></i>
+        <p class="mb-0">Select a match above to set correct answers and score predictions.</p>
+      </div>
     {% endif %}
   </div>
 </div>

@@ -3,49 +3,57 @@
 {% block title %}Manage Match Questions — Admin{% endblock %}
 
 {% block content %}
-<div class="card card-football">
-  <div class="card-header">Manage Match Prediction Questions</div>
-  <div class="card-body">
-    <p class="text-muted small">
-      Choose a match, add or edit prediction questions, and save. Saved questions appear on the Predict page for that match.
-    </p>
+<div class="card card-football admin-tool-page">
+  <div class="card-body admin-tool-body">
+    {% include 'matches/partials/admin_page_header.html' with page_icon='list-check' page_title='Manage Match Questions' page_description='Choose a match, add or edit prediction questions, and save. Saved questions appear on the Predict page for that match.' %}
 
-    <form method="get" class="row g-3 align-items-end mb-4">
-      <div class="col-md-8">
-        <label class="form-label" for="match_id">Match</label>
-        <select name="match_id" id="match_id" class="form-select" required>
-          {% for value, label in match_choices %}
-            <option value="{{ value }}" {% if value == selected_match_id %}selected{% endif %}>{{ label }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-4">
-        <button type="submit" class="btn btn-outline-secondary w-100">Load Match</button>
-      </div>
-    </form>
-
-    {% if match %}
-      <div class="mb-3">
-        <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
-        {% if match.round.name %}
-          <span class="badge rounded-pill badge-group-name">{{ match.round.name }}</span>
-        {% endif %}
-        <span class="ms-2 fw-semibold">{{ match.team_home.name }} vs {{ match.team_away.name }}</span>
-      </div>
-
-      <form method="post" id="match-questions-form">
-        {% csrf_token %}
-        <input type="hidden" name="match_id" value="{{ match.pk }}">
-        <div id="question-rows">
-          {% for row in question_rows %}
-            {% include 'matches/partials/admin_question_editor_row.html' with row=row question_templates=question_templates %}
-          {% endfor %}
-        </div>
-        <div class="d-flex flex-wrap gap-2 mt-3">
-          <button type="button" class="btn btn-outline-secondary" id="add-question-row">Add Question</button>
-          <button type="submit" class="btn btn-gold">Save Questions</button>
+    <div class="admin-selector-panel">
+      <form method="get" class="admin-selector-form">
+        <div class="row g-3 align-items-end">
+          <div class="col-lg-9">
+            <label class="form-label" for="match_id">Match</label>
+            <select name="match_id" id="match_id" class="form-select" required>
+              {% for value, label in match_choices %}
+                <option value="{{ value }}" {% if value == selected_match_id %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-lg-3">
+            <button type="submit" class="btn btn-outline-secondary w-100">
+              <i class="bi bi-arrow-repeat me-1"></i> Load Match
+            </button>
+          </div>
         </div>
       </form>
+    </div>
+
+    {% if match %}
+      {% include 'matches/partials/admin_match_hero.html' with match=match hero_icon='list-check' hero_label='Editing questions' %}
+
+      <div class="admin-work-panel">
+        <form method="post" id="match-questions-form" class="admin-action-form">
+          {% csrf_token %}
+          <input type="hidden" name="match_id" value="{{ match.pk }}">
+          <div id="question-rows">
+            {% for row in question_rows %}
+              {% include 'matches/partials/admin_question_editor_row.html' with row=row question_templates=question_templates %}
+            {% endfor %}
+          </div>
+          <div class="admin-form-actions">
+            <button type="button" class="btn btn-outline-secondary" id="add-question-row">
+              <i class="bi bi-plus-circle me-1"></i> Add Question
+            </button>
+            <button type="submit" class="btn btn-gold">
+              <i class="bi bi-check2-circle me-1"></i> Save Questions
+            </button>
+          </div>
+        </form>
+      </div>
+    {% else %}
+      <div class="admin-empty-state">
+        <i class="bi bi-ui-checks admin-empty-state-icon" aria-hidden="true"></i>
+        <p class="mb-0">Select a match above to manage its prediction questions.</p>
+      </div>
     {% endif %}
   </div>
 </div>

@@ -1,19 +1,22 @@
 {% if question.options %}
-  <div class="admin-question-options">
-    {% for opt in question.options %}
-      <div class="form-check">
-        <input class="form-check-input" type="radio"
-               name="{{ field_prefix }}{{ question.id }}"
-               id="{{ field_prefix }}{{ question.id }}_{{ forloop.counter }}"
-               value="{{ opt }}"
-               {% if selected_value == opt %}checked{% endif %}
-               required>
-        <label class="form-check-label" for="{{ field_prefix }}{{ question.id }}_{{ forloop.counter }}">
-          {{ opt }}
-        </label>
-      </div>
-    {% endfor %}
-  </div>
+  <fieldset class="predict-question-fieldset">
+    <legend class="visually-hidden">{{ question.question_text }}</legend>
+    <div class="predict-options-grid admin-question-options">
+      {% for opt in question.options %}
+        <div class="form-check predict-option-pill">
+          <input class="form-check-input" type="radio"
+                 name="{{ field_prefix }}{{ question.id }}"
+                 id="{{ field_prefix }}{{ question.id }}_{{ forloop.counter }}"
+                 value="{{ opt }}"
+                 {% if selected_value == opt %}checked{% endif %}
+                 required>
+          <label class="form-check-label" for="{{ field_prefix }}{{ question.id }}_{{ forloop.counter }}">
+            <span>{{ opt }}</span>
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+  </fieldset>
 {% else %}
   <input type="text"
          name="{{ field_prefix }}{{ question.id }}"

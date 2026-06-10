@@ -1,0 +1,51 @@
+{% load tournament_tags %}
+<div class="admin-match-hero predict-hero">
+  <div class="predict-hero-top d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+    <span class="predict-hero-label">
+      <i class="bi bi-{{ hero_icon|default:'trophy' }} me-1"></i> {{ hero_label|default:'Match' }}
+    </span>
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
+      {% if match.round %}<span class="badge rounded-pill badge-group-name">{{ match.round.name }}</span>{% endif %}
+    </div>
+  </div>
+  <div class="predict-teams row align-items-center g-3">
+    <div class="col-md-5">
+      <div class="predict-team-block predict-team-home">
+        {% with flag=match.team_home|team_flag_url:"w80" %}
+          {% if flag %}
+            <img src="{{ flag }}" alt="{{ match.team_home.name }} flag" class="predict-team-flag" loading="lazy">
+          {% endif %}
+        {% endwith %}
+        <div class="predict-team-name">{{ match.team_home.name }}</div>
+        {% if match.team_home.fifa_ranking %}
+          <div class="predict-team-rank">FIFA ranking #{{ match.team_home.fifa_ranking }}</div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-2 text-center">
+      <span class="predict-vs-badge">VS</span>
+    </div>
+    <div class="col-md-5">
+      <div class="predict-team-block predict-team-away">
+        {% with flag=match.team_away|team_flag_url:"w80" %}
+          {% if flag %}
+            <img src="{{ flag }}" alt="{{ match.team_away.name }} flag" class="predict-team-flag" loading="lazy">
+          {% endif %}
+        {% endwith %}
+        <div class="predict-team-name">{{ match.team_away.name }}</div>
+        {% if match.team_away.fifa_ranking %}
+          <div class="predict-team-rank">FIFA ranking #{{ match.team_away.fifa_ranking }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="predict-hero-meta mt-3 small">
+    {% if match.stadium %}
+      <span><i class="bi bi-geo-alt me-1"></i>{{ match.stadium.name }}{% if match.stadium.city %}, {{ match.stadium.city }}{% endif %}</span>
+      <span class="mx-2 text-white-50">·</span>
+    {% endif %}
+    <span>Kickoff:</span>
+    {% include 'tournaments/partials/kickoff_local.html' with kickoff_at=match.kickoff_at format='detail' %}
+  </div>
+</div>
