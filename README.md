@@ -78,7 +78,7 @@ Required environment variables:
 | `CSRF_TRUSTED_ORIGINS` | `https://your-app.onrender.com,https://yourdomain.com` |
 | `DATABASE_URL` | `postgresql://user:pass@host:5432/dbname` |
 
-Optional: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `EMAIL_HOST_PASSWORD` (SendGrid), `CELERY_BROKER_URL` (Redis URL for AI predict worker).
+Optional: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, SendGrid vars (see [Email with SendGrid](#email-with-sendgrid)), `CELERY_BROKER_URL` (Redis URL for AI predict worker).
 
 ### Hosting options (cost overview)
 
@@ -119,6 +119,9 @@ Heroku **no longer has a free tier** (discontinued 2022). Expect roughly **$5–
    ALLOWED_HOSTS=your-service.onrender.com
    CSRF_TRUSTED_ORIGINS=https://your-service.onrender.com
    DATABASE_URL=<postgres-connection-string>
+   EMAIL_HOST_PASSWORD=<sendgrid-api-key>
+   DEFAULT_FROM_EMAIL=WC 2026 Predictions <noreply@mail.yourdomain.com>
+   ACCOUNT_EMAIL_VERIFICATION=mandatory
    ```
 
 6. After first deploy, open the **Shell** and run:
@@ -155,6 +158,9 @@ The repo includes a `Procfile` (`release` runs migrations; `web` runs Gunicorn).
    heroku config:set SECRET_KEY="$(python -c 'import secrets; print(secrets.token_urlsafe(50))')"
    heroku config:set ALLOWED_HOSTS=your-prediction-game.herokuapp.com
    heroku config:set CSRF_TRUSTED_ORIGINS=https://your-prediction-game.herokuapp.com
+   heroku config:set EMAIL_HOST_PASSWORD=SG.your_sendgrid_api_key
+   heroku config:set DEFAULT_FROM_EMAIL="WC 2026 Predictions <noreply@mail.yourdomain.com>"
+   heroku config:set ACCOUNT_EMAIL_VERIFICATION=mandatory
    ```
 
    `DATABASE_URL` is set automatically if you use Heroku Postgres.
@@ -208,6 +214,106 @@ python manage.py loaddata backup.json
 ```
 
 Re-run `seed_wc2026` if you prefer a clean fixture load instead of migrating dev data.
+
+---
+
+## Email with SendGrid
+
+Signup confirmation, password reset, and other transactional mail are handled by **django-allauth** over Django's email backend. Production uses **SendGrid SMTP** when `DEBUG=False`.
+
+### What sends email automatically
+
+| Flow | URL / trigger | Email sent? |
+|------|---------------|-------------|
+| Signup confirmation | User registers at `/accounts/signup/` | Yes — link to verify address |
+| Password reset (forgot) | `/accounts/password/reset/` | Yes — reset link |
+| Password change (logged in) | `/accounts/password/` | No — user is already authenticated |
+
+With `DEBUG=False`, `ACCOUNT_EMAIL_VERIFICATION` defaults to **`mandatory`** (users must confirm email before logging in). Locally it stays **`optional`** so dev signup is not blocked.
+
+### 1. Create a SendGrid account
+
+1. Sign up at [sendgrid.com](https://sendgrid.com) (free tier: ~100 emails/day).
+2. **Settings → API Keys → Create API Key** with **Mail Send** permission.
+3. Copy the key (`SG....`) — shown once.
+
+### 2. Verify a sender
+
+**Quick test (no custom domain):**
+
+- **Settings → Sender Authentication → Single Sender Verification**
+- Verify one address; `DEFAULT_FROM_EMAIL` must match it exactly.
+
+**Production (recommended):**
+
+- **Settings → Sender Authentication → Authenticate Your Domain**
+- Add SendGrid DNS records (SPF, DKIM) at your registrar or Cloudflare.
+- Use a subdomain sender, e.g. `WC 2026 Predictions <noreply@mail.yourdomain.com>`.
+
+### 3. Environment variables
+
+Production (add to Render, Heroku, Railway, etc.):
+
+```bash
+DEBUG=False
+EMAIL_HOST=smtp.sendgrid.net
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=apikey
+EMAIL_HOST_PASSWORD=SG.your_sendgrid_api_key
+# or use SENDGRID_API_KEY instead of EMAIL_HOST_PASSWORD
+DEFAULT_FROM_EMAIL=WC 2026 Predictions <noreply@mail.yourdomain.com>
+ACCOUNT_EMAIL_VERIFICATION=mandatory
+ACCOUNT_EMAIL_SUBJECT_PREFIX=[WC 2026]
+```
+
+`EMAIL_HOST_USER` must be the literal string `apikey` (SendGrid convention).
+
+Include SendGrid vars in deploy examples:
+
+```text
+EMAIL_HOST_PASSWORD=<sendgrid-api-key>
+DEFAULT_FROM_EMAIL=WC 2026 Predictions <noreply@mail.yourdomain.com>
+ACCOUNT_EMAIL_VERIFICATION=mandatory
+```
+
+### 4. Test email delivery
+
+**Production shell:**
+
+```bash
+python manage.py shell
+```
+
+```python
+from django.core.mail import send_mail
+send_mail('SendGrid test', 'SMTP works.', None, ['you@example.com'], fail_silently=False)
+```
+
+**Local SendGrid test** (override console backend):
+
+```bash
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend \
+SENDGRID_API_KEY=SG.your_key \
+DEFAULT_FROM_EMAIL="WC 2026 Predictions <your-verified-sender@example.com>" \
+python manage.py shell
+```
+
+With `DEBUG=True`, mail prints to the terminal by default — no SendGrid call.
+
+### 5. Troubleshooting
+
+| Problem | Fix |
+|---------|-----|
+| Mail only in terminal locally | Expected with `DEBUG=True` and console backend |
+| `535 Authentication failed` | Wrong API key, or `EMAIL_HOST_USER` not `apikey` |
+| SendGrid 403 / sender rejected | Complete Single Sender or domain authentication |
+| Emails in spam | Add SPF, DKIM, and DMARC for your domain |
+| Reset link wrong host | Set `ALLOWED_HOSTS` and `CSRF_TRUSTED_ORIGINS` to your live URL |
+
+### 6. Resend confirmation (admin)
+
+In Django admin, open the user's email address record (django-allauth) and use **Send confirmation** if a user did not receive the signup email.
 
 ---
 
