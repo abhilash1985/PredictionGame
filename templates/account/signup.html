@@ -9,6 +9,7 @@
 {% block auth_heading %}<i class="bi bi-person-plus me-1"></i> Create Account{% endblock %}
 
 {% block auth_body %}
+{% include 'account/partials/google_signin.html' %}
 <p class="auth-form-intro text-muted">Choose your display name and favorite team to get started.</p>
 <form method="post" action="{% url 'account_signup' %}" class="auth-form">
   {% csrf_token %}

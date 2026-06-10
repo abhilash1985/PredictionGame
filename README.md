@@ -78,7 +78,7 @@ Required environment variables:
 | `CSRF_TRUSTED_ORIGINS` | `https://your-app.onrender.com,https://yourdomain.com` |
 | `DATABASE_URL` | `postgresql://user:pass@host:5432/dbname` |
 
-Optional: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, SendGrid vars (see [Email with SendGrid](#email-with-sendgrid)), `CELERY_BROKER_URL` (Redis URL for AI predict worker).
+Optional: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` (see [Sign in with Google](#sign-in-with-google)), SendGrid vars (see [Email with SendGrid](#email-with-sendgrid)), `CELERY_BROKER_URL` (Redis URL for AI predict worker).
 
 ### Hosting options (cost overview)
 
@@ -276,6 +276,63 @@ python manage.py loaddata backup.json
 ```
 
 Re-run `seed_wc2026` if you prefer a clean fixture load instead of migrating dev data.
+
+---
+
+## Sign in with Google
+
+**Recommended approach:** **django-allauth** (already used for email signup). It handles OAuth redirects, account linking, and fits the existing onboarding flow. Alternatives like rolling your own OAuth with Authlib, or Firebase Auth, add complexity without benefit for this Django app.
+
+Google sign-in is wired in code; enable it by creating OAuth credentials and setting env vars. The **Continue with Google** button appears on login and signup only when both `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` are set.
+
+### 1. Google Cloud Console
+
+1. Open [Google Cloud Console](https://console.cloud.google.com/) → **APIs & Services → Credentials**.
+2. **Create credentials → OAuth client ID → Web application**.
+3. **Authorized JavaScript origins:**
+   - `http://127.0.0.1:8000` (local dev)
+   - `https://myprediction.today`
+   - `https://www.myprediction.today`
+4. **Authorized redirect URIs:**
+   - `http://127.0.0.1:8000/accounts/google/login/callback/`
+   - `https://myprediction.today/accounts/google/login/callback/`
+   - `https://www.myprediction.today/accounts/google/login/callback/`
+5. Copy the **Client ID** and **Client secret**.
+
+### 2. Environment variables
+
+Local `.env`:
+
+```text
+GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-client-secret
+```
+
+Production (Railway web service): set the same two variables and redeploy.
+
+Also ensure production has:
+
+```text
+CSRF_TRUSTED_ORIGINS=https://myprediction.today,https://www.myprediction.today
+```
+
+### 3. User flow
+
+| Step | Behavior |
+|------|----------|
+| New Google user | Account created, profile auto-created, redirected to **onboarding** (display name, favorite team) |
+| Existing email user | If they signed up with the same email, Google login links to that account (`SOCIALACCOUNT_EMAIL_AUTHENTICATION`) |
+| Returning Google user | Logs in and goes to dashboard (or onboarding if incomplete) |
+
+Google users skip password setup (`set_unusable_password`). They can still complete onboarding like email signups.
+
+### 4. Troubleshooting
+
+| Error | Fix |
+|-------|-----|
+| `redirect_uri_mismatch` | Redirect URI in Google Console must match exactly (trailing slash, `https`, correct host) |
+| Button not shown | Both `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` must be non-empty |
+| `Access blocked: This app's request is invalid` | Add your domain to OAuth consent screen; publish app or add test users while in testing mode |
 
 ---
 

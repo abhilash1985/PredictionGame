@@ -9,6 +9,7 @@
 {% block auth_heading %}<i class="bi bi-box-arrow-in-right me-1"></i> Sign In{% endblock %}
 
 {% block auth_body %}
+{% include 'account/partials/google_signin.html' %}
 <form method="post" action="{% url 'account_login' %}" class="auth-form">
   {% csrf_token %}
   {% include 'account/partials/auth_form_fields.html' with form=form %}

@@ -3,6 +3,7 @@ import logging
 from django.conf import settings
 
 from allauth.account.adapter import DefaultAccountAdapter
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 from apps.accounts.profile_service import ensure_user_profile
 
@@ -40,3 +41,15 @@ class AccountAdapter(DefaultAccountAdapter):
         except Exception:
             logger.exception('Failed to send email to %s (template=%s)', email, template_prefix)
             raise
+
+
+class SocialAccountAdapter(DefaultSocialAccountAdapter):
+    def save_user(self, request, sociallogin, form=None):
+        user = super().save_user(request, sociallogin, form)
+        ensure_user_profile(user)
+        return user
+
+    def pre_social_login(self, request, sociallogin):
+        super().pre_social_login(request, sociallogin)
+        if sociallogin.is_existing:
+            ensure_user_profile(sociallogin.user)

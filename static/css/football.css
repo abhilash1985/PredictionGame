@@ -2175,6 +2175,47 @@ body.page-auth .main-content {
   max-width: 28rem;
 }
 
+.auth-oauth {
+  margin-bottom: 1rem;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  color: #6c757d;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e3e8ef;
+}
+
+.btn-google {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #dadce0;
+  color: #3c4043;
+  font-weight: 600;
+}
+
+.btn-google:hover,
+.btn-google:focus {
+  background: #f8f9fa;
+  border-color: #dadce0;
+  color: #202124;
+}
+
 .auth-form-intro {
   font-size: 0.92rem;
   margin-bottom: 1rem;
