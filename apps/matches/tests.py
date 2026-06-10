@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils import timezone
 
-from apps.matches.forms import MatchPredictionForm
+from apps.matches.forms import AdminMatchPredictionForm, MatchPredictionForm
 from apps.matches.models import GameSettings, Match, MatchQuestion, QuestionTemplate
 from apps.tournaments.models import Round, Stadium, Team, Tournament
 
@@ -79,3 +79,99 @@ class MatchPredictionFormTests(TestCase):
         self.assertNotIn('point_booster', form.fields)
         self.assertFalse(knockout_match.is_group_stage)
         self.assertTrue(self.match.is_group_stage)
+
+
+class AdminMatchPredictionFormTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(email='admin-target@example.com', password='testpass123')
+        tournament = Tournament.objects.create(
+            name='Admin Test WC',
+            location='Test',
+            start_date=timezone.now().date(),
+            end_date=timezone.now().date(),
+            is_active=True,
+        )
+        rnd = Round.objects.create(tournament=tournament, name='Group A', sort_order=1)
+        home = Team.objects.create(name='Home', short_name='HOM', fifa_code='HOM')
+        away = Team.objects.create(name='Away', short_name='AWY', fifa_code='AWY')
+        stadium = Stadium.objects.create(name='Test Stadium', city='Test City', country='Test')
+        cls.match = Match.objects.create(
+            tournament=tournament,
+            round=rnd,
+            match_number=1,
+            team_home=home,
+            team_away=away,
+            stadium=stadium,
+            kickoff_at=timezone.now() - timezone.timedelta(hours=1),
+        )
+        template = QuestionTemplate.objects.create(
+            code='MATCH_WINNER',
+            question_text='Who wins?',
+            default_points=8,
+        )
+        cls.question = MatchQuestion.objects.create(
+            match=cls.match,
+            question_template=template,
+            question_text='Who wins?',
+            options=[home.name, away.name, 'Draw'],
+            points=8,
+        )
+        settings = GameSettings.load()
+        settings.tournament_active = tournament
+        settings.save()
+
+    def test_shows_point_booster_for_group_stage_even_after_kickoff(self):
+        form = AdminMatchPredictionForm(match=self.match, user=self.user)
+        self.assertIn('point_booster', form.fields)
+
+    def test_admin_can_enable_booster_without_remaining_count(self):
+        profile = self.user.profile
+        profile.point_boosters_remaining = 0
+        profile.save(update_fields=['point_boosters_remaining'])
+
+        form = AdminMatchPredictionForm(
+            {
+                f'question_{self.question.id}': self.match.team_home.name,
+                'point_booster': True,
+            },
+            match=self.match,
+            user=self.user,
+        )
+        self.assertTrue(form.is_valid(), form.errors)
+        prediction = form.save()
+
+        profile.refresh_from_db()
+        self.assertTrue(prediction.point_booster_used)
+        self.assertEqual(profile.point_boosters_remaining, 0)
+
+    def test_admin_refunds_booster_when_unchecked(self):
+        profile = self.user.profile
+        profile.point_boosters_remaining = 2
+        profile.save(update_fields=['point_boosters_remaining'])
+
+        form = AdminMatchPredictionForm(
+            {
+                f'question_{self.question.id}': self.match.team_home.name,
+                'point_booster': True,
+            },
+            match=self.match,
+            user=self.user,
+        )
+        self.assertTrue(form.is_valid(), form.errors)
+        form.save()
+
+        form = AdminMatchPredictionForm(
+            {
+                f'question_{self.question.id}': self.match.team_home.name,
+                'point_booster': False,
+            },
+            match=self.match,
+            user=self.user,
+        )
+        self.assertTrue(form.is_valid(), form.errors)
+        prediction = form.save()
+
+        profile.refresh_from_db()
+        self.assertFalse(prediction.point_booster_used)
+        self.assertEqual(profile.point_boosters_remaining, 3)

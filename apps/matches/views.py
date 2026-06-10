@@ -202,10 +202,17 @@ def admin_update_prediction_view(request):
         form = AdminMatchPredictionForm(match=match, user=target_user)
 
     question_rows = []
+    existing_prediction = None
+    boosters_remaining = 0
+    booster_allowed = False
+    booster_field = None
     if target_user and match:
         existing_answers = {}
-        prediction = match.predictions.filter(user=target_user).first()
-        if prediction:
+        existing_prediction = match.predictions.filter(user=target_user).first()
+        profile = ensure_user_profile(target_user)
+        boosters_remaining = profile.point_boosters_remaining
+        booster_allowed = match.is_group_stage
+        if prediction := existing_prediction:
             for answer in prediction.answers.select_related('match_question'):
                 existing_answers[answer.match_question_id] = answer.user_answer
         for question in match.questions.all():
@@ -216,6 +223,8 @@ def admin_update_prediction_view(request):
                 'question': question,
                 'selected_value': selected_value,
             })
+        if form and 'point_booster' in form.fields:
+            booster_field = form['point_booster']
 
     return render(request, 'matches/admin_update_prediction.html', {
         'matches': matches,
@@ -227,6 +236,10 @@ def admin_update_prediction_view(request):
         'selected_user_id': int(user_id) if user_id else '',
         'selected_match_id': int(match_id) if match_id else '',
         'question_rows': question_rows,
+        'existing_prediction': existing_prediction,
+        'boosters_remaining': boosters_remaining,
+        'booster_allowed': booster_allowed,
+        'booster_field': booster_field,
     })
 
 

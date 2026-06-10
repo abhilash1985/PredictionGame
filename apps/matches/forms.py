@@ -95,16 +95,46 @@ class AdminMatchPredictionForm(MatchPredictionForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields.pop('point_booster', None)
+        if not self.match.is_group_stage:
+            self.fields.pop('point_booster', None)
+            return
+
+        existing = MatchPrediction.objects.filter(user=self.user, match=self.match).first()
+        if 'point_booster' not in self.fields:
+            self.fields['point_booster'] = forms.BooleanField(
+                required=False,
+                label='Use Point Booster (2× points)',
+                initial=bool(existing and existing.point_booster_used),
+            )
 
     def clean(self):
-        return forms.Form.clean(self)
+        cleaned = forms.Form.clean(self)
+        use_booster = cleaned.get('point_booster', False)
+        if use_booster and not self.match.is_group_stage:
+            raise ValidationError('Point boosters are only available for group stage matches.')
+        return cleaned
 
     def save(self):
+        use_booster = self.cleaned_data.get('point_booster', False)
+        if use_booster and not self.match.is_group_stage:
+            raise ValidationError('Point boosters are only available for group stage matches.')
+
         prediction, _created = MatchPrediction.objects.get_or_create(
             user=self.user,
             match=self.match,
         )
+
+        if use_booster and not prediction.point_booster_used:
+            profile = ensure_user_profile(self.user)
+            if profile.point_boosters_remaining > 0:
+                profile.point_boosters_remaining -= 1
+                profile.save(update_fields=['point_boosters_remaining'])
+            prediction.point_booster_used = True
+        elif not use_booster and prediction.point_booster_used:
+            profile = ensure_user_profile(self.user)
+            profile.point_boosters_remaining += 1
+            profile.save(update_fields=['point_boosters_remaining'])
+            prediction.point_booster_used = False
 
         for question in self.match.questions.all():
             field_name = f'question_{question.id}'
