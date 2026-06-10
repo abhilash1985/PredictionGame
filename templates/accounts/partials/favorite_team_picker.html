@@ -1,4 +1,35 @@
 {% load tournament_tags %}
+{% if pin_selected_first %}
+<div class="team-picker team-picker--profile" data-team-picker data-pin-selected-first="true">
+  <div class="team-picker-profile-current" data-team-picker-current></div>
+  <p class="team-picker-profile-divider d-none" data-team-picker-divider>Other teams</p>
+  <div class="team-picker-grid team-picker-grid-others" data-team-picker-grid>
+    <label class="team-picker-option" data-team-name="no preference" data-group-letter="">
+      <input type="radio" name="{{ field.html_name }}" value="" class="team-picker-input"
+             {% if not field.value %}checked{% endif %}>
+      <span class="team-picker-icon team-picker-icon-neutral"><i class="bi bi-globe2"></i></span>
+      <span class="team-picker-label">No preference</span>
+    </label>
+    {% for team in field.field.queryset %}
+      <label class="team-picker-option"
+             data-team-name="{{ team.name|lower }} {{ team.short_name|lower }}"
+             data-group-letter="{{ team.group_letter|default:'' }}">
+        <input type="radio" name="{{ field.html_name }}" value="{{ team.pk }}" class="team-picker-input"
+               {% if field.value|stringformat:"s" == team.pk|stringformat:"s" %}checked{% endif %}>
+        {% with flag=team|team_flag_url %}
+          {% if flag %}
+            <img src="{{ flag }}" alt="{{ team.name }} flag" class="team-picker-flag" loading="lazy">
+          {% else %}
+            <span class="team-picker-icon"><i class="bi bi-flag"></i></span>
+          {% endif %}
+        {% endwith %}
+        <span class="team-picker-label">{{ team.name }}</span>
+        {% if team.group_letter %}<span class="team-picker-group-tag">Grp {{ team.group_letter }}</span>{% endif %}
+      </label>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
 <div class="team-picker" data-team-picker>
   {% if show_filters %}
     <div class="team-picker-toolbar">
@@ -51,3 +82,4 @@
   </div>
   <p class="team-picker-empty text-muted small mb-0 d-none" data-team-picker-empty>No teams match your search.</p>
 </div>
+{% endif %}

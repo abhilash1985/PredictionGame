@@ -1,4 +1,36 @@
 (function () {
+  function syncProfileTeamPicker(root) {
+    if (root.dataset.pinSelectedFirst !== 'true') {
+      return;
+    }
+
+    var currentSlot = root.querySelector('[data-team-picker-current]');
+    var grid = root.querySelector('[data-team-picker-grid]');
+    var divider = root.querySelector('[data-team-picker-divider]');
+    if (!currentSlot || !grid) {
+      return;
+    }
+
+    var options = root.querySelectorAll('.team-picker-option');
+    options.forEach(function (option) {
+      option.classList.remove('team-picker-option-current');
+      if (option.parentElement === currentSlot) {
+        grid.appendChild(option);
+      }
+    });
+
+    var checked = root.querySelector('.team-picker-input:checked');
+    var selectedOption = checked ? checked.closest('.team-picker-option') : null;
+    if (selectedOption) {
+      selectedOption.classList.add('team-picker-option-current');
+      currentSlot.appendChild(selectedOption);
+    }
+
+    if (divider) {
+      divider.classList.toggle('d-none', grid.querySelectorAll('.team-picker-option').length === 0);
+    }
+  }
+
   function initTeamPicker(root) {
     var searchInput = root.querySelector('[data-team-picker-search]');
     var groupButtons = root.querySelectorAll('[data-group-filter]');
@@ -8,17 +40,17 @@
     var activeGroup = '';
 
     function updateSelection() {
-      if (!selectionValue) {
-        return;
+      if (selectionValue) {
+        var checked = root.querySelector('.team-picker-input:checked');
+        if (!checked) {
+          selectionValue.textContent = 'No preference';
+        } else {
+          var option = checked.closest('.team-picker-option');
+          var label = option ? option.querySelector('.team-picker-label') : null;
+          selectionValue.textContent = label ? label.textContent.trim() : 'No preference';
+        }
       }
-      var checked = root.querySelector('.team-picker-input:checked');
-      if (!checked) {
-        selectionValue.textContent = 'No preference';
-        return;
-      }
-      var option = checked.closest('.team-picker-option');
-      var label = option ? option.querySelector('.team-picker-label') : null;
-      selectionValue.textContent = label ? label.textContent.trim() : 'No preference';
+      syncProfileTeamPicker(root);
     }
 
     function applyFilters() {
@@ -64,6 +96,7 @@
 
     updateSelection();
     applyFilters();
+    syncProfileTeamPicker(root);
   }
 
   function initAiPredictPanel(root) {

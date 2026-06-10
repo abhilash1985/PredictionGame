@@ -2,7 +2,7 @@
   <div class="mb-3">
     {% if field.name == 'favorite_team' %}
       <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-      {% include 'accounts/partials/favorite_team_picker.html' with field=field %}
+      {% include 'accounts/partials/favorite_team_picker.html' with field=field pin_selected_first=True %}
     {% elif field.name == 'ai_predict_enabled' %}
       {% include 'accounts/partials/ai_predict_toggle.html' with field=field %}
     {% elif field.field.widget.input_type == 'checkbox' %}
