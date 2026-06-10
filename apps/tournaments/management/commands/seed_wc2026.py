@@ -1,7 +1,8 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from apps.matches.models import GameSettings, Match, MatchQuestion, QuestionTemplate
+from apps.matches.data.question_bank import create_match_question_pack, sync_question_templates_from_bank
+from apps.matches.models import GameSettings, Match
 from apps.tournaments.data.loader import load_wc2026_data, load_wc2026_squads, parse_kickoff
 from apps.tournaments.models import PastWorldCupWinner, Player, Round, Stadium, Team, Tournament
 
@@ -67,7 +68,8 @@ class Command(BaseCommand):
         settings.tournament_active = tournament
         settings.save()
 
-        self._seed_question_templates()
+        template_count = sync_question_templates_from_bank()
+        self.stdout.write(f'Synced {template_count} question templates from question bank.')
         self._seed_squads(teams, squads)
 
         if options['clear_matches']:
@@ -96,26 +98,6 @@ class Command(BaseCommand):
             f'Seeded {match_no - 1} group stage matches, {len(data["teams"])} teams, '
             f'{sum(len(v) for v in squads.values())} players.'
         ))
-
-    def _seed_question_templates(self):
-        templates = [
-            ('MATCH_WINNER', 'Who will win the match?', 'winner', 8),
-            ('HOME_GOALS', 'Goals scored by {home_team}?', 'goals', 5),
-            ('AWAY_GOALS', 'Goals scored by {away_team}?', 'goals', 5),
-            ('PLAYER_OF_MATCH', 'Player of the match', 'player', 6),
-            ('TOTAL_YELLOW_CARDS', 'Total yellow cards in the match', 'stats', 3),
-        ]
-        for code, text, category, points in templates:
-            QuestionTemplate.objects.update_or_create(
-                code=code,
-                defaults={
-                    'question_text': text,
-                    'category': category,
-                    'default_points': points,
-                    'question_type': 'choice',
-                    'is_active': True,
-                },
-            )
 
     def _seed_squads(self, teams, squads):
         for code, players in squads.items():
@@ -161,26 +143,4 @@ class Command(BaseCommand):
         return match_no + 1
 
     def _create_match_questions(self, match):
-        for template in QuestionTemplate.objects.filter(is_active=True):
-            options = []
-            if template.code == 'MATCH_WINNER':
-                options = [match.team_home.name, match.team_away.name, 'Draw']
-            elif template.code in ('HOME_GOALS', 'AWAY_GOALS'):
-                options = [str(n) for n in range(0, 6)]
-            elif template.code == 'TOTAL_YELLOW_CARDS':
-                options = [str(n) for n in range(0, 8)]
-            elif template.code == 'PLAYER_OF_MATCH':
-                options = [
-                    p.full_name for p in
-                    list(match.team_home.players.filter(is_active=True)) +
-                    list(match.team_away.players.filter(is_active=True))
-                ]
-
-            MatchQuestion.objects.create(
-                match=match,
-                question_template=template,
-                question_text=template.render_text(match),
-                options=options,
-                points=template.default_points,
-                sort_order=template.id,
-            )
+        create_match_question_pack(match)

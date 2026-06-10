@@ -1,0 +1,829 @@
+# FIFA 2026 Prediction Game — master question bank
+# Placeholders: {home_team}, {away_team}
+# Dynamic option keys are resolved per match in question_bank.py
+
+match_pattern:
+  total_questions: 7
+  required:
+    - basic
+  picks:
+    - bucket: player
+      count: 1
+      points_each: 4
+    - bucket: random_stats
+      count: 3
+      points_each: 2
+      one_per_sub_bucket: true
+      sub_buckets:
+        - attacking
+        - attempts
+        - discipline
+        - distribution
+        - set_plays
+        - defending
+
+option_presets:
+  goal_count: &goal_count
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "5+"
+  winner: &winner
+    dynamic: home_away_draw_no_results
+  first_goal_team: &first_goal_team
+    dynamic: home_away_draw_no_results
+  yes_no_no_results: &yes_no_no_results
+    - "Yes"
+    - "No"
+    - "No Results"
+  yes_no: &yes_no
+    - "Yes"
+    - "No"
+  first_goal_type: &first_goal_type
+    - "Penalty"
+    - "Free Kick"
+    - "Corner"
+    - "Inside the Box (Open Play)"
+    - "Outside the Box (Long Range)"
+    - "Own Goal"
+    - "No Goals"
+    - "Others"
+  first_goal_minute: &first_goal_minute
+    - "0-15"
+    - "16-30"
+    - "31-45"
+    - "46-60"
+    - "61-75"
+    - "76-90"
+    - "90+"
+    - "No Goals"
+  goal_position: &goal_position
+    - "No goals"
+    - "ST (Striker)"
+    - "LW (Left Wing)"
+    - "CAM (Attacking Midfielder)"
+    - "RB (Right Back)"
+    - "CM (Central Midfielder)"
+    - "RW (Right Wing)"
+    - "Others"
+  assist_position: &assist_position
+    - "No goals"
+    - "LW"
+    - "RW"
+    - "CM"
+    - "LM"
+    - "CB"
+    - "GK"
+    - "Others"
+  possession: &possession
+    - "0-25%"
+    - "26-35%"
+    - "36-45%"
+    - "46-60%"
+    - "61-75%"
+    - "75%+"
+  attempts_total: &attempts_total
+    - "0-3"
+    - "4-7"
+    - "8-10"
+    - "11-13"
+    - "14-17"
+    - "17-20"
+    - "20+"
+  attempts_team: &attempts_team
+    - "0-3"
+    - "4-6"
+    - "7-9"
+    - "10-12"
+    - "13-15"
+    - "15+"
+  attempts_on_target_total: &attempts_on_target_total
+    - "0-3"
+    - "4-6"
+    - "7-9"
+    - "10-12"
+    - "13-15"
+    - "15+"
+  attempts_on_target_team: &attempts_on_target_team
+    - "0"
+    - "1-3"
+    - "4-6"
+    - "7-8"
+    - "9-10"
+    - "10+"
+  fouls_total: &fouls_total
+    - "0-5"
+    - "6-10"
+    - "11-15"
+    - "16-20"
+    - "21-25"
+    - "26-30"
+    - "30+"
+  fouls_team: &fouls_team
+    - "0-5"
+    - "6-8"
+    - "9-12"
+    - "13-15"
+    - "16-18"
+    - "19-20"
+    - "20+"
+  passes_total: &passes_total
+    - "0-300"
+    - "301-400"
+    - "401-500"
+    - "501-650"
+    - "651-750"
+    - "751-850"
+    - "850+"
+  passes_team: &passes_team
+    - "0-200"
+    - "201-300"
+    - "301-400"
+    - "401-500"
+    - "501-600"
+    - "600+"
+  passes_completed_total: &passes_completed_total
+    - "0-300"
+    - "301-400"
+    - "401-500"
+    - "501-650"
+    - "651-750"
+    - "750+"
+  passes_completed_team: &passes_completed_team
+    - "0-100"
+    - "101-200"
+    - "201-300"
+    - "301-400"
+    - "401-500"
+    - "500+"
+  crosses_total: &crosses_total
+    - "0-10"
+    - "11-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "36-40"
+    - "40+"
+  crosses_team: &crosses_team
+    - "0-5"
+    - "6-10"
+    - "11-13"
+    - "14-17"
+    - "18-20"
+    - "20+"
+  crosses_completed_total: &crosses_completed_total
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "5+"
+  crosses_completed_team: &crosses_completed_team
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "4+"
+  switches_completed: &switches_completed
+    - "0-2"
+    - "3-4"
+    - "5-6"
+    - "7-8"
+    - "9-10"
+    - "10+"
+  corners_total: &corners_total
+    - "0-2"
+    - "3-4"
+    - "5-6"
+    - "7-8"
+    - "9-10"
+    - "10+"
+  free_kicks_total: &free_kicks_total
+    - "0-10"
+    - "11-20"
+    - "21-25"
+    - "26-30"
+    - "31-40"
+    - "40+"
+  free_kicks_team: &free_kicks_team
+    - "0-5"
+    - "6-10"
+    - "11-13"
+    - "14-17"
+    - "18-20"
+    - "20+"
+  penalties_scored: &penalties_scored
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "4+"
+  goal_preventions: &goal_preventions
+    - "0-5"
+    - "6-10"
+    - "11-13"
+    - "14-17"
+    - "18-20"
+    - "21-25"
+    - "25+"
+  own_goals: &own_goals
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "4+"
+  forced_turnovers_total: &forced_turnovers_total
+    - "0-30"
+    - "31-60"
+    - "61-75"
+    - "76-100"
+    - "101-120"
+    - "121-150"
+    - "150+"
+  forced_turnovers_team: &forced_turnovers_team
+    - "0-10"
+    - "11-20"
+    - "21-35"
+    - "36-50"
+    - "51-60"
+    - "61-75"
+    - "75+"
+  pressing_total: &pressing_total
+    - "0-50"
+    - "51-100"
+    - "101-200"
+    - "201-300"
+    - "301-400"
+    - "401-500"
+    - "500+"
+  pressing_team: &pressing_team
+    - "0-50"
+    - "51-100"
+    - "101-150"
+    - "151-200"
+    - "201-250"
+    - "251-300"
+    - "300+"
+
+templates:
+  # --- Basic (always on every match) ---
+  - code: MATCH_WINNER
+    bucket: basic
+    category: winner
+    question_type: choice
+    points: 10
+    question_text: "Who will win the match?"
+    options: *winner
+
+  - code: HOME_GOALS
+    bucket: basic
+    category: goals
+    question_type: choice
+    points: 5
+    question_text: "Goals scored by {home_team}?"
+    options: *goal_count
+
+  - code: AWAY_GOALS
+    bucket: basic
+    category: goals
+    question_type: choice
+    points: 5
+    question_text: "Goals scored by {away_team}?"
+    options: *goal_count
+
+  # --- Player / Scoring (pick 1 per match, 4 pts) ---
+  - code: PLAYER_OF_MATCH
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Who will be Player of the match?"
+    options:
+      dynamic: squad_players
+
+  - code: FIRST_GOAL_SCORER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Who will score the first goal in the match?"
+    options:
+      dynamic: squad_players_with_no_goal
+
+  - code: FIRST_GOAL_TYPE
+    bucket: player
+    category: player
+    question_type: choice
+    points: 4
+    question_text: "First goal in the match will be?"
+    options: *first_goal_type
+
+  - code: FIRST_GOAL_MINUTE
+    bucket: player
+    category: player
+    question_type: choice
+    points: 4
+    question_text: "When will the first goal be scored (minute)?"
+    options: *first_goal_minute
+
+  - code: FIRST_GOAL_TEAM
+    bucket: player
+    category: player
+    question_type: choice
+    points: 4
+    question_text: "Which team will score first?"
+    options: *first_goal_team
+
+  - code: LAST_MINUTE_GOAL
+    bucket: player
+    category: player
+    question_type: choice
+    points: 4
+    question_text: "Will there be a last-minute (after 85') goal?"
+    options: *yes_no_no_results
+
+  - code: FIRST_ASSIST_PROVIDER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Who will provide the first assist of the match?"
+    options:
+      dynamic: squad_players_with_no_goal
+
+  - code: BRACE_SCORED
+    bucket: player
+    category: player
+    question_type: choice
+    points: 4
+    question_text: "Will any player score a brace?"
+    options: *yes_no_no_results
+
+  - code: HAT_TRICK
+    bucket: player
+    category: player
+    question_type: choice
+    points: 4
+    question_text: "Will there be a hat-trick in the match?"
+    options: *yes_no_no_results
+
+  - code: FIRST_GOAL_POSITION
+    bucket: player
+    category: player
+    question_type: choice
+    points: 4
+    question_text: "Which position will score the first goal of the match?"
+    options: *goal_position
+
+  - code: FIRST_ASSIST_POSITION
+    bucket: player
+    category: player
+    question_type: choice
+    points: 4
+    question_text: "Which position will assist the first goal of the match?"
+    options: *assist_position
+
+  # --- Attacking (2 pts, random pool) ---
+  - code: HOME_POSSESSION
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total possession by {home_team}?"
+    options: *possession
+
+  - code: AWAY_POSSESSION
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total possession by {away_team}?"
+    options: *possession
+
+  - code: TOTAL_GOALS
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total goals in the match?"
+    options: *goal_count
+
+  - code: GOALS_INSIDE_BOX
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total goals inside penalty area?"
+    options: *goal_count
+
+  - code: GOALS_OUTSIDE_BOX
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total goals outside penalty area?"
+    options: *goal_count
+
+  - code: TOTAL_ASSISTS
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total assists in the match?"
+    options: *goal_count
+
+  - code: GOALS_FIRST_HALF
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total goals scored in the first half?"
+    options: *goal_count
+
+  - code: ASSISTS_FIRST_HALF
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total assists in the first half?"
+    options: *goal_count
+
+  - code: GOALS_SECOND_HALF
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total goals scored in the second half?"
+    options: *goal_count
+
+  - code: ASSISTS_SECOND_HALF
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total assists in the second half?"
+    options: *goal_count
+
+  # --- Attempts (2 pts) ---
+  - code: TOTAL_ATTEMPTS
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempts at goal?"
+    options: *attempts_total
+
+  - code: HOME_ATTEMPTS
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempts at goal by {home_team}?"
+    options: *attempts_team
+
+  - code: AWAY_ATTEMPTS
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempts at goal by {away_team}?"
+    options: *attempts_team
+
+  - code: TOTAL_ATTEMPTS_ON_TARGET
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempts at goal on target?"
+    options: *attempts_on_target_total
+
+  - code: HOME_ATTEMPTS_ON_TARGET
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempts at goal on target by {home_team}?"
+    options: *attempts_on_target_team
+
+  - code: AWAY_ATTEMPTS_ON_TARGET
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempts at goal on target by {away_team}?"
+    options: *attempts_on_target_team
+
+  - code: TOTAL_ATTEMPTS_OFF_TARGET
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempts at goal off target?"
+    options: *attempts_on_target_total
+
+  - code: HOME_ATTEMPTS_OFF_TARGET
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempts at goal off target by {home_team}?"
+    options: *attempts_on_target_team
+
+  - code: AWAY_ATTEMPTS_OFF_TARGET
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempts at goal off target by {away_team}?"
+    options: *attempts_on_target_team
+
+  # --- Discipline (2 pts) ---
+  - code: TOTAL_YELLOW_CARDS
+    bucket: discipline
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total yellow cards in the match?"
+    options: *goal_count
+
+  - code: TOTAL_RED_CARDS
+    bucket: discipline
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total red cards in the match?"
+    options: *goal_count
+
+  - code: TOTAL_CARDS
+    bucket: discipline
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total cards in the match?"
+    options: *goal_count
+
+  - code: TOTAL_FOULS
+    bucket: discipline
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total fouls against in the match?"
+    options: *fouls_total
+
+  - code: TOTAL_OFFSIDES
+    bucket: discipline
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total offsides in the match?"
+    options: *goal_count
+
+  - code: HOME_FOULS
+    bucket: discipline
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total fouls against by {home_team} in the match?"
+    options: *fouls_team
+
+  - code: AWAY_FOULS
+    bucket: discipline
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total fouls against by {away_team} in the match?"
+    options: *fouls_team
+
+  # --- Distribution (2 pts) ---
+  - code: TOTAL_PASSES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total passes in the match?"
+    options: *passes_total
+
+  - code: HOME_PASSES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total passes by {home_team}?"
+    options: *passes_team
+
+  - code: AWAY_PASSES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total passes by {away_team}?"
+    options: *passes_team
+
+  - code: TOTAL_PASSES_COMPLETED
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total passes completed in the match?"
+    options: *passes_completed_total
+
+  - code: HOME_PASSES_COMPLETED
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total passes completed by {home_team}?"
+    options: *passes_completed_team
+
+  - code: AWAY_PASSES_COMPLETED
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total passes completed by {away_team}?"
+    options: *passes_completed_team
+
+  - code: TOTAL_CROSSES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total crosses in the match?"
+    options: *crosses_total
+
+  - code: HOME_CROSSES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total crosses by {home_team}?"
+    options: *crosses_team
+
+  - code: AWAY_CROSSES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total crosses by {away_team}?"
+    options: *crosses_team
+
+  - code: TOTAL_CROSSES_COMPLETED
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total crosses completed in the match?"
+    options: *crosses_completed_total
+
+  - code: HOME_CROSSES_COMPLETED
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total crosses completed by {home_team}?"
+    options: *crosses_completed_team
+
+  - code: AWAY_CROSSES_COMPLETED
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total crosses completed by {away_team}?"
+    options: *crosses_completed_team
+
+  - code: SWITCHES_OF_PLAY_COMPLETED
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total switches of play completed in the match?"
+    options: *switches_completed
+
+  # --- Set plays (2 pts) ---
+  - code: TOTAL_CORNERS
+    bucket: set_plays
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total corners in the match?"
+    options: *corners_total
+
+  - code: HOME_CORNERS
+    bucket: set_plays
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total corners by {home_team}?"
+    options: *goal_count
+
+  - code: AWAY_CORNERS
+    bucket: set_plays
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total corners by {away_team}?"
+    options: *goal_count
+
+  - code: TOTAL_FREE_KICKS
+    bucket: set_plays
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total free kicks in the match?"
+    options: *free_kicks_total
+
+  - code: HOME_FREE_KICKS
+    bucket: set_plays
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total free kicks by {home_team}?"
+    options: *free_kicks_team
+
+  - code: AWAY_FREE_KICKS
+    bucket: set_plays
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total free kicks by {away_team}?"
+    options: *free_kicks_team
+
+  - code: PENALTIES_SCORED
+    bucket: set_plays
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total penalties scored in the match?"
+    options: *penalties_scored
+
+  # --- Defending (2 pts) ---
+  - code: TOTAL_GOAL_PREVENTIONS
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total goal preventions in the match?"
+    options: *goal_preventions
+
+  - code: TOTAL_OWN_GOALS
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total own goals in the match?"
+    options: *own_goals
+
+  - code: TOTAL_FORCED_TURNOVERS
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total forced turnovers in the match?"
+    options: *forced_turnovers_total
+
+  - code: HOME_FORCED_TURNOVERS
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total forced turnovers by {home_team}?"
+    options: *forced_turnovers_team
+
+  - code: AWAY_FORCED_TURNOVERS
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total forced turnovers by {away_team}?"
+    options: *forced_turnovers_team
+
+  - code: TOTAL_PRESSING_APPLIED
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total pressing applied in the match?"
+    options: *pressing_total
+
+  - code: HOME_PRESSING_APPLIED
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total pressing applied by {home_team}?"
+    options: *pressing_team
+
+  - code: AWAY_PRESSING_APPLIED
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total pressing applied by {away_team}?"
+    options: *pressing_team

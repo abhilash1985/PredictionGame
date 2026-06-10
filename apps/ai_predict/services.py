@@ -19,7 +19,8 @@ class AiPredictService:
                 return match.team_home.name
             if away_rank < home_rank:
                 return match.team_away.name
-            return random.choice(options)
+            pickable = [option for option in options if option not in {'Draw', 'No Results'}]
+            return random.choice(pickable or options)
 
         if 'GOALS' in template_code and options:
             return random.choice(options)

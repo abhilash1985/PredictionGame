@@ -2,6 +2,12 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils import timezone
 
+from apps.matches.data.question_bank import (
+    bank_templates,
+    create_match_question_pack,
+    select_match_template_codes,
+    sync_question_templates_from_bank,
+)
 from apps.matches.forms import AdminMatchPredictionForm, MatchPredictionForm
 from apps.matches.models import GameSettings, Match, MatchQuestion, QuestionTemplate
 from apps.tournaments.models import Round, Stadium, Team, Tournament
@@ -175,3 +181,49 @@ class AdminMatchPredictionFormTests(TestCase):
         profile.refresh_from_db()
         self.assertFalse(prediction.point_booster_used)
         self.assertEqual(profile.point_boosters_remaining, 3)
+
+
+class QuestionBankTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(email='bank@example.com', password='testpass123')
+        tournament = Tournament.objects.create(
+            name='Bank Test WC',
+            location='Test',
+            start_date=timezone.now().date(),
+            end_date=timezone.now().date(),
+            is_active=True,
+        )
+        rnd = Round.objects.create(tournament=tournament, name='Group A', sort_order=1)
+        home = Team.objects.create(name='Home', short_name='HOM', fifa_code='HOM')
+        away = Team.objects.create(name='Away', short_name='AWY', fifa_code='AWY')
+        stadium = Stadium.objects.create(name='Test Stadium', city='Test City', country='Test')
+        cls.match = Match.objects.create(
+            tournament=tournament,
+            round=rnd,
+            match_number=99,
+            team_home=home,
+            team_away=away,
+            stadium=stadium,
+            kickoff_at=timezone.now() + timezone.timedelta(days=1),
+        )
+        settings = GameSettings.load()
+        settings.tournament_active = tournament
+        settings.save()
+        sync_question_templates_from_bank()
+
+    def test_bank_has_expected_template_count(self):
+        self.assertEqual(len(bank_templates()), 68)
+
+    def test_match_pack_has_seven_questions(self):
+        codes = select_match_template_codes(self.match)
+        self.assertEqual(len(codes), 7)
+        self.assertEqual(codes[:3], ['MATCH_WINNER', 'HOME_GOALS', 'AWAY_GOALS'])
+
+    def test_create_match_question_pack(self):
+        created = create_match_question_pack(self.match)
+        self.assertEqual(created, 7)
+        self.assertEqual(self.match.questions.count(), 7)
+        winner = self.match.questions.filter(question_template__code='MATCH_WINNER').first()
+        self.assertEqual(winner.points, 10)
+        self.assertIn('No Results', winner.options)

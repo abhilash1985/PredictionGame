@@ -1,12 +1,21 @@
+from apps.matches.data.question_bank import (
+    default_options_for_code,
+    render_question_text,
+    template_by_code,
+)
 from apps.matches.models import MatchQuestion, QuestionTemplate
 
 
 def default_options_for_template(template, match):
+    options = default_options_for_code(template.code, match)
+    if options:
+        return options
+
     code = template.code
     if code == 'MATCH_WINNER':
-        return [match.team_home.name, match.team_away.name, 'Draw']
+        return [match.team_home.name, match.team_away.name, 'Draw', 'No Results']
     if code in ('HOME_GOALS', 'AWAY_GOALS'):
-        return [str(number) for number in range(0, 6)]
+        return [str(number) for number in range(0, 6)] + ['5+']
     if code == 'TOTAL_YELLOW_CARDS':
         return [str(number) for number in range(0, 8)]
     if code == 'PLAYER_OF_MATCH':
@@ -20,10 +29,12 @@ def default_options_for_template(template, match):
 def template_defaults_for_match(match):
     defaults = {}
     for template in QuestionTemplate.objects.filter(is_active=True).order_by('category', 'code'):
+        entry = template_by_code().get(template.code)
+        question_text = render_question_text(entry, match) if entry else template.render_text(match)
         defaults[str(template.pk)] = {
             'code': template.code,
             'label': template.code.replace('_', ' ').title(),
-            'question_text': template.render_text(match),
+            'question_text': question_text,
             'points': template.default_points,
             'options': '\n'.join(default_options_for_template(template, match)),
         }
@@ -69,7 +80,10 @@ def save_match_questions(match, rows):
         if not options:
             options = default_options_for_template(template, match)
 
-        question_text = row['question_text'] or template.render_text(match)
+        entry = template_by_code().get(template.code)
+        question_text = row['question_text'] or (
+            render_question_text(entry, match) if entry else template.render_text(match)
+        )
         points = template.default_points
         if row['points'].isdigit():
             points = int(row['points'])

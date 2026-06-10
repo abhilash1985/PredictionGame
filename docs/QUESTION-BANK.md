@@ -1,238 +1,204 @@
 # FIFA 2026 Prediction Game — Question Bank
 
-Reusable prediction questions for group-stage matches. Each template becomes a per-match `MatchQuestion` with options filled in at match setup time (team names, squad players, etc.).
-
-## How templates map to the app
-
-| Field | Purpose |
-|-------|---------|
-| `code` | Unique identifier (used by scoring, AI predict, graphs) |
-| `question_text` | Supports `{home_team}` and `{away_team}` placeholders |
-| `question_type` | `choice`, `numeric`, or `player_pick` (affects graph layout) |
-| `category` | `winner`, `goals`, `player`, `stats`, or `random` |
-| `default_points` | Suggested weight; admin can override per match |
-| `options` | Stored on `MatchQuestion`; one answer per line in admin UI |
-
-**Scoring:** exact string match against `correct_answer`. Options must match what players see.
-
-**Dynamic options** (generated per match in `question_builder.default_options_for_template` or admin):
-
-- Team names from `match.team_home` / `match.team_away`
-- Player names from both squads (`Player.full_name`)
-- Numeric ranges as string values (`"0"`, `"1"`, …)
+Master question bank for group-stage matches. Source of truth: [`apps/matches/data/question_bank.yaml`](../apps/matches/data/question_bank.yaml).
 
 ---
 
-## Tier 1 — Core set (currently seeded)
+## Match question pattern (7 per match)
 
-Use on every group-stage match. Total default points: **27** (before point booster).
+Every match gets **exactly 7 questions**:
 
-| Code | Question text | Type | Category | Pts | Options |
-|------|---------------|------|----------|-----|---------|
-| `MATCH_WINNER` | Who will win the match? | choice | winner | 8 | `{home_team}` · `{away_team}` · `Draw` |
-| `HOME_GOALS` | Goals scored by {home_team}? | numeric | goals | 5 | `0` · `1` · `2` · `3` · `4` · `5` |
-| `AWAY_GOALS` | Goals scored by {away_team}? | numeric | goals | 5 | `0` · `1` · `2` · `3` · `4` · `5` |
-| `PLAYER_OF_MATCH` | Player of the match | player_pick | player | 6 | All active players from both squads (alphabetical by team) |
-| `TOTAL_YELLOW_CARDS` | Total yellow cards in the match | numeric | stats | 3 | `0` · `1` · `2` · `3` · `4` · `5` · `6` · `7` |
+| Slot | Source | Count | Points each | Max |
+|------|--------|-------|-------------|-----|
+| 1–3 | **Basic** (always) | 3 | 10 / 5 / 5 | 20 |
+| 4 | **Player / Scoring** (random pick) | 1 | 4 | 4 |
+| 5–7 | **Stats buckets** (random, one per bucket) | 3 | 2 | 6 |
 
-### Notes
+**Stats buckets** (pick 3 different buckets, one question each):
 
-- `HOME_GOALS` + `AWAY_GOALS` correct answers sync the match result (`home_score` / `away_score`).
-- `MATCH_WINNER` correct answer drives winner display when scores are not set.
-- Extend goal options to `0`–`10` for high-scoring fixtures if desired.
-- Extend yellow cards to `0`–`10` for more granularity.
+- Attacking
+- Attempts
+- Discipline
+- Distribution
+- Set plays
+- Defending
 
----
+**Typical max per match:** 20 + 4 + 6 = **30 points** (60 with point booster).
 
-## Tier 2 — Recommended additions (from architecture plan)
-
-Good for variety across matches; pick 2–4 per match so total questions stay around 6–8.
-
-| Code | Question text | Type | Category | Pts | Options |
-|------|---------------|------|----------|-----|---------|
-| `FIRST_GOAL_SCORER` | Who scores the first goal? | player_pick | player | 4 | `{home_team} players` · `{away_team} players` · `No goal` · `Own goal` |
-| `FIRST_GOAL_TEAM` | Which team scores first? | choice | goals | 3 | `{home_team}` · `{away_team}` · `No goal` |
-| `TOTAL_GOALS` | Total goals in the match (both teams) | numeric | goals | 4 | `0` · `1` · `2` · `3` · `4` · `5` · `6` · `7` · `8` |
-| `TOTAL_GOALS_1H` | Total goals in the first half | numeric | goals | 3 | `0` · `1` · `2` · `3` · `4` · `5` · `6` |
-| `BOTH_TEAMS_SCORE` | Will both teams score? | choice | goals | 3 | `Yes` · `No` |
-| `OVER_UNDER_2_5` | Total goals over or under 2.5? | choice | goals | 3 | `Over 2.5` · `Under 2.5` |
-| `WINNING_MARGIN` | Winning margin (or draw) | choice | winner | 4 | `{home_team} by 1` · `{home_team} by 2+` · `Draw` · `{away_team} by 1` · `{away_team} by 2+` |
-| `TOTAL_CORNERS` | Total corners in the match | numeric | stats | 3 | `0`–`20` (each as string) or buckets: `0-4` · `5-8` · `9-12` · `13+` |
-| `TOTAL_FOULS` | Total fouls committed | numeric | stats | 2 | `0`–`30` or buckets: `0-15` · `16-22` · `23-28` · `29+` |
-| `POSSESSION_HOME` | Possession band for {home_team} | choice | stats | 2 | `Under 40%` · `40-49%` · `50-59%` · `60% or more` |
-
-### First goal scorer — option build rule
-
-```
-[all home squad players]
-[all away squad players]
-No goal
-Own goal
-```
-
-Cap at ~30 outfield names if squads are large; prefer starters + key subs.
+Selection is deterministic per match (`random.Random(match.pk)`) so re-seeding produces the same pack unless questions are cleared.
 
 ---
 
-## Tier 3 — Fun / engagement questions
+## Placeholders
 
-Lower stakes; good for knockout rounds or “wildcard” group matches.
+| Placeholder | Resolves to |
+|-------------|-------------|
+| `{home_team}` | Home team full name |
+| `{away_team}` | Away team full name |
 
-| Code | Question text | Type | Category | Pts | Options |
-|------|---------------|------|----------|-----|---------|
-| `RED_CARD` | Will a player be sent off (red card)? | choice | stats | 3 | `Yes` · `No` |
-| `PENALTY_AWARDED` | Will a penalty be awarded? | choice | stats | 3 | `Yes` · `No` |
-| `GOAL_FIRST_15` | Goal in the first 15 minutes? | choice | random | 2 | `Yes` · `No` |
-| `GOAL_LAST_15` | Goal in the last 15 minutes? | choice | random | 2 | `Yes` · `No` |
-| `HIGHEST_SCORING_HALF` | Higher-scoring half | choice | goals | 2 | `1st half` · `2nd half` · `Equal` |
-| `CLEAN_SHEET_HOME` | Will {home_team} keep a clean sheet? | choice | goals | 3 | `Yes` · `No` |
-| `CLEAN_SHEET_AWAY` | Will {away_team} keep a clean sheet? | choice | goals | 3 | `Yes` · `No` |
-| `HAT_TRICK` | Will any player score a hat-trick? | choice | player | 2 | `Yes` · `No` |
-| `OWN_GOAL` | Will there be an own goal? | choice | random | 2 | `Yes` · `No` |
-| `SUB_GOAL` | Will a substitute score? | choice | player | 2 | `Yes` · `No` |
-| `MATCH_EXTRA_TIME` | Will the match go to extra time? | choice | random | 2 | `Yes` · `No` *(knockout only; omit in group stage)* |
-| `MATCH_PENALTIES` | Will the match be decided on penalties? | choice | random | 2 | `Yes` · `No` *(knockout only)* |
+Team options in basic/winner questions use actual team names plus `Draw` and `No Results`.
+
+Player questions use both squads (`Player.full_name`) where applicable.
 
 ---
 
-## Tier 4 — Team-specific player questions
+## Basic questions (always included)
 
-Requires squad data. Rotate across matches so the same question does not repeat every game.
-
-| Code | Question text | Type | Category | Pts | Options |
-|------|---------------|------|----------|-----|---------|
-| `HOME_TOP_SCORER` | {home_team} player to score | player_pick | player | 4 | Active `{home_team}` squad · `None` |
-| `AWAY_TOP_SCORER` | {away_team} player to score | player_pick | player | 4 | Active `{away_team}` squad · `None` |
-| `ANYTIME_SCORER` | Anytime goal scorer (either team) | player_pick | player | 3 | Combined squads · `No goal` |
-| `HOME_CAPTAIN_SCORES` | Will {home_team} captain score? | choice | player | 2 | `Yes` · `No` |
-| `AWAY_CAPTAIN_SCORES` | Will {away_team} captain score? | choice | player | 2 | `Yes` · `No` |
-| `MOST_SHOTS_TEAM` | Team with more shots on target | choice | stats | 3 | `{home_team}` · `{away_team}` · `Equal` |
+| Code | Question | Points | Options |
+|------|----------|--------|---------|
+| `MATCH_WINNER` | Who will win the match? | **10** | `{home_team}`, `{away_team}`, `Draw`, `No Results` |
+| `HOME_GOALS` | Goals scored by {home_team}? | **5** | `0`, `1`, `2`, `3`, `4`, `5`, `5+` |
+| `AWAY_GOALS` | Goals scored by {away_team}? | **5** | `0`, `1`, `2`, `3`, `4`, `5`, `5+` |
 
 ---
 
-## Suggested match packs
+## Player / Scoring (pick 1 — 4 pts each)
 
-### Pack A — Standard (default seed)
-
-1. `MATCH_WINNER` (8)
-2. `HOME_GOALS` (5)
-3. `AWAY_GOALS` (5)
-4. `PLAYER_OF_MATCH` (6)
-5. `TOTAL_YELLOW_CARDS` (3)
-
-**Max points:** 27 · **Booster max:** 54
-
-### Pack B — Result + narrative
-
-1. `MATCH_WINNER` (8)
-2. `HOME_GOALS` (5)
-3. `AWAY_GOALS` (5)
-4. `FIRST_GOAL_TEAM` (3)
-5. `BOTH_TEAMS_SCORE` (3)
-6. `PLAYER_OF_MATCH` (6)
-
-**Max points:** 30
-
-### Pack C — Stats heavy
-
-1. `MATCH_WINNER` (8)
-2. `TOTAL_GOALS` (4)
-3. `OVER_UNDER_2_5` (3)
-4. `TOTAL_YELLOW_CARDS` (3)
-5. `TOTAL_CORNERS` (3)
-6. `RED_CARD` (3)
-7. `PENALTY_AWARDED` (3)
-
-**Max points:** 27
-
-### Pack D — Player focus
-
-1. `MATCH_WINNER` (8)
-2. `FIRST_GOAL_SCORER` (4)
-3. `PLAYER_OF_MATCH` (6)
-4. `HOME_TOP_SCORER` (4)
-5. `AWAY_TOP_SCORER` (4)
-6. `SUB_GOAL` (2)
-
-**Max points:** 28
+| Code | Question | Options |
+|------|----------|---------|
+| `PLAYER_OF_MATCH` | Who will be Player of the match? | Squad players (both teams) |
+| `FIRST_GOAL_SCORER` | Who will score the first goal in the match? | Squad players + `No goal` |
+| `FIRST_GOAL_TYPE` | First goal in the match will be? | `Penalty`, `Free Kick`, `Corner`, `Inside the Box (Open Play)`, `Outside the Box (Long Range)`, `Own Goal`, `No Goals`, `Others` |
+| `FIRST_GOAL_MINUTE` | When will the first goal be scored (minute)? | `0-15`, `16-30`, `31-45`, `46-60`, `61-75`, `76-90`, `90+`, `No Goals` |
+| `FIRST_GOAL_TEAM` | Which team will score first? | `{home_team}`, `{away_team}`, `Draw`, `No Results` |
+| `LAST_MINUTE_GOAL` | Will there be a last-minute (after 85') goal? | `Yes`, `No`, `No Results` |
+| `FIRST_ASSIST_PROVIDER` | Who will provide the first assist of the match? | Squad players + `No goal` |
+| `BRACE_SCORED` | Will any player score a brace? | `Yes`, `No`, `No Results` |
+| `HAT_TRICK` | Will there be a hat-trick in the match? | `Yes`, `No`, `No Results` |
+| `FIRST_GOAL_POSITION` | Which position will score the first goal of the match? | `No goals`, `ST (Striker)`, `LW (Left Wing)`, `CAM (Attacking Midfielder)`, `RB (Right Back)`, `CM (Central Midfielder)`, `RW (Right Wing)`, `Others` |
+| `FIRST_ASSIST_POSITION` | Which position will assist the first goal of the match? | `No goals`, `LW`, `RW`, `CM`, `LM`, `CB`, `GK`, `Others` |
 
 ---
 
-## Point weighting guide
+## Attacking (2 pts each — random pool)
 
-| Difficulty | Pts | Examples |
-|------------|-----|----------|
-| Easy | 2–3 | Yes/No, over/under, card bands |
-| Medium | 4–5 | Goal counts, first goal team, margin |
-| Hard | 6–8 | Match winner, player of the match, first scorer |
-
-Keep **total max per match between 24–36** so boosters feel meaningful but matches are not overwhelming.
-
----
-
-## Admin scoring reference
-
-| Code | Typical correct answer source |
-|------|------------------------------|
-| `MATCH_WINNER` | Derived from final score or manual |
-| `HOME_GOALS` / `AWAY_GOALS` | Final score per team |
-| `TOTAL_GOALS` | `home_score + away_score` as string |
-| `BOTH_TEAMS_SCORE` | `Yes` if both > 0 |
-| `OVER_UNDER_2_5` | `Over 2.5` if total ≥ 3 |
-| `FIRST_GOAL_TEAM` | Match report / event data |
-| `FIRST_GOAL_SCORER` | Player name or `No goal` / `Own goal` |
-| `PLAYER_OF_MATCH` | Official FIFA award |
-| `TOTAL_YELLOW_CARDS` | Count from match stats |
-| `TOTAL_CORNERS` | Count from match stats |
-| `RED_CARD` / `PENALTY_AWARDED` | `Yes` / `No` from events |
+| Code | Question | Options |
+|------|----------|---------|
+| `HOME_POSSESSION` | Total possession by {home_team}? | `0-25%`, `26-35%`, `36-45%`, `46-60%`, `61-75%`, `75%+` |
+| `AWAY_POSSESSION` | Total possession by {away_team}? | same bands |
+| `TOTAL_GOALS` | Total goals in the match? | `0`–`5`, `5+` |
+| `GOALS_INSIDE_BOX` | Total goals inside penalty area? | `0`–`5`, `5+` |
+| `GOALS_OUTSIDE_BOX` | Total goals outside penalty area? | `0`–`5`, `5+` |
+| `TOTAL_ASSISTS` | Total assists in the match? | `0`–`5`, `5+` |
+| `GOALS_FIRST_HALF` | Total goals scored in the first half? | `0`–`5`, `5+` |
+| `ASSISTS_FIRST_HALF` | Total assists in the first half? | `0`–`5`, `5+` |
+| `GOALS_SECOND_HALF` | Total goals scored in the second half? | `0`–`5`, `5+` |
+| `ASSISTS_SECOND_HALF` | Total assists in the second half? | `0`–`5`, `5+` |
 
 ---
 
-## Implementation checklist
+## Attempts (2 pts each)
 
-To add a new template to the database:
+| Code | Question | Options |
+|------|----------|---------|
+| `TOTAL_ATTEMPTS` | Total attempts at goal? | `0-3`, `4-7`, `8-10`, `11-13`, `14-17`, `17-20`, `20+` |
+| `HOME_ATTEMPTS` | Total attempts at goal by {home_team}? | `0-3`, `4-6`, `7-9`, `10-12`, `13-15`, `15+` |
+| `AWAY_ATTEMPTS` | Total attempts at goal by {away_team}? | same |
+| `TOTAL_ATTEMPTS_ON_TARGET` | Total attempts at goal on target? | `0-3`, `4-6`, `7-9`, `10-12`, `13-15`, `15+` |
+| `HOME_ATTEMPTS_ON_TARGET` | On target by {home_team}? | `0`, `1-3`, `4-6`, `7-8`, `9-10`, `10+` |
+| `AWAY_ATTEMPTS_ON_TARGET` | On target by {away_team}? | same |
+| `TOTAL_ATTEMPTS_OFF_TARGET` | Total attempts at goal off target? | `0-3`, `4-6`, `7-9`, `10-12`, `13-15`, `15+` |
+| `HOME_ATTEMPTS_OFF_TARGET` | Off target by {home_team}? | `0`, `1-3`, `4-6`, `7-8`, `9-10`, `10+` |
+| `AWAY_ATTEMPTS_OFF_TARGET` | Off target by {away_team}? | same |
 
-1. Insert row in `question_templates` (or extend `seed_wc2026._seed_question_templates`).
-2. Add option builder logic in `apps/matches/question_builder.py` → `default_options_for_template`.
-3. Optionally extend `AiPredictService.heuristic_answer` for smarter AI picks.
-4. Assign templates to matches via **Admin → Manage Match Questions**.
+---
 
-### Seed snippet (Tier 2 example)
+## Discipline (2 pts each)
 
-```python
-templates = [
-    # (code, question_text, category, default_points, question_type)
-    ('FIRST_GOAL_TEAM', 'Which team scores first?', 'goals', 3, 'choice'),
-    ('BOTH_TEAMS_SCORE', 'Will both teams score?', 'goals', 3, 'choice'),
-    ('TOTAL_GOALS', 'Total goals in the match (both teams)', 'goals', 4, 'numeric'),
-    ('OVER_UNDER_2_5', 'Total goals over or under 2.5?', 'goals', 3, 'choice'),
-    ('FIRST_GOAL_SCORER', 'Who scores the first goal?', 'player', 4, 'player_pick'),
-    ('TOTAL_CORNERS', 'Total corners in the match', 'stats', 3, 'numeric'),
-]
+| Code | Question | Options |
+|------|----------|---------|
+| `TOTAL_YELLOW_CARDS` | Total yellow cards in the match? | `0`–`5`, `5+` |
+| `TOTAL_RED_CARDS` | Total red cards in the match? | `0`–`5`, `5+` |
+| `TOTAL_CARDS` | Total cards in the match? | `0`–`5`, `5+` |
+| `TOTAL_FOULS` | Total fouls against in the match? | `0-5`, `6-10`, `11-15`, `16-20`, `21-25`, `26-30`, `30+` |
+| `TOTAL_OFFSIDES` | Total offsides in the match? | `0`–`5`, `5+` |
+| `HOME_FOULS` | Fouls against by {home_team}? | `0-5`, `6-8`, `9-12`, `13-15`, `16-18`, `19-20`, `20+` |
+| `AWAY_FOULS` | Fouls against by {away_team}? | same |
+
+---
+
+## Distribution (2 pts each)
+
+| Code | Question | Options |
+|------|----------|---------|
+| `TOTAL_PASSES` | Total passes in the match? | `0-300`, `301-400`, `401-500`, `501-650`, `651-750`, `751-850`, `850+` |
+| `HOME_PASSES` | Total passes by {home_team}? | `0-200`, `201-300`, `301-400`, `401-500`, `501-600`, `600+` |
+| `AWAY_PASSES` | Total passes by {away_team}? | same |
+| `TOTAL_PASSES_COMPLETED` | Total passes completed in the match? | `0-300`, `301-400`, `401-500`, `501-650`, `651-750`, `750+` |
+| `HOME_PASSES_COMPLETED` | Completed by {home_team}? | `0-100`, `101-200`, `201-300`, `301-400`, `401-500`, `500+` |
+| `AWAY_PASSES_COMPLETED` | Completed by {away_team}? | same |
+| `TOTAL_CROSSES` | Total crosses in the match? | `0-10`, `11-20`, `21-25`, `26-30`, `31-35`, `36-40`, `40+` |
+| `HOME_CROSSES` | Crosses by {home_team}? | `0-5`, `6-10`, `11-13`, `14-17`, `18-20`, `20+` |
+| `AWAY_CROSSES` | Crosses by {away_team}? | same |
+| `TOTAL_CROSSES_COMPLETED` | Total crosses completed? | `0`–`5`, `5+` |
+| `HOME_CROSSES_COMPLETED` | Completed by {home_team}? | `0`–`4`, `4+` |
+| `AWAY_CROSSES_COMPLETED` | Completed by {away_team}? | `0`–`4`, `4+` |
+| `SWITCHES_OF_PLAY_COMPLETED` | Total switches of play completed? | `0-2`, `3-4`, `5-6`, `7-8`, `9-10`, `10+` |
+
+---
+
+## Set plays (2 pts each)
+
+| Code | Question | Options |
+|------|----------|---------|
+| `TOTAL_CORNERS` | Total corners in the match? | `0-2`, `3-4`, `5-6`, `7-8`, `9-10`, `10+` |
+| `HOME_CORNERS` | Corners by {home_team}? | `0`–`5`, `5+` |
+| `AWAY_CORNERS` | Corners by {away_team}? | `0`–`5`, `5+` |
+| `TOTAL_FREE_KICKS` | Total free kicks in the match? | `0-10`, `11-20`, `21-25`, `26-30`, `31-40`, `40+` |
+| `HOME_FREE_KICKS` | Free kicks by {home_team}? | `0-5`, `6-10`, `11-13`, `14-17`, `18-20`, `20+` |
+| `AWAY_FREE_KICKS` | Free kicks by {away_team}? | `0-5`, `6-10`, `11-13`, `14-17`, `18-20`, `20+` |
+| `PENALTIES_SCORED` | Total penalties scored in the match? | `0`, `1`, `2`, `3`, `4`, `4+` |
+
+---
+
+## Defending (2 pts each)
+
+| Code | Question | Options |
+|------|----------|---------|
+| `TOTAL_GOAL_PREVENTIONS` | Total goal preventions in the match? | `0-5`, `6-10`, `11-13`, `14-17`, `18-20`, `21-25`, `25+` |
+| `TOTAL_OWN_GOALS` | Total own goals in the match? | `0`–`4`, `4+` |
+| `TOTAL_FORCED_TURNOVERS` | Total forced turnovers in the match? | `0-30`, `31-60`, `61-75`, `76-100`, `101-120`, `121-150`, `150+` |
+| `HOME_FORCED_TURNOVERS` | Forced turnovers by {home_team}? | `0-10`, `11-20`, `21-35`, `36-50`, `51-60`, `61-75`, `75+` |
+| `AWAY_FORCED_TURNOVERS` | Forced turnovers by {away_team}? | same |
+| `TOTAL_PRESSING_APPLIED` | Total pressing applied in the match? | `0-50`, `51-100`, `101-200`, `201-300`, `301-400`, `401-500`, `500+` |
+| `HOME_PRESSING_APPLIED` | Pressing by {home_team}? | `0-50`, `51-100`, `101-150`, `151-200`, `201-250`, `251-300`, `300+` |
+| `AWAY_PRESSING_APPLIED` | Pressing by {away_team}? | same |
+
+---
+
+## Bank summary
+
+| Bucket | Questions in bank | Used per match |
+|--------|-------------------|----------------|
+| Basic | 3 | 3 (all) |
+| Player / Scoring | 11 | 1 (random) |
+| Attacking | 10 | 0–1 |
+| Attempts | 9 | 0–1 |
+| Discipline | 7 | 0–1 |
+| Distribution | 13 | 0–1 |
+| Set plays | 7 | 0–1 |
+| Defending | 8 | 0–1 |
+| **Total in bank** | **68** | **7** |
+
+---
+
+## Implementation
+
+| Component | Role |
+|-----------|------|
+| `question_bank.yaml` | All templates, option presets, match pattern rules |
+| `question_bank.py` | Load bank, resolve options, select 7-question pack, seed helpers |
+| `seed_wc2026` | Syncs templates and creates 7-question packs for new matches |
+| `question_builder.py` | Admin UI defaults from bank |
+
+### Commands
+
+```bash
+pip install -r requirements.txt   # includes PyYAML
+python manage.py seed_wc2026 --clear-matches   # re-seed with new question packs
 ```
 
----
+### Scoring notes
 
-## Quick copy — options only
-
-### Fixed lists
-
-```
-Yes / No
-Over 2.5 / Under 2.5
-1st half / 2nd half / Equal
-No goal / Own goal
-Under 40% / 40-49% / 50-59% / 60% or more
-0-4 / 5-8 / 9-12 / 13+   (corners buckets)
-0-15 / 16-22 / 23-28 / 29+   (fouls buckets)
-```
-
-### Per-match dynamic
-
-```
-Winner:     {Home Team} / {Away Team} / Draw
-Goals:      0 / 1 / 2 / 3 / 4 / 5  (extend to 10 if needed)
-Cards:      0 / 1 / 2 / 3 / 4 / 5 / 6 / 7  (extend to 10)
-Players:    [Home squad] + [Away squad] + No goal + Own goal
-Margin:     {Home} by 1 / {Home} by 2+ / Draw / {Away} by 1 / {Away} by 2+
-```
+- Answers are scored by **exact string match** against `correct_answer`.
+- `HOME_GOALS` / `AWAY_GOALS` numeric sync to match score only works for plain integers (`0`–`5`); `5+` is scored but not synced to `home_score`/`away_score`.
