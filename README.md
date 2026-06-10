@@ -199,7 +199,7 @@ The repo includes a `Procfile` (`release` runs migrations; `web` runs Gunicorn).
 3. Set `DEBUG`, `SECRET_KEY`, `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS` (use the `*.up.railway.app` hostname).
 4. Build: `pip install -r requirements.txt && python manage.py collectstatic --noinput`
 5. Start: `gunicorn config.wsgi --log-file -` (or rely on the repo `Procfile`)
-6. Run seed commands via Railway shell (same as Render).
+6. Configure one-time setup (migrations, seed, admin) — see below.
 
 **Build error: `No GitHub artifact attestations found for python@3.12.8`**
 
@@ -210,6 +210,58 @@ MISE_PYTHON_GITHUB_ATTESTATIONS=false
 ```
 
 Then redeploy.
+
+**`railway run` fails with `postgres.railway.internal`**
+
+`railway run` executes on **your Mac** with Railway env vars. The web service `DATABASE_URL` uses `postgres.railway.internal`, which only works **inside Railway**, not from your laptop.
+
+Use one of these instead:
+
+**Option A — Pre-deploy commands (recommended, runs on Railway)**
+
+Web service → **Settings → Deploy → Pre-deploy command** (run once, then simplify):
+
+```bash
+python manage.py migrate && python manage.py update_wc2026_squads && python manage.py seed_wc2026 && python manage.py bootstrap_admin
+```
+
+Set these variables on the **web service** first:
+
+```text
+DJANGO_SUPERUSER_EMAIL=admin@myprediction.today
+DJANGO_SUPERUSER_PASSWORD=your-secure-password
+```
+
+`bootstrap_admin` creates the superuser only if that email does not exist yet. Remove the password variable after the first successful deploy if you prefer.
+
+**Option B — Run locally with the public database URL**
+
+1. Railway → **PostgreSQL** service → **Variables** or **Connect**
+2. Copy **`DATABASE_PUBLIC_URL`** (host looks like `*.proxy.rlwy.net`, **not** `postgres.railway.internal`)
+3. From your project with venv active:
+
+```bash
+cd /Users/u1129884/Projects/PredictionGame
+source .venv/bin/activate
+export DATABASE_URL="postgresql://..."   # paste DATABASE_PUBLIC_URL
+python manage.py migrate
+python manage.py update_wc2026_squads
+python manage.py seed_wc2026
+python manage.py createsuperuser
+```
+
+Do not commit the public URL. Remove it from your shell when done (`unset DATABASE_URL`).
+
+**Option C — Non-interactive superuser locally**
+
+```bash
+export DATABASE_URL="postgresql://..."   # DATABASE_PUBLIC_URL
+export DJANGO_SUPERUSER_EMAIL=admin@myprediction.today
+export DJANGO_SUPERUSER_PASSWORD='your-secure-password'
+python manage.py bootstrap_admin
+```
+
+The in-browser Railway **console** often shows `WebSocket connection failed`; that is a Railway UI issue, not your Django app. Use pre-deploy commands or Option B/C instead.
 
 ---
 
