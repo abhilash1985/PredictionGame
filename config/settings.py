@@ -157,10 +157,6 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 14
 # django-allauth
 ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
-ACCOUNT_EMAIL_VERIFICATION = os.environ.get(
-    'ACCOUNT_EMAIL_VERIFICATION',
-    'optional' if DEBUG else 'mandatory',
-)
 ACCOUNT_EMAIL_SUBJECT_PREFIX = os.environ.get('ACCOUNT_EMAIL_SUBJECT_PREFIX', '[WC 2026] ')
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
@@ -198,6 +194,14 @@ EMAIL_BACKEND = os.environ.get(
     'django.core.mail.backends.console.EmailBackend'
     if DEBUG
     else 'django.core.mail.backends.smtp.EmailBackend',
+)
+EMAIL_FAIL_SILENTLY = os.environ.get('EMAIL_FAIL_SILENTLY', 'False').lower() in ('true', '1', 'yes')
+_email_configured = bool(EMAIL_HOST_PASSWORD)
+ACCOUNT_EMAIL_VERIFICATION = os.environ.get(
+    'ACCOUNT_EMAIL_VERIFICATION',
+    'optional'
+    if DEBUG or not _email_configured or EMAIL_FAIL_SILENTLY
+    else 'mandatory',
 )
 
 # Celery

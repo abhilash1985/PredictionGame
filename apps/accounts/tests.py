@@ -1,8 +1,11 @@
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
+from allauth.account.adapter import DefaultAccountAdapter
+
+from apps.accounts.adapters import AccountAdapter
 from apps.accounts.forms import ProfileForm, SignupForm
 from apps.accounts.models import UserProfile
 from apps.accounts.profile_service import ensure_user_profile
@@ -80,3 +83,12 @@ class SignupFormTests(TestCase):
 
         profile = UserProfile.objects.get(user=saved)
         self.assertEqual(profile.display_name, 'TestPlayer')
+
+
+class AccountAdapterEmailTests(TestCase):
+    @override_settings(EMAIL_FAIL_SILENTLY=True)
+    @patch.object(DefaultAccountAdapter, 'send_mail', side_effect=Exception('smtp down'))
+    def test_send_mail_does_not_raise_when_fail_silent(self, mock_send):
+        adapter = AccountAdapter()
+        adapter.send_mail('account/email/email_confirmation', 'user@example.com', {})
+        mock_send.assert_called_once()

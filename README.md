@@ -239,7 +239,26 @@ Signup confirmation, password reset, and other transactional mail are handled by
 | Password reset (forgot) | `/accounts/password/reset/` | Yes — reset link |
 | Password change (logged in) | `/accounts/password/` | No — user is already authenticated |
 
-With `DEBUG=False`, `ACCOUNT_EMAIL_VERIFICATION` defaults to **`mandatory`** (users must confirm email before logging in). Locally it stays **`optional`** so dev signup is not blocked.
+With `DEBUG=False`, `ACCOUNT_EMAIL_VERIFICATION` defaults to **`mandatory`** only when SendGrid is configured. If no API key is set, or `EMAIL_FAIL_SILENTLY=True`, verification stays **`optional`** so signup does not return 500 when mail fails.
+
+### Disable email / avoid signup 500 errors (temporary)
+
+If SendGrid is not working yet, set on Railway:
+
+```text
+EMAIL_FAIL_SILENTLY=True
+ACCOUNT_EMAIL_VERIFICATION=optional
+```
+
+Signup and password reset will succeed; failed emails are logged instead of crashing the request. Re-enable mandatory verification after SendGrid DNS and API key are working.
+
+### View logs on Railway
+
+1. **Dashboard:** Project → **web service** → **Deployments** → latest deploy → **View logs** (HTTP requests and Python tracebacks).
+2. **CLI:** `railway logs` (from linked project directory).
+3. Search logs for `Failed to send email` or `SMTPAuthenticationError` after deploying with `EMAIL_FAIL_SILENTLY=True`.
+
+Set `DEBUG=False` in production so stack traces are not shown to users (logs still appear in Railway).
 
 ### 1. Create a SendGrid account
 
@@ -285,6 +304,7 @@ Include SendGrid vars in deploy examples:
 EMAIL_HOST_PASSWORD=<sendgrid-api-key>
 DEFAULT_FROM_EMAIL=WC 2026 Predictions <noreply@mail.yourdomain.com>
 ACCOUNT_EMAIL_VERIFICATION=mandatory
+EMAIL_FAIL_SILENTLY=False
 ```
 
 ### 4. Test email delivery
