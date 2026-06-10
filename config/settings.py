@@ -20,6 +20,13 @@ CSRF_TRUSTED_ORIGINS = [
     if origin.strip()
 ]
 
+if not DEBUG:
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True').lower() in ('true', '1', 'yes')
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

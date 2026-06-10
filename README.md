@@ -330,9 +330,25 @@ Google users skip password setup (`set_unusable_password`). They can still compl
 
 | Error | Fix |
 |-------|-----|
-| `redirect_uri_mismatch` | Redirect URI in Google Console must match exactly (trailing slash, `https`, correct host) |
+| `redirect_uri_mismatch` | In Google Cloud → OAuth client, add **exact** redirect URIs below (including trailing `/`). Click **error details** on Google's page to see the URI your app sent. Ensure Railway `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` match that OAuth client. Register both apex and `www` if users can reach either. |
+| `Access blocked: This app's request is invalid` | Usually the same as `redirect_uri_mismatch`, or OAuth consent screen not configured / app still in Testing without your Google account as a test user. |
 | Button not shown | Both `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` must be non-empty |
-| `Access blocked: This app's request is invalid` | Add your domain to OAuth consent screen; publish app or add test users while in testing mode |
+
+**Production redirect URIs to register in Google Cloud Console:**
+
+```text
+https://myprediction.today/accounts/google/login/callback/
+https://www.myprediction.today/accounts/google/login/callback/
+```
+
+**Production JavaScript origins:**
+
+```text
+https://myprediction.today
+https://www.myprediction.today
+```
+
+If you still use a Railway hostname for testing, also add its `https://.../accounts/google/login/callback/` URI.
 
 ---
 
