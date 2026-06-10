@@ -1,0 +1,4 @@
+# Railway/Railpack uses mise to install Python from runtime.txt.
+# Older patch releases may lack GitHub artifact attestations; disable verification.
+[settings]
+python.github_attestations = false

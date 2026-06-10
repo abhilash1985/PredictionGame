@@ -198,8 +198,18 @@ The repo includes a `Procfile` (`release` runs migrations; `web` runs Gunicorn).
 2. Add **PostgreSQL** plugin; Railway injects `DATABASE_URL`.
 3. Set `DEBUG`, `SECRET_KEY`, `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS` (use the `*.up.railway.app` hostname).
 4. Build: `pip install -r requirements.txt && python manage.py collectstatic --noinput`
-5. Start: `gunicorn config.wsgi --log-file -`
+5. Start: `gunicorn config.wsgi --log-file -` (or rely on the repo `Procfile`)
 6. Run seed commands via Railway shell (same as Render).
+
+**Build error: `No GitHub artifact attestations found for python@3.12.8`**
+
+Railway's builder uses `mise` to install Python from `runtime.txt`. This repo includes `mise.toml` to disable attestation checks. If the error persists, add a Railway **build** variable:
+
+```text
+MISE_PYTHON_GITHUB_ATTESTATIONS=false
+```
+
+Then redeploy.
 
 ---
 
