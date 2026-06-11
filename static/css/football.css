@@ -324,6 +324,17 @@ body.page-legal {
   color: var(--white) !important;
 }
 
+.badge-prediction-ai {
+  background-color: #4c51bf !important;
+  color: var(--white) !important;
+}
+
+.scorecard-source-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
 .dashboard-welcome-subtitle,
 .landing-page-subtitle,
 .matches-page-subtitle {

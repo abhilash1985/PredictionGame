@@ -123,4 +123,5 @@ class MatchScorecardService:
             'booster_bonus': booster_bonus,
             'total_points': total_points,
             'point_booster_used': prediction.point_booster_used,
+            'is_ai_generated': prediction.is_ai_generated,
         }

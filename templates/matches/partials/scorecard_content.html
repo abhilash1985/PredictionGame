@@ -105,6 +105,9 @@
               {% endif %}
               <span class="scorecard-predictor-label">{{ row.display_name }}</span>
               {% if row.is_current_user %}<span class="scorecard-you-badge">You</span>{% endif %}
+              {% if row.is_ai_generated %}
+                {% include 'matches/partials/prediction_source_badge.html' with badge_class='scorecard-source-badge' %}
+              {% endif %}
             </th>
             <td class="scorecard-col-booster text-center">
               {% if row.point_booster_used %}
