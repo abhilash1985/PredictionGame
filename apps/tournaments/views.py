@@ -1,8 +1,12 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.utils import timezone
+
+# Google AdSense ads.txt certification authority ID (standard value).
+ADSENSE_CERT_AUTHORITY_ID = 'f08c47fec0942fa0'
 
 from apps.leaderboard.dashboard_stats import DashboardStatsService
 from apps.leaderboard.services import LeaderboardService
@@ -27,6 +31,30 @@ def verdict_context_for_user(match, user):
     if not verdict_context['rows']:
         return None, 'You have not predicted this match yet.'
     return verdict_context, None
+
+
+def _adsense_publisher_id():
+    client = (settings.GOOGLE_ADSENSE_CLIENT or '').strip()
+    if not client:
+        return ''
+    if client.startswith('ca-'):
+        return client[3:]
+    if client.startswith('pub-'):
+        return client
+    return f'pub-{client}'
+
+
+def ads_txt_view(request):
+    """
+    Serve /ads.txt for Google AdSense authorization.
+    Requires GOOGLE_ADSENSE_CLIENT (ca-pub-... or pub-...) in environment.
+    """
+    publisher_id = _adsense_publisher_id()
+    if not publisher_id:
+        return HttpResponseNotFound('ads.txt is not configured.\n')
+
+    body = f'google.com, {publisher_id}, DIRECT, {ADSENSE_CERT_AUTHORITY_ID}\n'
+    return HttpResponse(body, content_type='text/plain; charset=utf-8')
 
 
 def _legal_page_context(page_title, page_subtitle=''):

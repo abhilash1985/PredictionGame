@@ -2836,6 +2836,11 @@ footer.site-footer {
   color: var(--theme-navy-light);
 }
 
+.adsense-unit {
+  min-height: 90px;
+  padding: 0.5rem 0;
+}
+
 .group-tabs .nav-link {
   color: var(--theme-navy-mid);
   border: 1px solid #dee2e6;

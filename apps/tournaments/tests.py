@@ -2,7 +2,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from django.db.models import Count
-from django.test import Client, TestCase
+from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
 
@@ -10,6 +10,23 @@ from apps.matches.models import Match
 from apps.tournaments.data.loader import load_wc2026_data, parse_kickoff
 from apps.tournaments.models import Round, Stadium, Team, Tournament
 from apps.tournaments.views import default_verdict_match
+
+
+class AdsTxtTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    @override_settings(GOOGLE_ADSENSE_CLIENT='')
+    def test_ads_txt_not_configured_returns_404(self):
+        response = self.client.get('/ads.txt')
+        self.assertEqual(response.status_code, 404)
+
+    @override_settings(GOOGLE_ADSENSE_CLIENT='ca-pub-1234567890123456')
+    def test_ads_txt_returns_publisher_line(self):
+        response = self.client.get('/ads.txt')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'text/plain; charset=utf-8')
+        self.assertIn('google.com, pub-1234567890123456, DIRECT, f08c47fec0942fa0', response.content.decode())
 
 
 class LegalPagesTests(TestCase):

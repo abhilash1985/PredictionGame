@@ -18,20 +18,20 @@ def _site_url(request):
 
 
 def site_context(request):
-    adsense_active = (
-        not settings.DEBUG
-        and settings.GOOGLE_ADSENSE_ENABLED
-        and bool(settings.GOOGLE_ADSENSE_CLIENT)
-    )
+    production = not settings.DEBUG
+    client = (settings.GOOGLE_ADSENSE_CLIENT or '').strip()
+    adsense_configured = production and bool(client)
+    adsense_show_units = adsense_configured and settings.GOOGLE_ADSENSE_ENABLED
     return {
         'site_name': settings.SITE_NAME,
         'site_contact_email': settings.SITE_CONTACT_EMAIL,
         'site_url': _site_url(request),
         'legal_last_updated': settings.LEGAL_LAST_UPDATED,
-        'adsense_enabled': adsense_active,
-        'adsense_client': settings.GOOGLE_ADSENSE_CLIENT if adsense_active else '',
-        'adsense_slot_footer': settings.GOOGLE_ADSENSE_SLOT_FOOTER if adsense_active else '',
-        'adsense_slot_sidebar': settings.GOOGLE_ADSENSE_SLOT_SIDEBAR if adsense_active else '',
+        'adsense_client': client if adsense_configured else '',
+        'adsense_verification': adsense_configured,
+        'adsense_show_units': adsense_show_units,
+        'adsense_slot_footer': settings.GOOGLE_ADSENSE_SLOT_FOOTER if adsense_show_units else '',
+        'adsense_slot_sidebar': settings.GOOGLE_ADSENSE_SLOT_SIDEBAR if adsense_show_units else '',
     }
 
 

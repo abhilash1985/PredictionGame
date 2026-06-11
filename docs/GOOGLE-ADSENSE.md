@@ -60,69 +60,105 @@ SITE_CONTACT_EMAIL=contact@myprediction.today
 
 Keep `GOOGLE_ADSENSE_ENABLED=False` locally (`DEBUG=True`).
 
+`GOOGLE_ADSENSE_CLIENT` alone is enough for **ads.txt** (ads do not need to be enabled yet).
+
 ---
 
-## 4. Django integration (when ready to enable ads)
+## 4. ads.txt (required for AdSense)
 
-### Settings (`config/settings.py`)
+AdSense checks `https://myprediction.today/ads.txt` for your publisher ID.
 
-```python
-GOOGLE_ADSENSE_CLIENT = os.environ.get('GOOGLE_ADSENSE_CLIENT', '')
-GOOGLE_ADSENSE_ENABLED = os.environ.get('GOOGLE_ADSENSE_ENABLED', 'False').lower() in ('true', '1', 'yes')
-GOOGLE_ADSENSE_SLOT_FOOTER = os.environ.get('GOOGLE_ADSENSE_SLOT_FOOTER', '')
-GOOGLE_ADSENSE_SLOT_SIDEBAR = os.environ.get('GOOGLE_ADSENSE_SLOT_SIDEBAR', '')
-SITE_CONTACT_EMAIL = os.environ.get('SITE_CONTACT_EMAIL', 'contact@myprediction.today')
-SITE_NAME = os.environ.get('SITE_NAME', 'FIFA WC 2026 Prediction Game')
+| AdSense status | Meaning |
+|----------------|---------|
+| **Not found** | No file at `/ads.txt` — fix below |
+| **Authorized** | Your `pub-…` ID is in the file — good |
+| **Unauthorized** | File exists but wrong/missing publisher ID |
+| **Not applicable** | Rare; usually N/A for standard publishers |
+
+This app serves `/ads.txt` dynamically when `GOOGLE_ADSENSE_CLIENT` is set on the **web** service:
+
+```text
+google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
 ```
 
-Enable ads only when `GOOGLE_ADSENSE_ENABLED`, client ID is set, and `DEBUG=False`.
+(`ca-pub-…` in env is converted to `pub-…` automatically.)
 
-### Context processor
+### Railway setup
 
-Expose `adsense_enabled`, `adsense_client`, and slot IDs to templates.
+1. Web service → **Variables** → set:
 
-### Templates
+```text
+GOOGLE_ADSENSE_CLIENT=ca-pub-XXXXXXXXXXXXXXXX
+```
 
-| Placement | Suggested pages | Avoid |
-|-----------|-----------------|-------|
-| Footer banner | Landing, leaderboard, match list | Predict form, modals |
-| In-content | Dashboard, leaderboard | Login, signup, onboarding |
+2. Deploy the web service (not only the cron service).
 
-**`templates/base.html` `<head>`** (once, when enabled):
+3. Verify in a browser:
+
+```text
+https://myprediction.today/ads.txt
+```
+
+4. In AdSense → **Sites** → open your site → use **Check for updates** on ads.txt (crawl can take up to 24–48 hours).
+
+If you use **www** as well as apex, both hosts must serve the same file (redirect `www` → apex, or add both domains in Railway).
+
+---
+
+## 5. Django integration (implemented)
+
+### Railway variables (web service)
+
+Minimum for **ads.txt** + **site verification** (meta tag + script in `<head>`):
+
+```text
+DEBUG=False
+GOOGLE_ADSENSE_CLIENT=ca-pub-2549684217163666
+```
+
+Optional — show footer ad units after you create an ad unit in AdSense:
+
+```text
+GOOGLE_ADSENSE_ENABLED=True
+GOOGLE_ADSENSE_SLOT_FOOTER=your-ad-slot-id
+```
+
+### What the app injects in production
+
+When `GOOGLE_ADSENSE_CLIENT` is set and `DEBUG=False`, `templates/base.html` includes:
+
+**Meta tag (verification):**
 
 ```html
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense_client }}"
-     crossorigin="anonymous"></script>
+<meta name="google-adsense-account" content="ca-pub-2549684217163666">
 ```
 
-**`templates/partials/adsense_unit.html`:**
+**Loader script:**
 
 ```html
-{% if adsense_enabled and adsense_client and slot %}
-<div class="adsense-unit my-3 text-center" aria-label="Advertisement">
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="{{ adsense_client }}"
-       data-ad-slot="{{ slot }}"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
-{% endif %}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2549684217163666"
+        crossorigin="anonymous"></script>
 ```
+
+**ads.txt** (dynamic route `/ads.txt`):
+
+```text
+google.com, pub-2549684217163666, DIRECT, f08c47fec0942fa0
+```
+
+Footer display units render only when `GOOGLE_ADSENSE_ENABLED=True` and `GOOGLE_ADSENSE_SLOT_FOOTER` is set (`templates/partials/adsense_unit.html`).
 
 ### Suggested rollout
 
-1. Privacy, About, Contact pages live (done in repo).
-2. Apply for AdSense on production domain.
-3. After approval, set env vars on Railway.
-4. Add partial + context processor + footer unit.
-5. Enable on public pages first; skip predict/login flows.
-6. Add EU/UK **cookie consent** (Consent Mode v2) if you have European users.
+1. Set `GOOGLE_ADSENSE_CLIENT` on Railway → deploy.
+2. Confirm `https://myprediction.today/ads.txt` and view page source for meta tag.
+3. In AdSense → Sites → **Check for updates** on ads.txt.
+4. After approval, create an ad unit → set `GOOGLE_ADSENSE_ENABLED=True` and slot env vars.
+5. Add EU/UK **cookie consent** (Consent Mode v2) if you have European users.
 
 ---
 
-## 5. Privacy and cookies
+## 6. Privacy and cookies
 
 AdSense uses cookies for ad delivery and personalization. The [Privacy Policy](/privacy/) covers:
 
@@ -136,7 +172,7 @@ If you serve users in the EU/UK, add a consent banner before loading personalize
 
 ---
 
-## 6. What not to do
+## 7. What not to do
 
 - Do not click your own ads or incentivize clicks
 - Do not hide ads or place them over buttons
@@ -145,7 +181,7 @@ If you serve users in the EU/UK, add a consent banner before loading personalize
 
 ---
 
-## 7. Revenue expectations
+## 8. Revenue expectations
 
 Earnings depend on traffic, geography, and seasonality. A niche WC 2026 prediction community may earn modest amounts unless page views are large. Sports RPM varies; scale during the tournament matters most.
 
