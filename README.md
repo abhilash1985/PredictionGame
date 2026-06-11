@@ -32,7 +32,7 @@ Group-stage only: knockout placeholders are not seeded, and point boosters apply
 
 ## Production deployment
 
-This app is a standard Django project with Gunicorn, WhiteNoise (static files), and optional Celery + Redis. **AI Predict uses Gemini** via `python manage.py run_ai_predictions` (Railway cron — no Redis required). See [AI Predict plan](docs/AI-PREDICT.md).
+This app is a standard Django project with Gunicorn, WhiteNoise (static files), and optional Celery + Redis. **AI Predict** runs via `python manage.py run_ai_predictions` on a **separate Railway cron service** every 10 minutes (no Redis required). See [AI Predict](docs/AI-PREDICT.md).
 
 ### Database: will SQLite work in production?
 
@@ -263,6 +263,25 @@ python manage.py bootstrap_admin
 
 The in-browser Railway **console** often shows `WebSocket connection failed`; that is a Railway UI issue, not your Django app. Use pre-deploy commands or Option B/C instead.
 
+**AI Predict cron (separate service)**
+
+Do not put a cron schedule on the **web** service. Add a second service from the same repo (e.g. **AI Predictions Cron**):
+
+| Setting | Value |
+|---------|--------|
+| Start command | `python manage.py run_ai_predictions` |
+| Cron schedule | `*/10 * * * *` (every 10 minutes) |
+| Teardown | On |
+| Variables | Same as web (`DATABASE_URL`, `GOOGLE_API_KEY`, …) |
+
+Manual run in Railway **Console** (cron or web service):
+
+```bash
+python manage.py run_ai_predictions --upcoming-matches 2
+```
+
+Local: `python manage.py migrate` then `python manage.py run_ai_predictions`. Full timing, Game Settings, and troubleshooting: [docs/AI-PREDICT.md](docs/AI-PREDICT.md).
+
 ---
 
 ### Moving local data to production Postgres
@@ -487,4 +506,4 @@ In Django admin, open the user's email address record (django-allauth) and use *
 | `apps.tournaments` | Teams, players, stadiums, landing/dashboard |
 | `apps.matches` | Matches, questions, predictions, scoring |
 | `apps.leaderboard` | Rankings, team points, graphs |
-| `apps.ai_predict` | AI auto-predict service (Celery) |
+| `apps.ai_predict` | AI auto-predict (Gemini + heuristics; Railway cron) |

@@ -162,7 +162,7 @@ For v1, build rich context from **your seeded WC 2026 data** plus finished match
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
-│  Celery Beat (every 15 min) or Railway cron                 │
+│  Railway cron (every 10 min) or Celery Beat                 │
 │    └─ run_ai_predictions                                    │
 └───────────────────────────┬─────────────────────────────────┘
                             │
@@ -343,7 +343,37 @@ window_end = now + timedelta(hours=ai_predict_hours_before)  # default 2
 matches = Match.filter(kickoff_at__gte=window_start, kickoff_at__lte=window_end)
 ```
 
-A match with kickoff at 20:00 gets processed between 18:00 and 20:00. Running every **15 minutes** ensures it is picked up once inside the window.
+A match with kickoff at 20:00 gets processed between 18:00 and 20:00 (when `ai_predict_hours_before = 2`). Running every **10 minutes** (`*/10 * * * *`) picks it up soon after it enters the window. Every 15 minutes also works; hourly may delay the first run by up to an hour.
+
+### Management command modes
+
+**Scheduled (cron — default):** only matches whose kickoff is within the next `ai_predict_hours_before` hours.
+
+```bash
+python manage.py run_ai_predictions
+```
+
+**Manual:** next N upcoming scheduled matches, ignoring the hours-before window (testing or one-off runs).
+
+```bash
+python manage.py run_ai_predictions --upcoming-matches 2
+```
+
+Before first local run after pulling code, apply migrations:
+
+```bash
+python manage.py migrate
+```
+
+### Recommended Celery Beat schedule
+
+```python
+# config/celery.py or django-celery-beat
+'schedule': crontab(minute='*/10'),
+'task': 'apps.ai_predict.tasks.run_ai_predictions',
+```
+
+Useful when Celery worker is not deployed yet.
 
 ### Idempotency
 
@@ -353,22 +383,6 @@ A match with kickoff at 20:00 gets processed between 18:00 and 20:00. Running ev
 | Predictions closed | `match.is_prediction_open` |
 | AI disabled | `profile.ai_predict_enabled` |
 | Duplicate Celery runs | DB unique constraint on (user, match) |
-
-### Recommended Celery Beat schedule
-
-```python
-# config/celery.py or django-celery-beat
-'schedule': crontab(minute='*/15'),
-'task': 'apps.ai_predict.tasks.run_ai_predictions',
-```
-
-### Management command (dev / Railway cron fallback)
-
-```bash
-python manage.py run_ai_predictions
-```
-
-Useful when Celery worker is not deployed yet.
 
 ---
 
@@ -404,13 +418,29 @@ Configure limits/model/window in **Django admin → Game Settings** (defaults: e
 
 4. Ensure a match kickoff is within the next 2 hours and has questions seeded.
 
-5. Run:
+5. Run scheduled mode (match kickoff must be within `ai_predict_hours_before`, default 2h):
 
 ```bash
 python manage.py run_ai_predictions
 ```
 
+Or manual mode (next 2 fixtures, ignores the window):
+
+```bash
+python manage.py run_ai_predictions --upcoming-matches 2
+```
+
 Without `GOOGLE_API_KEY`, the service falls back to heuristics (still creates predictions).
+
+**Optional local cron** (every 10 minutes):
+
+```bash
+crontab -e
+```
+
+```cron
+*/10 * * * * cd /path/to/PredictionGame && /path/to/PredictionGame/.venv/bin/python manage.py run_ai_predictions >> /tmp/predictiongame-ai-predict.log 2>&1
+```
 
 **Optional local Celery** (only if you want to test the task queue):
 
@@ -423,25 +453,58 @@ celery -A config worker -l info
 celery -A config beat -l info   # or: watch -n 900 python manage.py run_ai_predictions
 ```
 
-### Railway production (recommended: cron, no Redis)
+celery -A config beat -l info   # or: watch -n 600 python manage.py run_ai_predictions
+```
 
-1. **Web service variables:**
+### Railway production (recommended: separate cron service, no Redis)
+
+Use **two services** from the same GitHub repo. Do **not** attach a cron schedule to the web service.
+
+| Service | Start command | Cron schedule | Teardown | Public domain |
+|---------|---------------|---------------|----------|---------------|
+| **PredictionGame** (web) | `gunicorn config.wsgi --log-file -` | **None** | Off | Yes (`myprediction.today`) |
+| **AI Predictions Cron** | `python manage.py run_ai_predictions` | **`*/10 * * * *`** (every 10 min) | **On** | No |
+
+1. **Web service variables** (shared at project level if possible):
 
 ```text
 GOOGLE_API_KEY=...
+SECRET_KEY=...
+DATABASE_URL=...   # from Postgres plugin
 ```
 
-Tune AI Predict and point booster defaults in **Django admin → Game Settings**.
+Tune AI Predict and point booster defaults in **Django admin → Game Settings** (`ai_predict_hours_before`, `ai_predict_enabled`, model name, max users/run).
 
-2. **Cron job** (Railway → project → **Cron** or scheduled job):
+2. **Cron service** → **Settings → Deploy**:
 
 ```bash
 python manage.py run_ai_predictions
 ```
 
-Schedule: **every 15 minutes** (`*/15 * * * *`).
+- **Cron Schedule:** customize to `*/10 * * * *` (every 10 minutes). Alternatives: `*/15 * * * *` or `0 * * * *` (hourly).
+- **Enable Teardown:** on (container exits after the command finishes).
+- **Variables:** same as web (`DATABASE_URL`, `GOOGLE_API_KEY`, etc.).
 
-3. No Redis or Celery worker service required.
+3. **Migrations:** the web service `Procfile` runs `release: python manage.py migrate` on deploy. Ensure migration `0002_gamesettings_ai_predict_fields` has been applied before the first cron run.
+
+4. **Manual run on Railway** (inside the platform — uses internal DB):
+
+   - **AI Predictions Cron** → **Console**:
+
+```bash
+python manage.py run_ai_predictions --upcoming-matches 2
+```
+
+   - Or CLI (service name must match Railway exactly, including spaces):
+
+```bash
+railway link
+railway run --service "AI Predictions Cron" python manage.py run_ai_predictions --upcoming-matches 2
+```
+
+   `railway run` from your Mac may fail if `DATABASE_URL` uses `postgres.railway.internal`; prefer the **Console** on the cron or web service.
+
+5. View run history on the cron service **Cron Runs** tab. No Redis or Celery worker required.
 
 ### Railway production (optional: Celery)
 
@@ -462,10 +525,14 @@ beat: celery -A config beat -l info
 
 Or use **Railway cron** instead of Beat (simpler).
 
-### Management command (implemented)
+### Management command reference
 
 ```bash
+# Cron / scheduled window (default)
 python manage.py run_ai_predictions
+
+# Manual: next N upcoming matches
+python manage.py run_ai_predictions --upcoming-matches 2
 ```
 
 Prints: `Created N AI prediction(s).`
