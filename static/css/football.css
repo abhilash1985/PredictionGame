@@ -56,6 +56,12 @@ body.page-team-points {
     url('../images/2022-wc-2.webp');
 }
 
+body.page-legal {
+  background-image: linear-gradient(180deg, rgba(6, 18, 36, 0.92) 0%, rgba(6, 18, 36, 0.88) 100%),
+    url('../images/fifa-wc4.avif');
+  color: var(--white);
+}
+
 .site-navbar {
   background: var(--theme-navbar) !important;
   border-bottom: 3px solid var(--gold);
@@ -2752,19 +2758,47 @@ footer.site-footer {
   opacity: 0.5;
 }
 
-.legal-page {
-  max-width: 42rem;
+.legal-page-wrap {
+  max-width: 48rem;
   margin: 0 auto;
-  padding: 1.5rem 0 2.5rem;
+  padding: 0.5rem 0 2rem;
+}
+
+.legal-page-card {
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.legal-page-card__body {
+  padding: 2rem 2.25rem;
+  color: #1f2937;
+}
+
+@media (max-width: 575.98px) {
+  .legal-page-card__body {
+    padding: 1.5rem 1.25rem;
+  }
 }
 
 .legal-page__header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 1rem;
+}
+
+.legal-page__header h1 {
+  color: var(--theme-navy-mid);
+}
+
+.legal-page__subtitle,
+.legal-page__updated {
+  color: #5c6570;
 }
 
 .legal-section {
   margin-bottom: 1.75rem;
+}
+
+.legal-section:last-child {
+  margin-bottom: 0;
 }
 
 .legal-section h2 {
@@ -2774,11 +2808,32 @@ footer.site-footer {
 
 .legal-section p,
 .legal-section li {
-  line-height: 1.6;
+  line-height: 1.65;
+  color: #2d3748;
+}
+
+.legal-section a {
+  color: var(--theme-navy-light);
+  font-weight: 600;
+}
+
+.legal-section a:hover {
+  color: var(--fifa-red-mid);
+}
+
+.legal-section code {
+  background: rgba(6, 18, 36, 0.08);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
 }
 
 .legal-contact-email {
   font-size: 1.1rem;
+}
+
+.legal-contact-email a {
+  color: var(--theme-navy-light);
 }
 
 .group-tabs .nav-link {

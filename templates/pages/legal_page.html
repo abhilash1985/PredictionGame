@@ -2,19 +2,23 @@
 
 {% block title %}{{ page_title }} — FIFA 2026 Prediction Game{% endblock %}
 
-{% block body_class %}page-app page-legal{% endblock %}
+{% block body_class %}page-legal{% endblock %}
 
 {% block content %}
-<article class="legal-page">
-  <header class="legal-page__header mb-4">
-    <h1 class="h2 fw-bold mb-2">{{ page_title }}</h1>
-    {% if page_subtitle %}
-      <p class="text-muted mb-0">{{ page_subtitle }}</p>
-    {% endif %}
-    {% if last_updated %}
-      <p class="legal-page__updated text-muted small mt-2 mb-0">Last updated: {{ last_updated }}</p>
-    {% endif %}
-  </header>
-  {% block legal_content %}{% endblock %}
-</article>
+<div class="legal-page-wrap">
+  <article class="card card-football legal-page-card">
+    <div class="legal-page-card__body">
+      <header class="legal-page__header mb-4">
+        <h1 class="h2 fw-bold mb-2">{{ page_title }}</h1>
+        {% if page_subtitle %}
+          <p class="legal-page__subtitle mb-0">{{ page_subtitle }}</p>
+        {% endif %}
+        {% if last_updated %}
+          <p class="legal-page__updated small mt-2 mb-0">Last updated: {{ last_updated }}</p>
+        {% endif %}
+      </header>
+      {% block legal_content %}{% endblock %}
+    </div>
+  </article>
+</div>
 {% endblock %}
