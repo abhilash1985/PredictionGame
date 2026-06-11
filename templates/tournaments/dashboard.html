@@ -5,14 +5,36 @@
 
 {% block content %}
 <div class="dashboard-page">
-  <div class="dashboard-welcome mb-4">
-    <h2 class="page-heading fw-bold mb-1">Welcome, {{ user.display_name }}!</h2>
+  <div class="dashboard-welcome mb-3 mb-md-4">
+    <h2 class="page-heading fw-bold mb-1">
+      <span class="d-none d-sm-inline">Welcome, {{ user.display_name }}!</span>
+      <span class="d-sm-none">Hi, {{ user.display_name }}</span>
+    </h2>
     {% if tournament %}
-      <p class="dashboard-welcome-subtitle mb-0">{{ tournament.name }} — predict matches and track your progress</p>
+      <p class="dashboard-welcome-subtitle mb-0 d-none d-md-block">{{ tournament.name }} — predict matches and track your progress</p>
     {% endif %}
   </div>
 
-  <div class="row g-3 mb-3 dashboard-summary">
+  <div class="dashboard-stats-compact d-md-none mb-3" aria-label="Your stats">
+    <div class="dashboard-stats-compact__item">
+      <span class="dashboard-stats-compact__label">Total pts</span>
+      <span class="dashboard-stats-compact__value">
+        {% if user_leaderboard %}{{ user_leaderboard.total_points }}{% else %}0{% endif %}
+      </span>
+    </div>
+    <div class="dashboard-stats-compact__item">
+      <span class="dashboard-stats-compact__label">Rank</span>
+      <span class="dashboard-stats-compact__value">
+        {% if user_leaderboard %}#{{ user_leaderboard.rank }}<span class="dashboard-stats-compact__meta">/{{ leaderboard_total }}</span>{% else %}—{% endif %}
+      </span>
+    </div>
+    <div class="dashboard-stats-compact__item">
+      <span class="dashboard-stats-compact__label">Boosters</span>
+      <span class="dashboard-stats-compact__value text-success">{{ user.profile.point_boosters_remaining }}</span>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-3 dashboard-summary d-none d-md-flex">
     <div class="col-6 col-md-4 col-xl-2">
       <div class="dashboard-summary-card h-100">
         <div class="dashboard-summary-icon text-warning"><i class="bi bi-bar-chart-fill"></i></div>
@@ -31,7 +53,7 @@
         </div>
       </div>
     </div>
-    <div class="col-6 col-md-4 col-xl-2">
+    <div class="col-6 col-md-4 col-xl-2 d-none d-md-block">
       <div class="dashboard-summary-card h-100">
         <div class="dashboard-summary-icon"><i class="bi bi-percent"></i></div>
         <div class="dashboard-summary-label">Accuracy</div>
@@ -47,7 +69,7 @@
         <div class="dashboard-summary-value text-success">{{ user.profile.point_boosters_remaining }}</div>
       </div>
     </div>
-    <div class="col-6 col-md-4 col-xl-2">
+    <div class="col-6 col-md-4 col-xl-2 d-none d-md-block">
       <div class="dashboard-summary-card h-100">
         <div class="dashboard-summary-icon"><i class="bi bi-flag-fill"></i></div>
         <div class="dashboard-summary-label">Favorite team</div>
@@ -60,7 +82,7 @@
         </div>
       </div>
     </div>
-    <div class="col-6 col-md-4 col-xl-2">
+    <div class="col-6 col-md-4 col-xl-2 d-none d-md-block">
       <div class="dashboard-summary-card h-100">
         <div class="dashboard-summary-icon"><i class="bi bi-robot"></i></div>
         <div class="dashboard-summary-label">AI Predict</div>
@@ -69,7 +91,7 @@
     </div>
   </div>
 
-  <div class="row g-3 mb-4 dashboard-summary-actions">
+  <div class="row g-3 mb-3 mb-md-4 dashboard-summary-actions d-none d-md-flex">
     <div class="col-12 col-md-4">
       <button type="button" class="dashboard-summary-card dashboard-summary-cta w-100 border-0"
               data-dashboard-tab="matches-tab">
@@ -78,7 +100,7 @@
         <div class="dashboard-summary-value">Predict Matches</div>
       </button>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 d-none d-md-block">
       <button type="button" class="dashboard-summary-card dashboard-summary-cta w-100 border-0"
               data-dashboard-tab="stats-tab">
         <div class="dashboard-summary-icon"><i class="bi bi-graph-up"></i></div>
@@ -86,7 +108,7 @@
         <div class="dashboard-summary-value">View Stats</div>
       </button>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 d-none d-md-block">
       <button type="button" class="dashboard-summary-card dashboard-summary-cta w-100 border-0"
               data-dashboard-tab="verdict-tab">
         <div class="dashboard-summary-icon"><i class="bi bi-clipboard-data"></i></div>
@@ -102,13 +124,17 @@
         <li class="nav-item" role="presentation">
           <button class="nav-link active" id="matches-tab" data-bs-toggle="tab" data-bs-target="#dashboard-matches-pane"
                   type="button" role="tab" aria-controls="dashboard-matches-pane" aria-selected="true">
-            <i class="bi bi-calendar-event me-1"></i> Upcoming Matches
+            <i class="bi bi-calendar-event me-1"></i>
+            <span class="d-none d-sm-inline">Upcoming Matches</span>
+            <span class="d-sm-none">Matches</span>
           </button>
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="verdict-tab" data-bs-toggle="tab" data-bs-target="#dashboard-verdict-pane"
                   type="button" role="tab" aria-controls="dashboard-verdict-pane" aria-selected="false">
-            <i class="bi bi-clipboard-data me-1"></i> Match Verdict
+            <i class="bi bi-clipboard-data me-1"></i>
+            <span class="d-none d-sm-inline">Match Verdict</span>
+            <span class="d-sm-none">Verdict</span>
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -125,7 +151,15 @@
       <div class="tab-pane fade show active" id="dashboard-matches-pane" role="tabpanel" aria-labelledby="matches-tab" tabindex="0">
         <div class="dashboard-pane-body">
           {% if upcoming_matches %}
-            {% include 'matches/partials/match_list_grid.html' with matches=upcoming_matches predicted_match_ids=predicted_match_ids show_predict=show_predict %}
+            <div class="d-md-none">
+              {% include 'matches/partials/match_list_grid.html' with matches=upcoming_matches|slice:":6" predicted_match_ids=predicted_match_ids show_predict=show_predict %}
+              <div class="text-center mt-3">
+                <a href="{% url 'match_list' %}" class="btn btn-sm btn-outline-primary">View all matches</a>
+              </div>
+            </div>
+            <div class="d-none d-md-block">
+              {% include 'matches/partials/match_list_grid.html' with matches=upcoming_matches predicted_match_ids=predicted_match_ids show_predict=show_predict %}
+            </div>
           {% else %}
             <div class="p-4 text-muted">No matches scheduled yet.</div>
           {% endif %}

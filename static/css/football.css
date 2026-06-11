@@ -116,6 +116,11 @@ body.page-legal {
     border: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
+
+  .site-navbar .navbar-nav.d-lg-none .dropdown-item {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+  }
 }
 
 .navbar-fifa-icon,
@@ -429,6 +434,66 @@ body.page-legal {
   line-height: 1.2;
 }
 
+.dashboard-stats-compact {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-stats-compact__item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.1rem;
+  padding: 0.15rem 0.25rem;
+}
+
+.dashboard-stats-compact__item:not(:last-child) {
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-stats-compact__label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6c757d;
+  line-height: 1.2;
+}
+
+.dashboard-stats-compact__value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--theme-navy-mid);
+  line-height: 1.15;
+}
+
+.dashboard-stats-compact__meta {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.dashboard-stats-compact--profile .dashboard-stats-compact__label {
+  font-size: 0.58rem;
+}
+
+.dashboard-stats-compact--profile .dashboard-stats-compact__value {
+  font-size: 0.92rem;
+}
+
+.dashboard-stats-compact--profile .dashboard-stats-compact__meta {
+  font-size: 0.62rem;
+}
+
 .dashboard-summary-team {
   font-size: 0.95rem;
 }
@@ -680,6 +745,13 @@ body.page-legal {
   .dashboard-tabs-bar {
     padding-left: 1rem;
     padding-right: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .dashboard-tabs .nav-link {
+    font-size: 0.82rem;
+    padding: 0.45rem 0.65rem;
   }
 
   .dashboard-pane-body {
@@ -688,6 +760,27 @@ body.page-legal {
 
   .dashboard-leaderboard-link {
     width: 100%;
+  }
+
+  .dashboard-summary-card {
+    min-height: 6.25rem;
+    padding: 0.75rem;
+  }
+
+  .dashboard-summary-value {
+    font-size: 1.1rem;
+  }
+
+  .ranks-page-subtitle {
+    display: none;
+  }
+
+  .hero-banner .display-5 {
+    font-size: 1.65rem;
+  }
+
+  .hero-banner .lead {
+    font-size: 0.95rem;
   }
 }
 
@@ -1297,6 +1390,71 @@ body.page-legal {
   border: 2px solid var(--gold);
   font-weight: 800;
   color: var(--gold);
+}
+
+.scorecard-hero-teams-compact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.scorecard-team-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.scorecard-team-compact-home {
+  justify-content: flex-end;
+}
+
+.scorecard-team-compact-away {
+  justify-content: flex-start;
+}
+
+.scorecard-team-flag-compact {
+  width: 28px;
+  height: 21px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+}
+
+.scorecard-team-code {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+
+.scorecard-team-compact-center {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.scorecard-vs-compact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 0.35rem;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.scorecard-hero-score-compact {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--gold);
+  white-space: nowrap;
 }
 
 .scorecard-body {
@@ -2114,6 +2272,30 @@ body.page-legal {
   border-bottom: 2px solid var(--gold);
 }
 
+.account-card-header--stacked {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
+}
+
+.account-card-ai-heading {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+.account-card-header--stacked .ai-predict-panel {
+  margin-bottom: 0;
+}
+
+.account-card-identity {
+  padding-top: 0.15rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
 .account-card-header-center {
   justify-content: center;
   text-align: center;
@@ -2640,6 +2822,30 @@ body.page-auth .main-content {
   color: rgba(255, 255, 255, 0.85);
 }
 
+.predict-hero-meta-compact {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.predict-hero-meta-line + .predict-hero-meta-line {
+  margin-top: 0.2rem;
+}
+
+.predict-teams-ranks-compact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.predict-teams-ranks-sep {
+  opacity: 0.5;
+}
+
 .predict-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -2759,11 +2965,176 @@ body.page-auth .main-content {
 }
 
 @media (max-width: 767px) {
+  .scorecard-hero {
+    padding: 1rem 1rem 1.1rem;
+  }
+
+  .scorecard-hero-label {
+    font-size: 0.95rem;
+  }
+
+  .scorecard-hero .badge {
+    font-size: 0.68rem;
+  }
+
+  .predict-hero {
+    padding: 1rem 1rem 1.1rem;
+  }
+
+  .predict-hero-label {
+    font-size: 0.95rem;
+  }
+
+  .predict-hero .badge {
+    font-size: 0.68rem;
+  }
+
   .predict-hero,
   .predict-toolbar,
   .predict-body {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .predict-toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem 1rem;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .predict-toolbar-item {
+    min-width: 0;
+  }
+
+  .predict-toolbar-countdown {
+    grid-column: 1 / -1;
+    margin-left: 0 !important;
+  }
+
+  .predict-toolbar-countdown .predict-countdown {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .predict-body {
+    padding-top: 1rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .predict-question-card {
+    padding: 0.7rem 0.75rem;
+    margin-bottom: 0.6rem;
+    border-left-width: 3px;
+    border-radius: 10px;
+  }
+
+  .predict-question-head {
+    gap: 0.45rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+
+  .predict-question-num {
+    width: 1.4rem;
+    height: 1.4rem;
+    font-size: 0.7rem;
+  }
+
+  .predict-question-title {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+
+  .predict-points-badge {
+    font-size: 0.65rem;
+    padding: 0.12rem 0.38rem;
+  }
+
+  .predict-option-pill .form-check-label {
+    padding: 0.32rem 0.6rem;
+    font-size: 0.78rem;
+    border-width: 1.5px;
+    gap: 0.3rem;
+  }
+
+  .predict-option-pill .team-flag {
+    width: 18px;
+    height: 13px;
+  }
+
+  .predict-options-row .predict-option-pill .form-check-label {
+    padding: 0.32rem 0.55rem;
+  }
+
+  .predict-options-winner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  .predict-options-winner .predict-option-pill .form-check-label {
+    width: 100%;
+    justify-content: center;
+    padding: 0.38rem 0.45rem;
+  }
+
+  .predict-options-numeric {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .predict-options-numeric.predict-options-cols-7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .predict-options-numeric.predict-options-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .predict-options-numeric .predict-option-pill .form-check-label {
+    width: 100%;
+    justify-content: center;
+    padding: 0.3rem 0.15rem;
+    font-size: 0.76rem;
+    min-height: 2rem;
+  }
+
+  .predict-options-grid {
+    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+    gap: 0.4rem;
+  }
+
+  .predict-options-grid .predict-option-pill .form-check-label {
+    min-height: 2rem;
+    font-size: 0.78rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .predict-booster-box {
+    padding: 0.75rem 0.85rem;
+    margin-bottom: 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  .predict-notice {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.82rem;
+    margin-bottom: 0.85rem !important;
+  }
+
+  .predict-actions .btn-lg {
+    padding: 0.55rem 1rem;
+    font-size: 1rem;
+  }
+
+  .predict-actions {
+    flex-direction: column;
+  }
+
+  .predict-actions .btn {
+    width: 100%;
   }
 
   .predict-team-block {

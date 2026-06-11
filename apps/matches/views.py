@@ -122,10 +122,24 @@ def predict_view(request, pk):
         if field_name not in form.fields:
             continue
         template_code = question.question_template.code if question.question_template else ''
-        layout = 'grid' if template_code == 'PLAYER_OF_MATCH' else 'row'
+        if template_code == 'PLAYER_OF_MATCH':
+            layout = 'grid'
+        elif template_code in ('HOME_GOALS', 'AWAY_GOALS'):
+            layout = 'numeric'
+            columns = 7
+        elif template_code == 'TOTAL_YELLOW_CARDS':
+            layout = 'numeric'
+            columns = 4
+        elif template_code == 'MATCH_WINNER':
+            layout = 'winner'
+            columns = None
+        else:
+            layout = 'row'
+            columns = None
         question_fields.append({
             'field': form[field_name],
             'layout': layout,
+            'columns': columns,
             'points': question.points,
         })
         total_points += question.points

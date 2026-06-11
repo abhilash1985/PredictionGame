@@ -3,12 +3,39 @@
 
 {% block content %}
 <div class="account-page">
-  <div class="ranks-page-header mb-4">
+  <div class="ranks-page-header mb-3 mb-md-4">
     <h2 class="page-heading mb-1">Your Profile</h2>
-    <p class="ranks-page-subtitle mb-0">Manage your account, preferences, and prediction settings</p>
+    <p class="ranks-page-subtitle mb-0 d-none d-md-block">Manage your account, preferences, and prediction settings</p>
   </div>
 
-  <div class="row g-3 mb-4">
+  <div class="dashboard-stats-compact dashboard-stats-compact--profile d-md-none mb-3" aria-label="Your stats">
+    <div class="dashboard-stats-compact__item">
+      <span class="dashboard-stats-compact__label">Pts</span>
+      <span class="dashboard-stats-compact__value">
+        {% if user_leaderboard %}{{ user_leaderboard.total_points }}{% else %}0{% endif %}
+      </span>
+    </div>
+    <div class="dashboard-stats-compact__item">
+      <span class="dashboard-stats-compact__label">Rank</span>
+      <span class="dashboard-stats-compact__value">
+        {% if user_leaderboard %}#{{ user_leaderboard.rank }}<span class="dashboard-stats-compact__meta">/{{ leaderboard_total }}</span>{% else %}—{% endif %}
+      </span>
+    </div>
+    <div class="dashboard-stats-compact__item">
+      <span class="dashboard-stats-compact__label">Wins</span>
+      <span class="dashboard-stats-compact__value">{% if user_leaderboard %}{{ user_leaderboard.winner_picks }}{% else %}0{% endif %}</span>
+    </div>
+    <div class="dashboard-stats-compact__item">
+      <span class="dashboard-stats-compact__label">MVP</span>
+      <span class="dashboard-stats-compact__value">{% if user_leaderboard %}{{ user_leaderboard.match_tops }}{% else %}0{% endif %}</span>
+    </div>
+    <div class="dashboard-stats-compact__item">
+      <span class="dashboard-stats-compact__label">Boost</span>
+      <span class="dashboard-stats-compact__value text-success">{{ user.profile.point_boosters_remaining }}</span>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4 d-none d-md-flex">
     <div class="col-6 col-lg">
       <div class="dashboard-summary-card">
         <div class="dashboard-summary-icon text-warning"><i class="bi bi-bar-chart-fill"></i></div>
@@ -51,22 +78,28 @@
   </div>
 
   <div class="card card-football account-card">
-    <div class="account-card-header">
-      <div>
-        <span class="account-card-title"><i class="bi bi-person-circle me-1"></i> {{ user.display_name }}</span>
-        {% if user.profile.favorite_team %}
-          <div class="account-favorite-team mt-1">
-            {% team_badge user.profile.favorite_team show_name=True show_short=False %}
+    <form method="post" class="account-form">
+      {% csrf_token %}
+      <div class="account-card-header account-card-header--stacked">
+        <div class="account-card-ai">
+          <div class="account-card-ai-heading">
+            <i class="bi bi-robot me-1" aria-hidden="true"></i> AI Predict
           </div>
-        {% endif %}
+          {% include 'accounts/partials/ai_predict_toggle.html' with field=form.ai_predict_enabled %}
+          {% if form.ai_predict_enabled.errors %}
+            <div class="text-danger small mt-2">{{ form.ai_predict_enabled.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="account-card-identity">
+          <span class="account-card-title"><i class="bi bi-person-circle me-1"></i> {{ user.display_name }}</span>
+          {% if user.profile.favorite_team %}
+            <div class="account-favorite-team mt-1">
+              {% team_badge user.profile.favorite_team show_name=True show_short=False %}
+            </div>
+          {% endif %}
+        </div>
       </div>
-      <span class="account-ai-badge {% if user.profile.ai_predict_enabled %}account-ai-on{% else %}account-ai-off{% endif %}">
-        AI Predict {% if user.profile.ai_predict_enabled %}ON{% else %}OFF{% endif %}
-      </span>
-    </div>
-    <div class="account-card-body">
-      <form method="post" class="account-form">
-        {% csrf_token %}
+      <div class="account-card-body">
         {% include 'accounts/partials/profile_form_fields.html' with form=form %}
         <div class="account-form-actions">
           <button type="submit" class="btn btn-gold">
@@ -76,13 +109,13 @@
             <i class="bi bi-key me-1"></i> Change Password
           </a>
         </div>
-      </form>
-      <div class="account-meta">
-        <span><i class="bi bi-lightning me-1"></i> Boosters used: {{ user.profile.boosters_used }}</span>
-        <span class="mx-2 text-muted">·</span>
-        <span><i class="bi bi-percent me-1"></i> Accuracy: {% if user_leaderboard %}{{ user_leaderboard.prediction_percentage }}%{% else %}—{% endif %}</span>
+        <div class="account-meta">
+          <span><i class="bi bi-lightning me-1"></i> Boosters used: {{ user.profile.boosters_used }}</span>
+          <span class="mx-2 text-muted">·</span>
+          <span><i class="bi bi-percent me-1"></i> Accuracy: {% if user_leaderboard %}{{ user_leaderboard.prediction_percentage }}%{% else %}—{% endif %}</span>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 {% endblock %}

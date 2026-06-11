@@ -23,13 +23,13 @@
           <tr>
             <th class="ranks-col-rank">#</th>
             <th class="ranks-col-name">Name</th>
-            <th class="text-center">Matches</th>
+            <th class="text-center d-none d-md-table-cell">Matches</th>
             <th class="text-end">Points</th>
-            <th class="text-end" title="Maximum points available from predicted matches">Predicted pts</th>
+            <th class="text-end d-none d-md-table-cell" title="Maximum points available from predicted matches">Predicted pts</th>
             <th class="text-center">%</th>
-            <th class="text-center" title="Correct match-winner predictions">Win picks</th>
-            <th class="text-center" title="Times top scorer on a match">MVPs</th>
-            <th class="text-center">Boosters</th>
+            <th class="text-center d-none d-lg-table-cell" title="Correct match-winner predictions">Win picks</th>
+            <th class="text-center d-none d-lg-table-cell" title="Times top scorer on a match">MVPs</th>
+            <th class="text-center d-none d-lg-table-cell">Boosters</th>
           </tr>
         </thead>
         <tbody>
@@ -52,13 +52,13 @@
                   <span class="ranks-you-badge">You</span>
                 {% endif %}
               </td>
-              <td class="text-center">{{ row.matches_predicted }}</td>
+              <td class="text-center d-none d-md-table-cell">{{ row.matches_predicted }}</td>
               <td class="text-end ranks-points-cell">{{ row.total_points }}</td>
-              <td class="text-end">{{ row.max_points }}</td>
+              <td class="text-end d-none d-md-table-cell">{{ row.max_points }}</td>
               <td class="text-center">{{ row.prediction_percentage }}%</td>
-              <td class="text-center">{{ row.winner_picks }}</td>
-              <td class="text-center">{{ row.match_tops }}</td>
-              <td class="text-center">{{ row.boosters_used }}</td>
+              <td class="text-center d-none d-lg-table-cell">{{ row.winner_picks }}</td>
+              <td class="text-center d-none d-lg-table-cell">{{ row.match_tops }}</td>
+              <td class="text-center d-none d-lg-table-cell">{{ row.boosters_used }}</td>
             </tr>
           {% empty %}
             <tr>

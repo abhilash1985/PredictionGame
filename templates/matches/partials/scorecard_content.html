@@ -14,7 +14,28 @@
       {% endif %}
     </div>
   </div>
-  <div class="scorecard-hero-teams row align-items-center g-3">
+  <div class="scorecard-hero-teams-compact d-md-none" aria-label="{{ match.team_home.name }} vs {{ match.team_away.name }}">
+    <div class="scorecard-team-compact scorecard-team-compact-home">
+      {% with flag=match.team_home|team_flag_url:"w40" %}
+        {% if flag %}<img src="{{ flag }}" alt="" class="scorecard-team-flag-compact" loading="lazy">{% endif %}
+      {% endwith %}
+      <span class="scorecard-team-code">{{ match.team_home.short_name }}</span>
+    </div>
+    <div class="scorecard-team-compact-center">
+      {% if match.has_result %}
+        <span class="scorecard-hero-score-compact">{{ match.display_home_score }} : {{ match.display_away_score }}</span>
+      {% else %}
+        <span class="scorecard-vs-compact">VS</span>
+      {% endif %}
+    </div>
+    <div class="scorecard-team-compact scorecard-team-compact-away">
+      <span class="scorecard-team-code">{{ match.team_away.short_name }}</span>
+      {% with flag=match.team_away|team_flag_url:"w40" %}
+        {% if flag %}<img src="{{ flag }}" alt="" class="scorecard-team-flag-compact" loading="lazy">{% endif %}
+      {% endwith %}
+    </div>
+  </div>
+  <div class="scorecard-hero-teams row align-items-center g-3 d-none d-md-flex">
     <div class="col-md-5 text-center">
       {% with flag=match.team_home|team_flag_url:"w80" %}
         {% if flag %}<img src="{{ flag }}" alt="" class="scorecard-team-flag" loading="lazy">{% endif %}
