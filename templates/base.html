@@ -82,9 +82,11 @@
 
   <footer class="site-footer">
     <div class="container text-center">
-      {% if adsense_show_units and adsense_slot_footer %}
-        {% include 'partials/adsense_unit.html' with slot=adsense_slot_footer %}
-      {% endif %}
+      {% block adsense_footer %}
+        {% if adsense_show_units and adsense_slot_footer %}
+          {% include 'partials/adsense_unit.html' with slot=adsense_slot_footer unit_name='Coffee' %}
+        {% endif %}
+      {% endblock %}
       <nav class="site-footer__nav" aria-label="Footer">
         <a href="{% url 'about' %}">About</a>
         <span class="site-footer__sep" aria-hidden="true">·</span>

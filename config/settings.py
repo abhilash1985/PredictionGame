@@ -233,9 +233,14 @@ LEGAL_LAST_UPDATED = os.environ.get('LEGAL_LAST_UPDATED', '11 June 2026')
 
 # Google AdSense (optional — see docs/GOOGLE-ADSENSE.md; keep disabled locally)
 GOOGLE_ADSENSE_CLIENT = os.environ.get('GOOGLE_ADSENSE_CLIENT', '')
-GOOGLE_ADSENSE_ENABLED = os.environ.get('GOOGLE_ADSENSE_ENABLED', 'False').lower() in ('true', '1', 'yes')
 GOOGLE_ADSENSE_SLOT_FOOTER = os.environ.get('GOOGLE_ADSENSE_SLOT_FOOTER', '')
 GOOGLE_ADSENSE_SLOT_SIDEBAR = os.environ.get('GOOGLE_ADSENSE_SLOT_SIDEBAR', '')
+_adsense_enabled_env = os.environ.get('GOOGLE_ADSENSE_ENABLED', '')
+if _adsense_enabled_env:
+    GOOGLE_ADSENSE_ENABLED = _adsense_enabled_env.lower() in ('true', '1', 'yes')
+else:
+    # Show footer unit when a slot is configured unless explicitly disabled.
+    GOOGLE_ADSENSE_ENABLED = bool(GOOGLE_ADSENSE_SLOT_FOOTER.strip())
 
 # AI Predict — GOOGLE_API_KEY only; limits/model/enabled live in GameSettings (Django admin)
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')

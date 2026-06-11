@@ -21,7 +21,8 @@ def site_context(request):
     production = not settings.DEBUG
     client = (settings.GOOGLE_ADSENSE_CLIENT or '').strip()
     adsense_configured = production and bool(client)
-    adsense_show_units = adsense_configured and settings.GOOGLE_ADSENSE_ENABLED
+    footer_slot = (settings.GOOGLE_ADSENSE_SLOT_FOOTER or '').strip()
+    adsense_show_units = adsense_configured and settings.GOOGLE_ADSENSE_ENABLED and bool(footer_slot)
     return {
         'site_name': settings.SITE_NAME,
         'site_contact_email': settings.SITE_CONTACT_EMAIL,
@@ -30,7 +31,7 @@ def site_context(request):
         'adsense_client': client if adsense_configured else '',
         'adsense_verification': adsense_configured,
         'adsense_show_units': adsense_show_units,
-        'adsense_slot_footer': settings.GOOGLE_ADSENSE_SLOT_FOOTER if adsense_show_units else '',
+        'adsense_slot_footer': footer_slot if adsense_show_units else '',
         'adsense_slot_sidebar': settings.GOOGLE_ADSENSE_SLOT_SIDEBAR if adsense_show_units else '',
     }
 

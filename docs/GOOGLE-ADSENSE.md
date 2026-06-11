@@ -116,12 +116,13 @@ DEBUG=False
 GOOGLE_ADSENSE_CLIENT=ca-pub-2549684217163666
 ```
 
-Optional — show footer ad units after you create an ad unit in AdSense:
+Footer **Display** unit (“Coffee”):
 
 ```text
-GOOGLE_ADSENSE_ENABLED=True
-GOOGLE_ADSENSE_SLOT_FOOTER=your-ad-slot-id
+GOOGLE_ADSENSE_SLOT_FOOTER=3690660110
 ```
+
+Ads auto-enable when a footer slot is set. Set `GOOGLE_ADSENSE_ENABLED=False` to hide units while keeping verification/ads.txt.
 
 ### What the app injects in production
 
