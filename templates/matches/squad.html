@@ -4,7 +4,7 @@
 {% block content %}
 <div class="card card-football squad-card">
   <div class="squad-hero">
-    <div class="squad-hero-top d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+    <div class="squad-hero-top d-flex flex-wrap justify-content-between align-items-start gap-2 mb-2 mb-md-3">
       <span class="squad-hero-label"><i class="bi bi-people-fill me-1"></i> Match Squads</span>
       <div class="d-flex flex-wrap gap-2">
         <span class="badge rounded-pill text-bg-warning text-dark">Match {{ match.match_number }}</span>
@@ -12,7 +12,32 @@
       </div>
     </div>
 
-    <div class="squad-hero-teams row align-items-center g-3">
+    <div class="scorecard-hero-teams-compact d-md-none" aria-label="{{ match.team_home.name }} vs {{ match.team_away.name }}">
+      <div class="scorecard-team-compact scorecard-team-compact-home">
+        {% with flag=match.team_home|team_flag_url:"w40" %}
+          {% if flag %}<img src="{{ flag }}" alt="" class="scorecard-team-flag-compact" loading="lazy">{% endif %}
+        {% endwith %}
+        <span class="scorecard-team-code">{{ match.team_home.short_name }}</span>
+      </div>
+      <div class="scorecard-team-compact-center">
+        <span class="scorecard-vs-compact">VS</span>
+      </div>
+      <div class="scorecard-team-compact scorecard-team-compact-away">
+        <span class="scorecard-team-code">{{ match.team_away.short_name }}</span>
+        {% with flag=match.team_away|team_flag_url:"w40" %}
+          {% if flag %}<img src="{{ flag }}" alt="" class="scorecard-team-flag-compact" loading="lazy">{% endif %}
+        {% endwith %}
+      </div>
+    </div>
+    {% if match.team_home.fifa_ranking or match.team_away.fifa_ranking %}
+      <div class="predict-teams-ranks-compact d-md-none">
+        {% if match.team_home.fifa_ranking %}<span>#{{ match.team_home.fifa_ranking }}</span>{% else %}<span aria-hidden="true">&nbsp;</span>{% endif %}
+        <span class="predict-teams-ranks-sep">·</span>
+        {% if match.team_away.fifa_ranking %}<span>#{{ match.team_away.fifa_ranking }}</span>{% endif %}
+      </div>
+    {% endif %}
+
+    <div class="squad-hero-teams row align-items-center g-3 d-none d-md-flex">
       <div class="col-md-5">
         <div class="squad-hero-team">
           {% with flag=match.team_home|team_flag_url:"w80" %}
@@ -44,14 +69,25 @@
       </div>
     </div>
 
-    {% if match.stadium %}
-      <div class="squad-hero-meta mt-3 small">
-        <span><i class="bi bi-geo-alt me-1"></i>{{ match.stadium.name }}{% if match.stadium.city %}, {{ match.stadium.city }}{% endif %}</span>
-        <span class="mx-2 text-white-50">·</span>
+    <div class="predict-hero-meta predict-hero-meta-compact d-md-none mt-2">
+      {% if match.stadium %}
+        <div class="predict-hero-meta-line">
+          <i class="bi bi-geo-alt me-1"></i>{{ match.stadium.name }}{% if match.stadium.city %}, {{ match.stadium.city }}{% endif %}
+        </div>
+      {% endif %}
+      <div class="predict-hero-meta-line">
         <span>Kickoff:</span>
         {% include 'tournaments/partials/kickoff_local.html' with kickoff_at=match.kickoff_at format='detail' %}
       </div>
-    {% endif %}
+    </div>
+    <div class="squad-hero-meta mt-3 small d-none d-md-block">
+      {% if match.stadium %}
+        <span><i class="bi bi-geo-alt me-1"></i>{{ match.stadium.name }}{% if match.stadium.city %}, {{ match.stadium.city }}{% endif %}</span>
+        <span class="mx-2 text-white-50">·</span>
+      {% endif %}
+      <span>Kickoff:</span>
+      {% include 'tournaments/partials/kickoff_local.html' with kickoff_at=match.kickoff_at format='detail' %}
+    </div>
   </div>
 
   <div class="squad-body">

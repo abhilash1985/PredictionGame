@@ -1243,19 +1243,80 @@ body.page-legal {
 }
 
 @media (max-width: 767px) {
+  .squad-hero {
+    padding: 1rem 1rem 1.1rem;
+  }
+
+  .squad-hero-label {
+    font-size: 0.95rem;
+  }
+
+  .squad-hero .badge {
+    font-size: 0.68rem;
+  }
+
   .squad-hero,
   .squad-body {
     padding-left: 1rem;
     padding-right: 1rem;
   }
 
+  .squad-body {
+    padding-top: 1rem;
+    padding-bottom: 1.25rem;
+  }
+
   .squad-panel-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .squad-panel-flag {
+    width: 28px;
+    height: 21px;
+  }
+
+  .squad-panel-name {
+    font-size: 0.9rem;
+  }
+
+  .squad-panel-count {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.45rem;
   }
 
   .squad-panel-body {
     max-height: none;
+  }
+
+  .squad-table thead th {
+    font-size: 0.68rem;
+    padding: 0.4rem 0.55rem;
+  }
+
+  .squad-table tbody td {
+    padding: 0.4rem 0.55rem;
+    font-size: 0.85rem;
+  }
+
+  .squad-jersey {
+    width: 2rem;
+    font-size: 0.85rem;
+  }
+
+  .squad-position-badge {
+    min-width: 2rem;
+    font-size: 0.68rem;
+  }
+
+  .squad-actions {
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+  }
+
+  .squad-actions .btn {
+    width: 100%;
   }
 }
 
@@ -2686,7 +2747,9 @@ body.page-auth .main-content {
   font-size: 0.8rem;
 }
 
-.predict-options-row {
+.predict-options-row,
+.predict-options-winner,
+.predict-options-numeric {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -2694,7 +2757,9 @@ body.page-auth .main-content {
   gap: 0.5rem;
 }
 
-.predict-options-row .form-check {
+.predict-options-row .form-check,
+.predict-options-winner .form-check,
+.predict-options-numeric .form-check {
   margin-bottom: 0;
   padding-left: 0;
 }
@@ -3081,22 +3146,29 @@ body.page-auth .main-content {
   }
 
   .predict-options-numeric {
-    display: grid;
-    gap: 0.35rem;
-  }
-
-  .predict-options-numeric.predict-options-cols-7 {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.3rem;
   }
 
   .predict-options-numeric.predict-options-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    flex-wrap: wrap;
+  }
+
+  .predict-options-numeric .predict-option-pill {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .predict-options-numeric.predict-options-cols-4 .predict-option-pill {
+    flex: 1 1 calc(25% - 0.3rem);
+    max-width: calc(25% - 0.3rem);
   }
 
   .predict-options-numeric .predict-option-pill .form-check-label {
     width: 100%;
     justify-content: center;
-    padding: 0.3rem 0.15rem;
+    padding: 0.35rem 0.1rem;
     font-size: 0.76rem;
     min-height: 2rem;
   }

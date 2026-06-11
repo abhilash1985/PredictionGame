@@ -2,15 +2,18 @@
 <section class="squad-panel h-100">
   <header class="squad-panel-header">
     <div class="squad-panel-team">
-      {% with flag=team|team_flag_url:"w80" %}
+      {% with flag=team|team_flag_url:"w40" %}
         {% if flag %}
           <img src="{{ flag }}" alt="{{ team.name }} flag" class="squad-panel-flag" loading="lazy">
         {% endif %}
       {% endwith %}
       <div class="squad-panel-team-text">
-        <h3 class="squad-panel-name">{{ team.name }}</h3>
+        <h3 class="squad-panel-name">
+          <span class="d-md-none">{{ team.short_name }}</span>
+          <span class="d-none d-md-inline">{{ team.name }}</span>
+        </h3>
         {% if team.fifa_ranking %}
-          <div class="squad-panel-rank">FIFA ranking #{{ team.fifa_ranking }}</div>
+          <div class="squad-panel-rank d-none d-md-block">FIFA ranking #{{ team.fifa_ranking }}</div>
         {% endif %}
       </div>
     </div>
