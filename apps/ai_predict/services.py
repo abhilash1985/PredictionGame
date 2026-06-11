@@ -106,22 +106,32 @@ class AiPredictService:
         return prediction
 
     @classmethod
-    def run_scheduled_predictions(cls):
+    def _upcoming_matches_queryset(cls):
+        return (
+            Match.objects.filter(
+                kickoff_at__gte=timezone.now(),
+                status=Match.Status.SCHEDULED,
+            )
+            .prefetch_related(
+                'questions__question_template',
+                'team_home__players',
+                'team_away__players',
+            )
+            .select_related('team_home', 'team_away', 'round', 'stadium', 'tournament')
+            .order_by('kickoff_at', 'match_number')
+        )
+
+    @classmethod
+    def run_scheduled_predictions(cls, upcoming_match_limit=None):
         game_settings = GameSettings.load()
-        hours = game_settings.ai_predict_hours_before
-        window_start = timezone.now()
-        window_end = window_start + timezone.timedelta(hours=hours)
         max_users = game_settings.ai_predict_max_users_per_run
 
-        matches = Match.objects.filter(
-            kickoff_at__gte=window_start,
-            kickoff_at__lte=window_end,
-            status=Match.Status.SCHEDULED,
-        ).prefetch_related(
-            'questions__question_template',
-            'team_home__players',
-            'team_away__players',
-        ).select_related('team_home', 'team_away', 'round', 'stadium', 'tournament')
+        if upcoming_match_limit:
+            matches = cls._upcoming_matches_queryset()[:upcoming_match_limit]
+        else:
+            hours = game_settings.ai_predict_hours_before
+            window_end = timezone.now() + timezone.timedelta(hours=hours)
+            matches = cls._upcoming_matches_queryset().filter(kickoff_at__lte=window_end)
 
         profiles = list(
             UserProfile.objects.filter(ai_predict_enabled=True).select_related('user', 'favorite_team')[:max_users],

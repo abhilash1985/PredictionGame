@@ -91,26 +91,69 @@ class AiPredictServiceTests(TestCase):
         created = AiPredictService.run_scheduled_predictions()
         self.assertEqual(created, 1)
 
+    @override_settings(GOOGLE_API_KEY='')
+    def test_run_upcoming_matches_limits_fixture_count(self):
+        _add_basic_questions(self.match)
+        match_two = _create_match(
+            kickoff_at=timezone.now() + timedelta(hours=2),
+            tournament=self.match.tournament,
+            round_obj=self.match.round,
+            stadium=self.match.stadium,
+            team_home=self.match.team_home,
+            team_away=self.match.team_away,
+            match_number=2,
+        )
+        match_three = _create_match(
+            kickoff_at=timezone.now() + timedelta(hours=3),
+            tournament=self.match.tournament,
+            round_obj=self.match.round,
+            stadium=self.match.stadium,
+            team_home=self.match.team_home,
+            team_away=self.match.team_away,
+            match_number=3,
+        )
+        _add_basic_questions(match_two)
+        _add_basic_questions(match_three)
 
-def _create_match(kickoff_at=None):
-    tournament = Tournament.objects.create(
-        name='WC 2026',
-        location='USA',
-        start_date='2026-06-01',
-        end_date='2026-07-01',
-        is_active=True,
-    )
-    round_obj = Round.objects.create(tournament=tournament, name='Group A', sort_order=1)
-    stadium = Stadium.objects.create(name='Test Stadium', city='Test', country='USA')
-    home = Team.objects.create(name='Argentina', short_name='ARG', group_letter='A', fifa_ranking=1)
-    away = Team.objects.create(name='France', short_name='FRA', group_letter='A', fifa_ranking=2)
-    Player.objects.create(team=home, first_name='Lionel', last_name='Messi', jersey_number=10, position='ST')
+        created = AiPredictService.run_scheduled_predictions(upcoming_match_limit=2)
+        self.assertEqual(created, 2)
+        self.assertEqual(MatchPrediction.objects.filter(user=self.user).count(), 2)
+        self.assertFalse(MatchPrediction.objects.filter(user=self.user, match=match_three).exists())
+
+
+def _create_match(
+    kickoff_at=None,
+    match_number=1,
+    tournament=None,
+    round_obj=None,
+    stadium=None,
+    team_home=None,
+    team_away=None,
+):
+    if tournament is None:
+        tournament = Tournament.objects.create(
+            name='WC 2026',
+            location='USA',
+            start_date='2026-06-01',
+            end_date='2026-07-01',
+            is_active=True,
+        )
+    if round_obj is None:
+        round_obj = Round.objects.create(tournament=tournament, name='Group A', sort_order=1)
+    if stadium is None:
+        stadium = Stadium.objects.create(name='Test Stadium', city='Test', country='USA')
+    if team_home is None:
+        team_home = Team.objects.create(name='Argentina', short_name='ARG', group_letter='A', fifa_ranking=1)
+    if team_away is None:
+        team_away = Team.objects.create(name='France', short_name='FRA', group_letter='A', fifa_ranking=2)
+    if team_home.players.filter(is_active=True).count() == 0:
+        Player.objects.create(team=team_home, first_name='Lionel', last_name='Messi', jersey_number=10, position='ST')
     return Match.objects.create(
         tournament=tournament,
         round=round_obj,
-        match_number=1,
-        team_home=home,
-        team_away=away,
+        match_number=match_number,
+        team_home=team_home,
+        team_away=team_away,
         stadium=stadium,
         kickoff_at=kickoff_at or timezone.now() + timedelta(hours=1),
     )
