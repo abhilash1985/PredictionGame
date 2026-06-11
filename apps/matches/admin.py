@@ -70,7 +70,35 @@ class QuestionPredictionAdmin(admin.ModelAdmin):
 
 @admin.register(GameSettings)
 class GameSettingsAdmin(admin.ModelAdmin):
-    list_display = ['point_booster_limit', 'ai_predict_hours_before', 'tournament_active']
+    list_display = [
+        'point_booster_limit',
+        'ai_predict_enabled',
+        'ai_predict_model',
+        'ai_predict_hours_before',
+        'ai_predict_max_users_per_run',
+        'tournament_active',
+    ]
+    fieldsets = (
+        (
+            'Point boosters',
+            {'fields': ('point_booster_limit',)},
+        ),
+        (
+            'AI Predict',
+            {
+                'fields': (
+                    'ai_predict_enabled',
+                    'ai_predict_model',
+                    'ai_predict_hours_before',
+                    'ai_predict_max_users_per_run',
+                ),
+            },
+        ),
+        (
+            'Tournament',
+            {'fields': ('tournament_active',)},
+        ),
+    )
 
     def has_add_permission(self, request):
         return not GameSettings.objects.exists()

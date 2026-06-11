@@ -5,7 +5,10 @@ from django.utils import timezone
 
 class GameSettings(models.Model):
     point_booster_limit = models.PositiveIntegerField(default=5)
+    ai_predict_enabled = models.BooleanField(default=True)
+    ai_predict_model = models.CharField(max_length=100, default='gemini-2.5-flash')
     ai_predict_hours_before = models.PositiveIntegerField(default=2)
+    ai_predict_max_users_per_run = models.PositiveIntegerField(default=500)
     tournament_active = models.ForeignKey(
         'tournaments.Tournament',
         on_delete=models.SET_NULL,
@@ -26,10 +29,7 @@ class GameSettings(models.Model):
 
     @classmethod
     def load(cls):
-        obj, _created = cls.objects.get_or_create(
-            pk=1,
-            defaults={'point_booster_limit': settings.DEFAULT_POINT_BOOSTER_LIMIT},
-        )
+        obj, _created = cls.objects.get_or_create(pk=1)
         return obj
 
 

@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.db import IntegrityError, transaction
 
 from apps.accounts.models import UserProfile
@@ -6,10 +5,7 @@ from apps.matches.models import GameSettings
 
 
 def _default_booster_limit():
-    try:
-        return GameSettings.load().point_booster_limit
-    except Exception:
-        return settings.DEFAULT_POINT_BOOSTER_LIMIT
+    return GameSettings.load().point_booster_limit
 
 
 def _base_display_name(user):

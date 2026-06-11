@@ -1,7 +1,6 @@
 import logging
 import random
 
-from django.conf import settings
 from django.utils import timezone
 
 from apps.accounts.models import UserProfile
@@ -112,7 +111,7 @@ class AiPredictService:
         hours = game_settings.ai_predict_hours_before
         window_start = timezone.now()
         window_end = window_start + timezone.timedelta(hours=hours)
-        max_users = getattr(settings, 'AI_PREDICT_MAX_USERS_PER_RUN', 500)
+        max_users = game_settings.ai_predict_max_users_per_run
 
         matches = Match.objects.filter(
             kickoff_at__gte=window_start,

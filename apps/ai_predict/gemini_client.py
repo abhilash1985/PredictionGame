@@ -3,6 +3,8 @@ import logging
 
 from django.conf import settings
 
+from apps.matches.models import GameSettings
+
 logger = logging.getLogger(__name__)
 
 
@@ -18,7 +20,8 @@ class GeminiPredictor:
 
     @classmethod
     def is_configured(cls):
-        return bool(getattr(settings, 'AI_PREDICT_ENABLED', True) and settings.GOOGLE_API_KEY)
+        game_settings = GameSettings.load()
+        return bool(game_settings.ai_predict_enabled and settings.GOOGLE_API_KEY)
 
     @classmethod
     def predict(cls, context):
@@ -54,9 +57,10 @@ class GeminiPredictor:
         from google import genai
         from google.genai import types
 
+        game_settings = GameSettings.load()
         client = genai.Client(api_key=settings.GOOGLE_API_KEY)
         response = client.models.generate_content(
-            model=settings.AI_PREDICT_MODEL,
+            model=game_settings.ai_predict_model,
             contents=prompt,
             config=types.GenerateContentConfig(
                 response_mime_type='application/json',

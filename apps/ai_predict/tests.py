@@ -63,7 +63,7 @@ class AiPredictServiceTests(TestCase):
         self.assertTrue(prediction.is_ai_generated)
         self.assertEqual(prediction.answers.count(), 3)
 
-    @override_settings(GOOGLE_API_KEY='test-key', AI_PREDICT_ENABLED=True)
+    @override_settings(GOOGLE_API_KEY='test-key')
     @patch('apps.ai_predict.gemini_client.GeminiPredictor._call_gemini')
     def test_predict_for_user_uses_gemini_answers(self, mock_call):
         import json

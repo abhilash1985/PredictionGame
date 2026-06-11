@@ -214,11 +214,18 @@ apps/ai_predict/
 ### Environment variables
 
 ```text
-GOOGLE_API_KEY=              # Gemini Developer API key
-AI_PREDICT_MODEL=gemini-2.0-flash
-AI_PREDICT_ENABLED=True      # kill switch
-AI_PREDICT_MAX_USERS_PER_RUN=500   # safety cap
+GOOGLE_API_KEY=              # Gemini Developer API key (env only — secret)
 ```
+
+**Game Settings** (Django admin → singleton row, not env):
+
+| Field | Default | Purpose |
+|-------|---------|---------|
+| `ai_predict_enabled` | True | Gemini kill switch |
+| `ai_predict_model` | gemini-2.5-flash | Model name |
+| `ai_predict_hours_before` | 2 | Run window before kickoff |
+| `ai_predict_max_users_per_run` | 500 | Safety cap per cron run |
+| `point_booster_limit` | 5 | Boosters granted to new users |
 
 ---
 
@@ -387,9 +394,9 @@ The app ships both:
 
 ```text
 GOOGLE_API_KEY=your-key-from-aistudio.google.com
-AI_PREDICT_ENABLED=True
-AI_PREDICT_MODEL=gemini-2.5-flash
 ```
+
+Configure limits/model/window in **Django admin → Game Settings** (defaults: enabled, `gemini-2.5-flash`, 2h window, 500 users/run).
 
 2. Install deps: `pip install -r requirements.txt`
 
@@ -422,9 +429,9 @@ celery -A config beat -l info   # or: watch -n 900 python manage.py run_ai_predi
 
 ```text
 GOOGLE_API_KEY=...
-AI_PREDICT_ENABLED=True
-AI_PREDICT_MODEL=gemini-2.5-flash
 ```
+
+Tune AI Predict and point booster defaults in **Django admin → Game Settings**.
 
 2. **Cron job** (Railway → project → **Cron** or scheduled job):
 
@@ -479,7 +486,7 @@ Prints: `Created N AI prediction(s).`
 
 **Cost control:**
 
-- Cap users per run (`AI_PREDICT_MAX_USERS_PER_RUN`)
+- Cap users per run (`GameSettings.ai_predict_max_users_per_run`)
 - Cache match-level context (same for all users) — only user slice differs
 - Fallback to heuristics on 429/5xx
 
@@ -502,7 +509,7 @@ Prints: `Created N AI prediction(s).`
 - [ ] `AiPredictContextBuilder` from ORM
 - [ ] Validate answers against options
 - [ ] Fallback to heuristics on error
-- [ ] Env: `GOOGLE_API_KEY`, `AI_PREDICT_ENABLED`
+- [ ] Env: `GOOGLE_API_KEY`; Game Settings in admin
 
 **Outcome:** Personalized predictions with favorite team + history.
 
@@ -529,7 +536,7 @@ Prints: `Created N AI prediction(s).`
 | Invalid LLM answer | Validator rejects; retry once; then fallback |
 | All users same stats answer | Per-user seed + explicit prompt for Q4–Q7 |
 | Worker not running | Document Railway cron; monitor “missed predictions” |
-| API cost spike | `AI_PREDICT_ENABLED` kill switch; daily cap |
+| API cost spike | `GameSettings.ai_predict_enabled` kill switch; daily cap |
 | Wrong team/player in options | Always constrain to `question.options` from DB |
 
 ---
