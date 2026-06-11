@@ -1,0 +1,34 @@
+{% extends 'pages/legal_page.html' %}
+
+{% block legal_content %}
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Get in touch</h2>
+  <p>
+    For support, privacy or data requests, account issues, or general feedback about {{ site_name }}, email us at:
+  </p>
+  <p class="legal-contact-email">
+    <a class="fw-semibold" href="mailto:{{ site_contact_email }}">{{ site_contact_email }}</a>
+  </p>
+  <p class="text-muted small">
+    We aim to respond within a few business days. During the World Cup tournament, response times may be longer on match days.
+  </p>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">What to include</h2>
+  <ul>
+    <li>Your display name or account email (never send your password).</li>
+    <li>A clear description of the issue or request.</li>
+    <li>For privacy requests: whether you want access, correction, or deletion of your data.</li>
+  </ul>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Related links</h2>
+  <ul>
+    <li><a href="{% url 'about' %}">About the game</a></li>
+    <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+    <li><a href="{% url 'landing' %}">Home</a></li>
+  </ul>
+</section>
+{% endblock %}

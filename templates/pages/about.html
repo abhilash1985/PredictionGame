@@ -1,0 +1,60 @@
+{% extends 'pages/legal_page.html' %}
+
+{% block legal_content %}
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">What is this site?</h2>
+  <p>
+    {{ site_name }} is a free fantasy prediction game for the FIFA World Cup 2026 in Canada, Mexico, and the United States.
+    Pick outcomes for group-stage matches, earn points from correct answers, compete on leaderboards, and optionally use
+    <strong>AI Predict</strong> to fill predictions before kickoff when you enable it on your profile.
+  </p>
+  <p>
+    This is <strong>not</strong> real-money gambling or betting. There are no cash prizes — only points, rankings, and bragging rights.
+  </p>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">How it works</h2>
+  <ol>
+    <li>Create an account (email or Google sign-in).</li>
+    <li>Complete onboarding: display name, favorite team, timezone.</li>
+    <li>Submit predictions before each match kicks off.</li>
+    <li>Use up to five <strong>point boosters</strong> on group-stage matches (2× points when applied).</li>
+    <li>Track results on the dashboard, scorecards, and leaderboard.</li>
+  </ol>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">AI Predict</h2>
+  <p>
+    If you turn on AI Predict, the site can automatically submit predictions for you within a configurable window before kickoff
+    (default: two hours). Answers may use Google Gemini when configured, with a heuristic fallback.
+    You can change this anytime in your profile. See <a href="{% url 'privacy' %}">Privacy Policy</a> for how data is used.
+  </p>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Advertising</h2>
+  <p>
+    We may show Google AdSense display advertisements on some public pages to help cover hosting costs.
+    Ads are optional and controlled by site configuration. Advertising cookies are described in our
+    <a href="{% url 'privacy' %}">Privacy Policy</a>.
+  </p>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Disclaimer</h2>
+  <p>
+    This site is an independent fan project. It is not affiliated with, endorsed by, or sponsored by FIFA or the official World Cup organizers.
+    Team names and tournament information are used for informational and entertainment purposes.
+  </p>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Contact</h2>
+  <p>
+    Questions, feedback, or data requests: <a href="{% url 'contact' %}">Contact page</a>
+    or email <a href="mailto:{{ site_contact_email }}">{{ site_contact_email }}</a>.
+  </p>
+</section>
+{% endblock %}

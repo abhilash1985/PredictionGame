@@ -2736,6 +2736,51 @@ footer.site-footer {
   margin-top: auto;
 }
 
+.site-footer__nav a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.site-footer__nav a:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.site-footer__sep {
+  margin: 0 0.5rem;
+  opacity: 0.5;
+}
+
+.legal-page {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem 0 2.5rem;
+}
+
+.legal-page__header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 1rem;
+}
+
+.legal-section {
+  margin-bottom: 1.75rem;
+}
+
+.legal-section h2 {
+  color: var(--theme-navy-mid);
+  margin-bottom: 0.75rem;
+}
+
+.legal-section p,
+.legal-section li {
+  line-height: 1.6;
+}
+
+.legal-contact-email {
+  font-size: 1.1rem;
+}
+
 .group-tabs .nav-link {
   color: var(--theme-navy-mid);
   border: 1px solid #dee2e6;

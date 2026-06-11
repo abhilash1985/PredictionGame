@@ -497,6 +497,9 @@ In Django admin, open the user's email address record (django-allauth) and use *
 - [Architecture Plan](docs/ARCHITECTURE-PLAN.md)
 - [Question Bank](docs/QUESTION-BANK.md)
 - [AI Predict (Gemini / ADK plan)](docs/AI-PREDICT.md)
+- [Google AdSense](docs/GOOGLE-ADSENSE.md)
+
+Public pages: `/about/`, `/contact/`, `/privacy/` (footer links; useful for AdSense approval).
 
 ## Modules
 

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.shortcuts import render
@@ -26,6 +27,47 @@ def verdict_context_for_user(match, user):
     if not verdict_context['rows']:
         return None, 'You have not predicted this match yet.'
     return verdict_context, None
+
+
+def _legal_page_context(page_title, page_subtitle=''):
+    return {
+        'page_title': page_title,
+        'page_subtitle': page_subtitle,
+        'last_updated': settings.LEGAL_LAST_UPDATED,
+    }
+
+
+def privacy_policy_view(request):
+    return render(
+        request,
+        'pages/privacy_policy.html',
+        _legal_page_context(
+            'Privacy Policy',
+            'How we collect, use, and protect your information — including cookies and advertising.',
+        ),
+    )
+
+
+def about_view(request):
+    return render(
+        request,
+        'pages/about.html',
+        _legal_page_context(
+            'About',
+            'Free FIFA World Cup 2026 fantasy predictions — no real-money betting.',
+        ),
+    )
+
+
+def contact_view(request):
+    return render(
+        request,
+        'pages/contact.html',
+        _legal_page_context(
+            'Contact',
+            'Support, feedback, and privacy requests.',
+        ),
+    )
 
 
 def landing_view(request):

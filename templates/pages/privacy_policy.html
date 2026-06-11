@@ -1,0 +1,94 @@
+{% extends 'pages/legal_page.html' %}
+
+{% block legal_content %}
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Who we are</h2>
+  <p>
+    {{ site_name }} ({{ site_url }}) is a free fantasy prediction game for the FIFA World Cup 2026.
+    This policy describes how we handle personal data when you use the site.
+  </p>
+  <p>
+    Questions: <a href="mailto:{{ site_contact_email }}">{{ site_contact_email }}</a>
+    or our <a href="{% url 'contact' %}">Contact</a> page.
+  </p>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Information we collect</h2>
+  <ul>
+    <li><strong>Account data:</strong> email address, display name, password (stored hashed), and optional profile fields (favorite team, timezone, AI Predict preference).</li>
+    <li><strong>Sign-in with Google:</strong> if you use Google OAuth, we receive profile and email data from Google according to your Google account settings.</li>
+    <li><strong>Predictions:</strong> match predictions, scores, leaderboard statistics, and point booster usage.</li>
+    <li><strong>Technical data:</strong> session cookies, CSRF tokens, and a timezone cookie so kickoff times display in your local zone.</li>
+    <li><strong>Email:</strong> if email verification or password reset is enabled, we send messages via our email provider (e.g. SendGrid).</li>
+  </ul>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">How we use information</h2>
+  <ul>
+    <li>Operate the game: authentication, predictions, scoring, and leaderboards.</li>
+    <li>Optional <strong>AI Predict</strong>: if you enable it on your profile, the system may auto-submit predictions before kickoff using heuristics and, when configured, the Google Gemini API with match and profile context (favorite team, recent style). See <a href="{% url 'about' %}">About</a> for details.</li>
+    <li>Send account-related email (verification, password reset) when email is configured.</li>
+    <li>Maintain security and prevent abuse.</li>
+  </ul>
+  <p>We do not sell your personal data.</p>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Cookies</h2>
+  <p>We use cookies and similar technologies for:</p>
+  <ul>
+    <li><strong>Essential cookies:</strong> login session, CSRF protection, and optional timezone preference (<code>django_timezone</code>).</li>
+    <li><strong>Google Sign-In:</strong> Google may set cookies when you authenticate via OAuth.</li>
+    <li><strong>Advertising cookies (if enabled):</strong> if we enable Google AdSense, Google and its partners may use cookies to serve and personalize ads, measure performance, and limit repeat ads. You can learn more at <a href="https://policies.google.com/technologies/ads" rel="noopener noreferrer">Google Advertising Policies</a> and manage ad personalization in <a href="https://adssettings.google.com" rel="noopener noreferrer">Google Ad Settings</a>.</li>
+  </ul>
+  <p>
+    Where required by law (for example in the EU/UK), we will ask for consent before non-essential or advertising cookies.
+  </p>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Third-party services</h2>
+  <ul>
+    <li><strong>Google Sign-In</strong> — authentication (<a href="https://policies.google.com/privacy" rel="noopener noreferrer">Google Privacy Policy</a>).</li>
+    <li><strong>SendGrid / SMTP</strong> — transactional email.</li>
+    <li><strong>Google Gemini</strong> — optional AI Predict answers when enabled by you and by site administrators.</li>
+    <li><strong>Google AdSense</strong> — optional display advertising when enabled on the site. AdSense may collect usage data and cookies as described above.</li>
+    <li><strong>Hosting</strong> — application and database hosting (e.g. Railway, PostgreSQL).</li>
+  </ul>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Retention and security</h2>
+  <p>
+    We keep account and prediction data for the duration of the tournament service and a reasonable period afterward unless you ask for deletion or we must retain data for legal reasons.
+    Passwords are hashed. Production traffic uses HTTPS.
+  </p>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Your choices</h2>
+  <ul>
+    <li>Update profile and AI Predict settings in your account.</li>
+    <li>Request account deletion or data questions via <a href="mailto:{{ site_contact_email }}">{{ site_contact_email }}</a>.</li>
+    <li>Use browser settings to block cookies (essential site features may not work).</li>
+    <li>Opt out of personalized Google ads via <a href="https://adssettings.google.com" rel="noopener noreferrer">Google Ad Settings</a>.</li>
+  </ul>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Children</h2>
+  <p>
+    The service is not directed at children under 13 (or the minimum age in your country). We do not knowingly collect data from children.
+  </p>
+</section>
+
+<section class="legal-section">
+  <h2 class="h5 fw-semibold">Changes</h2>
+  <p>
+    We may update this policy. The “Last updated” date at the top will change when we do.
+    Continued use of the site after changes means you accept the updated policy.
+  </p>
+</section>
+{% endblock %}

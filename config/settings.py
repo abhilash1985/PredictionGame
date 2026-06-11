@@ -76,6 +76,7 @@ TEMPLATES = [
                 'apps.tournaments.context_processors.tournament_context',
                 'apps.tournaments.context_processors.standings_context',
                 'apps.accounts.context_processors.auth_context',
+                'apps.tournaments.context_processors.site_context',
             ],
         },
     },
@@ -224,6 +225,17 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
+
+# Site info (About, Contact, Privacy — also used for AdSense approval)
+SITE_NAME = os.environ.get('SITE_NAME', 'FIFA WC 2026 Prediction Game')
+SITE_CONTACT_EMAIL = os.environ.get('SITE_CONTACT_EMAIL', 'contact@myprediction.today')
+LEGAL_LAST_UPDATED = os.environ.get('LEGAL_LAST_UPDATED', '11 June 2026')
+
+# Google AdSense (optional — see docs/GOOGLE-ADSENSE.md; keep disabled locally)
+GOOGLE_ADSENSE_CLIENT = os.environ.get('GOOGLE_ADSENSE_CLIENT', '')
+GOOGLE_ADSENSE_ENABLED = os.environ.get('GOOGLE_ADSENSE_ENABLED', 'False').lower() in ('true', '1', 'yes')
+GOOGLE_ADSENSE_SLOT_FOOTER = os.environ.get('GOOGLE_ADSENSE_SLOT_FOOTER', '')
+GOOGLE_ADSENSE_SLOT_SIDEBAR = os.environ.get('GOOGLE_ADSENSE_SLOT_SIDEBAR', '')
 
 # AI Predict — GOOGLE_API_KEY only; limits/model/enabled live in GameSettings (Django admin)
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')

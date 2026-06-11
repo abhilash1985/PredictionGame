@@ -2,13 +2,35 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from django.db.models import Count
-from django.test import TestCase
+from django.test import Client, TestCase
+from django.urls import reverse
 from django.utils import timezone
 
 from apps.matches.models import Match
 from apps.tournaments.data.loader import load_wc2026_data, parse_kickoff
 from apps.tournaments.models import Round, Stadium, Team, Tournament
 from apps.tournaments.views import default_verdict_match
+
+
+class LegalPagesTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_privacy_page_returns_200(self):
+        response = self.client.get(reverse('privacy'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Privacy Policy')
+        self.assertContains(response, 'cookies')
+
+    def test_about_page_returns_200(self):
+        response = self.client.get(reverse('about'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'fantasy prediction')
+
+    def test_contact_page_returns_200(self):
+        response = self.client.get(reverse('contact'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Get in touch')
 
 
 class ParseKickoffTest(TestCase):
