@@ -32,7 +32,7 @@ Group-stage only: knockout placeholders are not seeded, and point boosters apply
 
 ## Production deployment
 
-This app is a standard Django project with Gunicorn, WhiteNoise (static files), and optional Celery + Redis (AI auto-predict). See [Question Bank](docs/QUESTION-BANK.md) for match questions and [AI Predict plan](docs/AI-PREDICT.md) for the Gemini/ADK design.
+This app is a standard Django project with Gunicorn, WhiteNoise (static files), and optional Celery + Redis. **AI Predict uses Gemini** via `python manage.py run_ai_predictions` (Railway cron — no Redis required). See [AI Predict plan](docs/AI-PREDICT.md).
 
 ### Database: will SQLite work in production?
 

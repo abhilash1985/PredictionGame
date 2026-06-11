@@ -367,16 +367,84 @@ Useful when Celery worker is not deployed yet.
 
 ## 9. Infrastructure (production)
 
-AI Predict **requires a background worker**. Web-only Railway deploy is not enough.
+### Does AI Predict require Redis?
 
-| Component | Purpose | Railway / free options |
-|-----------|---------|------------------------|
-| **Redis** | Celery broker | Upstash free Redis |
-| **Celery worker** | Runs `run_ai_predictions` | Railway worker service |
-| **Celery Beat** or **cron** | Every 15 min | Railway cron job or Beat process |
-| **GOOGLE_API_KEY** | Gemini calls | Google AI Studio |
+**No — not if you use the management command or Railway cron.**
 
-### Procfile addition
+| Approach | Redis required? | Celery worker? | Best for |
+|----------|-----------------|----------------|----------|
+| **`python manage.py run_ai_predictions`** | No | No | **Railway cron (recommended)**, local cron, manual runs |
+| **Celery Beat + worker** | Yes | Yes | High volume, retries, queue monitoring |
+
+The app ships both:
+
+- **Primary:** `apps/ai_predict/management/commands/run_ai_predictions.py`
+- **Optional:** `apps.ai_predict.tasks.run_ai_predictions` (Celery) — same service logic
+
+### Local development
+
+1. Add to `.env`:
+
+```text
+GOOGLE_API_KEY=your-key-from-aistudio.google.com
+AI_PREDICT_ENABLED=True
+AI_PREDICT_MODEL=gemini-2.5-flash
+```
+
+2. Install deps: `pip install -r requirements.txt`
+
+3. Enable AI Predict on a test user (profile or onboarding toggle).
+
+4. Ensure a match kickoff is within the next 2 hours and has questions seeded.
+
+5. Run:
+
+```bash
+python manage.py run_ai_predictions
+```
+
+Without `GOOGLE_API_KEY`, the service falls back to heuristics (still creates predictions).
+
+**Optional local Celery** (only if you want to test the task queue):
+
+```bash
+# terminal 1 — requires Redis running locally
+redis-server
+# terminal 2
+celery -A config worker -l info
+# terminal 3
+celery -A config beat -l info   # or: watch -n 900 python manage.py run_ai_predictions
+```
+
+### Railway production (recommended: cron, no Redis)
+
+1. **Web service variables:**
+
+```text
+GOOGLE_API_KEY=...
+AI_PREDICT_ENABLED=True
+AI_PREDICT_MODEL=gemini-2.5-flash
+```
+
+2. **Cron job** (Railway → project → **Cron** or scheduled job):
+
+```bash
+python manage.py run_ai_predictions
+```
+
+Schedule: **every 15 minutes** (`*/15 * * * *`).
+
+3. No Redis or Celery worker service required.
+
+### Railway production (optional: Celery)
+
+| Component | Purpose | Railway |
+|-----------|---------|---------|
+| **Upstash Redis** | Celery broker | Add Redis; set `CELERY_BROKER_URL` |
+| **Worker service** | Runs tasks | `celery -A config worker -l info` |
+| **Beat service** | Scheduler | `celery -A config beat -l info` |
+
+### Procfile (optional Celery)
 
 ```text
 release: python manage.py migrate
@@ -385,11 +453,15 @@ worker: celery -A config worker -l info
 beat: celery -A config beat -l info
 ```
 
-Or single Railway cron invoking `python manage.py run_ai_predictions` every 15 minutes (simpler, no Beat).
+Or use **Railway cron** instead of Beat (simpler).
 
----
+### Management command (implemented)
 
-## 10. Cost & free-tier limits
+```bash
+python manage.py run_ai_predictions
+```
+
+Prints: `Created N AI prediction(s).`
 
 ### Gemini Developer API (free tier, 2026)
 

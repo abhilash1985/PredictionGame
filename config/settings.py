@@ -227,3 +227,9 @@ CELERY_TIMEZONE = TIME_ZONE
 
 # Game defaults (overridden by GameSettings singleton when present)
 DEFAULT_POINT_BOOSTER_LIMIT = 5
+
+# AI Predict (Gemini via google-genai)
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
+AI_PREDICT_ENABLED = os.environ.get('AI_PREDICT_ENABLED', 'True').lower() in ('true', '1', 'yes')
+AI_PREDICT_MODEL = os.environ.get('AI_PREDICT_MODEL', 'gemini-2.5-flash')
+AI_PREDICT_MAX_USERS_PER_RUN = int(os.environ.get('AI_PREDICT_MAX_USERS_PER_RUN', '500'))
