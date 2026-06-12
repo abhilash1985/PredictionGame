@@ -544,6 +544,22 @@ templates:
     question_text: "Total attempts at goal off target by {away_team}?"
     options: *attempts_on_target_team
 
+  - code: TOTAL_ATTEMEPTS_INSIDE_PENALTY
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total Attempts at Goal Inside the Penalty Area?"
+    options: *attempts_team
+
+  - code: TOTAL_ATTEMPTS_OUTSIDE_PENALTY
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total Attempts at Goal Outside the Penalty Area?"
+    options: *attempts_team
+
   # --- Discipline (2 pts) ---
   - code: TOTAL_YELLOW_CARDS
     bucket: discipline
