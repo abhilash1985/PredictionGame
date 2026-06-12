@@ -147,3 +147,59 @@ class MatchPointsMatrixTests(TestCase):
         self.assertContains(response, 'MEX vs SA')
         self.assertContains(response, self.alice.display_name)
         self.assertContains(response, 'Total')
+
+
+class LeaderboardUserStatsTests(TestCase):
+    def setUp(self):
+        today = timezone.now().date()
+        self.tournament = Tournament.objects.create(
+            name='Test Cup',
+            location='Test',
+            start_date=today,
+            end_date=today,
+            is_active=True,
+        )
+        self.round = Round.objects.create(tournament=self.tournament, name='Group A', sort_order=1)
+        self.stadium = Stadium.objects.create(name='Test Stadium', city='Test City', country='Test')
+        self.home = Team.objects.create(name='Mexico', short_name='MEX', fifa_code='MEX', group_letter='A')
+        self.away = Team.objects.create(name='South Africa', short_name='SA', fifa_code='RSA', group_letter='A')
+        self.started_match = Match.objects.create(
+            tournament=self.tournament,
+            round=self.round,
+            match_number=1,
+            team_home=self.home,
+            team_away=self.away,
+            stadium=self.stadium,
+            kickoff_at=timezone.now() - timezone.timedelta(hours=1),
+            status=Match.Status.LIVE,
+        )
+        self.upcoming_match = Match.objects.create(
+            tournament=self.tournament,
+            round=self.round,
+            match_number=2,
+            team_home=self.away,
+            team_away=self.home,
+            stadium=self.stadium,
+            kickoff_at=timezone.now() + timezone.timedelta(days=1),
+        )
+        MatchQuestion.objects.create(
+            match=self.started_match,
+            question_text='Who wins?',
+            options=[self.home.name, 'Draw', self.away.name],
+            points=10,
+        )
+        MatchQuestion.objects.create(
+            match=self.upcoming_match,
+            question_text='Who wins?',
+            options=[self.home.name, 'Draw', self.away.name],
+            points=20,
+        )
+        self.alice = User.objects.create_user(email='alice@example.com', password='testpass123')
+        MatchPrediction.objects.create(user=self.alice, match=self.started_match, total_points=6)
+        MatchPrediction.objects.create(user=self.alice, match=self.upcoming_match, total_points=0)
+
+    def test_predicted_points_exclude_upcoming_matches(self):
+        row = LeaderboardService.user_row(self.alice, self.tournament)
+        self.assertEqual(row['total_points'], 6)
+        self.assertEqual(row['max_points'], 10)
+        self.assertEqual(row['prediction_percentage'], 60.0)

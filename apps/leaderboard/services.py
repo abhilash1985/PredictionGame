@@ -38,6 +38,8 @@ class LeaderboardService:
 
         match_max_points = {}
         for match in Match.objects.filter(tournament=tournament).prefetch_related('questions'):
+            if not match.has_started:
+                continue
             match_max_points[match.id] = sum(q.points for q in match.questions.all())
 
         for pred in predictions:
@@ -47,7 +49,8 @@ class LeaderboardService:
             entry = stats[user_id]
             entry['matches_predicted'] += 1
             entry['total_points'] += pred.total_points
-            entry['max_points'] += match_max_points.get(pred.match_id, 0)
+            if pred.match_id in match_max_points:
+                entry['max_points'] += match_max_points[pred.match_id]
             if pred.point_booster_used:
                 entry['boosters_used'] += 1
             entry['winner_picks'] = winner_picks_by_user.get(user_id, 0)
