@@ -12,7 +12,12 @@ class GeminiPredictor:
     SYSTEM_INSTRUCTION = (
         'You predict FIFA World Cup match questions for a fantasy prediction game. '
         'Return ONLY valid JSON. Every answer must exactly match one allowed option string. '
-        'Use rankings, standings, recent results, and the user favorite team for core questions. '
+        'Use FIFA rankings, head-to-head, last 5 results, form vs similar-ranked opponents, '
+        'group standings, the user favorite team, and the user recent predictions. '
+        'NEVER choose "No Results" — always predict a real match outcome. '
+        'Core questions (MATCH_WINNER, HOME_GOALS, AWAY_GOALS) MUST be logically consistent: '
+        'home win means home goals > away goals; away win means away goals > home goals; '
+        'Draw means home goals equals away goals. Pick realistic scorelines, not contradictory ones. '
         'For questions marked personalization=varied, choose different plausible answers per user '
         'based on user id, display name, and recent prediction style. '
         'Do not repeat identical varied answers for every user.'
@@ -64,7 +69,7 @@ class GeminiPredictor:
             contents=prompt,
             config=types.GenerateContentConfig(
                 response_mime_type='application/json',
-                temperature=0.9,
+                temperature=0.65,
             ),
         )
         text = getattr(response, 'text', None)

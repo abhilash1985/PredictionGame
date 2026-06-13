@@ -7,6 +7,11 @@ from django.utils import timezone
 from apps.accounts.models import UserProfile
 from apps.accounts.profile_service import ensure_user_profile
 from apps.ai_predict.services import AiPredictService
+from apps.ai_predict.core_prediction import (
+    generate_coherent_core_answers,
+    goals_consistent_with_winner,
+    normalize_core_answers,
+)
 from apps.ai_predict.validators import validate_answers
 from apps.matches.models import GameSettings, Match, MatchPrediction, MatchQuestion, QuestionPrediction, QuestionTemplate
 from apps.tournaments.models import Player, Round, Stadium, Team, Tournament
@@ -85,6 +90,47 @@ class AiPredictServiceTests(TestCase):
         self.assertEqual(answers[home_goals.pk], '2')
         self.assertEqual(answers[away_goals.pk], '1')
 
+    @override_settings(GOOGLE_API_KEY='test-key')
+    @patch('apps.ai_predict.gemini_client.GeminiPredictor._call_gemini')
+    def test_inconsistent_gemini_core_answers_are_normalized(self, mock_call):
+        import json
+
+        questions = _add_basic_questions(self.match)
+        winner, home_goals, away_goals = questions
+        mock_call.return_value = json.dumps(
+            {
+                'answers': {
+                    str(winner.pk): self.match.team_home.name,
+                    str(home_goals.pk): '0',
+                    str(away_goals.pk): '4',
+                },
+            },
+        )
+        prediction = AiPredictService.predict_for_user(self.user, self.match)
+        answers = {answer.match_question_id: answer.user_answer for answer in prediction.answers.all()}
+        self.assertEqual(answers[winner.pk], self.match.team_home.name)
+        self.assertNotEqual(answers[home_goals.pk], '0')
+        self.assertNotEqual(answers[away_goals.pk], '4')
+        self.assertGreater(
+            int(answers[home_goals.pk]),
+            int(answers[away_goals.pk]),
+        )
+
+    @override_settings(GOOGLE_API_KEY='')
+    def test_heuristic_core_prediction_is_consistent(self):
+        questions = _add_basic_questions(self.match)
+        answers = AiPredictService.build_answers(self.user, self.match, questions)
+        winner, home_goals, away_goals = questions
+        self.assertNotEqual(answers[winner.pk], 'No Results')
+        self.assertTrue(
+            goals_consistent_with_winner(
+                answers[winner.pk],
+                int(answers[home_goals.pk]),
+                int(answers[away_goals.pk]),
+                self.match,
+            ),
+        )
+
     @override_settings(GOOGLE_API_KEY='')
     def test_run_scheduled_predictions_within_window(self):
         _add_basic_questions(self.match)
@@ -119,6 +165,39 @@ class AiPredictServiceTests(TestCase):
         self.assertEqual(created, 2)
         self.assertEqual(MatchPrediction.objects.filter(user=self.user).count(), 2)
         self.assertFalse(MatchPrediction.objects.filter(user=self.user, match=match_three).exists())
+
+
+class CorePredictionTests(TestCase):
+    def test_normalize_replaces_no_results_and_fixes_goals(self):
+        match = _create_match()
+        questions = _add_basic_questions(match)
+        winner, home_goals, away_goals = questions
+        answers = {
+            winner.pk: 'No Results',
+            home_goals.pk: '0',
+            away_goals.pk: '3',
+        }
+        normalized = normalize_core_answers(questions, answers, match)
+        self.assertNotEqual(normalized[winner.pk], 'No Results')
+        self.assertTrue(
+            goals_consistent_with_winner(
+                normalized[winner.pk],
+                int(normalized[home_goals.pk]),
+                int(normalized[away_goals.pk]),
+                match,
+            ),
+        )
+
+    def test_generate_coherent_core_answers_for_draw(self):
+        match = _create_match(
+            team_home=Team.objects.create(name='Even A', short_name='EVA', group_letter='B', fifa_ranking=10),
+            team_away=Team.objects.create(name='Even B', short_name='EVB', group_letter='B', fifa_ranking=11),
+        )
+        questions = _add_basic_questions(match)
+        answers = generate_coherent_core_answers(match, questions)
+        winner, home_goals, away_goals = questions
+        if answers[winner.pk] == 'Draw':
+            self.assertEqual(answers[home_goals.pk], answers[away_goals.pk])
 
 
 def _create_match(
@@ -160,9 +239,18 @@ def _create_match(
 
 
 def _add_basic_questions(match):
-    winner = QuestionTemplate.objects.create(code='MATCH_WINNER', question_text='Winner?', default_points=10)
-    home_goals = QuestionTemplate.objects.create(code='HOME_GOALS', question_text='Home goals?', default_points=5)
-    away_goals = QuestionTemplate.objects.create(code='AWAY_GOALS', question_text='Away goals?', default_points=5)
+    winner, _ = QuestionTemplate.objects.get_or_create(
+        code='MATCH_WINNER',
+        defaults={'question_text': 'Winner?', 'default_points': 10},
+    )
+    home_goals, _ = QuestionTemplate.objects.get_or_create(
+        code='HOME_GOALS',
+        defaults={'question_text': 'Home goals?', 'default_points': 5},
+    )
+    away_goals, _ = QuestionTemplate.objects.get_or_create(
+        code='AWAY_GOALS',
+        defaults={'question_text': 'Away goals?', 'default_points': 5},
+    )
     options = [match.team_home.name, match.team_away.name, 'Draw', 'No Results']
     q1 = MatchQuestion.objects.create(
         match=match,

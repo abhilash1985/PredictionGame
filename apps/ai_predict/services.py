@@ -5,6 +5,10 @@ from django.utils import timezone
 
 from apps.accounts.models import UserProfile
 from apps.ai_predict.context import AiPredictContextBuilder
+from apps.ai_predict.core_prediction import (
+    generate_coherent_core_answers,
+    normalize_core_answers,
+)
 from apps.ai_predict.gemini_client import GeminiPredictor
 from apps.ai_predict.validators import missing_question_ids, validate_answers
 from apps.matches.models import GameSettings, Match, MatchPrediction, QuestionPrediction
@@ -62,7 +66,9 @@ class AiPredictService:
 
     @classmethod
     def build_answers(cls, user, match, questions):
+        rng = random.Random(f'{user.pk}:{match.pk}')
         answers = {}
+
         if GeminiPredictor.is_configured():
             context = AiPredictContextBuilder.build(user, match)
             gemini_answers = GeminiPredictor.predict(context)
@@ -76,11 +82,18 @@ class AiPredictService:
                     len(missing),
                 )
 
-        rng = random.Random(f'{user.pk}:{match.pk}')
+        core_fallback = generate_coherent_core_answers(match, questions, user=user, rng=rng)
+        for question in questions:
+            template_code = question.question_template.code if question.question_template else ''
+            if question.pk not in answers and template_code in {'MATCH_WINNER', 'HOME_GOALS', 'AWAY_GOALS'}:
+                if question.pk in core_fallback:
+                    answers[question.pk] = core_fallback[question.pk]
+
         for question in questions:
             if question.pk not in answers:
                 answers[question.pk] = cls.heuristic_answer(question, match, user=user, rng=rng)
-        return answers
+
+        return normalize_core_answers(questions, answers, match, user=user, rng=rng)
 
     @classmethod
     def predict_for_user(cls, user, match):

@@ -1,14 +1,15 @@
 from django.db.models import Q
 
 from apps.matches.models import Match, MatchPrediction
-from apps.tournaments.models import Tournament
 from apps.tournaments.services.standings import get_all_group_standings
+
+SIMILAR_RANKING_WINDOW = 15
 
 
 class AiPredictContextBuilder:
     CORE_TEMPLATE_CODES = {'MATCH_WINNER', 'HOME_GOALS', 'AWAY_GOALS'}
     RECENT_PREDICTIONS_LIMIT = 5
-    RECENT_RESULTS_LIMIT = 3
+    RECENT_RESULTS_LIMIT = 5
 
     @classmethod
     def build(cls, user, match):
@@ -25,8 +26,11 @@ class AiPredictContextBuilder:
             },
             'match': cls._match_payload(match),
             'standings': cls._standings_payload(tournament, match),
+            'head_to_head': cls._head_to_head_payload(match),
             'recent_results': cls._recent_results_payload(match),
+            'vs_similar_ranking': cls._similar_ranking_payload(match),
             'user_recent_predictions': cls._user_predictions_payload(user, match),
+            'prediction_guidance': cls._prediction_guidance(match),
             'questions': cls._questions_payload(match),
         }
 
@@ -42,6 +46,26 @@ class AiPredictContextBuilder:
             'kickoff_utc': match.kickoff_at.isoformat(),
             'round': match.round.name if match.round else None,
             'stadium': match.stadium.name if match.stadium_id else None,
+        }
+
+    @classmethod
+    def _prediction_guidance(cls, match):
+        return {
+            'never_pick': ['No Results'],
+            'core_consistency_rules': [
+                'If home team wins, home goals must be greater than away goals.',
+                'If away team wins, away goals must be greater than home goals.',
+                'If Draw is selected, home and away goals must be equal (e.g. 1-1, 0-0).',
+                'Prefer realistic scorelines based on FIFA rankings, recent form, and head-to-head.',
+            ],
+            'data_priority': [
+                'FIFA rankings and ranking gap',
+                'Head-to-head history in this tournament',
+                'Last 5 match results for each team',
+                'Results vs opponents with similar FIFA ranking (±15)',
+                'Group standings and goal difference',
+                'User favorite team and recent prediction style',
+            ],
         }
 
     @classmethod
@@ -70,10 +94,159 @@ class AiPredictContextBuilder:
         return payload
 
     @classmethod
+    def _head_to_head_payload(cls, match):
+        finished = (
+            Match.objects.filter(
+                tournament=match.tournament,
+                status=Match.Status.FINISHED,
+            )
+            .filter(
+                Q(team_home=match.team_home, team_away=match.team_away)
+                | Q(team_home=match.team_away, team_away=match.team_home),
+            )
+            .exclude(pk=match.pk)
+            .order_by('-kickoff_at')[: cls.RECENT_RESULTS_LIMIT]
+        )
+        meetings = []
+        home_wins = away_wins = draws = 0
+        for item in finished:
+            if item.home_score is None or item.away_score is None:
+                continue
+            if item.team_home_id == match.team_home.id:
+                home_score, away_score = item.home_score, item.away_score
+            else:
+                home_score, away_score = item.away_score, item.home_score
+
+            if home_score > away_score:
+                home_wins += 1
+                outcome = f'{match.team_home.short_name} win'
+            elif away_score > home_score:
+                away_wins += 1
+                outcome = f'{match.team_away.short_name} win'
+            else:
+                draws += 1
+                outcome = 'Draw'
+
+            meetings.append(
+                {
+                    'score': f'{home_score}-{away_score}',
+                    'outcome_for_current_home': outcome,
+                },
+            )
+
+        return {
+            'meetings': meetings,
+            'summary': {
+                f'{match.team_home.short_name}_wins': home_wins,
+                'draws': draws,
+                f'{match.team_away.short_name}_wins': away_wins,
+            },
+        }
+
+    @classmethod
     def _recent_results_payload(cls, match):
         return {
             'home_last_results': cls._team_recent_results(match.team_home, match),
             'away_last_results': cls._team_recent_results(match.team_away, match),
+            'home_form': cls._team_form_summary(match.team_home, match),
+            'away_form': cls._team_form_summary(match.team_away, match),
+        }
+
+    @classmethod
+    def _similar_ranking_payload(cls, match):
+        return {
+            'home_vs_similar_rank': cls._team_vs_similar_ranking(match.team_home, match),
+            'away_vs_similar_rank': cls._team_vs_similar_ranking(match.team_away, match),
+        }
+
+    @classmethod
+    def _team_vs_similar_ranking(cls, team, current_match):
+        team_rank = team.fifa_ranking or 50
+        rank_min = max(1, team_rank - SIMILAR_RANKING_WINDOW)
+        rank_max = team_rank + SIMILAR_RANKING_WINDOW
+
+        finished = (
+            Match.objects.filter(
+                tournament=current_match.tournament,
+                status=Match.Status.FINISHED,
+            )
+            .filter(_team_filter(team))
+            .exclude(pk=current_match.pk)
+            .select_related('team_home', 'team_away')
+            .order_by('-kickoff_at')[: cls.RECENT_RESULTS_LIMIT * 2]
+        )
+
+        results = []
+        for item in finished:
+            opponent = item.team_away if item.team_home_id == team.id else item.team_home
+            opponent_rank = opponent.fifa_ranking
+            if opponent_rank is None or not (rank_min <= opponent_rank <= rank_max):
+                continue
+            if item.home_score is None or item.away_score is None:
+                continue
+
+            if item.team_home_id == team.id:
+                team_score, opp_score = item.home_score, item.away_score
+            else:
+                team_score, opp_score = item.away_score, item.home_score
+
+            if team_score > opp_score:
+                outcome = 'W'
+            elif team_score < opp_score:
+                outcome = 'L'
+            else:
+                outcome = 'D'
+
+            results.append(
+                {
+                    'opponent': opponent.short_name,
+                    'opponent_rank': opponent_rank,
+                    'score': f'{team_score}-{opp_score}',
+                    'result': outcome,
+                },
+            )
+            if len(results) >= cls.RECENT_RESULTS_LIMIT:
+                break
+        return results
+
+    @classmethod
+    def _team_form_summary(cls, team, current_match):
+        finished = (
+            Match.objects.filter(
+                tournament=current_match.tournament,
+                status=Match.Status.FINISHED,
+            )
+            .filter(_team_filter(team))
+            .exclude(pk=current_match.pk)
+            .order_by('-kickoff_at')[: cls.RECENT_RESULTS_LIMIT]
+        )
+        wins = draws = losses = 0
+        goals_for = goals_against = 0
+        for item in finished:
+            if item.home_score is None or item.away_score is None:
+                continue
+            if item.team_home_id == team.id:
+                team_score, opp_score = item.home_score, item.away_score
+            else:
+                team_score, opp_score = item.away_score, item.home_score
+
+            goals_for += team_score
+            goals_against += opp_score
+            if team_score > opp_score:
+                wins += 1
+            elif team_score < opp_score:
+                losses += 1
+            else:
+                draws += 1
+
+        played = wins + draws + losses
+        return {
+            'played': played,
+            'wins': wins,
+            'draws': draws,
+            'losses': losses,
+            'avg_goals_scored': round(goals_for / played, 2) if played else None,
+            'avg_goals_conceded': round(goals_against / played, 2) if played else None,
         }
 
     @classmethod
@@ -85,19 +258,35 @@ class AiPredictContextBuilder:
             )
             .filter(_team_filter(team))
             .exclude(pk=current_match.pk)
+            .select_related('team_home', 'team_away')
             .order_by('-kickoff_at')[: cls.RECENT_RESULTS_LIMIT]
         )
         results = []
         for item in finished:
             if item.home_score is None or item.away_score is None:
                 continue
+            opponent = item.team_away if item.team_home_id == team.id else item.team_home
             if item.team_home_id == team.id:
-                opponent = item.team_away.short_name
-                score = f'{item.home_score}-{item.away_score}'
+                team_score, opp_score = item.home_score, item.away_score
             else:
-                opponent = item.team_home.short_name
-                score = f'{item.away_score}-{item.home_score}'
-            results.append(f'vs {opponent}: {score}')
+                team_score, opp_score = item.away_score, item.home_score
+
+            if team_score > opp_score:
+                outcome = 'W'
+            elif team_score < opp_score:
+                outcome = 'L'
+            else:
+                outcome = 'D'
+
+            opponent_rank = opponent.fifa_ranking
+            rank_note = f' (rank #{opponent_rank})' if opponent_rank else ''
+            results.append(
+                {
+                    'summary': f'{outcome} {team_score}-{opp_score} vs {opponent.short_name}{rank_note}',
+                    'goals_scored': team_score,
+                    'goals_conceded': opp_score,
+                },
+            )
         return results
 
     @classmethod
