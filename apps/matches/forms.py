@@ -75,6 +75,11 @@ class MatchPredictionForm(forms.Form):
             profile.point_boosters_remaining -= 1
             profile.save(update_fields=['point_boosters_remaining'])
             prediction.point_booster_used = True
+        elif not use_booster and prediction.point_booster_used:
+            profile = ensure_user_profile(self.user)
+            profile.point_boosters_remaining += 1
+            profile.save(update_fields=['point_boosters_remaining'])
+            prediction.point_booster_used = False
 
         for question in self.match.questions.all():
             field_name = f'question_{question.id}'

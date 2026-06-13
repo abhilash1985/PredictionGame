@@ -120,6 +120,7 @@
 
     <form method="post" class="predict-form" id="predict-form">
       {% csrf_token %}
+      <input type="hidden" name="from" value="{{ return_source }}">
       {% for item in question_fields %}
         {% with field=item.field %}
           <section class="predict-question-card">
@@ -174,7 +175,7 @@
         <button type="submit" class="btn btn-gold btn-lg">
           <i class="bi bi-check2-circle me-1"></i> Save Prediction
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-lg" onclick="history.back()">Cancel</button>
+        <a href="{{ cancel_url }}" class="btn btn-outline-secondary btn-lg">Cancel</a>
       </div>
     </form>
   </div>

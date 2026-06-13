@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import Client, TestCase
+from django.urls import reverse
 from django.utils import timezone
 
 from apps.matches.data.question_bank import (
@@ -66,6 +67,38 @@ class MatchPredictionFormTests(TestCase):
         self.assertIsNotNone(form)
         self.assertIn('point_booster', form.fields)
 
+    def test_refunds_booster_when_unchecked(self):
+        profile = self.user.profile
+        profile.point_boosters_remaining = 2
+        profile.save(update_fields=['point_boosters_remaining'])
+        question = self.match.questions.first()
+
+        form = MatchPredictionForm(
+            {
+                f'question_{question.id}': self.match.team_home.name,
+                'point_booster': True,
+            },
+            match=self.match,
+            user=self.user,
+        )
+        self.assertTrue(form.is_valid(), form.errors)
+        form.save()
+
+        form = MatchPredictionForm(
+            {
+                f'question_{question.id}': self.match.team_home.name,
+            },
+            match=self.match,
+            user=self.user,
+        )
+        self.assertTrue(form.is_valid(), form.errors)
+        self.assertFalse(form.cleaned_data['point_booster'])
+        prediction = form.save()
+
+        profile.refresh_from_db()
+        self.assertFalse(prediction.point_booster_used)
+        self.assertEqual(profile.point_boosters_remaining, 2)
+
     def test_point_booster_hidden_for_knockout(self):
         knockout_round = Round.objects.create(
             tournament=self.match.tournament,
@@ -85,6 +118,46 @@ class MatchPredictionFormTests(TestCase):
         self.assertNotIn('point_booster', form.fields)
         self.assertFalse(knockout_match.is_group_stage)
         self.assertTrue(self.match.is_group_stage)
+
+
+class PredictViewRedirectTests(MatchPredictionFormTests):
+    def setUp(self):
+        profile = self.user.profile
+        profile.onboarding_completed = True
+        profile.save(update_fields=['onboarding_completed'])
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_redirects_to_match_list_when_from_matches(self):
+        question = self.match.questions.first()
+        url = reverse('match_predict', args=[self.match.pk])
+        response = self.client.post(url, {
+            f'question_{question.id}': self.match.team_home.name,
+            'from': 'matches',
+        })
+        self.assertRedirects(response, reverse('match_list'), fetch_redirect_response=False)
+
+    def test_redirects_to_dashboard_when_from_dashboard(self):
+        question = self.match.questions.first()
+        url = reverse('match_predict', args=[self.match.pk])
+        response = self.client.post(url, {
+            f'question_{question.id}': self.match.team_home.name,
+            'from': 'dashboard',
+        })
+        self.assertRedirects(
+            response,
+            f"{reverse('dashboard')}?tab=matches",
+            fetch_redirect_response=False,
+        )
+
+    def test_defaults_to_match_list_for_unknown_from(self):
+        question = self.match.questions.first()
+        url = reverse('match_predict', args=[self.match.pk])
+        response = self.client.post(url, {
+            f'question_{question.id}': self.match.team_home.name,
+            'from': 'leaderboard',
+        })
+        self.assertRedirects(response, reverse('match_list'), fetch_redirect_response=False)
 
 
 class AdminMatchPredictionFormTests(TestCase):
@@ -180,7 +253,7 @@ class AdminMatchPredictionFormTests(TestCase):
 
         profile.refresh_from_db()
         self.assertFalse(prediction.point_booster_used)
-        self.assertEqual(profile.point_boosters_remaining, 3)
+        self.assertEqual(profile.point_boosters_remaining, 2)
 
 
 class QuestionBankTests(TestCase):

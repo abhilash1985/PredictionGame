@@ -20,6 +20,21 @@ from apps.matches.scorecard_service import MatchScorecardService
 from apps.matches.services.scoring import ScoringService
 from apps.tournaments.models import Player
 
+VALID_PREDICT_RETURN_SOURCES = frozenset({'dashboard', 'matches'})
+
+
+def _predict_return_source(request):
+    raw = request.POST.get('from') if request.method == 'POST' else request.GET.get('from')
+    if raw in VALID_PREDICT_RETURN_SOURCES:
+        return raw
+    return 'matches'
+
+
+def _predict_redirect_after_save(from_source):
+    if from_source == 'dashboard':
+        return f"{reverse('dashboard')}?tab=matches"
+    return reverse('match_list')
+
 
 def _active_tournament_matches():
     from apps.tournaments.context_processors import get_active_tournament
@@ -111,9 +126,11 @@ def predict_view(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your prediction has been saved.')
-            return redirect('match_list')
+            return redirect(_predict_redirect_after_save(_predict_return_source(request)))
     else:
         form = MatchPredictionForm(match=match, user=request.user)
+
+    return_source = _predict_return_source(request)
 
     question_fields = []
     total_points = 0
@@ -153,6 +170,8 @@ def predict_view(request, pk):
         'booster_field': form['point_booster'] if 'point_booster' in form.fields else None,
         'boosters_remaining': profile.point_boosters_remaining,
         'booster_allowed': match.is_group_stage,
+        'return_source': return_source,
+        'cancel_url': _predict_redirect_after_save(return_source),
     })
 
 
