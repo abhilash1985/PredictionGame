@@ -270,6 +270,36 @@ option_presets:
     - "201-250"
     - "251-300"
     - "300+"
+  player_passes_max: &player_passes_max
+    - "0-25"
+    - "26-35"
+    - "36-50"
+    - "51-70"
+    - "71-85"
+    - "86-100"
+    - "100+"
+  player_distance_max: &player_distance_max
+    - "0-5km"
+    - "6-8km"
+    - "9-10km"
+    - "11-12km"
+    - "13-15km"
+    - "15km+"
+  player_attempts_max: &player_attempts_max
+    - "0-1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "5+"
+  player_pressing_max: &player_pressing_max
+    - "0-25"
+    - "26-35"
+    - "36-50"
+    - "51-60"
+    - "61-70"
+    - "71-85"
+    - "85+"
 
 templates:
   # --- Basic (always on every match) ---
@@ -388,6 +418,42 @@ templates:
     points: 4
     question_text: "Which position will assist the first goal of the match?"
     options: *assist_position
+
+  - code: MOST_PASSES_PLAYER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Which player will complete the highest number of passes in the match?"
+    options:
+      dynamic: squad_players
+
+  - code: MOST_DISTANCE_PLAYER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Which player covered the most distance in the match?"
+    options:
+      dynamic: squad_players
+
+  - code: MOST_ATTEMPTS_PLAYER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Which player will have the most attempts at goal in the match?"
+    options:
+      dynamic: squad_players
+
+  - code: MOST_PRESSING_PLAYER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Which player will have the most pressing applied in the match?"
+    options:
+      dynamic: squad_players
 
   # --- Attacking (2 pts, random pool) ---
   - code: HOME_POSSESSION
@@ -559,6 +625,14 @@ templates:
     question_text: "Total Attempts at Goal Outside the Penalty Area?"
     options: *attempts_team
 
+  - code: MAX_PLAYER_ATTEMPTS
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "What is the maximum attempts at goal by a single player in the match?"
+    options: *player_attempts_max
+
   # --- Discipline (2 pts) ---
   - code: TOTAL_YELLOW_CARDS
     bucket: discipline
@@ -721,6 +795,22 @@ templates:
     question_text: "Total switches of play completed in the match?"
     options: *switches_completed
 
+  - code: MAX_PLAYER_PASSES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "What will be the maximum no. of passes completed by a single player in the match?"
+    options: *player_passes_max
+
+  - code: MAX_PLAYER_DISTANCE
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "What is the maximum distance covered by a single player in the match?"
+    options: *player_distance_max
+
   # --- Set plays (2 pts) ---
   - code: TOTAL_CORNERS
     bucket: set_plays
@@ -842,3 +932,11 @@ templates:
     points: 2
     question_text: "Total pressing applied by {away_team}?"
     options: *pressing_team
+
+  - code: MAX_PLAYER_PRESSING
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "What is the maximum no. of pressing applied by a single player in the match?"
+    options: *player_pressing_max
