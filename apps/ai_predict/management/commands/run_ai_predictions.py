@@ -23,11 +23,16 @@ class Command(BaseCommand):
         if upcoming_match_limit is not None and upcoming_match_limit < 1:
             raise CommandError('--upcoming-matches must be a positive integer.')
 
-        created = AiPredictService.run_scheduled_predictions(
-            upcoming_match_limit=upcoming_match_limit,
-        )
         if upcoming_match_limit:
             self.stdout.write(
                 self.style.NOTICE(f'Mode: next {upcoming_match_limit} upcoming match(es).'),
             )
+        self.stdout.write(
+            'Running AI predictions (one Gemini call per enabled user per match when configured). '
+            'This may take several minutes — watch logs for progress.',
+        )
+
+        created = AiPredictService.run_scheduled_predictions(
+            upcoming_match_limit=upcoming_match_limit,
+        )
         self.stdout.write(self.style.SUCCESS(f'Created {created} AI prediction(s).'))

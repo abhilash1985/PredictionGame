@@ -56,6 +56,8 @@ class AiPredictContextBuilder:
                 'If home team wins, home goals must be greater than away goals.',
                 'If away team wins, away goals must be greater than home goals.',
                 'If Draw is selected, home and away goals must be equal (e.g. 1-1, 0-0).',
+                'FIRST_GOAL_TEAM: use Draw only for 0-0; if one team wins, they must score first (never Draw).',
+                'If both teams score, first goal team cannot be Draw.',
                 'Prefer realistic scorelines based on FIFA rankings, recent form, and head-to-head.',
             ],
             'data_priority': [

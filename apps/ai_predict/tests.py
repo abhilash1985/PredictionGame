@@ -10,6 +10,7 @@ from apps.ai_predict.services import AiPredictService
 from apps.ai_predict.core_prediction import (
     generate_coherent_core_answers,
     goals_consistent_with_winner,
+    infer_first_goal_team,
     normalize_core_answers,
 )
 from apps.ai_predict.validators import validate_answers
@@ -170,7 +171,7 @@ class AiPredictServiceTests(TestCase):
 class CorePredictionTests(TestCase):
     def test_normalize_replaces_no_results_and_fixes_goals(self):
         match = _create_match()
-        questions = _add_basic_questions(match)
+        questions = list(_add_basic_questions(match))
         winner, home_goals, away_goals = questions
         answers = {
             winner.pk: 'No Results',
@@ -198,6 +199,42 @@ class CorePredictionTests(TestCase):
         winner, home_goals, away_goals = questions
         if answers[winner.pk] == 'Draw':
             self.assertEqual(answers[home_goals.pk], answers[away_goals.pk])
+
+    def test_normalize_first_goal_team_matches_away_win_to_nil(self):
+        match = _create_match()
+        questions = list(_add_basic_questions(match))
+        winner, home_goals, away_goals = questions
+        first_goal_template, _ = QuestionTemplate.objects.get_or_create(
+            code='FIRST_GOAL_TEAM',
+            defaults={'question_text': 'First goal team?', 'default_points': 4, 'category': 'player', 'question_type': 'choice'},
+        )
+        first_goal = MatchQuestion.objects.create(
+            match=match,
+            question_template=first_goal_template,
+            question_text='Which team will score first?',
+            options=[match.team_home.name, match.team_away.name, 'Draw', 'No Results'],
+            points=4,
+            sort_order=3,
+        )
+        answers = {
+            winner.pk: match.team_away.name,
+            home_goals.pk: '0',
+            away_goals.pk: '2',
+            first_goal.pk: 'Draw',
+        }
+        normalized = normalize_core_answers(questions + [first_goal], answers, match)
+        self.assertEqual(normalized[winner.pk], match.team_away.name)
+        self.assertEqual(normalized[first_goal.pk], match.team_away.name)
+        self.assertEqual(
+            infer_first_goal_team(
+                normalized[winner.pk],
+                int(normalized[home_goals.pk]),
+                int(normalized[away_goals.pk]),
+                match,
+                __import__('random').Random(1),
+            ),
+            match.team_away.name,
+        )
 
 
 def _create_match(

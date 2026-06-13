@@ -244,3 +244,4 @@ else:
 
 # AI Predict — GOOGLE_API_KEY only; limits/model/enabled live in GameSettings (Django admin)
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
+GEMINI_REQUEST_TIMEOUT_SECONDS = int(os.environ.get('GEMINI_REQUEST_TIMEOUT_SECONDS', '90'))

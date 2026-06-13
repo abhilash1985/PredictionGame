@@ -149,9 +149,21 @@ class AiPredictService:
         profiles = list(
             UserProfile.objects.filter(ai_predict_enabled=True).select_related('user', 'favorite_team')[:max_users],
         )
+        match_list = list(matches)
+        total_jobs = len(match_list) * len(profiles)
+        logger.info(
+            'AI predict run: %s match(es), %s enabled user(s), up to %s prediction job(s)',
+            len(match_list),
+            len(profiles),
+            total_jobs,
+        )
         created = 0
-        for match in matches:
+        completed = 0
+        for match in match_list:
             for profile in profiles:
+                completed += 1
+                if completed == 1 or completed % 25 == 0 or completed == total_jobs:
+                    logger.info('AI predict progress: %s/%s', completed, total_jobs)
                 result = cls.predict_for_user(profile.user, match)
                 if result:
                     created += 1

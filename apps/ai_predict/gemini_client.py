@@ -1,11 +1,14 @@
 import json
 import logging
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 
 from django.conf import settings
 
 from apps.matches.models import GameSettings
 
 logger = logging.getLogger(__name__)
+
+DEFAULT_GEMINI_TIMEOUT_SECONDS = 90
 
 
 class GeminiPredictor:
@@ -18,6 +21,9 @@ class GeminiPredictor:
         'Core questions (MATCH_WINNER, HOME_GOALS, AWAY_GOALS) MUST be logically consistent: '
         'home win means home goals > away goals; away win means away goals > home goals; '
         'Draw means home goals equals away goals. Pick realistic scorelines, not contradictory ones. '
+        'FIRST_GOAL_TEAM must align with the scoreline: if a team wins with goals, that team (or the only '
+        'scoring team) must score first — never Draw when one team wins. Draw for first goal only on 0-0. '
+        'If goals are scored, first goal scorer/minute/type questions must not use No goal/No Goals answers. '
         'For questions marked personalization=varied, choose different plausible answers per user '
         'based on user id, display name, and recent prediction style. '
         'Do not repeat identical varied answers for every user.'
@@ -59,20 +65,30 @@ class GeminiPredictor:
 
     @classmethod
     def _call_gemini(cls, prompt):
-        from google import genai
-        from google.genai import types
+        timeout_seconds = getattr(settings, 'GEMINI_REQUEST_TIMEOUT_SECONDS', DEFAULT_GEMINI_TIMEOUT_SECONDS)
 
-        game_settings = GameSettings.load()
-        client = genai.Client(api_key=settings.GOOGLE_API_KEY)
-        response = client.models.generate_content(
-            model=game_settings.ai_predict_model,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type='application/json',
-                temperature=0.65,
-            ),
-        )
-        text = getattr(response, 'text', None)
-        if not text:
-            raise ValueError('Empty Gemini response')
-        return text
+        def _request():
+            from google import genai
+            from google.genai import types
+
+            game_settings = GameSettings.load()
+            client = genai.Client(api_key=settings.GOOGLE_API_KEY)
+            response = client.models.generate_content(
+                model=game_settings.ai_predict_model,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type='application/json',
+                    temperature=0.65,
+                ),
+            )
+            text = getattr(response, 'text', None)
+            if not text:
+                raise ValueError('Empty Gemini response')
+            return text
+
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(_request)
+            try:
+                return future.result(timeout=timeout_seconds)
+            except FuturesTimeoutError as exc:
+                raise TimeoutError(f'Gemini API call timed out after {timeout_seconds}s') from exc

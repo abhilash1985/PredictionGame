@@ -6,7 +6,27 @@ logger = logging.getLogger(__name__)
 
 DRAW_LABEL = 'Draw'
 NO_RESULTS_LABEL = 'No Results'
+NO_GOAL_LABEL = 'No goal'
+NO_GOALS_LABEL = 'No Goals'
+NO_GOALS_POSITION_LABEL = 'No goals'
 CORE_TEMPLATE_CODES = ('MATCH_WINNER', 'HOME_GOALS', 'AWAY_GOALS')
+FIRST_GOAL_TEMPLATE_CODES = (
+    'FIRST_GOAL_TEAM',
+    'FIRST_GOAL_SCORER',
+    'FIRST_GOAL_MINUTE',
+    'FIRST_GOAL_TYPE',
+    'FIRST_GOAL_POSITION',
+    'FIRST_ASSIST_PROVIDER',
+)
+
+
+def questions_by_code(questions):
+    mapping = {}
+    for question in questions:
+        template = question.question_template
+        if template:
+            mapping[template.code] = question
+    return mapping
 
 
 def core_questions_by_code(questions):
@@ -72,6 +92,116 @@ def goals_consistent_with_winner(winner, home_goals, away_goals, match):
     if side == 'home':
         return home_goals > away_goals
     return away_goals > home_goals
+
+
+def infer_first_goal_team(winner, home_goals, away_goals, match, rng):
+    home_name = match.team_home.name
+    away_name = match.team_away.name
+
+    if home_goals == 0 and away_goals == 0:
+        return DRAW_LABEL
+
+    if away_goals == 0:
+        return home_name
+    if home_goals == 0:
+        return away_name
+
+    if winner == home_name:
+        return home_name if rng.random() < 0.7 else away_name
+    if winner == away_name:
+        return away_name if rng.random() < 0.7 else home_name
+    return rng.choice([home_name, away_name])
+
+
+def pick_player_from_team(match, team_side, rng):
+    team = match.team_home if team_side == 'home' else match.team_away
+    players = list(team.players.filter(is_active=True))
+    if not players:
+        return None
+    return rng.choice(players).full_name
+
+
+def normalize_related_answers(questions, normalized, match, rng):
+    by_code = questions_by_code(questions)
+    core = core_questions_by_code(questions)
+    winner_question = core.get('MATCH_WINNER')
+    home_question = core.get('HOME_GOALS')
+    away_question = core.get('AWAY_GOALS')
+    if not winner_question or not home_question or not away_question:
+        return normalized
+
+    winner = normalized.get(winner_question.pk)
+    home_goals = parse_goal_value(normalized.get(home_question.pk))
+    away_goals = parse_goal_value(normalized.get(away_question.pk))
+    if home_goals is None or away_goals is None:
+        return normalized
+
+    total = home_goals + away_goals
+    first_goal_team_question = by_code.get('FIRST_GOAL_TEAM')
+    first_goal_team = None
+    if first_goal_team_question:
+        options = first_goal_team_question.options or []
+        first_goal_team = infer_first_goal_team(winner, home_goals, away_goals, match, rng)
+        if first_goal_team not in options:
+            pickable = [option for option in options if option not in {NO_RESULTS_LABEL}]
+            first_goal_team = pickable[0] if pickable else first_goal_team
+        normalized[first_goal_team_question.pk] = first_goal_team
+
+    if total == 0:
+        if by_code.get('FIRST_GOAL_SCORER'):
+            q = by_code['FIRST_GOAL_SCORER']
+            if NO_GOAL_LABEL in (q.options or []):
+                normalized[q.pk] = NO_GOAL_LABEL
+        if by_code.get('FIRST_GOAL_MINUTE'):
+            q = by_code['FIRST_GOAL_MINUTE']
+            if NO_GOALS_LABEL in (q.options or []):
+                normalized[q.pk] = NO_GOALS_LABEL
+        if by_code.get('FIRST_GOAL_TYPE'):
+            q = by_code['FIRST_GOAL_TYPE']
+            if NO_GOALS_LABEL in (q.options or []):
+                normalized[q.pk] = NO_GOALS_LABEL
+        if by_code.get('FIRST_GOAL_POSITION'):
+            q = by_code['FIRST_GOAL_POSITION']
+            if NO_GOALS_POSITION_LABEL in (q.options or []):
+                normalized[q.pk] = NO_GOALS_POSITION_LABEL
+        if by_code.get('FIRST_ASSIST_PROVIDER'):
+            q = by_code['FIRST_ASSIST_PROVIDER']
+            if NO_GOAL_LABEL in (q.options or []):
+                normalized[q.pk] = NO_GOAL_LABEL
+        return normalized
+
+    if first_goal_team and first_goal_team not in {DRAW_LABEL, NO_RESULTS_LABEL}:
+        team_side = 'home' if first_goal_team == match.team_home.name else 'away'
+        scorer_name = pick_player_from_team(match, team_side, rng)
+        if by_code.get('FIRST_GOAL_SCORER') and scorer_name:
+            q = by_code['FIRST_GOAL_SCORER']
+            if scorer_name in (q.options or []):
+                normalized[q.pk] = scorer_name
+
+    if by_code.get('FIRST_GOAL_MINUTE'):
+        q = by_code['FIRST_GOAL_MINUTE']
+        minute_options = [option for option in (q.options or []) if option != NO_GOALS_LABEL]
+        if minute_options and normalized.get(q.pk) in {NO_GOALS_LABEL, None}:
+            normalized[q.pk] = rng.choice(minute_options)
+
+    if by_code.get('FIRST_GOAL_TYPE'):
+        q = by_code['FIRST_GOAL_TYPE']
+        type_options = [option for option in (q.options or []) if option != NO_GOALS_LABEL]
+        if type_options and normalized.get(q.pk) in {NO_GOALS_LABEL, None}:
+            normalized[q.pk] = rng.choice(type_options)
+
+    if by_code.get('FIRST_GOAL_POSITION'):
+        q = by_code['FIRST_GOAL_POSITION']
+        position_options = [option for option in (q.options or []) if option != NO_GOALS_POSITION_LABEL]
+        if position_options and normalized.get(q.pk) in {NO_GOALS_POSITION_LABEL, None}:
+            normalized[q.pk] = rng.choice(position_options)
+
+    total_goals_question = by_code.get('TOTAL_GOALS')
+    if total_goals_question:
+        options = total_goals_question.options or []
+        normalized[total_goals_question.pk] = format_goal_value(total, options)
+
+    return normalized
 
 
 def infer_winner_from_match(match, user=None, rng=None):
@@ -219,7 +349,7 @@ def normalize_core_answers(questions, answers, match, user=None, rng=None):
         )
         normalized[home_question.pk] = home_answer
         normalized[away_question.pk] = away_answer
-        return normalized
+        return normalize_related_answers(questions, normalized, match, randomizer)
 
     if not goals_consistent_with_winner(normalized[winner_question.pk], home_goals, away_goals, match):
         logger.info(
@@ -241,4 +371,4 @@ def normalize_core_answers(questions, answers, match, user=None, rng=None):
         normalized[home_question.pk] = home_answer
         normalized[away_question.pk] = away_answer
 
-    return normalized
+    return normalize_related_answers(questions, normalized, match, randomizer)
