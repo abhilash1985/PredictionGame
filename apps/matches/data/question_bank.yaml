@@ -59,6 +59,15 @@ option_presets:
     - "Own Goal"
     - "No Goals"
     - "Others"
+  first_goal_technique: &first_goal_technique
+    - "Volley"
+    - "Trivela"
+    - "Header"
+    - "Long shot"
+    - "Penalty"
+    - "Free Kick"
+    - "Tap-in"
+    - "Others"
   first_goal_minute: &first_goal_minute
     - "0-15"
     - "16-30"
@@ -361,6 +370,14 @@ templates:
     points: 4
     question_text: "First goal in the match will be?"
     options: *first_goal_type
+
+  - code: FIRST_GOAL_TECHNIQUE
+    bucket: player
+    category: player
+    question_type: choice
+    points: 4
+    question_text: "First Goal Technique?"
+    options: *first_goal_technique
 
   - code: FIRST_GOAL_MINUTE
     bucket: player
