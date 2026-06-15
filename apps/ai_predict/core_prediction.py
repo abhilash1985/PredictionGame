@@ -201,6 +201,13 @@ def normalize_related_answers(questions, normalized, match, rng):
         options = total_goals_question.options or []
         normalized[total_goals_question.pk] = format_goal_value(total, options)
 
+    over_under_question = by_code.get('OVER_UNDER_2_5')
+    if over_under_question:
+        options = over_under_question.options or []
+        over_under_answer = 'Over 2.5 goals' if total >= 3 else 'Under 2.5 goals'
+        if over_under_answer in options:
+            normalized[over_under_question.pk] = over_under_answer
+
     return normalized
 
 

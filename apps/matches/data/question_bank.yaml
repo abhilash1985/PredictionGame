@@ -42,6 +42,14 @@ option_presets:
   yes_no: &yes_no
     - "Yes"
     - "No"
+  over_under_2_5: &over_under_2_5
+    - "Over 2.5 goals"
+    - "Under 2.5 goals"
+  first_half_scoring: &first_half_scoring
+    - "Yes"
+    - "Only home team scores"
+    - "Only away team scores"
+    - "No goals in first half"
   first_goal_type: &first_goal_type
     - "Penalty"
     - "Free Kick"
@@ -511,6 +519,22 @@ templates:
     points: 2
     question_text: "Total goals scored in the first half?"
     options: *goal_count
+
+  - code: OVER_UNDER_2_5
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Will the match go over/under 2.5 goals?"
+    options: *over_under_2_5
+
+  - code: FIRST_HALF_BOTH_TEAMS_SCORE
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Will both teams score in the first half?"
+    options: *first_half_scoring
 
   - code: ASSISTS_FIRST_HALF
     bucket: attacking

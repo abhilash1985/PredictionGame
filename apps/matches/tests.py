@@ -310,7 +310,7 @@ class QuestionBankTests(TestCase):
         sync_question_templates_from_bank()
 
     def test_bank_has_expected_template_count(self):
-        self.assertEqual(len(bank_templates()), 78)
+        self.assertEqual(len(bank_templates()), 80)
 
     def test_match_pack_has_seven_questions(self):
         codes = select_match_template_codes(self.match)
