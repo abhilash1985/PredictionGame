@@ -159,13 +159,20 @@ def dashboard_view(request):
         (row for row in leaderboard_rows if row['user_id'] == request.user.id),
         None,
     )
+    dashboard_stats = DashboardStatsService.stats(tournament, user_timezone)
+    recent_match_ids = [item['match'].pk for item in dashboard_stats['recent_match_results']]
+    recent_predicted_match_ids = predicted_match_ids(
+        request.user,
+        Match.objects.filter(pk__in=recent_match_ids),
+    )
     tab = request.GET.get('tab')
 
     return render(request, 'tournaments/dashboard.html', {
         'tournament': tournament,
         'upcoming_matches': upcoming_matches,
         'predicted_match_ids': predicted_match_ids(request.user, upcoming_matches),
-        'dashboard_stats': DashboardStatsService.stats(tournament, user_timezone),
+        'recent_predicted_match_ids': recent_predicted_match_ids,
+        'dashboard_stats': dashboard_stats,
         'user_leaderboard': user_leaderboard,
         'leaderboard_total': len(leaderboard_rows),
         'show_predict': True,

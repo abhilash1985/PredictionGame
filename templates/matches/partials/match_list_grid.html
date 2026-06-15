@@ -1,7 +1,7 @@
 <div class="match-list-grid row g-3">
   {% for match in matches %}
     <div class="col-lg-6">
-      {% include 'matches/partials/match_list_row.html' with match=match predicted_match_ids=predicted_match_ids show_predict=show_predict show_verdict=show_verdict show_squads=show_squads predict_from=predict_from %}
+      {% include 'matches/partials/match_list_row.html' with match=match predicted_match_ids=predicted_match_ids show_predict=show_predict show_verdict=show_verdict show_squads=show_squads predict_from=predict_from verdict_from=verdict_from %}
     </div>
   {% endfor %}
 </div>

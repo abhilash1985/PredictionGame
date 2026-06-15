@@ -160,6 +160,30 @@ class PredictViewRedirectTests(MatchPredictionFormTests):
         self.assertRedirects(response, reverse('match_list'), fetch_redirect_response=False)
 
 
+class ScorecardBackUrlTests(TestCase):
+    def test_back_url_for_dashboard_stats(self):
+        from apps.matches.views import _scorecard_back_url
+
+        self.assertEqual(
+            _scorecard_back_url('dashboard_stats'),
+            f"{reverse('dashboard')}?tab=stats",
+        )
+
+    def test_back_url_for_dashboard_verdict_tab(self):
+        from apps.matches.views import _scorecard_back_url
+
+        self.assertEqual(
+            _scorecard_back_url('dashboard', match_pk=42),
+            f"{reverse('dashboard')}?tab=verdict&verdict_match=42",
+        )
+
+    def test_back_url_defaults_to_matches(self):
+        from apps.matches.views import _scorecard_back_url
+
+        self.assertEqual(_scorecard_back_url('matches'), reverse('match_list'))
+        self.assertEqual(_scorecard_back_url('unknown'), reverse('match_list'))
+
+
 class AdminMatchPredictionFormTests(TestCase):
     @classmethod
     def setUpTestData(cls):

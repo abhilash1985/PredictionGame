@@ -3,10 +3,18 @@
   <ul class="dashboard-results-list list-unstyled mb-0">
     {% for item in recent_match_results %}
       <li class="dashboard-results-item">
-        <div class="dashboard-results-match">
-          <span class="badge rounded-pill text-bg-warning text-dark">Match {{ item.match.match_number }}</span>
-          {% if item.match.round %}
-            <span class="badge rounded-pill badge-group-name">{{ item.match.round.name }}</span>
+        <div class="dashboard-results-head">
+          <div class="dashboard-results-match">
+            <span class="badge rounded-pill text-bg-warning text-dark">Match {{ item.match.match_number }}</span>
+            {% if item.match.round %}
+              <span class="badge rounded-pill badge-group-name">{{ item.match.round.name }}</span>
+            {% endif %}
+          </div>
+          {% if show_verdict and predicted_match_ids and item.match.pk in predicted_match_ids %}
+            <a href="{% url 'match_scorecard' item.match.pk %}{% if verdict_from %}?from={{ verdict_from }}{% endif %}" class="dashboard-results-verdict-btn" aria-label="Match Verdict">
+              <i class="bi bi-clipboard-data" aria-hidden="true"></i>
+              <span class="dashboard-results-verdict-label">Match Verdict</span>
+            </a>
           {% endif %}
         </div>
         <div class="dashboard-results-lineup{% if use_short_names %} dashboard-results-lineup--compact{% endif %}">

@@ -5,8 +5,8 @@
   {% include 'matches/partials/scorecard_content.html' with embedded=False %}
 
   <div class="scorecard-footer">
-    <a href="{% url 'match_list' %}" class="btn btn-outline-secondary">
-      <i class="bi bi-arrow-left me-1"></i> Back to Matches
+    <a href="{{ back_url }}" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left me-1"></i> {{ back_label }}
     </a>
   </div>
 </div>

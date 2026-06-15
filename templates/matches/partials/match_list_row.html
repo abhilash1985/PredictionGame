@@ -82,7 +82,7 @@
         {% endif %}
       {% endif %}
       {% if show_verdict is not False and match.prediction_count %}
-        <a href="{% url 'match_scorecard' match.pk %}" class="match-list-btn match-list-btn-verdict" aria-label="Match Verdict">
+        <a href="{% url 'match_scorecard' match.pk %}{% if verdict_from %}?from={{ verdict_from }}{% endif %}" class="match-list-btn match-list-btn-verdict" aria-label="Match Verdict">
           <i class="bi bi-clipboard-data" aria-hidden="true"></i>
           <span class="match-list-btn-label">Verdict</span>
         </a>

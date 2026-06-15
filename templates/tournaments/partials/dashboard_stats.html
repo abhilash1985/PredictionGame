@@ -10,7 +10,7 @@
         </div>
       </header>
       <div class="dashboard-stat-body dashboard-recent-results">
-        {% include 'tournaments/partials/recent_match_results_list.html' with recent_match_results=dashboard_stats.recent_match_results %}
+        {% include 'tournaments/partials/recent_match_results_list.html' with recent_match_results=dashboard_stats.recent_match_results show_verdict=show_verdict predicted_match_ids=predicted_match_ids verdict_from='dashboard_stats' %}
       </div>
     </section>
   </div>

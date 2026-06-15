@@ -152,13 +152,13 @@
         <div class="dashboard-pane-body">
           {% if upcoming_matches %}
             <div class="d-md-none">
-              {% include 'matches/partials/match_list_grid.html' with matches=upcoming_matches|slice:":6" predicted_match_ids=predicted_match_ids show_predict=show_predict predict_from='dashboard' %}
+              {% include 'matches/partials/match_list_grid.html' with matches=upcoming_matches|slice:":6" predicted_match_ids=predicted_match_ids show_predict=show_predict predict_from='dashboard' verdict_from='dashboard' %}
               <div class="text-center mt-3">
                 <a href="{% url 'match_list' %}" class="btn btn-sm btn-outline-primary">View all matches</a>
               </div>
             </div>
             <div class="d-none d-md-block">
-              {% include 'matches/partials/match_list_grid.html' with matches=upcoming_matches predicted_match_ids=predicted_match_ids show_predict=show_predict predict_from='dashboard' %}
+              {% include 'matches/partials/match_list_grid.html' with matches=upcoming_matches predicted_match_ids=predicted_match_ids show_predict=show_predict predict_from='dashboard' verdict_from='dashboard' %}
             </div>
           {% else %}
             <div class="p-4 text-muted">No matches scheduled yet.</div>
@@ -172,7 +172,7 @@
       </div>
       <div class="tab-pane fade" id="dashboard-stats-pane" role="tabpanel" aria-labelledby="stats-tab" tabindex="0">
         <div class="dashboard-pane-body">
-          {% include 'tournaments/partials/dashboard_stats.html' %}
+          {% include 'tournaments/partials/dashboard_stats.html' with show_verdict=True predicted_match_ids=recent_predicted_match_ids %}
         </div>
       </div>
     </div>

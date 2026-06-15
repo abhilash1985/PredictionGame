@@ -21,6 +21,7 @@ from apps.matches.services.scoring import ScoringService
 from apps.tournaments.models import Player
 
 VALID_PREDICT_RETURN_SOURCES = frozenset({'dashboard', 'matches'})
+VALID_SCORECARD_RETURN_SOURCES = frozenset({'dashboard_stats', 'dashboard', 'matches'})
 
 
 def _predict_return_source(request):
@@ -34,6 +35,29 @@ def _predict_redirect_after_save(from_source):
     if from_source == 'dashboard':
         return f"{reverse('dashboard')}?tab=matches"
     return reverse('match_list')
+
+
+def _scorecard_return_source(request):
+    raw = request.GET.get('from')
+    if raw in VALID_SCORECARD_RETURN_SOURCES:
+        return raw
+    return 'matches'
+
+
+def _scorecard_back_url(from_source, match_pk=None):
+    if from_source == 'dashboard_stats':
+        return f"{reverse('dashboard')}?tab=stats"
+    if from_source == 'dashboard':
+        if match_pk:
+            return f"{reverse('dashboard')}?tab=verdict&verdict_match={match_pk}"
+        return f"{reverse('dashboard')}?tab=verdict"
+    return reverse('match_list')
+
+
+def _scorecard_back_label(from_source):
+    if from_source in {'dashboard_stats', 'dashboard'}:
+        return 'Back to Dashboard'
+    return 'Back to Matches'
 
 
 def _active_tournament_matches():
@@ -79,17 +103,21 @@ def match_scorecard_view(request, pk):
         .prefetch_related('questions__question_template'),
         pk=pk,
     )
+    return_source = _scorecard_return_source(request)
+    back_url = _scorecard_back_url(return_source, match_pk=match.pk)
     verdict_context = MatchScorecardService.context_for_match(match, request.user)
     if not verdict_context['has_predictions']:
         messages.info(request, 'No predictions submitted for this match yet.')
-        return redirect('match_list')
+        return redirect(back_url)
 
     if not verdict_context['rows']:
         messages.info(request, 'You have not predicted this match yet.')
-        return redirect('match_list')
+        return redirect(back_url)
 
     return render(request, 'matches/scorecard.html', {
         'match': match,
+        'back_url': back_url,
+        'back_label': _scorecard_back_label(return_source),
         **verdict_context,
     })
 
