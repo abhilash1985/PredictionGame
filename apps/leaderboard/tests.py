@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
+from apps.leaderboard.dashboard_stats import DashboardStatsService
 from apps.leaderboard.services import LeaderboardService
 from apps.matches.models import Match, MatchPrediction, MatchQuestion, QuestionTemplate
 from apps.tournaments.models import Round, Stadium, Team, Tournament
@@ -147,6 +148,78 @@ class MatchPointsMatrixTests(TestCase):
         self.assertContains(response, 'MEX vs SA')
         self.assertContains(response, self.alice.display_name)
         self.assertContains(response, 'Total')
+
+
+class DashboardStatsTopSingleMatchScoresTests(TestCase):
+    def setUp(self):
+        today = timezone.now().date()
+        self.tournament = Tournament.objects.create(
+            name='Test Cup',
+            location='Test',
+            start_date=today,
+            end_date=today,
+            is_active=True,
+        )
+        self.round = Round.objects.create(tournament=self.tournament, name='Group A', sort_order=1)
+        self.stadium = Stadium.objects.create(name='Test Stadium', city='Test City', country='Test')
+        self.home = Team.objects.create(name='Mexico', short_name='MEX', fifa_code='MEX', group_letter='A')
+        self.away = Team.objects.create(name='South Africa', short_name='SA', fifa_code='RSA', group_letter='A')
+        self.match_one = Match.objects.create(
+            tournament=self.tournament,
+            round=self.round,
+            match_number=1,
+            team_home=self.home,
+            team_away=self.away,
+            stadium=self.stadium,
+            kickoff_at=timezone.now() - timezone.timedelta(days=2),
+            status=Match.Status.FINISHED,
+        )
+        self.match_two = Match.objects.create(
+            tournament=self.tournament,
+            round=self.round,
+            match_number=2,
+            team_home=self.away,
+            team_away=self.home,
+            stadium=self.stadium,
+            kickoff_at=timezone.now() - timezone.timedelta(days=1),
+            status=Match.Status.FINISHED,
+        )
+        self.match_three = Match.objects.create(
+            tournament=self.tournament,
+            round=self.round,
+            match_number=3,
+            team_home=self.home,
+            team_away=self.away,
+            stadium=self.stadium,
+            kickoff_at=timezone.now() - timezone.timedelta(hours=1),
+            status=Match.Status.FINISHED,
+        )
+        self.alice = User.objects.create_user(email='alice@example.com', password='testpass123')
+        self.bob = User.objects.create_user(email='bob@example.com', password='testpass123')
+        MatchPrediction.objects.create(user=self.alice, match=self.match_one, total_points=40)
+        MatchPrediction.objects.create(user=self.bob, match=self.match_two, total_points=36)
+        MatchPrediction.objects.create(user=self.alice, match=self.match_three, total_points=32)
+
+    def test_top_single_match_scores_lists_individual_match_totals(self):
+        rows = DashboardStatsService.top_single_match_scores(self.tournament, limit=3)
+        self.assertEqual(
+            [(row['display_name'], row['total_points']) for row in rows],
+            [
+                (self.alice.display_name, 40),
+                (self.bob.display_name, 36),
+                (self.alice.display_name, 32),
+            ],
+        )
+
+    def test_top_single_match_scores_excludes_zero_point_predictions(self):
+        MatchPrediction.objects.create(
+            user=self.bob,
+            match=self.match_one,
+            total_points=0,
+        )
+        rows = DashboardStatsService.top_single_match_scores(self.tournament, limit=10)
+        self.assertEqual(len(rows), 3)
+        self.assertTrue(all(row['total_points'] > 0 for row in rows))
 
 
 class LeaderboardUserStatsTests(TestCase):

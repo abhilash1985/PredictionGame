@@ -1,7 +1,7 @@
 from django.db.models import Count, F
 
 from apps.leaderboard.services import LeaderboardService
-from apps.matches.models import Match, QuestionPrediction
+from apps.matches.models import Match, MatchPrediction, QuestionPrediction
 from apps.matches.scorecard_service import MatchScorecardService
 from apps.tournaments.context_processors import get_active_tournament
 
@@ -17,7 +17,7 @@ class DashboardStatsService:
         return {
             'recent_match_results': DashboardStatsService.recent_match_results(tournament),
             'leaderboard_top': leaderboard[:5],
-            'top_points': leaderboard[:3],
+            'top_points': DashboardStatsService.top_single_match_scores(tournament, limit=3),
             'top_winner_predictors': DashboardStatsService.top_winner_predictors(tournament, limit=3),
             'top_accuracy': DashboardStatsService.top_by_accuracy(leaderboard, limit=3),
             'top_mvps': DashboardStatsService.top_by_match_tops(leaderboard, limit=3),
@@ -106,6 +106,25 @@ class DashboardStatsService:
     @staticmethod
     def _prediction_winners_label(winners):
         return ', '.join(winner['display_name'] for winner in winners)
+
+    @staticmethod
+    def top_single_match_scores(tournament, limit=3):
+        predictions = (
+            MatchPrediction.objects.filter(
+                match__tournament=tournament,
+                total_points__gt=0,
+            )
+            .select_related('user__profile', 'match')
+            .order_by('-total_points', 'user__profile__display_name')[:limit]
+        )
+        return [
+            {
+                'display_name': prediction.user.profile.display_name,
+                'total_points': prediction.total_points,
+            }
+            for prediction in predictions
+            if prediction.user.profile.display_name
+        ]
 
     @staticmethod
     def top_by_match_tops(leaderboard, limit=3):
