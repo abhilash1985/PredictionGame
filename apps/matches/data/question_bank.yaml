@@ -21,6 +21,8 @@ match_pattern:
         - distribution
         - set_plays
         - defending
+        - duels
+        - goalkeeping
 
 option_presets:
   goal_count: &goal_count
@@ -317,6 +319,307 @@ option_presets:
     - "61-70"
     - "71-85"
     - "85+"
+  sofascore_rating_max: &sofascore_rating_max
+    - "0-6.5"
+    - "6.51-7.0"
+    - "7.01-7.5"
+    - "7.51-8.0"
+    - "8.01-8.5"
+    - "8.51-9.0"
+    - "9.01-9.5"
+    - "9.5+"
+  team_avg_sofascore_rating: &team_avg_sofascore_rating
+    - "0-6.5"
+    - "6.51-7.0"
+    - "7.01-7.25"
+    - "7.26-7.5"
+    - "7.51-7.75"
+    - "7.76-8.0"
+    - "8.0-8.25"
+    - "8.25+"
+  player_sprints_max: &player_sprints_max
+    - "0-30"
+    - "31-40"
+    - "41-50"
+    - "51-60"
+    - "61-70"
+    - "71-80"
+    - "80+"
+  player_crosses_max: &player_crosses_max
+    - "0-1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "6"
+    - "6+"
+  team_distance: &team_distance
+    - "0-60km"
+    - "61-75km"
+    - "76-85km"
+    - "86-90km"
+    - "91-95km"
+    - "96-100km"
+    - "100+km"
+  big_chances_total: &big_chances_total
+    - "0-1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "5+"
+  big_chances_missed_total: &big_chances_missed_total
+    - "0-1"
+    - "2-3"
+    - "4-5"
+    - "6-7"
+    - "8+"
+  touches_opp_box_total: &touches_opp_box_total
+    - "0-10"
+    - "11-20"
+    - "21-30"
+    - "31-40"
+    - "41-50"
+    - "50+"
+  touches_opp_box_team: &touches_opp_box_team
+    - "0-10"
+    - "11-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "35+"
+  sprints_total: &sprints_total
+    - "0-100"
+    - "101-150"
+    - "151-175"
+    - "176-200"
+    - "200-225"
+    - "226-250"
+    - "250+"
+  sprints_team: &sprints_team
+    - "0-80"
+    - "81-90"
+    - "91-100"
+    - "101-110"
+    - "111-125"
+    - "125+"
+  through_balls_total: &through_balls_total
+    - "0-1"
+    - "2-3"
+    - "4-5"
+    - "6-7"
+    - "8+"
+  duels_total: &duels_total
+    - "0-70"
+    - "71-75"
+    - "76-80"
+    - "81-85"
+    - "86-90"
+    - "90+"
+  ground_duels_total: &ground_duels_total
+    - "0-15"
+    - "16-25"
+    - "26-35"
+    - "36-45"
+    - "46-55"
+    - "55+"
+  aerial_duels_total: &aerial_duels_total
+    - "0-10"
+    - "11-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "35+"
+  dispossessed_total: &dispossessed_total
+    - "0-5"
+    - "6-10"
+    - "11-15"
+    - "16-20"
+    - "21-25"
+    - "25+"
+  dribbles_total: &dribbles_total
+    - "0-10"
+    - "11-15"
+    - "16-20"
+    - "21-25"
+    - "26-30"
+    - "30+"
+  successful_dribbles_total: &successful_dribbles_total
+    - "0-4"
+    - "5-7"
+    - "8-10"
+    - "11-12"
+    - "13-15"
+    - "15+"
+  tackles_won_pct: &tackles_won_pct
+    - "0-50%"
+    - "51-60%"
+    - "61-65%"
+    - "66-70%"
+    - "71-75%"
+    - "76-80%"
+    - "80%+"
+  tackles_total: &tackles_total
+    - "0-10"
+    - "11-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "35+"
+  tackles_team: &tackles_team
+    - "0-5"
+    - "6-10"
+    - "11-14"
+    - "15-17"
+    - "18-20"
+    - "20+"
+  interceptions_total: &interceptions_total
+    - "0-5"
+    - "6-10"
+    - "11-14"
+    - "15-17"
+    - "18-20"
+    - "20+"
+  interceptions_team: &interceptions_team
+    - "0-2"
+    - "3-4"
+    - "5-6"
+    - "7-8"
+    - "9-10"
+    - "10+"
+  recoveries_total: &recoveries_total
+    - "0-70"
+    - "71-80"
+    - "81-90"
+    - "91-100"
+    - "101-110"
+    - "110+"
+  recoveries_team: &recoveries_team
+    - "0-35"
+    - "36-40"
+    - "41-45"
+    - "46-50"
+    - "51-55"
+    - "55+"
+  clearances_total: &clearances_total
+    - "0-15"
+    - "16-25"
+    - "26-35"
+    - "36-45"
+    - "46-50"
+    - "50+"
+  clearances_team: &clearances_team
+    - "0-10"
+    - "11-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "35+"
+  keeper_saves_total: &keeper_saves_total
+    - "0-2"
+    - "3-4"
+    - "5-6"
+    - "7-8"
+    - "9-10"
+    - "10+"
+  gk_high_claims: &gk_high_claims
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "4+"
+  gk_big_saves: &gk_big_saves
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "4+"
+  goal_kicks_total: &goal_kicks_total
+    - "0-5"
+    - "6-10"
+    - "11-15"
+    - "16-20"
+    - "21-25"
+    - "25+"
+  blocked_shots_total: &blocked_shots_total
+    - "0-2"
+    - "3-4"
+    - "5-6"
+    - "7-8"
+    - "9-10"
+    - "10+"
+  woodwork_total: &woodwork_total
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4+"
+  player_of_match_passes: &player_of_match_passes
+    - "0-10"
+    - "11-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "35+"
+  final_third_entries_total: &final_third_entries_total
+    - "0-70"
+    - "71-80"
+    - "81-90"
+    - "91-100"
+    - "101-110"
+    - "110+"
+  final_third_entries_team: &final_third_entries_team
+    - "0-30"
+    - "31-35"
+    - "36-40"
+    - "41-45"
+    - "46-50"
+    - "51-60"
+    - "60+"
+  throw_ins_total: &throw_ins_total
+    - "0-15"
+    - "16-25"
+    - "26-35"
+    - "36-45"
+    - "46-55"
+    - "55+"
+  throw_ins_team: &throw_ins_team
+    - "0-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "36-40"
+    - "40+"
+  long_balls_total: &long_balls_total
+    - "0-30"
+    - "31-50"
+    - "51-70"
+    - "71-85"
+    - "86-100"
+    - "100+"
+  long_balls_team: &long_balls_team
+    - "0-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "36-45"
+    - "45+"
+  long_balls_completed_total: &long_balls_completed_total
+    - "0-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "36-45"
+    - "45+"
+  long_balls_completed_team: &long_balls_completed_team
+    - "0-10"
+    - "11-14"
+    - "15-17"
+    - "18-21"
+    - "22-25"
+    - "25+"
 
 templates:
   # --- Basic (always on every match) ---
@@ -480,6 +783,59 @@ templates:
     options:
       dynamic: squad_players
 
+  - code: MOST_SPRINTS_PLAYER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Which player will have the most sprints in the match?"
+    options:
+      dynamic: squad_players
+
+  - code: MOST_CROSSES_PLAYER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Which player will have the most crosses in the match?"
+    options:
+      dynamic: squad_players
+
+  - code: MOST_BIG_CHANCES_CREATED_PLAYER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Which player will create the most big chances in the match?"
+    options:
+      dynamic: squad_players
+
+  - code: MOST_BIG_CHANCES_MISSED_PLAYER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Which player will have the most big chances missed in the match?"
+    options:
+      dynamic: squad_players
+
+  - code: HIGHEST_RATED_PLAYER
+    bucket: player
+    category: player
+    question_type: player_pick
+    points: 4
+    question_text: "Who will be the highest-rated player in the match?"
+    options:
+      dynamic: squad_players
+
+  - code: MAX_PLAYER_SOFASCORE_RATING
+    bucket: player
+    category: player
+    question_type: choice
+    points: 4
+    question_text: "What will be the highest SofaScore rating for a single player?"
+    options: *sofascore_rating_max
+
   # --- Attacking (2 pts, random pool) ---
   - code: HOME_POSSESSION
     bucket: attacking
@@ -577,6 +933,126 @@ templates:
     question_text: "Total assists in the second half?"
     options: *goal_count
 
+  - code: HOME_TEAM_AVG_SOFASCORE_RATING
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Average SofaScore rating for {home_team}?"
+    options: *team_avg_sofascore_rating
+
+  - code: AWAY_TEAM_AVG_SOFASCORE_RATING
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Average SofaScore rating for {away_team}?"
+    options: *team_avg_sofascore_rating
+
+  - code: MAX_PLAYER_SPRINTS
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Maximum no. of sprints by a player in the match?"
+    options: *player_sprints_max
+
+  - code: MAX_PLAYER_CROSSES
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Maximum no. of crosses by a player in the match?"
+    options: *player_crosses_max
+
+  - code: HOME_TEAM_DISTANCE_COVERED
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total distance covered by {home_team}?"
+    options: *team_distance
+
+  - code: AWAY_TEAM_DISTANCE_COVERED
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total distance covered by {away_team}?"
+    options: *team_distance
+
+  - code: TOTAL_BIG_CHANCES
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total big chances in the match?"
+    options: *big_chances_total
+
+  - code: TOTAL_BIG_CHANCES_MISSED
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total big chances missed in the match?"
+    options: *big_chances_missed_total
+
+  - code: TOTAL_TOUCHES_OPPOSITION_BOX
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total touches in the opposition box?"
+    options: *touches_opp_box_total
+
+  - code: HOME_TOUCHES_OPPOSITION_BOX
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total touches in the opposition box by {home_team}?"
+    options: *touches_opp_box_team
+
+  - code: AWAY_TOUCHES_OPPOSITION_BOX
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total touches in the opposition box by {away_team}?"
+    options: *touches_opp_box_team
+
+  - code: TOTAL_SPRINTS
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total no. of sprints in the match?"
+    options: *sprints_total
+
+  - code: HOME_SPRINTS
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total no. of sprints by {home_team}?"
+    options: *sprints_team
+
+  - code: AWAY_SPRINTS
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total no. of sprints by {away_team}?"
+    options: *sprints_team
+
+  - code: TOTAL_THROUGH_BALLS
+    bucket: attacking
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total no. of through balls in the match?"
+    options: *through_balls_total
+
   # --- Attempts (2 pts) ---
   - code: TOTAL_ATTEMPTS
     bucket: attempts
@@ -673,6 +1149,22 @@ templates:
     points: 2
     question_text: "What is the maximum attempts at goal by a single player in the match?"
     options: *player_attempts_max
+
+  - code: TOTAL_BLOCKED_SHOTS
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total blocked shots in the match?"
+    options: *blocked_shots_total
+
+  - code: TOTAL_SHOTS_WOODWORK
+    bucket: attempts
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total shots hitting the woodwork?"
+    options: *woodwork_total
 
   # --- Discipline (2 pts) ---
   - code: TOTAL_YELLOW_CARDS
@@ -852,6 +1344,110 @@ templates:
     question_text: "What is the maximum distance covered by a single player in the match?"
     options: *player_distance_max
 
+  - code: MAX_PLAYER_OF_MATCH_ACCURATE_PASSES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total no. of accurate passes by player of the match?"
+    options: *player_of_match_passes
+
+  - code: TOTAL_FINAL_THIRD_ENTRIES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total final third entries in the match?"
+    options: *final_third_entries_total
+
+  - code: HOME_FINAL_THIRD_ENTRIES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total final third entries by {home_team}?"
+    options: *final_third_entries_team
+
+  - code: AWAY_FINAL_THIRD_ENTRIES
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total final third entries by {away_team}?"
+    options: *final_third_entries_team
+
+  - code: TOTAL_THROW_INS
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total throw-ins in the match?"
+    options: *throw_ins_total
+
+  - code: HOME_THROW_INS
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total throw-ins by {home_team}?"
+    options: *throw_ins_team
+
+  - code: AWAY_THROW_INS
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total throw-ins by {away_team}?"
+    options: *throw_ins_team
+
+  - code: TOTAL_LONG_BALLS
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total long balls in the match?"
+    options: *long_balls_total
+
+  - code: HOME_LONG_BALLS
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total long balls by {home_team}?"
+    options: *long_balls_team
+
+  - code: AWAY_LONG_BALLS
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total long balls by {away_team}?"
+    options: *long_balls_team
+
+  - code: TOTAL_LONG_BALLS_COMPLETED
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total long balls completed in the match?"
+    options: *long_balls_completed_total
+
+  - code: HOME_LONG_BALLS_COMPLETED
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total long balls completed by {home_team}?"
+    options: *long_balls_completed_team
+
+  - code: AWAY_LONG_BALLS_COMPLETED
+    bucket: distribution
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total long balls completed by {away_team}?"
+    options: *long_balls_completed_team
+
   # --- Set plays (2 pts) ---
   - code: TOTAL_CORNERS
     bucket: set_plays
@@ -981,3 +1577,197 @@ templates:
     points: 2
     question_text: "What is the maximum no. of pressing applied by a single player in the match?"
     options: *player_pressing_max
+
+  - code: HOME_TACKLES_WON_PERCENTAGE
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total percentage of tackles won by {home_team}?"
+    options: *tackles_won_pct
+
+  - code: AWAY_TACKLES_WON_PERCENTAGE
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total percentage of tackles won by {away_team}?"
+    options: *tackles_won_pct
+
+  - code: TOTAL_TACKLES
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total tackles in the match?"
+    options: *tackles_total
+
+  - code: HOME_TACKLES
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total tackles by {home_team}?"
+    options: *tackles_team
+
+  - code: AWAY_TACKLES
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total tackles by {away_team}?"
+    options: *tackles_team
+
+  - code: TOTAL_INTERCEPTIONS
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total interceptions in the match?"
+    options: *interceptions_total
+
+  - code: HOME_INTERCEPTIONS
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total interceptions by {home_team}?"
+    options: *interceptions_team
+
+  - code: AWAY_INTERCEPTIONS
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total interceptions by {away_team}?"
+    options: *interceptions_team
+
+  - code: TOTAL_RECOVERIES
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total recoveries in the match?"
+    options: *recoveries_total
+
+  - code: HOME_RECOVERIES
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total recoveries by {home_team}?"
+    options: *recoveries_team
+
+  - code: AWAY_RECOVERIES
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total recoveries by {away_team}?"
+    options: *recoveries_team
+
+  - code: TOTAL_CLEARANCES
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total clearances in the match?"
+    options: *clearances_total
+
+  - code: HOME_CLEARANCES
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total clearances by {home_team}?"
+    options: *clearances_team
+
+  - code: AWAY_CLEARANCES
+    bucket: defending
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total clearances by {away_team}?"
+    options: *clearances_team
+
+  # --- Duels (2 pts) ---
+  - code: TOTAL_DUELS
+    bucket: duels
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total duels in the match?"
+    options: *duels_total
+
+  - code: TOTAL_GROUND_DUELS
+    bucket: duels
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total ground duels in the match?"
+    options: *ground_duels_total
+
+  - code: TOTAL_AERIAL_DUELS
+    bucket: duels
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total aerial duels in the match?"
+    options: *aerial_duels_total
+
+  - code: TOTAL_DISPOSSESSED
+    bucket: duels
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total times dispossessed in the match?"
+    options: *dispossessed_total
+
+  - code: TOTAL_DRIBBLES
+    bucket: duels
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total dribbles in the match?"
+    options: *dribbles_total
+
+  - code: TOTAL_SUCCESSFUL_DRIBBLES
+    bucket: duels
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total no. of successful dribbles in the match?"
+    options: *successful_dribbles_total
+
+  # --- Goalkeeping (2 pts) ---
+  - code: TOTAL_KEEPER_SAVES
+    bucket: goalkeeping
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total goalkeeper saves in the match?"
+    options: *keeper_saves_total
+
+  - code: TOTAL_GK_HIGH_CLAIMS
+    bucket: goalkeeping
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total high claims by goalkeepers?"
+    options: *gk_high_claims
+
+  - code: TOTAL_GK_BIG_SAVES
+    bucket: goalkeeping
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total big saves by goalkeepers?"
+    options: *gk_big_saves
+
+  - code: TOTAL_GOAL_KICKS
+    bucket: goalkeeping
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total goal kicks in the match?"
+    options: *goal_kicks_total

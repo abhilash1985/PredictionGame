@@ -10,7 +10,7 @@ BANK_PATH = Path(__file__).with_name('question_bank.yaml')
 
 BASIC_CODES = ('MATCH_WINNER', 'HOME_GOALS', 'AWAY_GOALS')
 PLAYER_BUCKET = 'player'
-STATS_BUCKETS = ('attacking', 'attempts', 'discipline', 'distribution', 'set_plays', 'defending')
+STATS_BUCKETS = ('attacking', 'attempts', 'discipline', 'distribution', 'set_plays', 'defending', 'duels', 'goalkeeping')
 
 DYNAMIC_OPTION_BUILDERS = {
     'home_away_draw_no_results': lambda match: [
