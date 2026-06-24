@@ -44,6 +44,7 @@ class QuestionTemplate(models.Model):
         GOALS = 'goals', 'Goals'
         PLAYER = 'player', 'Player'
         STATS = 'stats', 'Stats'
+        BONUS = 'bonus', 'Bonus'
         RANDOM = 'random', 'Random'
 
     code = models.CharField(max_length=50, unique=True)

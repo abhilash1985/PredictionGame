@@ -620,6 +620,194 @@ option_presets:
     - "18-21"
     - "22-25"
     - "25+"
+  ronaldo_wc_2026_goals: &ronaldo_wc_2026_goals
+    - "0-2"
+    - "3"
+    - "4"
+    - "5"
+    - "6"
+    - "7"
+    - "7+"
+  messi_wc_career_assists: &messi_wc_career_assists
+    - "0-8"
+    - "9"
+    - "10"
+    - "11"
+    - "12"
+    - "13"
+    - "13+"
+  haaland_wc_goal_contributions: &haaland_wc_goal_contributions
+    - "0-5"
+    - "6"
+    - "7"
+    - "8"
+    - "9"
+    - "10"
+    - "10+"
+  neymar_wc_matches: &neymar_wc_matches
+    - "0-1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "5+"
+  possession_in_contest: &possession_in_contest
+    - "0-4%"
+    - "5-6%"
+    - "7-9%"
+    - "10-12%"
+    - "13-15%"
+    - "15%+"
+  game_completed_in: &game_completed_in
+    - "Full Time"
+    - "Extra Time"
+    - "Penalties"
+    - "No Results"
+  final_third_left_channel: &final_third_left_channel
+    - "0-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "36-40"
+    - "40+"
+  final_third_right_channel: &final_third_right_channel
+    - "0-20"
+    - "21-25"
+    - "26-30"
+    - "31-35"
+    - "36-40"
+    - "40+"
+  final_third_central_channel: &final_third_central_channel
+    - "0-5"
+    - "6-10"
+    - "11-14"
+    - "15-17"
+    - "18-20"
+    - "20+"
+  offers_to_receive_total: &offers_to_receive_total
+    - "0-500"
+    - "501-550"
+    - "551-600"
+    - "601-650"
+    - "651-700"
+    - "701-750"
+    - "750+"
+  offers_to_receive_team: &offers_to_receive_team
+    - "0-100"
+    - "101-200"
+    - "201-300"
+    - "301-400"
+    - "401-450"
+    - "451-500"
+    - "500+"
+  attempted_line_breaks_total: &attempted_line_breaks_total
+    - "0-250"
+    - "251-275"
+    - "276-300"
+    - "301-325"
+    - "326-350"
+    - "350+"
+  attempted_line_breaks_team: &attempted_line_breaks_team
+    - "0-100"
+    - "101-135"
+    - "136-150"
+    - "151-175"
+    - "176-200"
+    - "200+"
+  completed_line_breaks_total: &completed_line_breaks_total
+    - "0-120"
+    - "121-140"
+    - "141-160"
+    - "161-180"
+    - "181-200"
+    - "201-225"
+    - "225+"
+  completed_line_breaks_team: &completed_line_breaks_team
+    - "0-60"
+    - "61-75"
+    - "76-90"
+    - "91-110"
+    - "111-130"
+    - "131-150"
+    - "150+"
+  attempted_def_line_breaks_total: &attempted_def_line_breaks_total
+    - "0-20"
+    - "21-30"
+    - "31-35"
+    - "36-40"
+    - "41-45"
+    - "46-50"
+    - "50+"
+  attempted_def_line_breaks_team: &attempted_def_line_breaks_team
+    - "0-5"
+    - "6-10"
+    - "11-15"
+    - "16-20"
+    - "21-25"
+    - "26-30"
+    - "30+"
+  completed_def_line_breaks_total: &completed_def_line_breaks_total
+    - "0-5"
+    - "6-9"
+    - "10-12"
+    - "13-15"
+    - "16-18"
+    - "19-20"
+    - "20+"
+  completed_def_line_breaks_team: &completed_def_line_breaks_team
+    - "0-4"
+    - "5-6"
+    - "7-8"
+    - "9-10"
+    - "11-12"
+    - "13-15"
+    - "15+"
+  world_cup_winner_2026: &world_cup_winner_2026
+    - "Brazil"
+    - "Germany"
+    - "England"
+    - "Argentina"
+    - "France"
+    - "Portugal"
+    - "Spain"
+    - "Others"
+  golden_ball_boot_shortlist: &golden_ball_boot_shortlist
+    - "Kylian Mbappé"
+    - "Erling Haaland"
+    - "Cristiano Ronaldo"
+    - "Lionel Messi"
+    - "Harry Kane"
+    - "Vinícius Júnior"
+    - "Lamine Yamal"
+    - "Others"
+  young_player_award_2026: &young_player_award_2026
+    - "Lamine Yamal"
+    - "Joao Neves"
+    - "Antonio Nusa"
+    - "Desire Doue"
+    - "Nico Paz"
+    - "Ayyoub Bouaddi"
+    - "Endrick"
+    - "Nico O'Reilly"
+    - "Pau Cubarsi"
+    - "Others"
+  golden_glove_2026: &golden_glove_2026
+    - "Emiliano Martínez"
+    - "David Raya"
+    - "Alisson Becker"
+    - "Mike Maignan"
+    - "Jordan Pickford"
+    - "Diogo Costa"
+    - "Thibaut Courtois"
+    - "Others"
+  golden_boot_winner_goals: &golden_boot_winner_goals
+    - "0-5"
+    - "6-7"
+    - "8-9"
+    - "10-11"
+    - "12-13"
+    - "14-15"
+    - "15+"
 
 templates:
   # --- Basic (always on every match) ---
@@ -1771,3 +1959,262 @@ templates:
     points: 2
     question_text: "Total goal kicks in the match?"
     options: *goal_kicks_total
+
+  # --- Knockout match stats (Round of 32 onward) ---
+  - code: POSSESSION_IN_CONTEST
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 3
+    question_text: "What will the possession margin be in the match (higher team minus lower team)?"
+    options: *possession_in_contest
+
+  - code: GAME_COMPLETED_IN
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 5
+    question_text: "How will the match be decided?"
+    options: *game_completed_in
+
+  - code: TOTAL_FINAL_THIRD_LEFT
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total final third entries via the left channel?"
+    options: *final_third_left_channel
+
+  - code: TOTAL_FINAL_THIRD_RIGHT
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total final third entries via the right channel?"
+    options: *final_third_right_channel
+
+  - code: TOTAL_FINAL_THIRD_CENTRAL
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total final third entries via the central channel?"
+    options: *final_third_central_channel
+
+  - code: TOTAL_OFFERS_TO_RECEIVE
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total offers to receive in the match?"
+    options: *offers_to_receive_total
+
+  - code: HOME_OFFERS_TO_RECEIVE
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total offers to receive by {home_team}?"
+    options: *offers_to_receive_team
+
+  - code: AWAY_OFFERS_TO_RECEIVE
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total offers to receive by {away_team}?"
+    options: *offers_to_receive_team
+
+  - code: TOTAL_ATTEMPTED_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempted line breaks in the match?"
+    options: *attempted_line_breaks_total
+
+  - code: HOME_ATTEMPTED_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempted line breaks by {home_team}?"
+    options: *attempted_line_breaks_team
+
+  - code: AWAY_ATTEMPTED_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempted line breaks by {away_team}?"
+    options: *attempted_line_breaks_team
+
+  - code: TOTAL_COMPLETED_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total completed line breaks in the match?"
+    options: *completed_line_breaks_total
+
+  - code: HOME_COMPLETED_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total completed line breaks by {home_team}?"
+    options: *completed_line_breaks_team
+
+  - code: AWAY_COMPLETED_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total completed line breaks by {away_team}?"
+    options: *completed_line_breaks_team
+
+  - code: TOTAL_ATTEMPTED_DEF_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempted defensive line breaks in the match?"
+    options: *attempted_def_line_breaks_total
+
+  - code: HOME_ATTEMPTED_DEF_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempted defensive line breaks by {home_team}?"
+    options: *attempted_def_line_breaks_team
+
+  - code: AWAY_ATTEMPTED_DEF_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total attempted defensive line breaks by {away_team}?"
+    options: *attempted_def_line_breaks_team
+
+  - code: TOTAL_COMPLETED_DEF_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total completed defensive line breaks in the match?"
+    options: *completed_def_line_breaks_total
+
+  - code: HOME_COMPLETED_DEF_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total completed defensive line breaks by {home_team}?"
+    options: *completed_def_line_breaks_team
+
+  - code: AWAY_COMPLETED_DEF_LINE_BREAKS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 2
+    question_text: "Total completed defensive line breaks by {away_team}?"
+    options: *completed_def_line_breaks_team
+
+  # --- Tournament bonus (Final match only) ---
+  - code: WORLD_CUP_WINNER_2026
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 50
+    question_text: "Who will win the FIFA World Cup 2026?"
+    options: *world_cup_winner_2026
+
+  - code: GOLDEN_BALL_2026
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 50
+    question_text: "Who will win the Golden Ball at World Cup 2026?"
+    options: *golden_ball_boot_shortlist
+
+  - code: GOLDEN_BOOT_2026
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 50
+    question_text: "Who will win the Golden Boot at World Cup 2026?"
+    options: *golden_ball_boot_shortlist
+
+  - code: YOUNG_PLAYER_AWARD_2026
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 30
+    question_text: "Who will win the FIFA Young Player Award at World Cup 2026?"
+    options: *young_player_award_2026
+
+  - code: GOLDEN_GLOVE_2026
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 30
+    question_text: "Who will win the Golden Glove at World Cup 2026?"
+    options: *golden_glove_2026
+
+  - code: GOLDEN_BOOT_WINNER_GOALS
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 30
+    question_text: "How many goals will the Golden Boot winner score?"
+    options: *golden_boot_winner_goals
+
+  # --- Tournament bonus (20 pts each) ---
+  - code: MBAPPE_CAREER_FREEKICK_GOALS_WC
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 20
+    question_text: "How many career free-kick goals will Kylian Mbappé have at the end of World Cup 2026?"
+    options: *goal_count
+
+  - code: RONALDO_WC_2026_GOALS
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 20
+    question_text: "How many goals will Cristiano Ronaldo score at World Cup 2026?"
+    options: *ronaldo_wc_2026_goals
+
+  - code: MESSI_WC_CAREER_ASSISTS_END
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 20
+    question_text: "How many World Cup career assists will Lionel Messi have at the end of World Cup 2026?"
+    options: *messi_wc_career_assists
+
+  - code: HAALAND_WC_GOAL_CONTRIBUTIONS
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 20
+    question_text: "Total goal contributions (goals + assists) by Erling Haaland at World Cup 2026?"
+    options: *haaland_wc_goal_contributions
+
+  - code: KANE_WC_PENALTY_GOALS
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 20
+    question_text: "How many penalty goals will Harry Kane score at World Cup 2026?"
+    options: *goal_count
+
+  - code: NEYMAR_WC_2026_MATCHES
+    bucket: bonus
+    category: bonus
+    question_type: choice
+    points: 20
+    question_text: "How many matches will Neymar play at World Cup 2026?"
+    options: *neymar_wc_matches
