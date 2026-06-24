@@ -131,7 +131,7 @@ class AiPredictService:
                 'team_away__players',
             )
             .select_related('team_home', 'team_away', 'round', 'stadium', 'tournament')
-            .order_by('kickoff_at', 'match_number')
+            .order_by('match_number')
         )
 
     @classmethod

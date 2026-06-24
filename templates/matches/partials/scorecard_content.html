@@ -23,7 +23,7 @@
     </div>
     <div class="scorecard-team-compact-center">
       {% if match.has_result %}
-        <span class="scorecard-hero-score-compact">{{ match.display_home_score }} : {{ match.display_away_score }}</span>
+        <span class="scorecard-hero-score-compact">{{ match.display_home_score_line }} : {{ match.display_away_score_line }}</span>
       {% else %}
         <span class="scorecard-vs-compact">VS</span>
       {% endif %}
@@ -44,7 +44,7 @@
     </div>
     <div class="col-md-2 text-center">
       {% if match.has_result %}
-        <div class="scorecard-hero-score">{{ match.display_home_score }} : {{ match.display_away_score }}</div>
+        <div class="scorecard-hero-score">{{ match.display_home_score_line }} : {{ match.display_away_score_line }}</div>
       {% else %}
         <span class="scorecard-vs">VS</span>
       {% endif %}

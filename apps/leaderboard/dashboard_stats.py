@@ -52,8 +52,8 @@ class DashboardStatsService:
             prediction_winners = DashboardStatsService._match_prediction_winners(match)
             results.append({
                 'match': match,
-                'home_score': match.display_home_score,
-                'away_score': match.display_away_score,
+                'home_score': match.display_home_score_line,
+                'away_score': match.display_away_score_line,
                 'prediction_winners': prediction_winners,
                 'prediction_winners_label': DashboardStatsService._prediction_winners_label(prediction_winners),
                 'prediction_winner_points': prediction_winners[0]['total_points'] if prediction_winners else None,

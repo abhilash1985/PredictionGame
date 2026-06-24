@@ -9,7 +9,7 @@
                  id="{{ field_prefix }}{{ question.id }}_{{ forloop.counter }}"
                  value="{{ opt }}"
                  {% if selected_value == opt %}checked{% endif %}
-                 required>
+                 {% if require_answer is not False %}required{% endif %}>
           <label class="form-check-label" for="{{ field_prefix }}{{ question.id }}_{{ forloop.counter }}">
             <span>{{ opt }}</span>
           </label>
@@ -22,5 +22,5 @@
          name="{{ field_prefix }}{{ question.id }}"
          class="form-control"
          value="{{ selected_value|default:'' }}"
-         required>
+         {% if require_answer is not False %}required{% endif %}>
 {% endif %}

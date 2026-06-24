@@ -18,7 +18,7 @@ from apps.tournaments.models import PastWorldCupWinner
 
 
 def default_verdict_match(verdict_matches):
-    past_matches = verdict_matches.filter(kickoff_at__lt=timezone.now()).order_by('-kickoff_at', '-match_number')
+    past_matches = verdict_matches.filter(kickoff_at__lt=timezone.now()).order_by('-match_number')
     return past_matches.filter(prediction_count__gt=0).first() or past_matches.first()
 
 
@@ -136,11 +136,11 @@ def dashboard_view(request):
 
     if tournament:
         verdict_matches = (
-            Match.objects.filter(tournament=tournament, round__name__startswith='Group ')
+            Match.objects.filter(tournament=tournament)
             .select_related('team_home', 'team_away', 'round', 'stadium')
             .prefetch_related('questions__question_template')
             .annotate(prediction_count=Count('predictions'))
-            .order_by('kickoff_at')
+            .order_by('match_number')
         )
 
         verdict_match_id = request.GET.get('verdict_match')

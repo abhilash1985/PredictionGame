@@ -20,11 +20,41 @@ class MatchQuestionInline(admin.TabularInline):
 
 @admin.register(Match)
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ['match_number', 'team_home', 'team_away', 'kickoff_at', 'status', 'stadium']
-    list_filter = ['tournament', 'status', 'round']
+    list_display = ['match_number', 'team_home', 'team_away', 'kickoff_at', 'status', 'won_in', 'stadium']
+    list_filter = ['tournament', 'status', 'round', 'won_in']
     search_fields = ['team_home__name', 'team_away__name']
     inlines = [MatchQuestionInline]
     readonly_fields = ['score_link']
+    fieldsets = (
+        (
+            None,
+            {
+                'fields': (
+                    'tournament',
+                    'round',
+                    'match_number',
+                    'team_home',
+                    'team_away',
+                    'stadium',
+                    'kickoff_at',
+                    'status',
+                ),
+            },
+        ),
+        (
+            'Result',
+            {
+                'fields': (
+                    'home_score',
+                    'away_score',
+                    'won_in',
+                    'home_penalty_score',
+                    'away_penalty_score',
+                    'score_link',
+                ),
+            },
+        ),
+    )
 
     def score_link(self, obj):
         if not obj.pk:

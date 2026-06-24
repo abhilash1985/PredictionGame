@@ -107,7 +107,7 @@ class DefaultVerdictMatchTests(TestCase):
         verdict_matches = (
             Match.objects.filter(tournament=self.tournament, round__name__startswith='Group ')
             .annotate(prediction_count=Count('predictions'))
-            .order_by('kickoff_at')
+            .order_by('match_number')
         )
         default_match = default_verdict_match(verdict_matches)
         self.assertEqual(default_match.pk, self.past_match.pk)

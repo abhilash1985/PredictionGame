@@ -72,6 +72,11 @@ class Match(models.Model):
         LIVE = 'live', 'Live'
         FINISHED = 'finished', 'Finished'
 
+    class WonIn(models.TextChoices):
+        FT = 'FT', 'Full Time'
+        AET = 'AET', 'Extra Time'
+        PEN = 'PEN', 'Penalties'
+
     tournament = models.ForeignKey('tournaments.Tournament', on_delete=models.CASCADE, related_name='matches')
     round = models.ForeignKey('tournaments.Round', on_delete=models.SET_NULL, null=True, blank=True)
     match_number = models.PositiveIntegerField()
@@ -82,10 +87,12 @@ class Match(models.Model):
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.SCHEDULED)
     home_score = models.PositiveIntegerField(null=True, blank=True)
     away_score = models.PositiveIntegerField(null=True, blank=True)
-    won_in = models.CharField(max_length=10, default='FT')
+    home_penalty_score = models.PositiveIntegerField(null=True, blank=True)
+    away_penalty_score = models.PositiveIntegerField(null=True, blank=True)
+    won_in = models.CharField(max_length=10, choices=WonIn.choices, default=WonIn.FT)
 
     class Meta:
-        ordering = ['kickoff_at', 'match_number']
+        ordering = ['match_number']
         unique_together = [('tournament', 'match_number')]
 
     def __str__(self):
@@ -104,6 +111,36 @@ class Match(models.Model):
     @property
     def is_group_stage(self):
         return bool(self.round and self.round.name.startswith('Group '))
+
+    @property
+    def is_knockout(self):
+        return not self.is_group_stage
+
+    @property
+    def display_home_score_line(self):
+        score = self.display_home_score
+        if score is None:
+            return ''
+        if self.won_in == self.WonIn.PEN and self.home_penalty_score is not None:
+            return f'{score}({self.home_penalty_score})'
+        return str(score)
+
+    @property
+    def display_away_score_line(self):
+        score = self.display_away_score
+        if score is None:
+            return ''
+        if self.won_in == self.WonIn.PEN and self.away_penalty_score is not None:
+            return f'{score}({self.away_penalty_score})'
+        return str(score)
+
+    @property
+    def result_status_label(self):
+        if self.won_in == self.WonIn.PEN:
+            return 'Penalties'
+        if self.won_in == self.WonIn.AET:
+            return 'AET'
+        return 'Full Time'
 
     @property
     def total_question_points(self):
@@ -133,12 +170,21 @@ class Match(models.Model):
 
     @property
     def is_draw(self):
+        if self.won_in == self.WonIn.PEN:
+            if self.home_penalty_score is not None and self.away_penalty_score is not None:
+                return self.home_penalty_score == self.away_penalty_score
         if not self.has_result:
             return self._winner_label_from_questions() == 'Draw'
         return self.display_home_score == self.display_away_score
 
     @property
     def winning_team(self):
+        if self.won_in == self.WonIn.PEN:
+            if self.home_penalty_score is not None and self.away_penalty_score is not None:
+                if self.home_penalty_score > self.away_penalty_score:
+                    return self.team_home
+                if self.away_penalty_score > self.home_penalty_score:
+                    return self.team_away
         if self.is_draw:
             return None
         if self.has_result:

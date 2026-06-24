@@ -183,7 +183,7 @@ class LeaderboardService:
             Match.objects.filter(tournament=tournament)
             .select_related('team_home', 'team_away')
             .prefetch_related('questions')
-            .order_by('kickoff_at', 'match_number')
+            .order_by('match_number')
         )
         completed_matches = [match for match in all_matches if match.is_completed]
         if not completed_matches:
@@ -245,7 +245,7 @@ class LeaderboardService:
             Match.objects.filter(tournament=tournament)
             .select_related('team_home', 'team_away', 'round', 'stadium')
             .annotate(prediction_count=Count('predictions'))
-            .order_by('kickoff_at', 'match_number')
+            .order_by('match_number')
         )
 
     @staticmethod

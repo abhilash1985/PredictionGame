@@ -12,7 +12,7 @@
       {% if match.status == 'live' %}
         <span class="badge rounded-pill match-list-badge-live">Live</span>
       {% elif match.is_completed %}
-        <span class="badge rounded-pill match-list-badge-final">Full Time</span>
+        <span class="badge rounded-pill match-list-badge-final">{{ match.result_status_label }}</span>
       {% endif %}
     </div>
   </div>
@@ -30,9 +30,9 @@
     <div class="match-list-center">
       {% if match.has_result %}
         <div class="match-list-score" aria-label="Final score">
-          <span class="match-list-score-home">{{ match.display_home_score }}</span>
+          <span class="match-list-score-home">{{ match.display_home_score_line }}</span>
           <span class="match-list-score-sep">:</span>
-          <span class="match-list-score-away">{{ match.display_away_score }}</span>
+          <span class="match-list-score-away">{{ match.display_away_score_line }}</span>
         </div>
       {% else %}
         <span class="match-list-vs">vs</span>

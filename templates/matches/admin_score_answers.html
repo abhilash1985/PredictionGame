@@ -5,7 +5,7 @@
 {% block content %}
 <div class="card card-football admin-tool-page">
   <div class="card-body admin-tool-body">
-    {% include 'matches/partials/admin_page_header.html' with page_icon='clipboard-check' page_title='Score Match Answers' page_description='Set the correct answer for each question. Saving recalculates points for every prediction on this match.' %}
+    {% include 'matches/partials/admin_page_header.html' with page_icon='clipboard-check' page_title='Score Match Answers' page_description='Set correct answers for any questions you want to score. Unanswered questions keep their previous values. Saving recalculates points for every prediction on this match.' %}
 
     <div class="admin-selector-panel">
       <form method="get" class="admin-selector-form">
@@ -34,6 +34,38 @@
         <form method="post" class="admin-action-form">
           {% csrf_token %}
           <input type="hidden" name="match_id" value="{{ match.pk }}">
+          {% if match.is_knockout %}
+            <section class="predict-question-card admin-question-card admin-knockout-result-card">
+              <div class="predict-question-head">
+                <span class="predict-question-num"><i class="bi bi-trophy" aria-hidden="true"></i></span>
+                <h3 class="predict-question-title">Knockout match result</h3>
+              </div>
+              <p class="text-muted small mb-3">
+                From the Round of 32 onward, matches can end after extra time or penalties.
+                Enter the score after full time / extra time, then add penalty scores when the match was decided on pens.
+              </p>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label" for="won_in">Decided in</label>
+                  <select name="won_in" id="won_in" class="form-select">
+                    {% for value, label in won_in_choices %}
+                      <option value="{{ value }}" {% if match.won_in == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label" for="home_penalty_score">{{ match.team_home.name }} penalty score</label>
+                  <input type="number" min="0" name="home_penalty_score" id="home_penalty_score"
+                         class="form-control" value="{{ match.home_penalty_score|default:'' }}">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label" for="away_penalty_score">{{ match.team_away.name }} penalty score</label>
+                  <input type="number" min="0" name="away_penalty_score" id="away_penalty_score"
+                         class="form-control" value="{{ match.away_penalty_score|default:'' }}">
+                </div>
+              </div>
+            </section>
+          {% endif %}
           {% for question in match.questions.all %}
             <section class="predict-question-card admin-question-card">
               <div class="predict-question-head">
@@ -41,7 +73,7 @@
                 <h3 class="predict-question-title">{{ question.question_text }}</h3>
                 <span class="predict-points-badge">{{ question.points }} pts</span>
               </div>
-              {% include 'matches/partials/admin_question_radios.html' with question=question field_prefix='answer_' selected_value=question.correct_answer %}
+              {% include 'matches/partials/admin_question_radios.html' with question=question field_prefix='answer_' selected_value=question.correct_answer require_answer=False %}
             </section>
           {% empty %}
             <div class="admin-empty-state admin-empty-state-inline">

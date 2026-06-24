@@ -70,8 +70,36 @@ def _active_tournament_matches():
         Match.objects.filter(tournament=tournament)
         .select_related('team_home', 'team_away', 'stadium', 'round')
         .prefetch_related('questions')
-        .order_by('kickoff_at', 'match_number')
+        .order_by('match_number')
     )
+
+
+def _save_knockout_result(match, post_data):
+    if match.is_group_stage:
+        return
+
+    won_in = post_data.get('won_in', Match.WonIn.FT)
+    valid_won_in = {choice for choice, _label in Match.WonIn.choices}
+    if won_in not in valid_won_in:
+        won_in = Match.WonIn.FT
+
+    match.won_in = won_in
+    update_fields = ['won_in']
+
+    if won_in == Match.WonIn.PEN:
+        home_penalty = post_data.get('home_penalty_score', '').strip()
+        away_penalty = post_data.get('away_penalty_score', '').strip()
+        if home_penalty.isdigit():
+            match.home_penalty_score = int(home_penalty)
+        if away_penalty.isdigit():
+            match.away_penalty_score = int(away_penalty)
+        update_fields.extend(['home_penalty_score', 'away_penalty_score'])
+    else:
+        match.home_penalty_score = None
+        match.away_penalty_score = None
+        update_fields.extend(['home_penalty_score', 'away_penalty_score'])
+
+    match.save(update_fields=update_fields)
 
 
 @login_required
@@ -82,11 +110,11 @@ def match_list_view(request):
     matches = Match.objects.none()
     if tournament:
         matches = (
-            Match.objects.filter(tournament=tournament, round__name__startswith='Group ')
+            Match.objects.filter(tournament=tournament)
             .select_related('team_home', 'team_away', 'stadium', 'round')
             .prefetch_related('questions__question_template')
             .annotate(prediction_count=Count('predictions'))
-            .order_by('kickoff_at')
+            .order_by('match_number')
         )
     return render(request, 'matches/list.html', {
         'matches': matches,
@@ -218,6 +246,7 @@ def admin_score_answers_view(request):
             if answer:
                 answers[str(question.id)] = answer
         scored_count = ScoringService.set_correct_answers(match, answers)
+        _save_knockout_result(match, request.POST)
         messages.success(
             request,
             f'Correct answers saved. Scored {scored_count} prediction(s).',
@@ -229,6 +258,7 @@ def admin_score_answers_view(request):
         'match': match,
         'match_choices': admin_match_choices(matches),
         'selected_match_id': int(match_id) if match_id else '',
+        'won_in_choices': Match.WonIn.choices,
     })
 
 
