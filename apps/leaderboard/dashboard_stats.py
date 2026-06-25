@@ -37,12 +37,12 @@ class DashboardStatsService:
         }
 
     @staticmethod
-    def recent_match_results(tournament, limit=5):
+    def recent_match_results(tournament, limit=6):
         matches = (
             Match.objects.filter(tournament=tournament)
             .select_related('team_home', 'team_away', 'round')
             .prefetch_related('questions__question_template')
-            .order_by('-kickoff_at')
+            .order_by('-match_number')
         )
 
         results = []
