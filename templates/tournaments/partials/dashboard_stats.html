@@ -5,7 +5,7 @@
       <header class="dashboard-stat-card-head">
         <i class="bi bi-trophy-fill dashboard-stat-icon"></i>
         <div>
-          <h3 class="dashboard-stat-title">Last 5 Match Results</h3>
+          <h3 class="dashboard-stat-title">Last 6 Match Results</h3>
           <p class="dashboard-stat-subtitle mb-0">Recent scores with prediction MVPs</p>
         </div>
       </header>
@@ -20,7 +20,10 @@
       <header class="dashboard-stat-card-head">
         <i class="bi bi-bar-chart-fill dashboard-stat-icon"></i>
         <div>
-          <h3 class="dashboard-stat-title">Leaderboard Top 5</h3>
+          <h3 class="dashboard-stat-title">
+            <span class="d-lg-none">Leaderboard Top 5</span>
+            <span class="d-none d-lg-inline">Leaderboard Top 10</span>
+          </h3>
           <p class="dashboard-stat-subtitle mb-0">Highest total prediction points</p>
         </div>
       </header>
@@ -28,7 +31,7 @@
         {% if dashboard_stats.leaderboard_top %}
           <ol class="dashboard-mini-ranking list-unstyled mb-0">
             {% for row in dashboard_stats.leaderboard_top %}
-              <li class="dashboard-mini-ranking-item">
+              <li class="dashboard-mini-ranking-item{% if forloop.counter > 5 %} dashboard-rank-desktop-only{% endif %}">
                 <span class="dashboard-mini-rank">{{ forloop.counter }}</span>
                 <span class="dashboard-mini-name">{{ row.display_name }}</span>
                 <span class="dashboard-mini-value">{{ row.total_points }} pts</span>

@@ -613,6 +613,16 @@ body.page-legal {
   border-bottom: none;
 }
 
+.dashboard-rank-desktop-only {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .dashboard-rank-desktop-only {
+    display: grid;
+  }
+}
+
 .dashboard-mini-rank {
   display: inline-flex;
   align-items: center;
