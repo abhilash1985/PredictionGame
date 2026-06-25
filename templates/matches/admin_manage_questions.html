@@ -36,7 +36,7 @@
           <input type="hidden" name="match_id" value="{{ match.pk }}">
           <div id="question-rows">
             {% for row in question_rows %}
-              {% include 'matches/partials/admin_question_editor_row.html' with row=row question_templates=question_templates %}
+              {% include 'matches/partials/admin_question_editor_row.html' with row=row question_templates=question_templates squad_players=squad_players %}
             {% endfor %}
           </div>
           <div class="admin-form-actions">
@@ -62,7 +62,7 @@
   {{ template_defaults|json_script:"template-defaults" }}
   <template id="question-row-template">
     {% with row=blank_row %}
-      {% include 'matches/partials/admin_question_editor_row.html' with row=row question_templates=question_templates %}
+      {% include 'matches/partials/admin_question_editor_row.html' with row=row question_templates=question_templates squad_players=squad_players %}
     {% endwith %}
   </template>
 {% endif %}
@@ -77,6 +77,19 @@
   var rowTemplate = document.getElementById('question-row-template');
   var nextIndex = {{ question_rows|length|default:1 }};
 
+  function isFeatured(templateId) {
+    var defaults = templateDefaults[templateId];
+    return !!(defaults && defaults.code && defaults.code.indexOf('FEATURED_PLAYER') === 0);
+  }
+
+  function updateFeaturedVisibility(row, templateId) {
+    var wrap = row.querySelector('.featured-player-wrap');
+    if (!wrap) {
+      return;
+    }
+    wrap.style.display = isFeatured(templateId) ? '' : 'none';
+  }
+
   function applyTemplateDefaults(row, templateId) {
     var defaults = templateDefaults[templateId];
     if (!defaults) {
@@ -85,6 +98,7 @@
     row.querySelector('.question-text').value = defaults.question_text;
     row.querySelector('.question-points').value = defaults.points;
     row.querySelector('.question-options').value = defaults.options;
+    row.dataset.templateText = defaults.question_text;
   }
 
   function bindRow(row) {
@@ -92,11 +106,28 @@
     if (!select) {
       return;
     }
+    if (select.value && templateDefaults[select.value]) {
+      row.dataset.templateText = templateDefaults[select.value].question_text;
+    }
+    updateFeaturedVisibility(row, select.value);
     select.addEventListener('change', function () {
       if (select.value) {
         applyTemplateDefaults(row, select.value);
       }
+      updateFeaturedVisibility(row, select.value);
     });
+
+    var playerSelect = row.querySelector('.featured-player-select');
+    if (playerSelect) {
+      playerSelect.addEventListener('change', function () {
+        if (!playerSelect.value) {
+          return;
+        }
+        var textField = row.querySelector('.question-text');
+        var rawText = row.dataset.templateText || textField.value;
+        textField.value = rawText.replace('{featured_player}', playerSelect.value);
+      });
+    }
   }
 
   rowsContainer.querySelectorAll('.admin-question-row').forEach(bindRow);

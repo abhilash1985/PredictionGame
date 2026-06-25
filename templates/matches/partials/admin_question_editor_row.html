@@ -36,6 +36,16 @@
         <label class="form-label" for="question_text_{{ row.index }}">Question text</label>
         <input type="text" name="question_text_{{ row.index }}" id="question_text_{{ row.index }}" class="form-control question-text" value="{{ row.question_text }}" required>
       </div>
+      <div class="col-md-6 featured-player-wrap" style="display: none;">
+        <label class="form-label" for="featured_player_{{ row.index }}">Featured player</label>
+        <select id="featured_player_{{ row.index }}" class="form-select featured-player-select">
+          <option value="">— Select player from squads —</option>
+          {% for name in squad_players %}
+            <option value="{{ name }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+        <div class="form-text">Fills the {featured_player} placeholder in the question text above.</div>
+      </div>
       <div class="col-12">
         <label class="form-label" for="options_{{ row.index }}">Options (one per line)</label>
         <textarea name="options_{{ row.index }}" id="options_{{ row.index }}" class="form-control question-options" rows="4" placeholder="Option 1&#10;Option 2">{{ row.options }}</textarea>

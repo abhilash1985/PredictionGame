@@ -74,6 +74,15 @@ def _active_tournament_matches():
     )
 
 
+def _match_squad_player_names(match):
+    players = list(
+        Player.objects.filter(team__in=[match.team_home_id, match.team_away_id], is_active=True)
+        .select_related('team')
+        .order_by('team', 'jersey_number')
+    )
+    return [player.full_name for player in players]
+
+
 def _save_knockout_result(match, post_data):
     if match.is_group_stage:
         return
@@ -342,6 +351,7 @@ def admin_manage_match_questions_view(request):
     question_rows = []
     question_templates = QuestionTemplate.objects.filter(is_active=True).order_by('category', 'code')
     template_defaults = {}
+    squad_players = []
 
     if match_id:
         match = get_object_or_404(
@@ -349,6 +359,7 @@ def admin_manage_match_questions_view(request):
             pk=match_id,
         )
         template_defaults = template_defaults_for_match(match)
+        squad_players = _match_squad_player_names(match)
 
     if request.method == 'POST' and match:
         parsed_rows = []
@@ -388,6 +399,7 @@ def admin_manage_match_questions_view(request):
         'question_templates': question_templates,
         'question_rows': question_rows,
         'template_defaults': template_defaults,
+        'squad_players': squad_players,
         'blank_row': {
             'index': '__INDEX__',
             'id': '',

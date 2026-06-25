@@ -808,6 +808,143 @@ option_presets:
     - "12-13"
     - "14-15"
     - "15+"
+  featured_player_goals: &featured_player_goals
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "4+"
+  featured_player_assists: &featured_player_assists
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "3+"
+  featured_player_contributions: &featured_player_contributions
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "5+"
+  featured_player_penalties: &featured_player_penalties
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "3+"
+  featured_player_shots: &featured_player_shots
+    - "0-1"
+    - "2-3"
+    - "4-5"
+    - "6-7"
+    - "8-9"
+    - "9+"
+  featured_player_shots_on_target: &featured_player_shots_on_target
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "4+"
+  featured_player_big_chances: &featured_player_big_chances
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "3+"
+  featured_player_key_passes: &featured_player_key_passes
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "5+"
+  featured_player_accurate_passes: &featured_player_accurate_passes
+    - "0-20"
+    - "21-35"
+    - "36-50"
+    - "51-65"
+    - "66-80"
+    - "80+"
+  featured_player_pass_accuracy: &featured_player_pass_accuracy
+    - "0-60%"
+    - "61-70%"
+    - "71-80%"
+    - "81-90%"
+    - "91-100%"
+  featured_player_crosses: &featured_player_crosses
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "4+"
+  featured_player_dribbles: &featured_player_dribbles
+    - "0"
+    - "1-2"
+    - "3-4"
+    - "5-6"
+    - "7-8"
+    - "8+"
+  featured_player_fouled: &featured_player_fouled
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "4+"
+  featured_player_ground_duels: &featured_player_ground_duels
+    - "0-2"
+    - "3-5"
+    - "6-8"
+    - "9-11"
+    - "11+"
+  featured_player_touches: &featured_player_touches
+    - "0-40"
+    - "41-60"
+    - "61-80"
+    - "81-100"
+    - "100+"
+  featured_player_tackles: &featured_player_tackles
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "4+"
+  featured_player_interceptions: &featured_player_interceptions
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "3+"
+  featured_player_card: &featured_player_card
+    - "No card"
+    - "Yellow"
+    - "Red"
+    - "Yellow + Red"
+  featured_player_minutes: &featured_player_minutes
+    - "0"
+    - "1-30"
+    - "31-60"
+    - "61-89"
+    - "90"
+    - "90+"
+  featured_player_saves: &featured_player_saves
+    - "0-1"
+    - "2-3"
+    - "4-5"
+    - "6-7"
+    - "7+"
+  featured_player_goals_conceded: &featured_player_goals_conceded
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "3+"
 
 templates:
   # --- Basic (always on every match) ---
@@ -2218,3 +2355,180 @@ templates:
     points: 20
     question_text: "How many matches will Neymar play at World Cup 2026?"
     options: *neymar_wc_matches
+
+  # --- Featured player (admin picks a player from the match squads) ---
+  - code: FEATURED_PLAYER_GOALS
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 5
+    question_text: "No. of goals scored by {featured_player} in the match?"
+    options: *featured_player_goals
+
+  - code: FEATURED_PLAYER_ASSISTS
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 5
+    question_text: "No. of assists by {featured_player} in the match?"
+    options: *featured_player_assists
+
+  - code: FEATURED_PLAYER_GOAL_CONTRIBUTIONS
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 5
+    question_text: "No. of goal contributions by {featured_player} in the match?"
+    options: *featured_player_contributions
+
+  - code: FEATURED_PLAYER_PENALTIES
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 5
+    question_text: "No. of penalties scored by {featured_player} in the match?"
+    options: *featured_player_penalties
+
+  - code: FEATURED_PLAYER_SHOTS
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of shots by {featured_player} in the match?"
+    options: *featured_player_shots
+
+  - code: FEATURED_PLAYER_SHOTS_ON_TARGET
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of shots on target by {featured_player} in the match?"
+    options: *featured_player_shots_on_target
+
+  - code: FEATURED_PLAYER_BIG_CHANCES
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of big chances created by {featured_player} in the match?"
+    options: *featured_player_big_chances
+
+  - code: FEATURED_PLAYER_KEY_PASSES
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of key passes by {featured_player} in the match?"
+    options: *featured_player_key_passes
+
+  - code: FEATURED_PLAYER_ACCURATE_PASSES
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of accurate passes by {featured_player} in the match?"
+    options: *featured_player_accurate_passes
+
+  - code: FEATURED_PLAYER_PASS_ACCURACY
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "Pass accuracy % of {featured_player} in the match?"
+    options: *featured_player_pass_accuracy
+
+  - code: FEATURED_PLAYER_CROSSES
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of accurate crosses by {featured_player} in the match?"
+    options: *featured_player_crosses
+
+  - code: FEATURED_PLAYER_DRIBBLES
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of successful dribbles by {featured_player} in the match?"
+    options: *featured_player_dribbles
+
+  - code: FEATURED_PLAYER_FOULED
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of times {featured_player} was fouled in the match?"
+    options: *featured_player_fouled
+
+  - code: FEATURED_PLAYER_GROUND_DUELS_WON
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of ground duels won by {featured_player} in the match?"
+    options: *featured_player_ground_duels
+
+  - code: FEATURED_PLAYER_TOUCHES
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of touches by {featured_player} in the match?"
+    options: *featured_player_touches
+
+  - code: FEATURED_PLAYER_TACKLES
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of tackles by {featured_player} in the match?"
+    options: *featured_player_tackles
+
+  - code: FEATURED_PLAYER_INTERCEPTIONS
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of interceptions by {featured_player} in the match?"
+    options: *featured_player_interceptions
+
+  - code: FEATURED_PLAYER_CARD
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "Will {featured_player} get a card (yellow/red) in the match?"
+    options: *featured_player_card
+
+  - code: FEATURED_PLAYER_MINUTES
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "Minutes played by {featured_player} in the match?"
+    options: *featured_player_minutes
+
+  - code: FEATURED_PLAYER_SAVES
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "No. of saves by {featured_player} in the match?"
+    options: *featured_player_saves
+
+  - code: FEATURED_PLAYER_CLEAN_SHEET
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "Will {featured_player} keep a clean sheet?"
+    options: *yes_no
+
+  - code: FEATURED_PLAYER_GOALS_CONCEDED
+    bucket: featured_player
+    category: player
+    question_type: choice
+    points: 3
+    question_text: "Goals conceded by {featured_player} in the match?"
+    options: *featured_player_goals_conceded

@@ -61,9 +61,9 @@ class QuestionTemplate(models.Model):
         return self.code
 
     def render_text(self, match):
-        return self.question_text.format(
-            home_team=match.team_home.name,
-            away_team=match.team_away.name,
+        return (
+            self.question_text.replace('{home_team}', match.team_home.name)
+            .replace('{away_team}', match.team_away.name)
         )
 
 

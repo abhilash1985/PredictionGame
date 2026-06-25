@@ -71,9 +71,14 @@ def default_options_for_code(code, match):
 
 
 def render_question_text(template_entry, match):
-    return template_entry['question_text'].format(
-        home_team=match.team_home.name,
-        away_team=match.team_away.name,
+    return render_placeholders(template_entry['question_text'], match)
+
+
+def render_placeholders(text, match):
+    """Substitute only known placeholders, leaving others (e.g. {featured_player}) intact."""
+    return (
+        text.replace('{home_team}', match.team_home.name)
+        .replace('{away_team}', match.team_away.name)
     )
 
 
