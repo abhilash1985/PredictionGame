@@ -203,7 +203,9 @@ def predict_view(request, pk):
         field_name = f'question_{question.id}'
         if field_name not in form.fields:
             continue
-        template_code = question.question_template.code if question.question_template else ''
+        template = question.question_template
+        template_code = template.code if template else ''
+        is_bonus = bool(template and template.category == QuestionTemplate.Category.BONUS)
         if template_code == 'PLAYER_OF_MATCH':
             layout = 'grid'
         elif template_code in ('HOME_GOALS', 'AWAY_GOALS'):
@@ -223,6 +225,7 @@ def predict_view(request, pk):
             'layout': layout,
             'columns': columns,
             'points': question.points,
+            'is_bonus': is_bonus,
         })
         total_points += question.points
 

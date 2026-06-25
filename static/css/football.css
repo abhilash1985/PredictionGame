@@ -3077,6 +3077,32 @@ body.page-auth .main-content {
   font-weight: 700;
 }
 
+.predict-question-card-bonus {
+  border-left-color: var(--gold);
+  background: linear-gradient(0deg, rgba(255, 199, 44, 0.08), rgba(255, 199, 44, 0.08)), var(--white);
+  box-shadow: 0 2px 12px rgba(255, 184, 0, 0.18);
+}
+
+.predict-bonus-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--theme-navy);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+.predict-points-badge-bonus {
+  background: var(--theme-navy);
+  color: var(--gold);
+}
+
 .predict-booster-box {
   padding: 1rem 1.25rem;
   margin-bottom: 1.25rem;

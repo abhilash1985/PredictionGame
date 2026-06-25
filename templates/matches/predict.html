@@ -123,11 +123,14 @@
       <input type="hidden" name="from" value="{{ return_source }}">
       {% for item in question_fields %}
         {% with field=item.field %}
-          <section class="predict-question-card">
+          <section class="predict-question-card{% if item.is_bonus %} predict-question-card-bonus{% endif %}">
             <div class="predict-question-head">
               <span class="predict-question-num">{{ forloop.counter }}</span>
-              <h3 class="predict-question-title">{{ field.label }}</h3>
-              <span class="predict-points-badge">{{ item.points }} pts</span>
+              <h3 class="predict-question-title">
+                {{ field.label }}
+                {% if item.is_bonus %}<span class="predict-bonus-badge"><i class="bi bi-star-fill me-1"></i>Bonus</span>{% endif %}
+              </h3>
+              <span class="predict-points-badge{% if item.is_bonus %} predict-points-badge-bonus{% endif %}">{{ item.points }} pts</span>
             </div>
 
             {% if field.field.widget.input_type == 'radio' %}
