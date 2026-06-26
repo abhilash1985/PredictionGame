@@ -945,6 +945,36 @@ option_presets:
     - "2"
     - "3"
     - "3+"
+  goals_excl_shootout: &goals_excl_shootout
+    - "0-1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "6"
+    - "6+"
+  penalty_shootout_goals: &penalty_shootout_goals
+    - "0-5"
+    - "6"
+    - "7"
+    - "8"
+    - "8+"
+    - "No shootout (decided in full time)"
+    - "No shootout (decided in extra time)"
+  total_goals_incl_shootout: &total_goals_incl_shootout
+    - "0-3"
+    - "4-6"
+    - "7-9"
+    - "10-12"
+    - "13-15"
+    - "15+"
+  team_goals_incl_shootout: &team_goals_incl_shootout
+    - "0-2"
+    - "3-4"
+    - "5-6"
+    - "7-8"
+    - "9-10"
+    - "10+"
 
 templates:
   # --- Basic (always on every match) ---
@@ -2257,6 +2287,62 @@ templates:
     points: 2
     question_text: "Total completed defensive line breaks by {away_team}?"
     options: *completed_def_line_breaks_team
+
+  - code: TOTAL_GOALS_EXCL_SHOOTOUT
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 3
+    question_text: "Total goals in the match (incl. extra time, excl. penalty shootout)?"
+    options: *goals_excl_shootout
+
+  - code: HOME_GOALS_EXCL_SHOOTOUT
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 3
+    question_text: "Total goals by {home_team} (incl. extra time, excl. penalty shootout)?"
+    options: *goals_excl_shootout
+
+  - code: AWAY_GOALS_EXCL_SHOOTOUT
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 3
+    question_text: "Total goals by {away_team} (incl. extra time, excl. penalty shootout)?"
+    options: *goals_excl_shootout
+
+  - code: TOTAL_PENALTY_SHOOTOUT_GOALS
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 3
+    question_text: "Total goals scored in the penalty shootout?"
+    options: *penalty_shootout_goals
+
+  - code: TOTAL_GOALS_INCL_SHOOTOUT
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 3
+    question_text: "Total goals in the match (incl. full time, extra time & penalty shootout)?"
+    options: *total_goals_incl_shootout
+
+  - code: HOME_GOALS_INCL_SHOOTOUT
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 3
+    question_text: "Total goals by {home_team} (incl. full time, extra time & penalty shootout)?"
+    options: *team_goals_incl_shootout
+
+  - code: AWAY_GOALS_INCL_SHOOTOUT
+    bucket: knockout_stats
+    category: stats
+    question_type: choice
+    points: 3
+    question_text: "Total goals by {away_team} (incl. full time, extra time & penalty shootout)?"
+    options: *team_goals_incl_shootout
 
   # --- Tournament bonus (Final match only) ---
   - code: WORLD_CUP_WINNER_2026
