@@ -69,10 +69,6 @@ class UserProfile(models.Model):
     onboarding_completed = models.BooleanField(default=False)
     point_boosters_remaining = models.PositiveIntegerField(default=5)
     timezone = models.CharField(max_length=63, blank=True, default='')
-    keep_signed_in = models.BooleanField(
-        default=False,
-        help_text='Always keep this user signed in (persistent session), regardless of the login "Remember me" checkbox.',
-    )
 
     class Meta:
         ordering = ['display_name']

@@ -1,5 +1,4 @@
 from django import forms
-from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from django.contrib.auth.forms import PasswordChangeForm
@@ -34,17 +33,6 @@ class LoginForm(LoginForm):
         if 'remember' in self.fields:
             self.fields['remember'].label = 'Remember me'
             self.fields['remember'].widget.attrs.update({'class': 'form-check-input'})
-
-    def login(self, request, redirect_url=None):
-        # allauth sets the session expiry based on the "Remember me" checkbox inside
-        # super().login(); re-apply a persistent expiry afterwards for users flagged
-        # keep_signed_in so the admin toggle always wins.
-        response = super().login(request, redirect_url)
-        user = getattr(self, 'user', None)
-        profile = getattr(user, 'profile', None) if user else None
-        if profile and profile.keep_signed_in:
-            request.session.set_expiry(settings.SESSION_COOKIE_AGE)
-        return response
 
 
 class ResetPasswordForm(ResetPasswordForm):

@@ -34,7 +34,7 @@ class UserAdmin(BaseUserAdmin):
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = [
         'display_name', 'user', 'favorite_team', 'ai_predict_enabled',
-        'onboarding_completed', 'point_boosters_remaining', 'keep_signed_in',
+        'onboarding_completed', 'point_boosters_remaining',
     ]
     search_fields = ['display_name', 'user__email']
-    list_filter = ['ai_predict_enabled', 'onboarding_completed', 'keep_signed_in']
+    list_filter = ['ai_predict_enabled', 'onboarding_completed']
