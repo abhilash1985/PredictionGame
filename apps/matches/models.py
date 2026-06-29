@@ -97,9 +97,12 @@ class Match(models.Model):
         unique_together = [('tournament', 'match_number')]
 
     def __str__(self):
-        return (
-            f'Match {self.match_number}: {self.team_home.short_name} vs {self.team_away.short_name}'
-        )
+        try:
+            home_name = self.team_home.short_name if self.team_home else '?'
+            away_name = self.team_away.short_name if self.team_away else '?'
+            return f'Match {self.match_number}: {home_name} vs {away_name}'
+        except Exception:
+            return f'Match {self.match_number}'
 
     @property
     def has_started(self):
@@ -286,3 +289,4 @@ class QuestionPrediction(models.Model):
 
     def __str__(self):
         return f'{self.match_prediction.user.display_name}: {self.user_answer}'
+
