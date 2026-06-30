@@ -97,9 +97,12 @@ class Match(models.Model):
         unique_together = [('tournament', 'match_number')]
 
     def __str__(self):
-        return (
-            f'Match {self.match_number}: {self.team_home.short_name} vs {self.team_away.short_name}'
-        )
+        try:
+            home = self.team_home.short_name if self.team_home_id else '?'
+            away = self.team_away.short_name if self.team_away_id else '?'
+        except Exception:
+            home, away = '?', '?'
+        return f'Match {self.match_number}: {home} vs {away}'
 
     @property
     def has_started(self):
