@@ -117,6 +117,23 @@
             </div>
           {% endif %}
 
+          {% if ai_field %}
+            <div class="predict-booster-box">
+              <div class="form-check mb-0">
+                {{ ai_field }}
+                <label class="form-check-label fw-semibold" for="{{ ai_field.id_for_label }}">
+                  {{ ai_field.label }}
+                </label>
+              </div>
+              <p class="admin-booster-hint mb-0 mt-2">
+                Tick this to flag the prediction as AI predicted, or untick to mark it as a manual entry.
+              </p>
+              {% if ai_field.errors %}
+                <div class="text-danger small mt-2">{{ ai_field.errors }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+
           {% if question_rows %}
             <div class="admin-form-actions">
               <button type="submit" class="btn btn-gold">

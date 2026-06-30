@@ -100,11 +100,19 @@ class AdminMatchPredictionForm(MatchPredictionForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        existing = MatchPrediction.objects.filter(user=self.user, match=self.match).first()
+
+        self.fields['is_ai_generated'] = forms.BooleanField(
+            required=False,
+            label='Mark as AI predicted',
+            initial=bool(existing and existing.is_ai_generated),
+            widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        )
+
         if not self.match.is_group_stage:
             self.fields.pop('point_booster', None)
             return
 
-        existing = MatchPrediction.objects.filter(user=self.user, match=self.match).first()
         if 'point_booster' not in self.fields:
             self.fields['point_booster'] = forms.BooleanField(
                 required=False,
@@ -150,7 +158,7 @@ class AdminMatchPredictionForm(MatchPredictionForm):
                 defaults={'user_answer': answer_value},
             )
 
-        prediction.is_ai_generated = False
+        prediction.is_ai_generated = self.cleaned_data.get('is_ai_generated', False)
         prediction.save()
         return prediction
 

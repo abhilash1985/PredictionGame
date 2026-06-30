@@ -309,6 +309,7 @@ def admin_update_prediction_view(request):
     boosters_remaining = 0
     booster_allowed = False
     booster_field = None
+    ai_field = None
     if target_user and match:
         existing_answers = {}
         existing_prediction = match.predictions.filter(user=target_user).first()
@@ -328,6 +329,8 @@ def admin_update_prediction_view(request):
             })
         if form and 'point_booster' in form.fields:
             booster_field = form['point_booster']
+        if form and 'is_ai_generated' in form.fields:
+            ai_field = form['is_ai_generated']
 
     return render(request, 'matches/admin_update_prediction.html', {
         'matches': matches,
@@ -343,6 +346,7 @@ def admin_update_prediction_view(request):
         'boosters_remaining': boosters_remaining,
         'booster_allowed': booster_allowed,
         'booster_field': booster_field,
+        'ai_field': ai_field,
     })
 
 
