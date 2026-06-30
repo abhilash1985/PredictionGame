@@ -402,7 +402,7 @@ class MatchKnockoutDisplayTests(TestCase):
             away_penalty_score=3,
             won_in=Match.WonIn.PEN,
         )
-        self.assertEqual(match.display_home_score_line, '2(5)')
+        self.assertEqual(match.display_home_score_line, '(5)2')
         self.assertEqual(match.display_away_score_line, '2(3)')
         self.assertEqual(match.winning_team, self.home)
         self.assertEqual(match.result_status_label, 'Penalties')

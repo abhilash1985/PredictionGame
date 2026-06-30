@@ -123,7 +123,7 @@ class Match(models.Model):
         if score is None:
             return ''
         if self.won_in == self.WonIn.PEN and self.home_penalty_score is not None:
-            return f'{score}({self.home_penalty_score})'
+            return f'({self.home_penalty_score}){score}'
         return str(score)
 
     @property
