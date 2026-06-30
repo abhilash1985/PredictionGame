@@ -12,6 +12,7 @@ from apps.ai_predict.core_prediction import (
     goals_consistent_with_winner,
     infer_first_goal_team,
     normalize_core_answers,
+    range_option_for_count,
 )
 from apps.ai_predict.validators import validate_answers
 from apps.matches.models import GameSettings, Match, MatchPrediction, MatchQuestion, QuestionPrediction, QuestionTemplate
@@ -237,6 +238,68 @@ class CorePredictionTests(TestCase):
         )
 
 
+class KnockoutCoherenceTests(TestCase):
+    def test_range_option_for_count_matches_ranges_and_plus(self):
+        options = ['0-1', '2', '3', '4', '5', '6', '6+']
+        self.assertEqual(range_option_for_count(0, options), '0-1')
+        self.assertEqual(range_option_for_count(2, options), '2')
+        self.assertEqual(range_option_for_count(9, options), '6+')
+
+    def test_excl_shootout_goals_follow_match_winner(self):
+        match = _create_match()
+        questions = list(_add_basic_questions(match))
+        winner, home_goals, away_goals = questions
+        knockout = _add_knockout_questions(match)
+        answers = {
+            winner.pk: match.team_home.name,
+            home_goals.pk: '2',
+            away_goals.pk: '0',
+            # Deliberately inconsistent knockout goals (away winning big).
+            knockout['HOME_GOALS_EXCL_SHOOTOUT'].pk: '0-1',
+            knockout['AWAY_GOALS_EXCL_SHOOTOUT'].pk: '6+',
+        }
+        normalized = normalize_core_answers(questions + list(knockout.values()), answers, match)
+        self.assertEqual(normalized[knockout['HOME_GOALS_EXCL_SHOOTOUT'].pk], '2')
+        self.assertEqual(normalized[knockout['AWAY_GOALS_EXCL_SHOOTOUT'].pk], '0-1')
+
+    def test_level_scoreline_is_decided_in_penalties(self):
+        match = _create_match()
+        questions = list(_add_basic_questions(match))
+        winner, home_goals, away_goals = questions
+        knockout = _add_knockout_questions(match)
+        answers = {
+            winner.pk: 'Draw',
+            home_goals.pk: '1',
+            away_goals.pk: '1',
+            knockout['GAME_COMPLETED_IN'].pk: 'Full Time',
+        }
+        normalized = normalize_core_answers(questions + list(knockout.values()), answers, match)
+        self.assertEqual(normalized[knockout['GAME_COMPLETED_IN'].pk], 'Penalties')
+        self.assertNotEqual(normalized[winner.pk], 'Draw')
+        self.assertIn(
+            normalized[knockout['TOTAL_PENALTY_SHOOTOUT_GOALS'].pk],
+            ['0-5', '6', '7', '8', '8+'],
+        )
+
+    def test_decisive_scoreline_has_no_shootout(self):
+        match = _create_match()
+        questions = list(_add_basic_questions(match))
+        winner, home_goals, away_goals = questions
+        knockout = _add_knockout_questions(match)
+        answers = {
+            winner.pk: match.team_home.name,
+            home_goals.pk: '2',
+            away_goals.pk: '1',
+            knockout['GAME_COMPLETED_IN'].pk: 'Penalties',
+        }
+        normalized = normalize_core_answers(questions + list(knockout.values()), answers, match)
+        self.assertEqual(normalized[knockout['GAME_COMPLETED_IN'].pk], 'Full Time')
+        self.assertEqual(
+            normalized[knockout['TOTAL_PENALTY_SHOOTOUT_GOALS'].pk],
+            'No shootout (decided in full time)',
+        )
+
+
 def _create_match(
     kickoff_at=None,
     match_number=1,
@@ -314,3 +377,34 @@ def _add_basic_questions(match):
         sort_order=2,
     )
     return q1, q2, q3
+
+
+def _add_knockout_questions(match):
+    specs = {
+        'GAME_COMPLETED_IN': ('How will the match be decided?', ['Full Time', 'Extra Time', 'Penalties', 'No Results']),
+        'HOME_GOALS_EXCL_SHOOTOUT': ('Home goals (excl. shootout)?', ['0-1', '2', '3', '4', '5', '6', '6+']),
+        'AWAY_GOALS_EXCL_SHOOTOUT': ('Away goals (excl. shootout)?', ['0-1', '2', '3', '4', '5', '6', '6+']),
+        'TOTAL_GOALS_EXCL_SHOOTOUT': ('Total goals (excl. shootout)?', ['0-1', '2', '3', '4', '5', '6', '6+']),
+        'TOTAL_PENALTY_SHOOTOUT_GOALS': (
+            'Shootout goals?',
+            ['0-5', '6', '7', '8', '8+', 'No shootout (decided in full time)', 'No shootout (decided in extra time)'],
+        ),
+        'HOME_GOALS_INCL_SHOOTOUT': ('Home goals (incl. shootout)?', ['0-2', '3-4', '5-6', '7-8', '9-10', '10+']),
+        'AWAY_GOALS_INCL_SHOOTOUT': ('Away goals (incl. shootout)?', ['0-2', '3-4', '5-6', '7-8', '9-10', '10+']),
+        'TOTAL_GOALS_INCL_SHOOTOUT': ('Total goals (incl. shootout)?', ['0-3', '4-6', '7-9', '10-12', '13-15', '15+']),
+    }
+    questions = {}
+    for sort_order, (code, (text, options)) in enumerate(specs.items(), start=3):
+        template, _ = QuestionTemplate.objects.get_or_create(
+            code=code,
+            defaults={'question_text': text, 'default_points': 3, 'category': 'stats', 'question_type': 'choice'},
+        )
+        questions[code] = MatchQuestion.objects.create(
+            match=match,
+            question_template=template,
+            question_text=text,
+            options=options,
+            points=3,
+            sort_order=sort_order,
+        )
+    return questions

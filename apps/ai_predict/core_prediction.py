@@ -10,6 +10,26 @@ NO_GOAL_LABEL = 'No goal'
 NO_GOALS_LABEL = 'No Goals'
 NO_GOALS_POSITION_LABEL = 'No goals'
 CORE_TEMPLATE_CODES = ('MATCH_WINNER', 'HOME_GOALS', 'AWAY_GOALS')
+
+# --- Knockout-specific coherence ---
+KNOCKOUT_DECISION_CODE = 'GAME_COMPLETED_IN'
+KNOCKOUT_SHOOTOUT_TOTAL_CODE = 'TOTAL_PENALTY_SHOOTOUT_GOALS'
+KNOCKOUT_EXCL_CODES = {
+    'home': 'HOME_GOALS_EXCL_SHOOTOUT',
+    'away': 'AWAY_GOALS_EXCL_SHOOTOUT',
+    'total': 'TOTAL_GOALS_EXCL_SHOOTOUT',
+}
+KNOCKOUT_INCL_CODES = {
+    'home': 'HOME_GOALS_INCL_SHOOTOUT',
+    'away': 'AWAY_GOALS_INCL_SHOOTOUT',
+    'total': 'TOTAL_GOALS_INCL_SHOOTOUT',
+}
+DECISION_FULL_TIME = 'Full Time'
+DECISION_EXTRA_TIME = 'Extra Time'
+DECISION_PENALTIES = 'Penalties'
+NO_SHOOTOUT_FULL_TIME_LABEL = 'No shootout (decided in full time)'
+NO_SHOOTOUT_EXTRA_TIME_LABEL = 'No shootout (decided in extra time)'
+SHOOTOUT_SCORELINES = ((4, 3), (5, 4), (5, 3), (3, 2), (4, 2))
 FIRST_GOAL_TEMPLATE_CODES = (
     'FIRST_GOAL_TEAM',
     'FIRST_GOAL_SCORER',
@@ -329,7 +349,7 @@ def normalize_core_answers(questions, answers, match, user=None, rng=None):
     home_question = core.get('HOME_GOALS')
     away_question = core.get('AWAY_GOALS')
     if not winner_question or not home_question or not away_question:
-        return normalized
+        return normalize_knockout_answers(questions, normalized, match, randomizer)
 
     winner_options = list(winner_question.options or [])
     pickable_winners = [option for option in winner_options if option != NO_RESULTS_LABEL]
@@ -356,7 +376,8 @@ def normalize_core_answers(questions, answers, match, user=None, rng=None):
         )
         normalized[home_question.pk] = home_answer
         normalized[away_question.pk] = away_answer
-        return normalize_related_answers(questions, normalized, match, randomizer)
+        normalized = normalize_related_answers(questions, normalized, match, randomizer)
+        return normalize_knockout_answers(questions, normalized, match, randomizer)
 
     if not goals_consistent_with_winner(normalized[winner_question.pk], home_goals, away_goals, match):
         logger.info(
@@ -378,4 +399,145 @@ def normalize_core_answers(questions, answers, match, user=None, rng=None):
         normalized[home_question.pk] = home_answer
         normalized[away_question.pk] = away_answer
 
-    return normalize_related_answers(questions, normalized, match, randomizer)
+    normalized = normalize_related_answers(questions, normalized, match, randomizer)
+    return normalize_knockout_answers(questions, normalized, match, randomizer)
+
+
+def range_option_for_count(value, options):
+    """Pick the option whose numeric range/threshold contains value, ignoring non-numeric labels."""
+    numeric_spans = []
+    plus_options = []
+    for option in options:
+        text = str(option).strip()
+        range_match = re.fullmatch(r'(\d+)\s*-\s*(\d+)', text)
+        if range_match:
+            low, high = int(range_match.group(1)), int(range_match.group(2))
+            if low <= value <= high:
+                return option
+            numeric_spans.append((option, low, high))
+            continue
+        plus_match = re.fullmatch(r'(\d+)\+', text)
+        if plus_match:
+            plus_options.append((option, int(plus_match.group(1))))
+            continue
+        int_match = re.fullmatch(r'\d+', text)
+        if int_match:
+            number = int(text)
+            if number == value:
+                return option
+            numeric_spans.append((option, number, number))
+
+    applicable_plus = [(option, threshold) for option, threshold in plus_options if value >= threshold]
+    if applicable_plus:
+        return max(applicable_plus, key=lambda item: item[1])[0]
+
+    if numeric_spans:
+        return min(numeric_spans, key=lambda item: abs(((item[1] + item[2]) / 2) - value))[0]
+
+    return None
+
+
+def _set_count_option(normalized, question, value):
+    if not question:
+        return
+    option = range_option_for_count(value, question.options or [])
+    if option is not None:
+        normalized[question.pk] = option
+
+
+def _set_exact_option(normalized, question, label, fallback_exclude=(NO_RESULTS_LABEL,)):
+    if not question:
+        return
+    options = question.options or []
+    if label in options:
+        normalized[question.pk] = label
+        return
+    pickable = [option for option in options if option not in fallback_exclude]
+    if pickable:
+        normalized[question.pk] = pickable[0]
+
+
+def normalize_knockout_answers(questions, normalized, match, rng):
+    """Make knockout-only answers (decision method, extra-time/shootout goals) coherent with the winner."""
+    by_code = questions_by_code(questions)
+    decision_question = by_code.get(KNOCKOUT_DECISION_CODE)
+    shootout_question = by_code.get(KNOCKOUT_SHOOTOUT_TOTAL_CODE)
+    excl_questions = {side: by_code.get(code) for side, code in KNOCKOUT_EXCL_CODES.items()}
+    incl_questions = {side: by_code.get(code) for side, code in KNOCKOUT_INCL_CODES.items()}
+
+    knockout_present = (
+        decision_question
+        or shootout_question
+        or any(excl_questions.values())
+        or any(incl_questions.values())
+    )
+    if not knockout_present:
+        return normalized
+
+    home_name = match.team_home.name
+    away_name = match.team_away.name
+
+    winner_question = by_code.get('MATCH_WINNER')
+    home_question = by_code.get('HOME_GOALS')
+    away_question = by_code.get('AWAY_GOALS')
+
+    winner = normalized.get(winner_question.pk) if winner_question else None
+    home_goals = parse_goal_value(normalized.get(home_question.pk)) if home_question else None
+    away_goals = parse_goal_value(normalized.get(away_question.pk)) if away_question else None
+
+    if home_goals is None or away_goals is None:
+        seed_winner = winner if winner in {home_name, away_name, DRAW_LABEL} else infer_winner_from_match(match, rng=rng)
+        home_goals, away_goals = suggest_scoreline(seed_winner, match, rng)
+
+    if winner == home_name:
+        winner_side_value = 'home'
+    elif winner == away_name:
+        winner_side_value = 'away'
+    elif home_goals > away_goals:
+        winner_side_value = 'home'
+    elif away_goals > home_goals:
+        winner_side_value = 'away'
+    else:
+        home_rank = match.team_home.fifa_ranking or 50
+        away_rank = match.team_away.fifa_ranking or 50
+        winner_side_value = 'home' if home_rank <= away_rank else 'away'
+
+    # A knockout match must produce an eventual winner: a level scoreline goes to penalties.
+    decision = DECISION_PENALTIES if home_goals == away_goals else DECISION_FULL_TIME
+
+    # Resolve a Draw/No Results winner into the team that advances.
+    if winner_question:
+        eventual_winner_name = home_name if winner_side_value == 'home' else away_name
+        if normalized.get(winner_question.pk) in {DRAW_LABEL, NO_RESULTS_LABEL, None}:
+            if eventual_winner_name in (winner_question.options or []):
+                normalized[winner_question.pk] = eventual_winner_name
+
+    winner_pens = loser_pens = 0
+    if decision == DECISION_PENALTIES:
+        winner_pens, loser_pens = rng.choice(SHOOTOUT_SCORELINES)
+
+    home_pens = winner_pens if winner_side_value == 'home' else loser_pens
+    away_pens = winner_pens if winner_side_value == 'away' else loser_pens
+
+    _set_count_option(normalized, excl_questions['home'], home_goals)
+    _set_count_option(normalized, excl_questions['away'], away_goals)
+    _set_count_option(normalized, excl_questions['total'], home_goals + away_goals)
+
+    if decision_question:
+        _set_exact_option(normalized, decision_question, decision)
+
+    if shootout_question:
+        if decision == DECISION_PENALTIES:
+            _set_count_option(normalized, shootout_question, winner_pens + loser_pens)
+        elif decision == DECISION_EXTRA_TIME:
+            _set_exact_option(normalized, shootout_question, NO_SHOOTOUT_EXTRA_TIME_LABEL)
+        else:
+            _set_exact_option(normalized, shootout_question, NO_SHOOTOUT_FULL_TIME_LABEL)
+
+    incl_home = home_goals + home_pens
+    incl_away = away_goals + away_pens
+    _set_count_option(normalized, incl_questions['home'], incl_home)
+    _set_count_option(normalized, incl_questions['away'], incl_away)
+    _set_count_option(normalized, incl_questions['total'], incl_home + incl_away)
+
+    return normalized
