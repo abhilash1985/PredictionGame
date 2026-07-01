@@ -2367,9 +2367,13 @@ body.page-legal {
   max-width: 100%;
 }
 
-.graph-chart-canvas-wrap--doughnut,
-.graph-chart-canvas-wrap--polarArea {
+.graph-chart-canvas-wrap--doughnut {
   height: 110px;
+  max-width: 240px;
+}
+
+.graph-chart-canvas-wrap--polarArea {
+  height: 250px;
   max-width: 240px;
 }
 
